@@ -1,0 +1,19 @@
+#summary PA165 2012 Správa vozového parku
+
+= Introduction =
+
+Aplikace pro správu vozového parku
+
+
+= Details =
+
+Team:
+Jozef Triščík - 359347
+Eva Neduchalová - 359893
+Lukáš Hájek - 359617
+František Veverka - 207422
+
+Add your content here.  Format your content with:
+  * Text in *bold* or _italic_
+  * Headings, paragraphs, and lists
+  * Automatic links to other wiki pages
