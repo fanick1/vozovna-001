@@ -37,13 +37,6 @@ public interface ServiceIntervalDAO {
 	 * @throws IllegalArgumentException if the id is null
 	 */
 	public ServiceInterval getById(Long id);
-
-	/**
-	 * Saves given Service Interval
-	 * @param serviceInterval the Service Interval to save
-	 * @throws IllegalArgumentException if serviceInterval is null
-	 */
-	public void add(ServiceInterval serviceInterval);
 	
 	/**
 	 * Saves given Service Interval
