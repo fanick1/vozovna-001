@@ -1,29 +1,109 @@
-/**
- *  Copyright 2012 Frantisek Veverka, Eva Neduchalova, Jozef Triscik, Lukas Hajek
- *  The latest (and the greatest) version of this software can be obtained at 
- *	http://code.google.com/p/vozovna-001/
- *
- *  This file is part of Vozovna.
- *   Vozovna is free software: you can redistribute it and/or modify
- *  it under the terms of the GNU General Public License as published by
- *  the Free Software Foundation, either version 3 of the License, or
- *  (at your option) any later version.
- *
- *  Vozovna is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU General Public License for more details.
- *
- *  You should have received a copy of the GNU General Public License
- *  along with Vozovna.  If not, see <http://www.gnu.org/licenses/>.
- */
 package cz.muni.fi.pa165.vozovna.entities;
 
+import cz.muni.fi.pa165.vozovna.enums.DriveStateEnum;
+import java.util.Date;
+import javax.persistence.*;
+
 /**
- * stub
- * TODO Add author
+ * Jízda. Slouží pro rezervaci vozidel na určitý čas a pro záznam najetých
+ * kilometrů.
+ *
+ * @author eva.neduchalova
  */
+@Entity
+@Table(name = "Drive")
+//@TypeDefs({ @TypeDef(name = "jodaDateTime", typeClass = PersistentDateTime.class) })
+@SequenceGenerator(name = "drive_id_sequence", sequenceName = "drive_id_sequence", allocationSize = 1)
 public class Drive {
 
-	// TODO FILL IN
+    @Id
+    @Column(name = "id")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "land_id_sequence")
+    private Long id;
+    
+    private Integer distance;
+    
+    @OneToOne(targetEntity = User.class)
+    @JoinColumn(name = "id_user")
+    private User user;
+    
+    @OneToOne(targetEntity = Vehicle.class)
+    @JoinColumn(name = "id_vehicle")
+    private Vehicle vehicle;
+    
+    @Column(name = "date_from")
+    //@Type(type = "jodaDateTime")
+    @Temporal(TemporalType.DATE)
+    private Date dateFrom;
+    
+    @Column(name = "date_to")
+    //@Type(type = "jodaDateTime")
+    @Temporal(TemporalType.DATE)
+    private Date dateTo;
+    
+    @Column(name = "state")
+    private DriveStateEnum state;
+
+    public Date getDateFrom() {
+        return dateFrom;
+    }
+
+    public void setDateFrom(Date dateFrom) {
+        this.dateFrom = dateFrom;
+    }
+
+    public Date getDateTo() {
+        return dateTo;
+    }
+
+    public void setDateTo(Date dateTo) {
+        this.dateTo = dateTo;
+    }
+
+    public Integer getDistance() {
+        return distance;
+    }
+
+    public void setDistance(Integer distance) {
+        this.distance = distance;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public DriveStateEnum getState() {
+        return state;
+    }
+
+    public void setState(DriveStateEnum state) {
+        this.state = state;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public Vehicle getVehicle() {
+        return vehicle;
+    }
+
+    public void setVehicle(Vehicle vehicle) {
+        this.vehicle = vehicle;
+    }
+
+    @Override
+    public String toString() {
+        return "Drive{" + "id=" + id + ", distance=" + distance + ", user=" + user 
+                + ", vehicle=" + vehicle + ", dateFrom=" + dateFrom + ", dateTo=" 
+                + dateTo + ", state=" + state + '}';
+    }
 }
