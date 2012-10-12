@@ -17,8 +17,9 @@
  *  You should have received a copy of the GNU General Public License
  *  along with Vozovna.  If not, see <http://www.gnu.org/licenses/>.
  */
-package cz.muni.fi.pa165.vozovna.dao;
+package cz.muni.fi.pa165.vozovna.dao.jpa;
 
+import cz.muni.fi.pa165.vozovna.dao.DriveDAO;
 import java.util.List;
 
 import cz.muni.fi.pa165.vozovna.entities.Drive;
