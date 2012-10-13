@@ -31,7 +31,7 @@ import cz.muni.fi.pa165.vozovna.entities.User;
 public interface DriveDAO {
 	
 	//TODO add comment
-	public List<Drive> getById(Long id);
+	public Drive getById(Long id);
 
 	//TODO add comment
 	public void create(Drive drive);

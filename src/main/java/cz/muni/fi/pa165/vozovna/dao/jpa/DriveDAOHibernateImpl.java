@@ -20,29 +20,48 @@
 package cz.muni.fi.pa165.vozovna.dao.jpa;
 
 import cz.muni.fi.pa165.vozovna.dao.DriveDAO;
-import java.util.List;
-
 import cz.muni.fi.pa165.vozovna.entities.Drive;
 import cz.muni.fi.pa165.vozovna.entities.User;
+import java.util.List;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.TypedQuery;
+import org.hibernate.service.spi.ServiceException;
 
 /**
- * @author Frantisek Veverka, 207422@mail.muni.cz
- *
+ * Drive DAO using Hibernate.
+ * 
+ * @author Lukas Hajek, 359617@mail.muni.cz
  */
 public class DriveDAOHibernateImpl implements DriveDAO {
 
-	/**
-	 * 
-	 */
-	public DriveDAOHibernateImpl() {
+    private EntityManagerFactory emf;
+	
+	public void setEntityManagerFactory(final EntityManagerFactory emf){
+		if(emf == null){
+			throw new IllegalArgumentException("emf");
+		}
+		
+		this.emf = emf;
 	}
-
+    
 	/* (non-Javadoc)
 	 * @see cz.muni.fi.pa165.vozovna.dao.DriveDAO#getById(java.lang.Long)
 	 */
 	@Override
-	public List<Drive> getById(Long id) {
-		throw new UnsupportedOperationException("Not implemented yet");
+	public Drive getById(Long id) {
+        if (id == null) {
+            throw new IllegalArgumentException("Parameter id is null.");
+        }
+		EntityManager em = emf.createEntityManager();
+        
+		TypedQuery<Drive> query = em.createQuery("FROM DRIVE WHERE ID = :id ", Drive.class);
+		query.setParameter("id", id);
+        
+		Drive result = query.getSingleResult();
+		em.close();
+         
+		return result;
 	}
 
 	/* (non-Javadoc)
@@ -50,7 +69,21 @@ public class DriveDAOHibernateImpl implements DriveDAO {
 	 */
 	@Override
 	public void create(Drive drive) {
-		throw new UnsupportedOperationException("Not implemented yet");
+        if (drive == null) {
+            throw new IllegalArgumentException("Drive is null.");
+        }
+        EntityManager em = emf.createEntityManager();
+        em.getTransaction().begin();
+        
+        try {
+            em.persist(drive);
+            em.getTransaction().commit();
+        } catch(Exception e) {
+            em.getTransaction().rollback();
+            em.close();
+            throw new ServiceException("Drive creation was failed.", e);
+        }
+        em.close();
 	}
 
 	/* (non-Javadoc)
@@ -58,7 +91,21 @@ public class DriveDAOHibernateImpl implements DriveDAO {
 	 */
 	@Override
 	public void remove(Drive drive) {
-		throw new UnsupportedOperationException("Not implemented yet");
+		if (drive == null) {
+            throw new IllegalArgumentException("Drive is null.");
+        }
+        EntityManager em = emf.createEntityManager();
+        em.getTransaction().begin();
+        
+        try {
+            em.remove(drive);
+            em.getTransaction().commit();
+        } catch(Exception e) {
+            em.getTransaction().rollback();
+            em.close();
+            throw new ServiceException("Drive remove was failed.", e);
+        }
+        em.close();
 	}
 	
 
@@ -67,7 +114,21 @@ public class DriveDAOHibernateImpl implements DriveDAO {
 	 */
 	@Override
 	public void update(Drive drive) {
-		throw new UnsupportedOperationException("Not implemented yet");
+		if (drive == null) {
+            throw new IllegalArgumentException("Drive is null.");
+        }
+        EntityManager em = emf.createEntityManager();
+        em.getTransaction().begin();
+        
+        try {
+            em.persist(drive);
+            em.getTransaction().commit();
+        } catch(Exception e) {
+            em.getTransaction().rollback();
+            em.close();
+            throw new ServiceException("Drive update was failed.", e);
+        }
+        em.close();
 	}
 
 	/* (non-Javadoc)
@@ -75,7 +136,15 @@ public class DriveDAOHibernateImpl implements DriveDAO {
 	 */
 	@Override
 	public List<Drive> findAll() {
-		throw new UnsupportedOperationException("Not implemented yet");
+		
+        EntityManager em = emf.createEntityManager();
+   
+		TypedQuery<Drive> query = em.createQuery("FROM DRIVE", Drive.class);
+		List<Drive> result = query.getResultList(); 
+		em.close();
+        
+		return result;
+
 	}
 
 	/* (non-Javadoc)
@@ -83,7 +152,19 @@ public class DriveDAOHibernateImpl implements DriveDAO {
 	 */
 	@Override
 	public List<Drive> findByUser(User user) {
-		throw new UnsupportedOperationException("Not implemented yet");
+		if (user == null) {
+            return findAll();
+        }
+        EntityManager em = emf.createEntityManager();
+   
+		TypedQuery<Drive> query = 
+                em.createQuery("FROM DRIVE WHERE USER = :user", Drive.class)
+                    .setParameter("user", user);
+        
+		List<Drive> result = query.getResultList(); 
+		em.close();
+        
+		return result;
 	}
 
 }
