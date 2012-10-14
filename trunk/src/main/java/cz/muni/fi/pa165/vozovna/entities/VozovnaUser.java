@@ -26,12 +26,12 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 /**
- * The User entity this class represents any user present in the application
+ * The VozovnaUser entity this class represents any user present in the application
  * 
  * @author Frantisek Veverka, 207422@mail.muni.cz
  */
 @Entity
-public class User {
+public class VozovnaUser {
 
 	/**
 	 * Unique users ID
@@ -47,7 +47,7 @@ public class User {
 	private String name;
 
 	/**
-	 * User's category - important when deciding which vehicles can be reserved
+	 * VozovnaUser's category - important when deciding which vehicles can be reserved
 	 */
 	@Column(nullable = false)
 	private int userClassId;
@@ -140,7 +140,7 @@ public class User {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		User other = (User) obj;
+		VozovnaUser other = (VozovnaUser) obj;
 		if (id == null || other.id == null){ //can't compare null ids
 			return false;
 		} else if (!id.equals(other.id))

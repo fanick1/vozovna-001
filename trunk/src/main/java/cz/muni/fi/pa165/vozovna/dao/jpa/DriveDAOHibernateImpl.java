@@ -21,7 +21,7 @@ package cz.muni.fi.pa165.vozovna.dao.jpa;
 
 import cz.muni.fi.pa165.vozovna.dao.DriveDAO;
 import cz.muni.fi.pa165.vozovna.entities.Drive;
-import cz.muni.fi.pa165.vozovna.entities.User;
+import cz.muni.fi.pa165.vozovna.entities.VozovnaUser;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -148,10 +148,10 @@ public class DriveDAOHibernateImpl implements DriveDAO {
 	}
 
 	/* (non-Javadoc)
-	 * @see cz.muni.fi.pa165.vozovna.dao.DriveDAO#findByUser(cz.muni.fi.pa165.vozovna.entities.User)
+	 * @see cz.muni.fi.pa165.vozovna.dao.DriveDAO#findByUser(cz.muni.fi.pa165.vozovna.entities.VozovnaUser)
 	 */
 	@Override
-	public List<Drive> findByUser(User user) {
+	public List<Drive> findByUser(VozovnaUser user) {
 		if (user == null) {
             return findAll();
         }

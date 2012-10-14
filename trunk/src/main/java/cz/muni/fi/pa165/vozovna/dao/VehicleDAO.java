@@ -19,9 +19,8 @@
  */
 package cz.muni.fi.pa165.vozovna.dao;
 
-import java.util.List;
-
 import cz.muni.fi.pa165.vozovna.entities.Vehicle;
+import java.util.List;
 
 /**
  *stub

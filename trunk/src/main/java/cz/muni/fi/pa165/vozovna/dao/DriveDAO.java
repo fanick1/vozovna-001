@@ -19,10 +19,9 @@
  */
 package cz.muni.fi.pa165.vozovna.dao;
 
-import java.util.List;
-
 import cz.muni.fi.pa165.vozovna.entities.Drive;
-import cz.muni.fi.pa165.vozovna.entities.User;
+import cz.muni.fi.pa165.vozovna.entities.VozovnaUser;
+import java.util.List;
 
 /**
  * stub
@@ -30,21 +29,52 @@ import cz.muni.fi.pa165.vozovna.entities.User;
  */
 public interface DriveDAO {
 	
-	//TODO add comment
+	/**
+         * Return Drive with given id. Returns null if drive does not exists.
+         * @param id
+         * @return Drive if exists, null otherwise.
+         * @throws IllegalArgumentException Throws if given id is null.
+         * @throws IllegalStateException Throws if factory was not set.
+         */
 	public Drive getById(Long id);
 
-	//TODO add comment
+	/**
+         * Saves given drive into database.
+         * @param drive Drive to save
+         * @throws IllegalArgumentException Throws if given drive is null.
+         * @throws IllegalStateException Throws if factory was not set.
+         */
 	public void create(Drive drive);
 	
-	//TODO add comment
+	/**
+         * Removes given drive from database.
+         * @param drive Drive to remove
+         * @throws IllegalArgumentException Throws if given drive is null.
+         * @throws IllegalStateException Throws if factory was not set.
+         */
 	public void remove(Drive drive);
 	
-	//TODO add comment
+	/**
+         * Updates given drive into database.
+         * @param drive Drive to update
+         * @throws IllegalArgumentException Throws if given drive is null.
+         * @throws IllegalStateException Throws if factory was not set.
+         */
 	public void update(Drive drive);
 	
-	//TODO add comment
+	/**
+         * Find and return all drives in database.
+         * @return List of all drives in database.
+         * @throws IllegalStateException Throws if factory was not set.
+         */
 	public List<Drive> findAll();
 	
-	//TODO add comment
-	public List<Drive> findByUser(User user);
+	/**
+         * Find and return drives of given user.
+         * @param user VozovnaUser of which we want drives.
+         * @return List of drives of given user.
+         * @throws IllegalArgumentException Throws if given user is null.
+         * @throws IllegalStateException Throws if factory was not set.
+         */
+	public List<Drive> findByUser(VozovnaUser user);
 }
