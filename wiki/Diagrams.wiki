@@ -3,3 +3,5 @@
 [http://vozovna-001.googlecode.com/files/Vozovna-UseCase.png]
 
 = Diagram tříd =
+
+[http://vozovna-001.googlecode.com/files/class_diagram-page-001.jpg]
