@@ -1,6 +1,6 @@
 package cz.muni.fi.pa165.vozovna.dao.jpa;
 
-import cz.muni.fi.pa165.vozovna.dao.UserDAO;
+import cz.muni.fi.pa165.vozovna.dao.UserDao;
 import cz.muni.fi.pa165.vozovna.entities.VozovnaUser;
 import java.util.List;
 import javax.persistence.EntityManager;
@@ -11,7 +11,7 @@ import javax.persistence.TypedQuery;
 /**
  * @author Jozef Triscik
  */
-public class UserDAOHibernateImpl implements UserDAO {
+public class UserDAOHibernateImpl implements UserDao {
 
     public EntityManagerFactory factory;
     

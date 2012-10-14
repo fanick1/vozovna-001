@@ -11,7 +11,7 @@ import java.util.List;
  *
  * @author eva.neduchalova
  */
-public interface UserDAO {
+public interface UserDao {
     
     VozovnaUser getById(Long id);
     
