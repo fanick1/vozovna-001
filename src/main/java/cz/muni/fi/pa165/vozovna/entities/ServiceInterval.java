@@ -54,7 +54,7 @@ public class ServiceInterval implements Serializable {
     /**
      * The dates when vehicle was inspected.
      */
-    @Temporal(javax.persistence.TemporalType.DATE)
+    //@Temporal(javax.persistence.TemporalType.DATE)
     private List<Date> dated;
     
     /**

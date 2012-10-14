@@ -19,6 +19,7 @@
  */
 package cz.muni.fi.pa165.vozovna.entities;
 
+import cz.muni.fi.pa165.vozovna.enums.UserClassEnum;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -50,7 +51,7 @@ public class VozovnaUser {
 	 * VozovnaUser's category - important when deciding which vehicles can be reserved
 	 */
 	@Column(nullable = false)
-	private int userClassId;
+	private UserClassEnum userClass;
 
 	/**
 	 * True when this user is administrator
@@ -91,16 +92,16 @@ public class VozovnaUser {
 	/**
 	 * @return the userClassId
 	 */
-	public int getUserClassId() {
-		return this.userClassId;
+	public UserClassEnum getUserClassId() {
+		return this.userClass;
 	}
 
 	/**
 	 * @param userClassId
 	 *            the userClassId to set
 	 */
-	public void setUserClassId(int userClassId) {
-		this.userClassId = userClassId;
+	public void setUserClass(UserClassEnum userClass) {
+		this.userClass = userClass;
 	}
 
 	/**
@@ -158,8 +159,8 @@ public class VozovnaUser {
 		builder.append(id);
 		builder.append(", name=");
 		builder.append(name);
-		builder.append(", userClassId=");
-		builder.append(userClassId);
+		builder.append(", userClass=");
+		builder.append(userClass);
 		builder.append(", isAdmin=");
 		builder.append(isAdmin);
 		builder.append("]");
