@@ -8,9 +8,7 @@ import cz.muni.fi.pa165.vozovna.dao.ServiceIntervalDAO;
 import cz.muni.fi.pa165.vozovna.entities.ServiceInterval;
 import cz.muni.fi.pa165.vozovna.entities.Vehicle;
 import java.util.List;
-import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
-import javax.persistence.EntityTransaction;
 
 /**
  *

@@ -4,7 +4,7 @@
  */
 package cz.muni.fi.pa165.vozovna.dao;
 
-import cz.muni.fi.pa165.vozovna.entities.VozovnaUser;
+import cz.muni.fi.pa165.vozovna.entities.User;
 import java.util.List;
 
 /**
@@ -13,15 +13,15 @@ import java.util.List;
  */
 public interface UserDao {
     
-    VozovnaUser getById(Long id);
+    User getById(Long id);
     
-    void create(VozovnaUser user);
+    void create(User user);
     
-    void remove(VozovnaUser user);
+    void remove(User user);
     
-    void update(VozovnaUser user);
+    void update(User user);
     
-    List<VozovnaUser> findAll();
+    List<User> findAll();
     
-    List<VozovnaUser> findByName(String name);
+    List<User> findByName(String name);
 }
