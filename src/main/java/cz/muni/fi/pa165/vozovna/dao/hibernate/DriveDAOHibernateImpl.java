@@ -25,6 +25,7 @@ import cz.muni.fi.pa165.vozovna.entities.User;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.EntityTransaction;
 import javax.persistence.TypedQuery;
 import org.hibernate.service.spi.ServiceException;
 
@@ -37,6 +38,11 @@ public class DriveDAOHibernateImpl implements DriveDAO {
 
     private EntityManagerFactory emf;
 	
+    /**
+     * Sets Entity Manager Factory
+     * @param emf   The Entity Manager Factory
+     * @throws IllegalArgumentException     If emf is null.
+     */
 	public void setEntityManagerFactory(final EntityManagerFactory emf){
 		if(emf == null){
 			throw new IllegalArgumentException("emf");
@@ -53,14 +59,20 @@ public class DriveDAOHibernateImpl implements DriveDAO {
         if (id == null) {
             throw new IllegalArgumentException("Parameter id is null.");
         }
+        if (emf == null) {
+            throw new IllegalStateException("Entity Manager Factory is not set.");
+        }
 		EntityManager em = emf.createEntityManager();
+        Drive result = null;
+        try {
+
+            result = em.find(Drive.class, id);
+        } catch(RuntimeException e) {
+            throw e;
+        } finally {
+            em.close();
+        }
         
-		TypedQuery<Drive> query = em.createQuery("FROM DRIVE WHERE ID = :id ", Drive.class);
-		query.setParameter("id", id);
-        
-		Drive result = query.getSingleResult();
-		em.close();
-         
 		return result;
 	}
 
@@ -72,18 +84,23 @@ public class DriveDAOHibernateImpl implements DriveDAO {
         if (drive == null) {
             throw new IllegalArgumentException("Drive is null.");
         }
+        if (emf == null) {
+            throw new IllegalStateException("Entity Manager Factory is not set.");
+        }
         EntityManager em = emf.createEntityManager();
-        em.getTransaction().begin();
+        EntityTransaction transaction = em.getTransaction();
         
+        transaction.begin();
         try {
             em.persist(drive);
-            em.getTransaction().commit();
-        } catch(Exception e) {
-            em.getTransaction().rollback();
+            transaction.commit();
+        } catch(RuntimeException e) {
+            transaction.rollback();
+            throw e;
+        } finally {
             em.close();
-            throw new ServiceException("Drive creation was failed.", e);
         }
-        em.close();
+        
 	}
 
 	/* (non-Javadoc)
@@ -94,18 +111,24 @@ public class DriveDAOHibernateImpl implements DriveDAO {
 		if (drive == null) {
             throw new IllegalArgumentException("Drive is null.");
         }
+        if (emf == null) {
+            throw new IllegalStateException("Entity Manager Factory is not set.");
+        }
         EntityManager em = emf.createEntityManager();
-        em.getTransaction().begin();
+        EntityTransaction transaction = em.getTransaction();
         
+        transaction.begin();
+       
         try {
             em.remove(drive);
-            em.getTransaction().commit();
-        } catch(Exception e) {
-            em.getTransaction().rollback();
+            transaction.commit();
+        } catch(RuntimeException e) {
+            transaction.rollback();
+            throw e;
+        } finally {
             em.close();
-            throw new ServiceException("Drive remove was failed.", e);
         }
-        em.close();
+        
 	}
 	
 
@@ -117,18 +140,24 @@ public class DriveDAOHibernateImpl implements DriveDAO {
 		if (drive == null) {
             throw new IllegalArgumentException("Drive is null.");
         }
+        if (emf == null) {
+            throw new IllegalStateException("Entity Manager Factory is not set.");
+        }
         EntityManager em = emf.createEntityManager();
-        em.getTransaction().begin();
+        EntityTransaction transaction = em.getTransaction();
+       
+        transaction.begin();
         
         try {
             em.persist(drive);
-            em.getTransaction().commit();
-        } catch(Exception e) {
-            em.getTransaction().rollback();
+            transaction.commit();
+        } catch(RuntimeException e) {
+            transaction.rollback();
+            throw e;
+        } finally {
             em.close();
-            throw new ServiceException("Drive update was failed.", e);
         }
-        em.close();
+        
 	}
 
 	/* (non-Javadoc)
@@ -136,12 +165,21 @@ public class DriveDAOHibernateImpl implements DriveDAO {
 	 */
 	@Override
 	public List<Drive> findAll() {
-		
+		if (emf == null) {
+            throw new IllegalStateException("Entity Manager Factory is not set.");
+        }
+        
         EntityManager em = emf.createEntityManager();
-   
-		TypedQuery<Drive> query = em.createQuery("FROM DRIVE", Drive.class);
-		List<Drive> result = query.getResultList(); 
-		em.close();
+        List<Drive> result = null;
+        
+		try {
+            TypedQuery<Drive> query = em.createQuery("FROM DRIVE", Drive.class);
+            result = query.getResultList(); 
+        } catch (RuntimeException e) {
+            throw e;
+        } finally {
+            em.close();
+        }
         
 		return result;
 
@@ -152,17 +190,25 @@ public class DriveDAOHibernateImpl implements DriveDAO {
 	 */
 	@Override
 	public List<Drive> findByUser(User user) {
-		if (user == null) {
-            return findAll();
+		if(user == null) {
+            throw new IllegalArgumentException("User is null.");
+        }
+        if (emf == null) {
+            throw new IllegalStateException("Entity Manager Factory is not set.");
         }
         EntityManager em = emf.createEntityManager();
-   
-		TypedQuery<Drive> query = 
+        List<Drive> result = null;
+        
+        try {
+            TypedQuery<Drive> query = 
                 em.createQuery("FROM DRIVE WHERE USER = :user", Drive.class)
                     .setParameter("user", user);
-        
-		List<Drive> result = query.getResultList(); 
-		em.close();
+            result = query.getResultList(); 
+        } catch (RuntimeException e) {
+            throw e;
+        } finally {
+            em.close();
+        }
         
 		return result;
 	}

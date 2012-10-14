@@ -23,27 +23,59 @@ import cz.muni.fi.pa165.vozovna.entities.Vehicle;
 import java.util.List;
 
 /**
- *stub
- *TODO add author 
+ * Vehicle DAO Interface
+ * @author Lukas Hajek, 359617@mail.muni.cz
  */
 public interface VehicleDAO {
 	
 	
-	//TODO add comment
+	/**
+     * Returns Vehicle with given ID
+     * 
+	 * @param id        ID of Vehicle
+	 * @return          The Vehicle with given ID, null if Vehicle doesn't exist
+	 * @throws IllegalArgumentException     If id is null.
+     * @throws IllegalStateException        If the Entity Manager Factory is not set.
+     */
 	public Vehicle getById(Long id);
 
-	//TODO add comment
-	public void create(final Vehicle vehicle);
+	/**
+     * Adds vehicle into system.
+     * @param vehicle   The Vehicle to save
+     * @throws IllegalArgumentException     If vehicle is null.
+     * @throws IllegalStateException        If the Entity Manager Factory is not set.
+     */
+ 	public void create(final Vehicle vehicle);
 	
-	//TODO add comment
+	/**
+     * Removes vehicle
+     * @param vehicle   The Vehicle to remove     
+     * @throws IllegalArgumentException     If vehicle is null.
+     * @throws IllegalStateException        If the Entity Manager Factory is not set.
+     */
 	public void remove(final Vehicle vehicle);
 	
-	//TODO add comment
+	/**
+     * Updates vehicle
+     * @param vehicle   The Vehicle to update
+     * @throws IllegalArgumentException     If vehicle is null.
+     * @throws IllegalStateException        If the Entity Manager Factory is not set.
+     */
 	public void update(final Vehicle vehicle);
 	
-	//TODO add comment
+	/**
+     * Returns list with all of vehicles
+     * @return java.util.List   List of vehicles
+     * @throws IllegalStateException        If the Entity Manager Factory is not set.
+     */
 	public List<Vehicle> findAll();
 	
-	//TODO add comment
+	/**
+     * Returns list with all of vehicles
+     * @param userClass                     
+     * @return java.util.List               List with vehicles
+     * @throws IllegalArgumentException     If userClass is invalid
+     * @throws IllegalStateException        If the Entity Manager Factory is not set.
+     */
 	public List<Vehicle> findByUserClass(int userClass);
 }
