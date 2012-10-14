@@ -30,7 +30,7 @@ public interface VehicleDAO {
 	
 	
 	//TODO add comment
-	public List<Vehicle> getById(Long id);
+	public Vehicle getById(Long id);
 
 	//TODO add comment
 	public void create(final Vehicle vehicle);
