@@ -4,7 +4,7 @@
  */
 package cz.muni.fi.pa165.vozovna.dao;
 
-import cz.muni.fi.pa165.vozovna.dao.jpa.ServiceIntervalDaoImpl;
+import cz.muni.fi.pa165.vozovna.dao.hibernate.ServiceIntervalDaoImpl;
 import cz.muni.fi.pa165.vozovna.entities.ServiceInterval;
 import cz.muni.fi.pa165.vozovna.entities.Vehicle;
 import cz.muni.fi.pa165.vozovna.enums.UserClassEnum;

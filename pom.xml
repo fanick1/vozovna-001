@@ -1,3 +1,4 @@
+
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
@@ -32,6 +33,8 @@
             <artifactId>derbyclient</artifactId>
             <version>10.7.1.1</version>
         </dependency>
+        
+<!--        testování začátek-->
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
@@ -39,7 +42,40 @@
             <type>jar</type>
             <scope>test</scope>
         </dependency>
-        
+        <dependency>
+            <groupId>org.dbunit</groupId>
+            <artifactId>dbunit</artifactId>
+            <version>2.4.8</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-test</artifactId>
+            <version>3.1.1.RELEASE</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.hamcrest</groupId>
+            <artifactId>hamcrest-all</artifactId>
+            <version>1.1</version>
+        </dependency>
+        <dependency>
+            <groupId>org.hamcrest</groupId>
+            <artifactId>hamcrest-library</artifactId>
+            <version>1.2</version>
+        </dependency>
+		
+        <dependency>
+            <groupId>org.jmock</groupId>
+            <artifactId>jmock</artifactId>
+            <version>2.5.1</version>
+        </dependency>
+		
+        <dependency>
+            <groupId>org.jmock</groupId>
+            <artifactId>jmock-junit4</artifactId>
+            <version>2.5.1</version>
+        </dependency>
+<!--        testování konec-->
 
         <dependency>
             <groupId>javax.servlet</groupId>
@@ -85,9 +121,9 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surfire-plugin</artifactId>
                 <version>2.10</version>
-				<configuration>
-					<testFailureIgnore>true</testFailureIgnore>
-				</configuration>
+                <configuration>
+                    <testFailureIgnore>true</testFailureIgnore>
+                </configuration>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
