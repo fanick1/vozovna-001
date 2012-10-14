@@ -48,15 +48,18 @@ public class VehicleDAOHibernateImpl implements VehicleDAO {
 	 * @see cz.muni.fi.pa165.vozovna.dao.VehicleDAO#getById(java.lang.Long)
 	 */
 	@Override
-	public List<Vehicle> getById(Long id) {
+	public Vehicle getById(Long id) {
 		if(id == null){
 			throw new IllegalArgumentException("Id is null");
 		}
+		if(emf == null){
+			throw new IllegalStateException("EntityManagerFactory was not set.");
+		}
 		final EntityManager em = emf.createEntityManager();
 		em.getTransaction().begin();
-		TypedQuery<Vehicle> query = em.createQuery("FROM VEHICLE WHERE ID = :id ", Vehicle.class) ;
+		TypedQuery<Vehicle> query = em.createQuery("FROM Vehicle WHERE ID = :id ", Vehicle.class) ;
 		query.setParameter("id", id);
-		List<Vehicle> result = query.getResultList(); 
+		Vehicle result = query.getSingleResult(); 
 		em.getTransaction().commit();
 		em.close();
 		return result;
@@ -85,6 +88,10 @@ public class VehicleDAOHibernateImpl implements VehicleDAO {
 		if(vehicle == null){
 			throw new IllegalArgumentException("Vehicle is null");
 		}
+		if(emf == null){
+			throw new IllegalStateException("EntityManagerFactory was not set.");
+		}
+
 		final EntityManager em = emf.createEntityManager();
 		em.getTransaction().begin();
 		em.remove(vehicle);
@@ -112,9 +119,13 @@ public class VehicleDAOHibernateImpl implements VehicleDAO {
 	 */
 	@Override
 	public List<Vehicle> findAll() {
+		if(emf == null){
+			throw new IllegalStateException("EntityManagerFactory was not set.");
+		}
+
 		final EntityManager em = emf.createEntityManager();
 		em.getTransaction().begin();
-		List<Vehicle> result = em.createQuery("FROM VEHICLE", Vehicle.class).getResultList();
+		List<Vehicle> result = em.createQuery("FROM Vehicle", Vehicle.class).getResultList();
 		em.getTransaction().commit();
 		em.close();
 		return result;
@@ -125,9 +136,12 @@ public class VehicleDAOHibernateImpl implements VehicleDAO {
 	 */
 	@Override
 	public List<Vehicle> findByUserClass(int userClass) {
+		if(emf == null){
+			throw new IllegalStateException("EntityManagerFactory was not set.");
+		}
 		final EntityManager em = emf.createEntityManager();
 		em.getTransaction().begin();
-		TypedQuery<Vehicle> query = em.createQuery("FROM VEHICLE WHERE USERCLASS = :USERCLASS ", Vehicle.class) ;
+		TypedQuery<Vehicle> query = em.createQuery("FROM Vehicle WHERE userClass = :USERCLASS ", Vehicle.class) ;
 		query.setParameter("USERCLASS", userClass);
 		List<Vehicle> result = query.getResultList(); 
 		em.getTransaction().commit();

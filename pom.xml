@@ -28,6 +28,7 @@
             <artifactId>hibernate-entitymanager</artifactId>
             <version>4.1.4.Final</version>
         </dependency>
+
         <dependency>
             <groupId>org.apache.derby</groupId>
             <artifactId>derbyclient</artifactId>
@@ -36,54 +37,21 @@
         
 <!--        testování začátek-->
         <dependency>
+            <groupId>org.apache.derby</groupId>
+            <artifactId>derby</artifactId>
+            <version>10.7.1.1</version>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
             <version>4.10</version>
             <type>jar</type>
             <scope>test</scope>
         </dependency>
-        <dependency>
-            <groupId>org.dbunit</groupId>
-            <artifactId>dbunit</artifactId>
-            <version>2.4.8</version>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-test</artifactId>
-            <version>3.1.1.RELEASE</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.hamcrest</groupId>
-            <artifactId>hamcrest-all</artifactId>
-            <version>1.1</version>
-        </dependency>
-        <dependency>
-            <groupId>org.hamcrest</groupId>
-            <artifactId>hamcrest-library</artifactId>
-            <version>1.2</version>
-        </dependency>
-		
-        <dependency>
-            <groupId>org.jmock</groupId>
-            <artifactId>jmock</artifactId>
-            <version>2.5.1</version>
-        </dependency>
-		
-        <dependency>
-            <groupId>org.jmock</groupId>
-            <artifactId>jmock-junit4</artifactId>
-            <version>2.5.1</version>
-        </dependency>
-<!--        testování konec-->
-
-        <dependency>
-            <groupId>javax.servlet</groupId>
-            <artifactId>servlet-api</artifactId>
-            <version>2.5</version>
-        </dependency>
         
-        <!-- joda DateTime ZAČÁTEK-->
+        <!-- DateTime-->
         <dependency>
             <groupId>org.jadira.usertype</groupId>
             <artifactId>usertype.jodatime</artifactId>
@@ -94,13 +62,18 @@
             <artifactId>joda-time</artifactId>
             <version>2.0</version>
         </dependency>
+
         <dependency>
-            <groupId>joda-time</groupId>
-            <artifactId>joda-time-hibernate</artifactId>
-            <version>1.3</version>
+        	<groupId>org.hibernate.javax.persistence</groupId>
+        	<artifactId>hibernate-jpa-2.0-api</artifactId>
+        	<version>1.0.1.Final</version>
         </dependency>
-        <!-- joda DateTime KONEC-->
-        
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>servlet-api</artifactId>
+            <version>2.5</version>
+        </dependency>
+
     </dependencies>
 
     <build>
@@ -121,9 +94,9 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surfire-plugin</artifactId>
                 <version>2.10</version>
-                <configuration>
-                    <testFailureIgnore>true</testFailureIgnore>
-                </configuration>
+				<configuration>
+					<testFailureIgnore>true</testFailureIgnore>
+				</configuration>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -144,7 +117,7 @@
                 <version>2.1</version>
                 <executions>
                     <execution>
-                        <phase>validate</phase>
+                        <phase>package</phase>
                         <goals>
                             <goal>copy</goal>
                         </goals>
