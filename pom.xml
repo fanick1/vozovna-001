@@ -40,18 +40,7 @@
             <scope>test</scope>
         </dependency>
         
-        <!-- DateTime-->
-        <dependency>
-            <groupId>org.jadira.usertype</groupId>
-            <artifactId>usertype.jodatime</artifactId>
-            <version>2.0</version>
-        </dependency>
-        <dependency>
-            <groupId>joda-time</groupId>
-            <artifactId>joda-time</artifactId>
-            <version>2.0</version>
-        </dependency>
-        
+
         <dependency>
             <groupId>javax.servlet</groupId>
             <artifactId>servlet-api</artifactId>
@@ -72,10 +61,9 @@
         <dependency>
             <groupId>joda-time</groupId>
             <artifactId>joda-time-hibernate</artifactId>
-	<version>1.3</version>
+            <version>1.3</version>
+        </dependency>
         <!-- joda DateTime KONEC-->
-        
-</dependency>
         
     </dependencies>
 
