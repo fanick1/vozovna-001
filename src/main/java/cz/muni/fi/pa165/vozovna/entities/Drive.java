@@ -23,9 +23,9 @@ public class Drive {
     
     private Integer distance;
     
-    @OneToOne(targetEntity = User.class)
+    @OneToOne(targetEntity = VozovnaUser.class)
     @JoinColumn(name = "id_user")
-    private User user;
+    private VozovnaUser user;
     
     @OneToOne(targetEntity = Vehicle.class)
     @JoinColumn(name = "id_vehicle")
@@ -84,11 +84,11 @@ public class Drive {
         this.state = state;
     }
 
-    public User getUser() {
+    public VozovnaUser getUser() {
         return user;
     }
 
-    public void setUser(User user) {
+    public void setUser(VozovnaUser user) {
         this.user = user;
     }
 
