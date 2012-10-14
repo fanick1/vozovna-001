@@ -1,4 +1,3 @@
-
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
@@ -58,6 +57,25 @@
             <artifactId>servlet-api</artifactId>
             <version>2.5</version>
         </dependency>
+        
+        <!-- joda DateTime ZAČÁTEK-->
+        <dependency>
+            <groupId>org.jadira.usertype</groupId>
+            <artifactId>usertype.jodatime</artifactId>
+            <version>2.0</version>
+        </dependency>
+        <dependency>
+            <groupId>joda-time</groupId>
+            <artifactId>joda-time</artifactId>
+            <version>2.0</version>
+        </dependency>
+        <dependency>
+            <groupId>joda-time</groupId>
+            <artifactId>joda-time-hibernate</artifactId>
+	<version>1.3</version>
+        <!-- joda DateTime KONEC-->
+        
+</dependency>
         
     </dependencies>
 

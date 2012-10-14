@@ -28,10 +28,11 @@ import org.junit.Test;
 public class ServiceIntervalDAOTest {
     
     private ServiceIntervalDAO serviceIntervalDAO;
+    private static final String PERSISTENCE_UNIT_NAME = "VozovnaPU";
     
     public ServiceIntervalDAOTest() {
         ServiceIntervalDaoImpl serviceDaoImplementation = new ServiceIntervalDaoImpl();
-        serviceDaoImplementation.setFactory(Persistence.createEntityManagerFactory("TestPU"));
+        serviceDaoImplementation.setFactory(Persistence.createEntityManagerFactory(PERSISTENCE_UNIT_NAME));
         this.serviceIntervalDAO = serviceDaoImplementation;
     }
     
@@ -84,7 +85,7 @@ public class ServiceIntervalDAOTest {
         dates.add(sdf.parse("11.4.2012"));
         ServiceInterval interval2 = ServiceIntervalDAOTest.getServiceInterval(dates, "Kontrola stavu oleja", 10, mercedes);
         
-        EntityManager localManager = Persistence.createEntityManagerFactory("TestPU").createEntityManager();
+        EntityManager localManager = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT_NAME).createEntityManager();
         localManager.getTransaction().begin();
         
         localManager.persist(toyota);
@@ -98,7 +99,7 @@ public class ServiceIntervalDAOTest {
     
     @After
     public void tearDown() {
-        EntityManager localManager = Persistence.createEntityManagerFactory("TestPU").createEntityManager();
+        EntityManager localManager = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT_NAME).createEntityManager();
         
         // Remove intervals
         localManager.getTransaction().begin();

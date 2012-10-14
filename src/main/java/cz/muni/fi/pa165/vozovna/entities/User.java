@@ -25,6 +25,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Table;
 
 /**
  * The VozovnaUser entity this class represents any user present in the application
@@ -32,7 +33,8 @@ import javax.persistence.Id;
  * @author Frantisek Veverka, 207422@mail.muni.cz
  */
 @Entity
-public class VozovnaUser {
+@Table(name = "Users")
+public class User {
 
 	/**
 	 * Unique users ID
@@ -141,7 +143,7 @@ public class VozovnaUser {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		VozovnaUser other = (VozovnaUser) obj;
+		User other = (User) obj;
 		if (id == null || other.id == null){ //can't compare null ids
 			return false;
 		} else if (!id.equals(other.id))

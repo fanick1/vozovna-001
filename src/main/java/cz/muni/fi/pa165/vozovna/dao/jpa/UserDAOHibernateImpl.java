@@ -1,7 +1,7 @@
 package cz.muni.fi.pa165.vozovna.dao.jpa;
 
 import cz.muni.fi.pa165.vozovna.dao.UserDao;
-import cz.muni.fi.pa165.vozovna.entities.VozovnaUser;
+import cz.muni.fi.pa165.vozovna.entities.User;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -24,7 +24,7 @@ public class UserDAOHibernateImpl implements UserDao {
     }
     
     @Override
-    public VozovnaUser getById(Long id) {
+    public User getById(Long id) {
         if(id == null) {
             throw new IllegalArgumentException("Given id is null");
         }
@@ -35,11 +35,11 @@ public class UserDAOHibernateImpl implements UserDao {
         
         EntityManager manager = this.factory.createEntityManager();
         
-        return manager.find(VozovnaUser.class, id);
+        return manager.find(User.class, id);
     }
 
     @Override
-    public void create(VozovnaUser user) {
+    public void create(User user) {
         if(user == null) {
             throw new IllegalArgumentException("Given user is null");
         }
@@ -58,7 +58,7 @@ public class UserDAOHibernateImpl implements UserDao {
         manager.close();
     }
 
-    public void remove(VozovnaUser user) {
+    public void remove(User user) {
         if(user == null) {
             throw new IllegalArgumentException("Given user is null");
         }
@@ -76,7 +76,7 @@ public class UserDAOHibernateImpl implements UserDao {
     }
 
     @Override
-    public void update(VozovnaUser user) {
+    public void update(User user) {
         if(user == null) {
             throw new IllegalArgumentException("Given user is null");
         }
@@ -96,21 +96,21 @@ public class UserDAOHibernateImpl implements UserDao {
     }
 
     @Override
-    public List<VozovnaUser> findAll() {
+    public List<User> findAll() {
         if(this.factory == null) {
             throw new IllegalStateException("Factory is not initialized");
         }
         
         EntityManager manager = this.factory.createEntityManager();
-        TypedQuery<VozovnaUser> query = manager.createQuery("FROM VozovnaUser",VozovnaUser.class);
-        List<VozovnaUser> result = query.getResultList();
+        TypedQuery<User> query = manager.createQuery("FROM VozovnaUser",User.class);
+        List<User> result = query.getResultList();
         manager.close();
         
         return result;
     }
     
     @Override
-    public List<VozovnaUser> findByName(String name) {
+    public List<User> findByName(String name) {
         if(name == null || "".equals(name)) {
             throw new IllegalArgumentException("Name cannot be null or empty");
         }
@@ -120,9 +120,9 @@ public class UserDAOHibernateImpl implements UserDao {
         }
         
         EntityManager manager = this.factory.createEntityManager();
-        TypedQuery<VozovnaUser> query = manager.createQuery("FROM VozovnaUser u WHERE Name = :Name",VozovnaUser.class);
+        TypedQuery<User> query = manager.createQuery("FROM VozovnaUser u WHERE Name = :Name",User.class);
         query.setParameter("Name", name);
-        List<VozovnaUser> result = query.getResultList();
+        List<User> result = query.getResultList();
         manager.close();
         
         return result;

@@ -20,7 +20,7 @@
 package cz.muni.fi.pa165.vozovna.dao;
 
 import cz.muni.fi.pa165.vozovna.entities.Drive;
-import cz.muni.fi.pa165.vozovna.entities.VozovnaUser;
+import cz.muni.fi.pa165.vozovna.entities.User;
 import java.util.List;
 
 /**
@@ -76,5 +76,5 @@ public interface DriveDAO {
          * @throws IllegalArgumentException Throws if given user is null.
          * @throws IllegalStateException Throws if factory was not set.
          */
-	public List<Drive> findByUser(VozovnaUser user);
+	public List<Drive> findByUser(User user);
 }
