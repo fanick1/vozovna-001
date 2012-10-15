@@ -20,6 +20,7 @@
 package cz.muni.fi.pa165.vozovna.dao.hibernate;
 
 import cz.muni.fi.pa165.vozovna.dao.VehicleDAO;
+import cz.muni.fi.pa165.vozovna.entities.User;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -57,13 +58,9 @@ public class VehicleDAOHibernateImpl implements VehicleDAO {
 			throw new IllegalStateException("EntityManagerFactory was not set.");
 		}
 		final EntityManager em = this.emf.createEntityManager();
-		em.getTransaction().begin();
-		TypedQuery<Vehicle> query = em.createQuery("FROM Vehicle WHERE ID = :id ", Vehicle.class) ;
-		query.setParameter("id", id);
-		Vehicle result = query.getSingleResult(); 
-		em.getTransaction().commit();
+        Vehicle vehicle = em.find(Vehicle.class, id);
 		em.close();
-		return result;
+		return vehicle;
 	}
 
 	/* (non-Javadoc)

@@ -80,13 +80,13 @@ public class VehicleDAOTest {
 			Vehicle mercedes = VehicleDAOTest.getVehicle("Mercedes", 20000, "R4 Diesel", "E", UserClassEnum.PRESIDENT, "2a-447i-882a45", 2009);
 			this.vehicleDao.create(mercedes);
 			Long id = mercedes.getId();
-			System.out.println("Log: vehicle created!");
+			System.out.println("Log: vehicle [" + id + "] created!");
 			
 			this.vehicleDao.remove(mercedes);
-			System.out.println("Log: vehicle removed!");
+			System.out.println("Log: vehicle [" + id + "] removed!");
 			
 			Vehicle loaded = this.vehicleDao.getById(id);
-			System.out.println("Log: vehicle loaded!");
+			System.out.println("Log: vehicle [" + id + "] loaded!");
 			
 			Assert.assertNull("Vehicle was not deleted from database", loaded);
 		} catch(Exception ex) {
@@ -151,4 +151,123 @@ public class VehicleDAOTest {
 		}
     }
 
+	@Test
+	public void testCreateNullArgument() {
+		try {
+			this.vehicleDao.create(null);
+			Assert.fail("Exception for null argument wasn't throwed.");
+		} catch (IllegalArgumentException ex) {
+			// Ok
+		} catch (Exception ex) {
+			Assert.fail("Unexpected exception throwed: " + ex + " " + ex.getMessage());
+		}
+	}
+	
+	@Test
+	public void testRemoveNullArgument() {
+		try {
+			this.vehicleDao.remove(null);
+			Assert.fail("Exception for null argument wasn't throwed.");
+		} catch (IllegalArgumentException ex) {
+			// Ok
+		} catch (Exception ex) {
+			Assert.fail("Unexpected exception throwed: " + ex + " " + ex.getMessage());
+		}
+	}	
+	
+	@Test
+	public void testUpdateNullArgument() {
+		try {
+			this.vehicleDao.update(null);
+			Assert.fail("Exception for null argument wasn't throwed.");
+		} catch (IllegalArgumentException ex) {
+			// Ok
+		} catch (Exception ex) {
+			Assert.fail("Unexpected exception throwed: " + ex + " " + ex.getMessage());
+		}
+	}
+	
+	@Test
+	public void testGetByIdNullArgument() {
+		try {
+			this.vehicleDao.getById(null);
+			Assert.fail("Exception for null argument wasn't throwed.");
+		} catch (IllegalArgumentException ex) {
+			// Ok
+		} catch (Exception ex) {
+			Assert.fail("Unexpected exception throwed: " + ex + " " + ex.getMessage());
+		}
+	}	
+	
+	@Test
+	public void testCreateNullFactory() {
+		try {
+			(new VehicleDAOHibernateImpl()).create(new Vehicle());
+			Assert.fail("Exception for null argument wasn't throwed.");
+		} catch (IllegalStateException ex) {
+			// Ok
+		} catch (Exception ex) {
+			Assert.fail("Unexpected exception throwed: " + ex + " " + ex.getMessage());
+		}
+	}
+	
+	@Test
+	public void testRemoveNullFactory() {
+		try {
+			(new VehicleDAOHibernateImpl()).remove(new Vehicle());
+			Assert.fail("Exception for null argument wasn't throwed.");
+		} catch (IllegalStateException ex) {
+			// Ok
+		} catch (Exception ex) {
+			Assert.fail("Unexpected exception throwed: " + ex + " " + ex.getMessage());
+		}
+	}
+	
+	@Test
+	public void testUpdateNullFactory() {
+		try {
+			(new VehicleDAOHibernateImpl()).update(new Vehicle());
+			Assert.fail("Exception for null argument wasn't throwed.");
+		} catch (IllegalStateException ex) {
+			// Ok
+		} catch (Exception ex) {
+			Assert.fail("Unexpected exception throwed: " + ex + " " + ex.getMessage());
+		}
+	}
+	
+	@Test
+	public void testfindAllNullFactory() {
+		try {
+			(new VehicleDAOHibernateImpl()).findAll();
+			Assert.fail("Exception for null argument wasn't throwed.");
+		} catch (IllegalStateException ex) {
+			// Ok
+		} catch (Exception ex) {
+			Assert.fail("Unexpected exception throwed: " + ex + " " + ex.getMessage());
+		}
+	}	
+	
+	@Test
+	public void testFindByUserClassNullFactory() {
+		try {
+			(new VehicleDAOHibernateImpl()).findByUserClass(UserClassEnum.EMPLOYEE);
+			Assert.fail("Exception for null argument wasn't throwed.");
+		} catch (IllegalStateException ex) {
+			// Ok
+		} catch (Exception ex) {
+			Assert.fail("Unexpected exception throwed: " + ex + " " + ex.getMessage());
+		}
+	}
+	
+	@Test
+	public void testGetByIdNullFactory() {
+		try {
+			(new VehicleDAOHibernateImpl()).getById(new Long("1"));
+			Assert.fail("Exception for null argument wasn't throwed.");
+		} catch (IllegalStateException ex) {
+			// Ok
+		} catch (Exception ex) {
+			Assert.fail("Unexpected exception throwed: " + ex + " " + ex.getMessage());
+		}
+	}
 }

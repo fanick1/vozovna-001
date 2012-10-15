@@ -106,13 +106,18 @@ public class ServiceIntervalDaoImpl implements ServiceIntervalDAO {
 			throw new IllegalStateException("Factory is not initialized!");
 		}
 		
+		System.out.println("Log: todelete: " + serviceInterval);
         EntityManager em = this.emf.createEntityManager();
         EntityTransaction tx = null;
         try {
             tx = em.getTransaction();
+			System.out.println("Log: transaction created!");
             tx.begin();
+			System.out.println("Log: transaction begin!");
             em.remove(serviceInterval);
+			System.out.println("Log: Interval removed!");
             tx.commit();
+			System.out.println("Log: transaction committed!");
         } catch (Exception e) {
             if (tx != null && tx.isActive()) {
                 tx.rollback();
