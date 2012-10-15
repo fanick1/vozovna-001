@@ -119,7 +119,7 @@ public class DriveDAOHibernateImpl implements DriveDAO {
         transaction.begin();
        
         try {
-            em.remove(drive);
+            em.remove(em.merge(drive));
             transaction.commit();
         } catch(RuntimeException e) {
             transaction.rollback();
@@ -148,7 +148,7 @@ public class DriveDAOHibernateImpl implements DriveDAO {
         transaction.begin();
         
         try {
-            em.persist(drive);
+            em.persist(em.merge(drive));
             transaction.commit();
         } catch(RuntimeException e) {
             transaction.rollback();
