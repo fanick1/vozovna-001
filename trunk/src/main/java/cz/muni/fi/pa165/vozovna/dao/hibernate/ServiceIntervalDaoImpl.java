@@ -114,11 +114,12 @@ public class ServiceIntervalDaoImpl implements ServiceIntervalDAO {
 			System.out.println("Log: transaction created!");
             tx.begin();
 			System.out.println("Log: transaction begin!");
-            em.remove(serviceInterval);
+            em.remove(em.merge(serviceInterval));
 			System.out.println("Log: Interval removed!");
             tx.commit();
 			System.out.println("Log: transaction committed!");
         } catch (Exception e) {
+			System.out.println("Log: exception info: " + e + " " + e.getMessage());
             if (tx != null && tx.isActive()) {
                 tx.rollback();
             }
