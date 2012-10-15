@@ -24,8 +24,7 @@ import cz.muni.fi.pa165.vozovna.entities.User;
 import java.util.List;
 
 /**
- * stub
- * TODO FILL IN
+ * @author Jozef Triscik
  */
 public interface DriveDAO {
 	
