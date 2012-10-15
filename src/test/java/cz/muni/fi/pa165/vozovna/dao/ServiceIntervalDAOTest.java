@@ -5,6 +5,7 @@
 package cz.muni.fi.pa165.vozovna.dao;
 
 import cz.muni.fi.pa165.vozovna.dao.hibernate.ServiceIntervalDaoImpl;
+import cz.muni.fi.pa165.vozovna.dao.hibernate.VehicleDAOHibernateImpl;
 import cz.muni.fi.pa165.vozovna.entities.ServiceInterval;
 import cz.muni.fi.pa165.vozovna.entities.Vehicle;
 import cz.muni.fi.pa165.vozovna.enums.UserClassEnum;
@@ -28,12 +29,17 @@ import org.junit.Test;
 public class ServiceIntervalDAOTest {
     
     private ServiceIntervalDAO serviceIntervalDAO;
+	private VehicleDAO vehicleDao;
     private static final String PERSISTENCE_UNIT_NAME = "VozovnaPU";
     
     public ServiceIntervalDAOTest() {
         ServiceIntervalDaoImpl serviceDaoImplementation = new ServiceIntervalDaoImpl();
         serviceDaoImplementation.setFactory(Persistence.createEntityManagerFactory(PERSISTENCE_UNIT_NAME));
         this.serviceIntervalDAO = serviceDaoImplementation;
+		
+		VehicleDAOHibernateImpl vehicleDaoImpl = new VehicleDAOHibernateImpl();
+		vehicleDaoImpl.setEntityManagerFactory(Persistence.createEntityManagerFactory(PERSISTENCE_UNIT_NAME));
+		this.vehicleDao = vehicleDaoImpl;
     }
     
     private static Vehicle getVehicle(String brand, int distanceCount, String engineType, 
@@ -73,25 +79,25 @@ public class ServiceIntervalDAOTest {
         Vehicle mercedes = ServiceIntervalDAOTest.getVehicle("Mercedes", 20000, "R4 Diesel", "E", UserClassEnum.PRESIDENT, "2a-447i-882a45", 2009);
         
         List<Date> dates = new ArrayList<Date>();
-        dates.add(sdf.parse("22.7.2008"));
-        dates.add(sdf.parse("4.11.2009"));
+//        dates.add(sdf.parse("22.7.2008"));
+//        dates.add(sdf.parse("4.11.2009"));
         
         ServiceInterval interval1 = ServiceIntervalDAOTest.getServiceInterval(dates, "Prehodeni koles", 7, toyota);
         
         dates = new ArrayList<Date>();
-        dates.add(sdf.parse("14.1.2010"));
-        dates.add(sdf.parse("13.10.2010"));
-        dates.add(sdf.parse("12.7.2011"));
-        dates.add(sdf.parse("11.4.2012"));
+//        dates.add(sdf.parse("14.1.2010"));
+//        dates.add(sdf.parse("13.10.2010"));
+//        dates.add(sdf.parse("12.7.2011"));
+//        dates.add(sdf.parse("11.4.2012"));
         ServiceInterval interval2 = ServiceIntervalDAOTest.getServiceInterval(dates, "Kontrola stavu oleja", 10, mercedes);
         
-        EntityManager localManager = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT_NAME).createEntityManager();
+        EntityManager localManager = Persistence.createEntityManagerFactory("VozovnaPU").createEntityManager();
         localManager.getTransaction().begin();
         
         localManager.persist(toyota);
-        localManager.persist(mercedes);
-        localManager.persist(interval1);
-        localManager.persist(interval2);
+//        localManager.persist(mercedes);
+//        localManager.persist(interval1);
+//        localManager.persist(interval2);
         
         localManager.getTransaction().commit();
         localManager.close();
@@ -99,7 +105,7 @@ public class ServiceIntervalDAOTest {
     
     @After
     public void tearDown() {
-        EntityManager localManager = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT_NAME).createEntityManager();
+        EntityManager localManager = Persistence.createEntityManagerFactory("VozovnaPU").createEntityManager();
         
         // Remove intervals
         localManager.getTransaction().begin();
@@ -177,29 +183,17 @@ public class ServiceIntervalDAOTest {
         }
     }
     
-    @Test
-    public void testValidGetById() {
-        try {
-            ServiceInterval loaded = this.serviceIntervalDAO.getById(new Long("1"));
-            
-            if(loaded == null) {
-                Assert.fail("Existing entity was not loaded!");
-            }
-        } catch(Exception ex) {
-            Assert.fail("Unexpected exception was throwed: " + ex + " " + ex.getMessage());
-        }
-    }
-    
 	@Test
-	public void testValidCreate() {
+	public void testValidCreateAndGetById() {
 		try {
 			Vehicle toyota = ServiceIntervalDAOTest.getVehicle("Toyota", 20000, "V-8", "Supra", UserClassEnum.MANAGER, "78-88as-ouu899", 2004);
+			this.vehicleDao.create(toyota);
 			ServiceInterval interval1 = ServiceIntervalDAOTest.getServiceInterval(new ArrayList<Date>(), "Prehodeni koles", 7, toyota);
-			
 			this.serviceIntervalDAO.create(interval1);
 			
+			System.out.println("Id to load: " + interval1.getId());
 			ServiceInterval loaded = this.serviceIntervalDAO.getById(interval1.getId());
-			Assert.assertEquals("Inserted entity is not same as laoded", loaded, interval1);
+			Assert.assertEquals("Inserted entity is not same as loaded", interval1,loaded);
 		} catch(Exception ex) {
 			Assert.fail("Unexpected exception was throwed: " + ex + " " + ex.getMessage());
 		}
@@ -208,8 +202,9 @@ public class ServiceIntervalDAOTest {
 	@Test
 	public void testValidUpdate() {
 		try {
-			Vehicle toyota = ServiceIntervalDAOTest.getVehicle("Toyota", 20000, "V-8", "Supra", UserClassEnum.MANAGER, "78-88as-ouu899", 2004);
-			ServiceInterval interval1 = ServiceIntervalDAOTest.getServiceInterval(new ArrayList<Date>(), "Prehodeni koles", 7, toyota);
+			Vehicle mercedes = ServiceIntervalDAOTest.getVehicle("Mercedes", 20000, "R4 Diesel", "E", UserClassEnum.PRESIDENT, "2a-447i-882a45", 2009);
+			this.vehicleDao.create(mercedes);
+			ServiceInterval interval1 = ServiceIntervalDAOTest.getServiceInterval(new ArrayList<Date>(), "Prehodeni koles", 7, mercedes);
 			
 			this.serviceIntervalDAO.create(interval1);
 			
@@ -217,7 +212,7 @@ public class ServiceIntervalDAOTest {
 			this.serviceIntervalDAO.update(interval1);
 			
 			ServiceInterval loaded = this.serviceIntervalDAO.getById(interval1.getId());
-			Assert.assertNotSame("Description has not been updated.", loaded.getDescription(), loaded.getDescription());
+			Assert.assertNotSame("Description has not been updated.", "Prehodeni koles", loaded.getDescription());
 		} catch(Exception ex) {
 			Assert.fail("Unexpected exception was throwed: " + ex + " " + ex.getMessage());
 		}
@@ -226,6 +221,14 @@ public class ServiceIntervalDAOTest {
 	@Test
 	public void testValidFindAll() {
 		try {
+			Vehicle mercedes = ServiceIntervalDAOTest.getVehicle("Mercedes", 20000, "R4 Diesel", "C", UserClassEnum.PRESIDENT, "2f-4a7i-121245", 2009);
+			this.vehicleDao.create(mercedes);
+			
+			ServiceInterval interval1 = ServiceIntervalDAOTest.getServiceInterval(new ArrayList<Date>(), "Prehodeni koles", 7, mercedes);
+			ServiceInterval interval2 = ServiceIntervalDAOTest.getServiceInterval(new ArrayList<Date>(), "Vymena oleje", 7, mercedes);
+			this.serviceIntervalDAO.create(interval1);
+			this.serviceIntervalDAO.create(interval2);
+			
 			List<ServiceInterval> intervals = this.serviceIntervalDAO.findAll();
 			if(intervals.isEmpty()) {
 				Assert.fail("Any entities were loaded from databse!");
@@ -238,16 +241,20 @@ public class ServiceIntervalDAOTest {
 	@Test
 	public void testValidRemove() {
 		try {
-			List<ServiceInterval> intervals = this.serviceIntervalDAO.findAll();
-			if(intervals.isEmpty()) {
-				Assert.fail("Any entities were loaded from databse!");
+			Vehicle mercedes = ServiceIntervalDAOTest.getVehicle("Mercedes", 14000, "R4 Diesel", "A", UserClassEnum.PRESIDENT, "2f-4xxi-121245", 2009);
+			this.vehicleDao.create(mercedes);
+			ServiceInterval interval1 = ServiceIntervalDAOTest.getServiceInterval(new ArrayList<Date>(), "Prehodeni koles", 7, mercedes);
+			this.serviceIntervalDAO.create(interval1);
+			ServiceInterval loaded = this.serviceIntervalDAO.getById(interval1.getId());
+			Assert.assertNotNull("Service interval was not created", loaded);
+			
+			this.serviceIntervalDAO.remove(interval1);
+			
+			loaded = this.serviceIntervalDAO.getById(interval1.getId());
+			if(loaded != null) {
+				Assert.fail("Interval was not deleted from database.");
 			}
-			
-			ServiceInterval toRemove = intervals.get(0);
-			this.serviceIntervalDAO.remove(toRemove);
-			
-			ServiceInterval loaded = this.serviceIntervalDAO.getById(toRemove.getId());
-			Assert.assertNull("Service interval was not delete from databse", loaded);
+			Assert.assertNull("Service interval was not deleted from database", loaded);
 		} catch(Exception ex) {
 			Assert.fail("Unexpected exception was throwed: " + ex + " " + ex.getMessage());
 		}
@@ -256,12 +263,12 @@ public class ServiceIntervalDAOTest {
 	@Test
 	public void testValidFindByVehicle() {
 		try {
-			List<ServiceInterval> intervals = this.serviceIntervalDAO.findAll();
-			if(intervals.isEmpty()) {
-				Assert.fail("Any entities were loaded from databse!");
-			}
+			Vehicle mercedes = ServiceIntervalDAOTest.getVehicle("Mercedes", 14000, "R4 Diesel", "A", UserClassEnum.PRESIDENT, "2f-4xxi-121245", 2009);
+			this.vehicleDao.create(mercedes);
+			ServiceInterval interval1 = ServiceIntervalDAOTest.getServiceInterval(new ArrayList<Date>(), "Prehodeni koles", 7, mercedes);
+			this.serviceIntervalDAO.create(interval1);
 			
-			List<ServiceInterval> intervalsOfVehicle = this.serviceIntervalDAO.findAllByVehicle(intervals.get(0).getVehicle());
+			List<ServiceInterval> intervalsOfVehicle = this.serviceIntervalDAO.findAllByVehicle(mercedes);
 			if(intervalsOfVehicle.isEmpty()) {
 				Assert.fail("Any intervals of given vehicle were loaded from databse!");
 			}
@@ -347,7 +354,8 @@ public class ServiceIntervalDAOTest {
 	@Test
 	public void testFindByVehicleFactoryNotInitialized() {
 		try {
-			Vehicle toyota = ServiceIntervalDAOTest.getVehicle("Toyota", 20000, "V-8", "Supra", UserClassEnum.MANAGER, "78-88as-ouu899", 2004);
+			Vehicle toyota = ServiceIntervalDAOTest.getVehicle("Toyota", 20000, "V-8", "Yaris", UserClassEnum.MANAGER, "7s-xxas-ouu899", 2004);
+			this.vehicleDao.create(toyota);
 			
 			ServiceIntervalDAO manager = ServiceIntervalDAOTest.getUnitializedServiceIntervalDAO();
 			manager.findAllByVehicle(toyota);

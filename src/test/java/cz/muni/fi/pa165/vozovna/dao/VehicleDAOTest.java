@@ -4,8 +4,12 @@
  */
 package cz.muni.fi.pa165.vozovna.dao;
 
+import cz.muni.fi.pa165.vozovna.dao.hibernate.VehicleDAOHibernateImpl;
 import cz.muni.fi.pa165.vozovna.entities.Vehicle;
+import cz.muni.fi.pa165.vozovna.enums.UserClassEnum;
 import java.util.List;
+import javax.persistence.Persistence;
+import junit.framework.Assert;
 import org.junit.After;
 import org.junit.AfterClass;
 import static org.junit.Assert.assertEquals;
@@ -23,16 +27,11 @@ public class VehicleDAOTest {
     private VehicleDAO vehicleDao;
     
     public VehicleDAOTest() {
+		VehicleDAOHibernateImpl vehicleDaoImpl = new VehicleDAOHibernateImpl();
+		vehicleDaoImpl.setEntityManagerFactory(Persistence.createEntityManagerFactory("VozovnaPU"));
+		this.vehicleDao = vehicleDaoImpl;
     }
 
-    @BeforeClass
-    public static void setUpClass() throws Exception {
-    }
-
-    @AfterClass
-    public static void tearDownClass() throws Exception {
-    }
-    
     @Before
     public void setUp() {
     }
@@ -40,33 +39,36 @@ public class VehicleDAOTest {
     @After
     public void tearDown() {
     }
+	
+    private static Vehicle getVehicle(String brand, int distanceCount, String engineType, 
+            String type, UserClassEnum userClass, String vin, int year) {
+        
+        Vehicle vehicle = new Vehicle();
+        vehicle.setBrand(brand);
+        vehicle.setDistanceCount(distanceCount);
+        vehicle.setEngineType(engineType);
+        vehicle.setType(type);
+        vehicle.setUserClass(userClass);
+        vehicle.setVin(vin);
+        vehicle.setYearMade(year);
+        
+        return vehicle;
+    }
 
     /**
      * Test of getById method, of class VehicleDAO.
      */
     @Test
-    public void testGetById() {
-        System.out.println("getById");
-        Long id = null;
-        VehicleDAO instance = new VehicleDAOImpl();
-        List expResult = null;
-        List result = instance.getById(id);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of create method, of class VehicleDAO.
-     */
-    @Test
-    public void testCreate() {
-        System.out.println("create");
-        Vehicle vehicle = null;
-        VehicleDAO instance = new VehicleDAOImpl();
-        instance.create(vehicle);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+    public void testCreateAndGetById() {
+        try {
+			Vehicle mercedes = VehicleDAOTest.getVehicle("Mercedes", 20000, "R4 Diesel", "E", UserClassEnum.PRESIDENT, "2a-447i-882a45", 2009);
+			this.vehicleDao.create(mercedes);
+			
+			Vehicle loaded = this.vehicleDao.getById(mercedes.getId());
+			Assert.assertEquals("Insserted and loaded vehicles should be same.",mercedes, loaded);
+		} catch(Exception ex) {
+			Assert.fail("Unexpected exception was throwed: " + ex + " " + ex.getMessage());
+		}
     }
 
     /**
@@ -74,12 +76,22 @@ public class VehicleDAOTest {
      */
     @Test
     public void testRemove() {
-        System.out.println("remove");
-        Vehicle vehicle = null;
-        VehicleDAO instance = new VehicleDAOImpl();
-        instance.remove(vehicle);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        try {
+			Vehicle mercedes = VehicleDAOTest.getVehicle("Mercedes", 20000, "R4 Diesel", "E", UserClassEnum.PRESIDENT, "2a-447i-882a45", 2009);
+			this.vehicleDao.create(mercedes);
+			Long id = mercedes.getId();
+			System.out.println("Log: vehicle created!");
+			
+			this.vehicleDao.remove(mercedes);
+			System.out.println("Log: vehicle removed!");
+			
+			Vehicle loaded = this.vehicleDao.getById(id);
+			System.out.println("Log: vehicle loaded!");
+			
+			Assert.assertNull("Vehicle was not deleted from database", loaded);
+		} catch(Exception ex) {
+			Assert.fail("Unexpected exception was throwed: " + ex + " " + ex.getMessage());
+		}
     }
 
     /**
@@ -87,12 +99,19 @@ public class VehicleDAOTest {
      */
     @Test
     public void testUpdate() {
-        System.out.println("update");
-        Vehicle vehicle = null;
-        VehicleDAO instance = new VehicleDAOImpl();
-        instance.update(vehicle);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        try{
+			Vehicle mercedes = VehicleDAOTest.getVehicle("Mercedes", 20000, "R4 Diesel", "E", UserClassEnum.PRESIDENT, "2a-447i-882a45", 2009);
+			this.vehicleDao.create(mercedes);
+			Long id = mercedes.getId();
+			
+			mercedes.setType("C");
+			this.vehicleDao.update(mercedes);
+			
+			Vehicle loaded = this.vehicleDao.getById(id);
+			Assert.assertNotSame("Vehicle was not upadted!", "E", loaded.getType());
+		} catch(Exception ex) {
+			Assert.fail("Unexpected exception was throwed: " + ex + " " + ex.getMessage());
+		}
     }
 
     /**
@@ -100,13 +119,18 @@ public class VehicleDAOTest {
      */
     @Test
     public void testFindAll() {
-        System.out.println("findAll");
-        VehicleDAO instance = new VehicleDAOImpl();
-        List expResult = null;
-        List result = instance.findAll();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        try {
+			Vehicle mercedes1 = VehicleDAOTest.getVehicle("Mercedes", 20000, "R4 Diesel", "E", UserClassEnum.PRESIDENT, "2a-447i-882a45", 2009);
+			Vehicle mercedes2 = VehicleDAOTest.getVehicle("Mercedes", 20000, "R4 Diesel", "C", UserClassEnum.PRESIDENT, "98-447i-883345", 2009);
+			this.vehicleDao.create(mercedes1);
+			this.vehicleDao.create(mercedes2);
+			
+			if(this.vehicleDao.findAll().isEmpty()) {
+				Assert.fail("Any vehicles were loaded from database.");
+			}
+		} catch(Exception ex) {
+			Assert.fail("Unexpected exception was throwed: " + ex + " " + ex.getMessage());
+		}
     }
 
     /**
@@ -114,37 +138,17 @@ public class VehicleDAOTest {
      */
     @Test
     public void testFindByUserClass() {
-        System.out.println("findByUserClass");
-        int userClass = 0;
-        VehicleDAO instance = new VehicleDAOImpl();
-        List expResult = null;
-        List result = instance.findByUserClass(userClass);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        try {
+			Vehicle mercedes1 = VehicleDAOTest.getVehicle("Mercedes", 20000, "R4 Diesel", "E", UserClassEnum.PRESIDENT, "2a-447i-882a45", 2009);
+			Vehicle mercedes2 = VehicleDAOTest.getVehicle("Mercedes", 20000, "R4 Diesel", "C", UserClassEnum.MANAGER, "98-447i-883345", 2009);
+			this.vehicleDao.create(mercedes1);
+			this.vehicleDao.create(mercedes2);
+			
+			List<Vehicle> required = this.vehicleDao.findByUserClass(UserClassEnum.MANAGER);
+			Assert.assertEquals("Vehicle with right user class was not loaded.",required.get(0), mercedes2);
+		} catch(Exception ex) {
+			Assert.fail("Unexpected exception was throwed: " + ex + " " + ex.getMessage());
+		}
     }
 
-    public class VehicleDAOImpl implements VehicleDAO {
-
-        public List<Vehicle> getById(Long id) {
-            return null;
-        }
-
-        public void create(Vehicle vehicle) {
-        }
-
-        public void remove(Vehicle vehicle) {
-        }
-
-        public void update(Vehicle vehicle) {
-        }
-
-        public List<Vehicle> findAll() {
-            return null;
-        }
-
-        public List<Vehicle> findByUserClass(int userClass) {
-            return null;
-        }
-    }
 }

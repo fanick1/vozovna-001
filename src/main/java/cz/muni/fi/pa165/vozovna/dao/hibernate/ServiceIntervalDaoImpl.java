@@ -11,7 +11,7 @@ import javax.persistence.EntityTransaction;
 import javax.persistence.Query;
 
 /**
- * @author eva.neduchalova, 359893
+ * @author Jozef Triscik
  */
 public class ServiceIntervalDaoImpl implements ServiceIntervalDAO {
 
@@ -29,7 +29,12 @@ public class ServiceIntervalDaoImpl implements ServiceIntervalDAO {
         if (id == null) {
             throw new IllegalArgumentException("null id");
         }
-        EntityManager em = emf.createEntityManager();
+		
+		if(this.emf == null) {
+			throw new IllegalStateException("Factory is not initialized!");
+		}
+		
+        EntityManager em = this.emf.createEntityManager();
         ServiceInterval result = null;
         try {
             result = em.find(ServiceInterval.class, id);
@@ -44,7 +49,12 @@ public class ServiceIntervalDaoImpl implements ServiceIntervalDAO {
         if (serviceInterval == null) {
             throw new IllegalArgumentException("null serviceInterval");
         }
-        EntityManager em = emf.createEntityManager();
+		
+		if(this.emf == null) {
+			throw new IllegalStateException("Factory is not initialized!");
+		}
+		
+        EntityManager em = this.emf.createEntityManager();
         EntityTransaction tx = null;
         try {
             tx = em.getTransaction();
@@ -65,7 +75,12 @@ public class ServiceIntervalDaoImpl implements ServiceIntervalDAO {
         if (serviceInterval == null) {
             throw new IllegalArgumentException("null serviceInterval");
         }
-        EntityManager em = emf.createEntityManager();
+		
+		if(this.emf == null) {
+			throw new IllegalStateException("Factory is not initialized!");
+		}
+		
+        EntityManager em = this.emf.createEntityManager();
         EntityTransaction tx = null;
         try {
             tx = em.getTransaction();
@@ -86,7 +101,12 @@ public class ServiceIntervalDaoImpl implements ServiceIntervalDAO {
         if (serviceInterval == null) {
             throw new IllegalArgumentException("null serviceInterval");
         }
-        EntityManager em = emf.createEntityManager();
+		
+		if(this.emf == null) {
+			throw new IllegalStateException("Factory is not initialized!");
+		}
+		
+        EntityManager em = this.emf.createEntityManager();
         EntityTransaction tx = null;
         try {
             tx = em.getTransaction();
@@ -104,10 +124,15 @@ public class ServiceIntervalDaoImpl implements ServiceIntervalDAO {
 
     @Override
     public List<ServiceInterval> findAll() {
-        EntityManager em = emf.createEntityManager();
+		
+		if(this.emf == null) {
+			throw new IllegalStateException("Factory is not initialized!");
+		}
+		
+        EntityManager em = this.emf.createEntityManager();
         List<ServiceInterval> result = null;
         try {
-            Query query = em.createQuery("SELECT interval FROM " + ServiceInterval.class + " interval");
+            Query query = em.createQuery("FROM ServiceInterval interval");
             result = (List<ServiceInterval>) query.getResultList();
         } finally {
             em.close();
@@ -117,6 +142,7 @@ public class ServiceIntervalDaoImpl implements ServiceIntervalDAO {
 
     @Override
     public List<ServiceInterval> findAllByVehicle(Vehicle vehicle) {
+		
         if (vehicle == null) {
             throw new IllegalArgumentException("null vehicle");
         }
@@ -124,10 +150,15 @@ public class ServiceIntervalDaoImpl implements ServiceIntervalDAO {
             // pro nové vozidlo můžeme přímo vrátit prázdný list bez dotazování se do DB
             return new ArrayList<ServiceInterval>();
         }
-        EntityManager em = emf.createEntityManager();
+		
+		if(this.emf == null) {
+			throw new IllegalStateException("Factory is not initialized!");
+		}
+		
+        EntityManager em = this.emf.createEntityManager();
         List<ServiceInterval> result = null;
         try {
-            Query query = em.createQuery("SELECT interval FROM " + ServiceInterval.class + " interval "
+            Query query = em.createQuery("FROM ServiceInterval interval "
                     + "WHERE interval.vehicle = :vehicle");
             query.setParameter("vehicle", vehicle);
             result = (List<ServiceInterval>) query.getResultList();

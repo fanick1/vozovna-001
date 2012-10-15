@@ -27,7 +27,6 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
 import javax.persistence.TypedQuery;
-import org.hibernate.service.spi.ServiceException;
 
 /**
  * Drive DAO using Hibernate.
@@ -59,10 +58,10 @@ public class DriveDAOHibernateImpl implements DriveDAO {
         if (id == null) {
             throw new IllegalArgumentException("Parameter id is null.");
         }
-        if (emf == null) {
+        if (this.emf == null) {
             throw new IllegalStateException("Entity Manager Factory is not set.");
         }
-		EntityManager em = emf.createEntityManager();
+		EntityManager em = this.emf.createEntityManager();
         Drive result = null;
         try {
 
@@ -84,10 +83,10 @@ public class DriveDAOHibernateImpl implements DriveDAO {
         if (drive == null) {
             throw new IllegalArgumentException("Drive is null.");
         }
-        if (emf == null) {
+        if (this.emf == null) {
             throw new IllegalStateException("Entity Manager Factory is not set.");
         }
-        EntityManager em = emf.createEntityManager();
+        EntityManager em = this.emf.createEntityManager();
         EntityTransaction transaction = em.getTransaction();
         
         transaction.begin();
@@ -111,10 +110,10 @@ public class DriveDAOHibernateImpl implements DriveDAO {
 		if (drive == null) {
             throw new IllegalArgumentException("Drive is null.");
         }
-        if (emf == null) {
+        if (this.emf == null) {
             throw new IllegalStateException("Entity Manager Factory is not set.");
         }
-        EntityManager em = emf.createEntityManager();
+        EntityManager em = this.emf.createEntityManager();
         EntityTransaction transaction = em.getTransaction();
         
         transaction.begin();
@@ -140,10 +139,10 @@ public class DriveDAOHibernateImpl implements DriveDAO {
 		if (drive == null) {
             throw new IllegalArgumentException("Drive is null.");
         }
-        if (emf == null) {
+        if (this.emf == null) {
             throw new IllegalStateException("Entity Manager Factory is not set.");
         }
-        EntityManager em = emf.createEntityManager();
+        EntityManager em = this.emf.createEntityManager();
         EntityTransaction transaction = em.getTransaction();
        
         transaction.begin();
@@ -165,11 +164,11 @@ public class DriveDAOHibernateImpl implements DriveDAO {
 	 */
 	@Override
 	public List<Drive> findAll() {
-		if (emf == null) {
+		if (this.emf == null) {
             throw new IllegalStateException("Entity Manager Factory is not set.");
         }
         
-        EntityManager em = emf.createEntityManager();
+        EntityManager em = this.emf.createEntityManager();
         List<Drive> result = null;
         
 		try {
@@ -193,10 +192,10 @@ public class DriveDAOHibernateImpl implements DriveDAO {
 		if(user == null) {
             throw new IllegalArgumentException("User is null.");
         }
-        if (emf == null) {
+        if (this.emf == null) {
             throw new IllegalStateException("Entity Manager Factory is not set.");
         }
-        EntityManager em = emf.createEntityManager();
+        EntityManager em = this.emf.createEntityManager();
         List<Drive> result = null;
         
         try {
