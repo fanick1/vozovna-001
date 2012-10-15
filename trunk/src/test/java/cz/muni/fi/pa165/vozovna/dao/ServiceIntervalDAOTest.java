@@ -24,7 +24,7 @@ import org.junit.Test;
 
 /**
  *
- * @author jostri
+ * @author Jozef Triscik
  */
 public class ServiceIntervalDAOTest {
     
