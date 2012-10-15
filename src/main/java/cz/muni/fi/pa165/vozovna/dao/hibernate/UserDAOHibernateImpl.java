@@ -35,7 +35,9 @@ public class UserDAOHibernateImpl implements UserDao {
         
         EntityManager manager = this.factory.createEntityManager();
         
-        return manager.find(User.class, id);
+        User user = manager.find(User.class, id);
+		manager.close();
+		return user;
     }
 
     @Override
