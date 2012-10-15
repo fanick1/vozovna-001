@@ -52,14 +52,14 @@ public class Drive {
     private Vehicle vehicle;
     
     @Column(name = "date_from")
-    @Type(type="org.joda.time.contrib.hibernate.PersistentDateTime")
+    //@Type(type="org.joda.time.contrib.hibernate.PersistentDateTime")
     /**
      * Date when the Drive started
      */
     private DateTime dateFrom;
     
     @Column(name = "date_to")
-    @Type(type="org.joda.time.contrib.hibernate.PersistentDateTime")
+    //@Type(type="org.joda.time.contrib.hibernate.PersistentDateTime")
     /**
      * Date when the drive ended
      */

@@ -27,6 +27,7 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.TypedQuery;
 
 import cz.muni.fi.pa165.vozovna.entities.Vehicle;
+import cz.muni.fi.pa165.vozovna.enums.UserClassEnum;
 
 /**
  * Vehicle DAO using Hibernate
@@ -52,10 +53,10 @@ public class VehicleDAOHibernateImpl implements VehicleDAO {
 		if(id == null){
 			throw new IllegalArgumentException("Id is null");
 		}
-		if(emf == null){
+		if(this.emf == null){
 			throw new IllegalStateException("EntityManagerFactory was not set.");
 		}
-		final EntityManager em = emf.createEntityManager();
+		final EntityManager em = this.emf.createEntityManager();
 		em.getTransaction().begin();
 		TypedQuery<Vehicle> query = em.createQuery("FROM Vehicle WHERE ID = :id ", Vehicle.class) ;
 		query.setParameter("id", id);
@@ -73,7 +74,12 @@ public class VehicleDAOHibernateImpl implements VehicleDAO {
 		if(vehicle == null){
 			throw new IllegalArgumentException("Vehicle is null");
 		}
-		final EntityManager em = emf.createEntityManager();
+		
+		if(this.emf == null){
+			throw new IllegalStateException("EntityManagerFactory was not set.");
+		}
+		
+		final EntityManager em = this.emf.createEntityManager();
 		em.getTransaction().begin();
 		em.persist(vehicle);
 		em.getTransaction().commit();
@@ -88,13 +94,13 @@ public class VehicleDAOHibernateImpl implements VehicleDAO {
 		if(vehicle == null){
 			throw new IllegalArgumentException("Vehicle is null");
 		}
-		if(emf == null){
+		if(this.emf == null){
 			throw new IllegalStateException("EntityManagerFactory was not set.");
 		}
 
-		final EntityManager em = emf.createEntityManager();
+		final EntityManager em = this.emf.createEntityManager();
 		em.getTransaction().begin();
-		em.remove(vehicle);
+		em.remove(em.merge(vehicle));
 		em.getTransaction().commit();
 		em.close();
 	}
@@ -107,9 +113,14 @@ public class VehicleDAOHibernateImpl implements VehicleDAO {
 		if(vehicle == null){
 			throw new IllegalArgumentException("Vehicle is null");
 		}
-		final EntityManager em = emf.createEntityManager();
+		
+		if(this.emf == null){
+			throw new IllegalStateException("EntityManagerFactory was not set.");
+		}
+		
+		final EntityManager em = this.emf.createEntityManager();
 		em.getTransaction().begin();
-		em.persist(vehicle);
+		em.persist(em.merge(vehicle));
 		em.getTransaction().commit();
 		em.close();
 	}
@@ -119,11 +130,11 @@ public class VehicleDAOHibernateImpl implements VehicleDAO {
 	 */
 	@Override
 	public List<Vehicle> findAll() {
-		if(emf == null){
+		if(this.emf == null){
 			throw new IllegalStateException("EntityManagerFactory was not set.");
 		}
 
-		final EntityManager em = emf.createEntityManager();
+		final EntityManager em = this.emf.createEntityManager();
 		em.getTransaction().begin();
 		List<Vehicle> result = em.createQuery("FROM Vehicle", Vehicle.class).getResultList();
 		em.getTransaction().commit();
@@ -135,11 +146,11 @@ public class VehicleDAOHibernateImpl implements VehicleDAO {
 	 * @see cz.muni.fi.pa165.vozovna.dao.VehicleDAO#findByUserClass(int)
 	 */
 	@Override
-	public List<Vehicle> findByUserClass(int userClass) {
-		if(emf == null){
+	public List<Vehicle> findByUserClass(UserClassEnum userClass) {
+		if(this.emf == null){
 			throw new IllegalStateException("EntityManagerFactory was not set.");
 		}
-		final EntityManager em = emf.createEntityManager();
+		final EntityManager em = this.emf.createEntityManager();
 		em.getTransaction().begin();
 		TypedQuery<Vehicle> query = em.createQuery("FROM Vehicle WHERE userClass = :USERCLASS ", Vehicle.class) ;
 		query.setParameter("USERCLASS", userClass);

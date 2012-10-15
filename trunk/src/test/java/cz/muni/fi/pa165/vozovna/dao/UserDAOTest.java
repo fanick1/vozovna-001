@@ -19,8 +19,8 @@
  */
 package cz.muni.fi.pa165.vozovna.dao;
 
+import cz.muni.fi.pa165.vozovna.dao.hibernate.ServiceIntervalDaoImpl;
 import cz.muni.fi.pa165.vozovna.dao.hibernate.UserDAOHibernateImpl;
-import cz.muni.fi.pa165.vozovna.dao.UserDao;
 import cz.muni.fi.pa165.vozovna.entities.User;
 import cz.muni.fi.pa165.vozovna.enums.UserClassEnum;
 import java.sql.SQLException;
@@ -40,12 +40,9 @@ public class UserDAOTest {
     
 
     private static final String PERSISTENCE_UNIT_NAME = "VozovnaPU";
-//    
-//    public UserDAOTest() {
-//        ServiceIntervalDaoImpl serviceDaoImplementation = new ServiceIntervalDaoImpl();
-//        serviceDaoImplementation.setFactory(Persistence.createEntityManagerFactory(PERSISTENCE_UNIT_NAME));
-//        this.serviceIntervalDAO = serviceDaoImplementation;
-//    }
+  
+    public UserDAOTest() {
+    }
     
     private UserDao createUserDAOFactory() {
         UserDAOHibernateImpl userDAO = new UserDAOHibernateImpl();
@@ -53,17 +50,9 @@ public class UserDAOTest {
         return userDAO;
     }
     private UserDao createUserDAOFactoryWithoutEMF() {
-        UserDAOHibernateImpl userDAO = new UserDAOHibernateImpl();
-        
-        return userDAO;
+        return new UserDAOHibernateImpl();
     }
     
-    @Before
-    public void setUp() throws SQLException {
-        
-    }
-    
-    // GET BY ID
     @Test
     public void testGetUserByIdWithoutEMF(){
         // UserDAO without Entity Manager Factory
@@ -189,11 +178,11 @@ public class UserDAOTest {
             dao.create(user);
             user.setName("Jan Novy");
             dao.update(user);
-            fail("Exception for null argument was not threw.");
+            assertNotSame("Name hasn't been updated.", "Petr Novak", user.getName());
         } catch(Exception e) {
             fail("Unexcepted exception was threw: " + e + " " + e.getMessage());
         }
-        assertNotSame("Name hasn't been updated.", "Petr Novak", user.getName());
+        
     }
     
     // REMOVE

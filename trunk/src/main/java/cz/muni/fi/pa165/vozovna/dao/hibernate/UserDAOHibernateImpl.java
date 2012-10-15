@@ -102,7 +102,7 @@ public class UserDAOHibernateImpl implements UserDao {
         }
         
         EntityManager manager = this.factory.createEntityManager();
-        TypedQuery<User> query = manager.createQuery("FROM VozovnaUser",User.class);
+        TypedQuery<User> query = manager.createQuery("FROM User u",User.class);
         List<User> result = query.getResultList();
         manager.close();
         
@@ -120,7 +120,7 @@ public class UserDAOHibernateImpl implements UserDao {
         }
         
         EntityManager manager = this.factory.createEntityManager();
-        TypedQuery<User> query = manager.createQuery("FROM VozovnaUser u WHERE Name = :Name",User.class);
+        TypedQuery<User> query = manager.createQuery("FROM User u WHERE Name = :Name",User.class);
         query.setParameter("Name", name);
         List<User> result = query.getResultList();
         manager.close();

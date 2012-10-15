@@ -20,6 +20,7 @@
 package cz.muni.fi.pa165.vozovna.dao;
 
 import cz.muni.fi.pa165.vozovna.entities.Vehicle;
+import cz.muni.fi.pa165.vozovna.enums.UserClassEnum;
 import java.util.List;
 
 /**
@@ -77,5 +78,5 @@ public interface VehicleDAO {
      * @throws IllegalArgumentException     If userClass is invalid
      * @throws IllegalStateException        If the Entity Manager Factory is not set.
      */
-	public List<Vehicle> findByUserClass(int userClass);
+	public List<Vehicle> findByUserClass(UserClassEnum userClass);
 }
