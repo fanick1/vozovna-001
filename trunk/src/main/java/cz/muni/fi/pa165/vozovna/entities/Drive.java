@@ -12,7 +12,6 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import org.hibernate.annotations.Type;
 import org.joda.time.DateTime;
-
 /**
  * Drive. Used both for vehicle reservation and drive reports.
  *
@@ -25,7 +24,7 @@ public class Drive {
 
     @Id
     @Column(name = "id")
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "drive_id_sequence")
+    @GeneratedValue(strategy = GenerationType.AUTO)
     /**
      * Unique id
      */
@@ -52,14 +51,16 @@ public class Drive {
     private Vehicle vehicle;
     
     @Column(name = "date_from")
-    //@Type(type="org.joda.time.contrib.hibernate.PersistentDateTime")
+//    @Type(type="org.joda.time.contrib.hibernate.PersistentDateTime")
+        @Type(type="org.jadira.usertype.dateandtime.joda.PersistentDateTime")
     /**
      * Date when the Drive started
      */
     private DateTime dateFrom;
     
     @Column(name = "date_to")
-    //@Type(type="org.joda.time.contrib.hibernate.PersistentDateTime")
+//    @Type(type="org.joda.time.contrib.hibernate.PersistentDateTime")
+    @Type(type="org.jadira.usertype.dateandtime.joda.PersistentDateTime")
     /**
      * Date when the drive ended
      */

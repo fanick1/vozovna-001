@@ -80,6 +80,7 @@ public class DriveDAOHibernateImpl implements DriveDAO {
 	 */
 	@Override
 	public void create(Drive drive) {
+            System.err.println("Create");
         if (drive == null) {
             throw new IllegalArgumentException("Drive is null.");
         }
@@ -172,7 +173,7 @@ public class DriveDAOHibernateImpl implements DriveDAO {
         List<Drive> result = null;
         
 		try {
-            TypedQuery<Drive> query = em.createQuery("FROM DRIVE", Drive.class);
+            TypedQuery<Drive> query = em.createQuery("FROM Drive", Drive.class);
             result = query.getResultList(); 
         } catch (RuntimeException e) {
             throw e;
@@ -196,14 +197,16 @@ public class DriveDAOHibernateImpl implements DriveDAO {
             throw new IllegalStateException("Entity Manager Factory is not set.");
         }
         EntityManager em = this.emf.createEntityManager();
+        
         List<Drive> result = null;
         
         try {
-            TypedQuery<Drive> query = 
-                em.createQuery("FROM DRIVE WHERE USER = :user", Drive.class)
-                    .setParameter("user", user);
-            result = query.getResultList(); 
+            TypedQuery<Drive> query =  em.createQuery("FROM Drive d WHERE d.user = :user", Drive.class);
+                 
+                    
+            result = query.setParameter("user", user).getResultList(); 
         } catch (RuntimeException e) {
+            e.printStackTrace();
             throw e;
         } finally {
             em.close();

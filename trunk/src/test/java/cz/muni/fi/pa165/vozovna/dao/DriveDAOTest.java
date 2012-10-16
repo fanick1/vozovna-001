@@ -57,7 +57,7 @@ public class DriveDAOTest {
 	private EntityManagerFactory emf;
 	
 	public DriveDAOTest() {
-		emf = Persistence.createEntityManagerFactory("VozovnaPU");
+		emf = Persistence.createEntityManagerFactory("TestingPU");
 	}
 	
 	/**
@@ -73,6 +73,7 @@ public class DriveDAOTest {
         DriveDAOHibernateImpl driveDaoHibernate = new DriveDAOHibernateImpl();
         driveDaoHibernate.setEntityManagerFactory(emf);
         driveDao = driveDaoHibernate;
+        System.err.println("SetUp");
 	}
 
 	private void fillData(EntityManager localManager) {
@@ -110,7 +111,7 @@ public class DriveDAOTest {
 	 */
 	@After
 	public void tearDown() throws Exception {
-		
+		System.err.println("TearDown");
 	}
 
 	/**
@@ -118,6 +119,7 @@ public class DriveDAOTest {
 	 */
 	@Test
 	public void testGetById1() {
+                System.err.println("testGetById1");
 		try{
 			driveDao.getById(null);
 			fail("IllegalArgumentException expected.");
@@ -131,13 +133,15 @@ public class DriveDAOTest {
 	 */
 	@Test
 	public void testGetById2() {
+            System.err.println("testGetById2");
 		assertNull("null expected",driveDao.getById(-1l));
 	}
 	/**
 	 * Test method for {@link cz.muni.fi.pa165.vozovna.dao.DriveDAO#getById(java.lang.Long)}.
 	 */
 	@Test
-	public void testGetById3() {		
+	public void testGetById3() {
+            System.err.println("testGetById3");
 		Drive test1 = driveDao.getById(driveId1);
 		assertNotNull(test1);
 		
@@ -150,6 +154,7 @@ public class DriveDAOTest {
 	 */
 	@Test
 	public void testCreate1() {
+            System.err.println("testCreate1");
 		try{
 			driveDao.create(null);
 			fail("IllegalArgumentException expected");
@@ -163,6 +168,7 @@ public class DriveDAOTest {
 	 */
 	@Test
 	public void testCreate2() {
+            System.err.println("testCreate2");
 		Drive newDrive = new Drive();
 		
 		driveDao.create(newDrive);
@@ -173,6 +179,7 @@ public class DriveDAOTest {
 	 */
 	@Test
 	public void testCreate3() {
+            System.err.println("testCreate3");
 		try{
 			driveDao.create(drive);	//duplicity
 			fail("Some exception expected");
@@ -187,6 +194,7 @@ public class DriveDAOTest {
 	 */
 	@Test
 	public void testRemove() {
+            System.err.println("testRemove");
 		try{
 			driveDao.remove(null);
 			fail("IllegalArgumentException expected");
@@ -200,6 +208,7 @@ public class DriveDAOTest {
 	 */
 	@Test
 	public void testUpdate1() {
+            System.err.println("testUpdate1");
 		try{
 			driveDao.getById(null);
 			fail("IllegalArgumentException expected");
@@ -214,18 +223,29 @@ public class DriveDAOTest {
 	 */
 	@Test
 	public void testUpdate2() {
+		System.err.println("testUpdate2");
 		
-		Integer distance = 1234;
+                EntityManager localManager = emf.createEntityManager();
+                Integer distance = 1234;
 		DriveStateEnum state = DriveStateEnum.FINISHED;
 		User user = new User();
+                user.setIsAdmin(false);
+                user.setName("Name");
+                user.setUserClass(UserClassEnum.EMPLOYEE);
 		Vehicle vehicle2 = new Vehicle();
 		
+                
 		Drive existingDrive = driveDao.getById(drive.getId());
 		existingDrive.setDistance(distance);
 		existingDrive.setState(state);
-		existingDrive.setUser(user);
+                localManager.getTransaction().begin();
+                localManager.persist(user);
+                localManager.persist(vehicle2);
+                localManager.getTransaction().commit();
+                existingDrive.setUser(user);
 		existingDrive.setVehicle(vehicle2);
-	
+
+                localManager.close();
 		driveDao.update(existingDrive);
 		
 		Drive existingDrive2 = driveDao.getById(drive.getId());
@@ -241,6 +261,7 @@ public class DriveDAOTest {
 	 */
 	@Test
 	public void testFindAll() {
+            System.err.println("testFindAll");
 		List<Drive> list = driveDao.findAll();
 		if(list == null){
 			fail("Non null list expected");
@@ -256,7 +277,7 @@ public class DriveDAOTest {
 	 */
 	@Test
 	public void testFindByUser() {
-		
+		System.err.println("testFindByUser");
 		try{
 			driveDao.findByUser(null);
 			fail("IllegalArgumentException expected");
