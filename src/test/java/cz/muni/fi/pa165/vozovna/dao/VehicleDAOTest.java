@@ -28,7 +28,7 @@ public class VehicleDAOTest {
     
     public VehicleDAOTest() {
 		VehicleDAOHibernateImpl vehicleDaoImpl = new VehicleDAOHibernateImpl();
-		vehicleDaoImpl.setEntityManagerFactory(Persistence.createEntityManagerFactory("VozovnaPU"));
+		vehicleDaoImpl.setEntityManagerFactory(Persistence.createEntityManagerFactory("TestingPU"));
 		this.vehicleDao = vehicleDaoImpl;
     }
 

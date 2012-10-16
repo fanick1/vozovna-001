@@ -39,7 +39,7 @@ import org.junit.Test;
 public class UserDAOTest {
     
 
-    private static final String PERSISTENCE_UNIT_NAME = "VozovnaPU";
+    private static final String PERSISTENCE_UNIT_NAME = "TestingPU";
   
     public UserDAOTest() {
     }
