@@ -1,7 +1,7 @@
 package cz.muni.fi.pa165.vozovna.dao;
 
-import cz.muni.fi.pa165.vozovna.entities.ServiceInterval;
-import cz.muni.fi.pa165.vozovna.entities.Vehicle;
+import cz.muni.fi.pa165.vozovna.entity.ServiceInterval;
+import cz.muni.fi.pa165.vozovna.entity.Vehicle;
 import java.util.List;
 
 /**

@@ -20,7 +20,7 @@
 package cz.muni.fi.pa165.vozovna.dao;
 
 import cz.muni.fi.pa165.vozovna.dao.hibernate.UserDAOHibernateImpl;
-import cz.muni.fi.pa165.vozovna.entities.User;
+import cz.muni.fi.pa165.vozovna.entity.User;
 import cz.muni.fi.pa165.vozovna.enums.UserClassEnum;
 import java.util.Arrays;
 import java.util.Collections;

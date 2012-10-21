@@ -5,7 +5,7 @@
 package cz.muni.fi.pa165.vozovna.dao;
 
 import cz.muni.fi.pa165.vozovna.dao.hibernate.VehicleDAOHibernateImpl;
-import cz.muni.fi.pa165.vozovna.entities.Vehicle;
+import cz.muni.fi.pa165.vozovna.entity.Vehicle;
 import cz.muni.fi.pa165.vozovna.enums.UserClassEnum;
 import java.util.List;
 import javax.persistence.Persistence;

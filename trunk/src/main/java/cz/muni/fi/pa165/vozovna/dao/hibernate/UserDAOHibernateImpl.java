@@ -1,7 +1,7 @@
 package cz.muni.fi.pa165.vozovna.dao.hibernate;
 
 import cz.muni.fi.pa165.vozovna.dao.UserDAO;
-import cz.muni.fi.pa165.vozovna.entities.User;
+import cz.muni.fi.pa165.vozovna.entity.User;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
