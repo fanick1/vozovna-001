@@ -11,15 +11,55 @@ import javax.persistence.EntityManagerFactory;
  */
 public interface GenericDAO<T, PK extends Serializable> {
 
+    /**
+     * Sets up entityManagerFactory
+     *
+     * @param emf EntityManagerFactory to be set
+     */
+    void setEntityManagerFactory(EntityManagerFactory emf);
+
+    /**
+     * Returns an entity instance with given id. Returns null if such entity doesn`t exist.
+     *
+     * @param id
+     * @return Entity instance with given id if exists, null otherwise.
+     * @throws IllegalArgumentException Throws if given id is null.
+     * @throws IllegalStateException Throws if factory is not set.
+     */
     T getById(PK id);
 
-    void create(T t);
+    /**
+     * Persists given entity instance in database.
+     *
+     * @param entity entity instance to save
+     * @throws IllegalArgumentException Throws if given entity instance is null.
+     * @throws IllegalStateException Throws if factory is not set.
+     */
+    void create(T entity);
 
-    void update(T t);
+    /**
+     * Updates given entity in database.
+     *
+     * @param entity Entity to update
+     * @throws IllegalArgumentException Throws if given entity is null.
+     * @throws IllegalStateException Throws if factory is not set.
+     */
+    void update(T entity);
 
-    void remove(T t);
+    /**
+     * Removes given entity from database.
+     *
+     * @param entity Entity to remove
+     * @throws IllegalArgumentException Throws if given entity is null.
+     * @throws IllegalStateException Throws if factory is not set.
+     */
+    void remove(T entity);
 
+    /**
+     * Find and return all instances of this entity type in database.
+     *
+     * @return List of all entities in database.
+     * @throws IllegalStateException Throws if factory is not set.
+     */
     List<T> findAll();
-
-    void setEntityManagerFactory(EntityManagerFactory emf);
 }

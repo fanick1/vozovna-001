@@ -1,46 +1,31 @@
-/**
- *  Copyright 2012 Frantisek Veverka, Eva Neduchalova, Jozef Triscik, Lukas Hajek
- *  The latest (and the greatest) version of this software can be obtained at 
- *	http://code.google.com/p/vozovna-001/
- *
- *  This file is part of Vozovna.
- *   Vozovna is free software: you can redistribute it and/or modify
- *  it under the terms of the GNU General Public License as published by
- *  the Free Software Foundation, either version 3 of the License, or
- *  (at your option) any later version.
- *
- *  Vozovna is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU General Public License for more details.
- *
- *  You should have received a copy of the GNU General Public License
- *  along with Vozovna.  If not, see <http://www.gnu.org/licenses/>.
- */
 package cz.muni.fi.pa165.vozovna.entities;
 
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.*;
+import org.hibernate.annotations.Type;
+import org.joda.time.DateTime;
 
 /**
- * The Entity represents service interval. 
+ * The Entity represents service interval.
+ *
  * @author Lukas Hajek, 359617@mail.muni.cz
  */
 @Entity
 public class ServiceInterval implements Serializable {
-    
+
     private static final long serialVersionUID = 1L;
     /**
-	 * Unique users ID
-	 */
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Long id;
+     * Unique users ID
+     */
+    @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    private Long id;
     
-    /** 
-     * The required time interval between two service inspections (in days).  
+    
+    /**
+     * The required time interval between two service inspections (in days).
      */
     @Column(nullable = false)
     private int inspectionInterval;
@@ -50,10 +35,11 @@ public class ServiceInterval implements Serializable {
      */
     @ElementCollection
     @Temporal(javax.persistence.TemporalType.DATE)
+    //@Type(type = "org.jadira.usertype.dateandtime.joda.PersistentDateTime")
     private List<Date> dated;
     
     /**
-     * The related vehicle 
+     * The related vehicle
      */
     //@Column(nullable = false)
     @ManyToOne()
@@ -62,19 +48,18 @@ public class ServiceInterval implements Serializable {
     /**
      * Description of service interval. E.g: wheel exchange
      */
-    @Column(nullable=false)
+    @Column(nullable = false)
     private String description;
 
-    
     /**
-     * @return      Service interval ID
+     * @return Service interval ID
      */
     public Long getId() {
         return id;
     }
 
     /**
-     * @param id    Service interval ID
+     * @param id Service interval ID
      */
     public void setId(Long id) {
         this.id = id;
@@ -85,9 +70,10 @@ public class ServiceInterval implements Serializable {
     }
 
     /**
-     * Sets time interval between two service inspections 
-     * @param inspectionInterval            Interval between two service inspections (in days)
-     * @throws IllegalArgumentException     If inspectionInterval is less or equals to 0
+     * Sets time interval between two service inspections
+     *
+     * @param inspectionInterval Interval between two service inspections (in days)
+     * @throws IllegalArgumentException If inspectionInterval is less or equals to 0
      */
     public void setInspectionInterval(int inspectionInterval) {
         if (inspectionInterval <= 0) {
@@ -95,8 +81,9 @@ public class ServiceInterval implements Serializable {
         }
         this.inspectionInterval = inspectionInterval;
     }
+
     /**
-     * @return      List of dates when vehicle was inspected.
+     * @return List of dates when vehicle was inspected.
      */
     public List<Date> getDated() {
         return dated;
@@ -105,17 +92,17 @@ public class ServiceInterval implements Serializable {
     public void setDated(List<Date> dated) {
         this.dated = dated;
     }
-    
+
     /**
-     * @return      The connected vehicle
+     * @return The connected vehicle
      */
     public Vehicle getVehicle() {
         return vehicle;
     }
 
     /**
-     * @param   vehicle                      The related vehicle
-     * @throws  IllegalArgumentException     When the vehicle is null
+     * @param vehicle The related vehicle
+     * @throws IllegalArgumentException When the vehicle is null
      */
     public void setVehicle(Vehicle vehicle) {
         if (vehicle == null) {
@@ -125,15 +112,15 @@ public class ServiceInterval implements Serializable {
     }
 
     /**
-     * @return  Description of service interval.
+     * @return Description of service interval.
      */
     public String getDescription() {
         return description;
     }
-    
+
     /**
-     * @param   description                 Description of service interval.
-     * @throws IllegalArgumentException     When description is null
+     * @param description Description of service interval.
+     * @throws IllegalArgumentException When description is null
      */
     public void setDescription(String description) {
         if (description == null) {
@@ -144,10 +131,10 @@ public class ServiceInterval implements Serializable {
 
     @Override
     public String toString() {
-        return "ServiceInterval{" + "id=" + id + ", inspectionInterval=" + inspectionInterval + ", dated=" + dated + ", vehicle=" + vehicle + ", description=" + description + '}';
+        return "ServiceInterval{" + "id=" + id + ", inspectionInterval=" + inspectionInterval
+                + ", dated=" + dated + ", vehicle=" + vehicle + ", description=" + description + '}';
     }
- 
-    
+
     @Override
     public int hashCode() {
         int hash = 3;
@@ -168,6 +155,4 @@ public class ServiceInterval implements Serializable {
         }
         return false;
     }
-    
-	
 }

@@ -12,8 +12,8 @@ import javax.persistence.TypedQuery;
 public class UserDAOHibernateImpl extends GenericDAOHibernateImpl<User, Long> implements UserDAO {
 
     @Override
-    public List<User> findByName(String name) {
-        if (name == null || "".equals(name)) {
+    public List<User> findByLastName(String lastName) {
+        if (lastName == null || "".equals(lastName)) {
             throw new IllegalArgumentException("Name cannot be null or empty");
         }
         if (this.emf == null) {
@@ -21,8 +21,8 @@ public class UserDAOHibernateImpl extends GenericDAOHibernateImpl<User, Long> im
         }
         
         EntityManager manager = this.emf.createEntityManager();
-        TypedQuery<User> query = manager.createQuery("FROM User u WHERE Name = :Name", User.class);
-        query.setParameter("Name", name);
+        TypedQuery<User> query = manager.createQuery("FROM " + User.class.getName() + " u WHERE lastName = :Name", User.class);
+        query.setParameter("Name", lastName);
         List<User> result = query.getResultList();
         manager.close();
 

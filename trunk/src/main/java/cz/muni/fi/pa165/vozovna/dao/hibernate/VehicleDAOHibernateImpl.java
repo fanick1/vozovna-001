@@ -24,7 +24,7 @@ public class VehicleDAOHibernateImpl extends GenericDAOHibernateImpl<Vehicle, Lo
         }
         final EntityManager em = this.emf.createEntityManager();
         em.getTransaction().begin();
-        TypedQuery<Vehicle> query = em.createQuery("FROM Vehicle WHERE userClass = :USERCLASS ", Vehicle.class);
+        TypedQuery<Vehicle> query = em.createQuery("FROM " + Vehicle.class.getName() + " WHERE userClass = :USERCLASS ", Vehicle.class);
         query.setParameter("USERCLASS", userClass);
         List<Vehicle> result = query.getResultList();
         em.getTransaction().commit();

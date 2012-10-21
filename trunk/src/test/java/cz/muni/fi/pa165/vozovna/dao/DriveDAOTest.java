@@ -89,7 +89,7 @@ public class DriveDAOTest {
         localManager.persist(vehicle);
         franta = new User();
         franta.setIsAdmin(true);
-        franta.setName("BFU");
+        franta.setFirstName("BFU");
         franta.setUserClass(UserClassEnum.EMPLOYEE);
         localManager.persist(franta);
         drive.setDateFrom(DateTime.now().minusDays(1));
@@ -230,7 +230,7 @@ public class DriveDAOTest {
 		DriveStateEnum state = DriveStateEnum.FINISHED;
 		User user = new User();
                 user.setIsAdmin(false);
-                user.setName("Name");
+                user.setFirstName("Name");
                 user.setUserClass(UserClassEnum.EMPLOYEE);
 		Vehicle vehicle2 = new Vehicle();
 		

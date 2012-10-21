@@ -87,7 +87,7 @@ public class ServiceIntervalDAOTest {
 //        dates.add(sdf.parse("11.4.2012"));
         ServiceInterval interval2 = ServiceIntervalDAOTest.getServiceInterval(dates, "Kontrola stavu oleja", 10, mercedes);
 
-        EntityManager localManager = Persistence.createEntityManagerFactory("TestingPU").createEntityManager();
+        EntityManager localManager = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT_NAME).createEntityManager();
         localManager.getTransaction().begin();
 
         localManager.persist(toyota);
@@ -101,7 +101,7 @@ public class ServiceIntervalDAOTest {
 
     @After
     public void tearDown() {
-        EntityManager localManager = Persistence.createEntityManagerFactory("TestingPU").createEntityManager();
+        EntityManager localManager = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT_NAME).createEntityManager();
 
         // Remove intervals
         localManager.getTransaction().begin();
