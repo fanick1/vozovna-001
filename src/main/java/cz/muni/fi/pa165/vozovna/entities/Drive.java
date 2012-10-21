@@ -12,6 +12,7 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import org.hibernate.annotations.Type;
 import org.joda.time.DateTime;
+
 /**
  * Drive. Used both for vehicle reservation and drive reports.
  *
@@ -29,43 +30,35 @@ public class Drive {
      * Unique id
      */
     private Long id;
-    
     @Column(name = "distance")
     /**
      * Kilometres traveled in this drive
      */
     private Integer distance;
-    
     @OneToOne(targetEntity = User.class)
     @JoinColumn(name = "id_user")
     /**
      * User, to whom the vehicle is being lent for this drive
      */
     private User user;
-    
     @OneToOne(targetEntity = Vehicle.class)
     @JoinColumn(name = "id_vehicle")
     /**
      * Vehicle which is lent for this drive
      */
     private Vehicle vehicle;
-    
     @Column(name = "date_from")
-//    @Type(type="org.joda.time.contrib.hibernate.PersistentDateTime")
-        @Type(type="org.jadira.usertype.dateandtime.joda.PersistentDateTime")
+    @Type(type = "org.jadira.usertype.dateandtime.joda.PersistentDateTime")
     /**
      * Date when the Drive started
      */
     private DateTime dateFrom;
-    
     @Column(name = "date_to")
-//    @Type(type="org.joda.time.contrib.hibernate.PersistentDateTime")
-    @Type(type="org.jadira.usertype.dateandtime.joda.PersistentDateTime")
+    @Type(type = "org.jadira.usertype.dateandtime.joda.PersistentDateTime")
     /**
      * Date when the drive ended
      */
     private DateTime dateTo;
-    
     @Column(name = "drive_state")
     /**
      * State of this Drive. (Before drive, drive ongoing, drive cancelled, drive finished)
@@ -130,8 +123,8 @@ public class Drive {
 
     @Override
     public String toString() {
-        return "Drive{" + "id=" + id + ", distance=" + distance + ", user=" + user 
-                + ", vehicle=" + vehicle + ", dateFrom=" + dateFrom + ", dateTo=" 
+        return "Drive{" + "id=" + id + ", distance=" + distance + ", user=" + user
+                + ", vehicle=" + vehicle + ", dateFrom=" + dateFrom + ", dateTo="
                 + dateTo + ", state=" + state + '}';
     }
 
@@ -156,5 +149,4 @@ public class Drive {
         hash = 47 * hash + (this.id != null ? this.id.hashCode() : 0);
         return hash;
     }
-
 }

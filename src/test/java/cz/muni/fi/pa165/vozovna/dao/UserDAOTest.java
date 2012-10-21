@@ -19,18 +19,15 @@
  */
 package cz.muni.fi.pa165.vozovna.dao;
 
-import cz.muni.fi.pa165.vozovna.dao.hibernate.ServiceIntervalDaoImpl;
 import cz.muni.fi.pa165.vozovna.dao.hibernate.UserDAOHibernateImpl;
 import cz.muni.fi.pa165.vozovna.entities.User;
 import cz.muni.fi.pa165.vozovna.enums.UserClassEnum;
-import java.sql.SQLException;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import javax.persistence.Persistence;
 import static org.junit.Assert.*;
-import org.junit.Before;
 import org.junit.Test;
 /**
  *
@@ -44,19 +41,19 @@ public class UserDAOTest {
     public UserDAOTest() {
     }
     
-    private UserDao createUserDAOFactory() {
+    private UserDAO createUserDAOFactory() {
         UserDAOHibernateImpl userDAO = new UserDAOHibernateImpl();
-        userDAO.setFactory(Persistence.createEntityManagerFactory(PERSISTENCE_UNIT_NAME));
+        userDAO.setEntityManagerFactory(Persistence.createEntityManagerFactory(PERSISTENCE_UNIT_NAME));
         return userDAO;
     }
-    private UserDao createUserDAOFactoryWithoutEMF() {
+    private UserDAO createUserDAOFactoryWithoutEMF() {
         return new UserDAOHibernateImpl();
     }
     
     @Test
     public void testGetUserByIdWithoutEMF(){
         // UserDAO without Entity Manager Factory
-        UserDao dao = createUserDAOFactoryWithoutEMF();
+        UserDAO dao = createUserDAOFactoryWithoutEMF();
         
         try {
             dao.create(newDefaultUser());
@@ -71,7 +68,7 @@ public class UserDAOTest {
     @Test
     public void testGetUserByIdWithNullArgument(){
         // UserDAO without Entity Manager Factory
-        UserDao dao = createUserDAOFactory();
+        UserDAO dao = createUserDAOFactory();
         
         try {
              dao.getById(null);
@@ -85,7 +82,7 @@ public class UserDAOTest {
     
     @Test
     public void testValidCreateAndGetUserById(){
-        UserDao dao = createUserDAOFactory();
+        UserDAO dao = createUserDAOFactory();
         User user = newDefaultUser();
         User result = null;
         try {
@@ -102,7 +99,7 @@ public class UserDAOTest {
     
     @Test
     public void testCreateWithoutEMF() {
-        UserDao dao = createUserDAOFactoryWithoutEMF();
+        UserDAO dao = createUserDAOFactoryWithoutEMF();
         
         try {
             dao.create(newDefaultUser());
@@ -115,7 +112,7 @@ public class UserDAOTest {
     
     @Test
     public void testCreateWithNullArguments() {     
-        UserDao dao = createUserDAOFactory();
+        UserDAO dao = createUserDAOFactory();
         try {
             dao.create(null);
             fail("Exception for null argument was not threw.");
@@ -127,7 +124,7 @@ public class UserDAOTest {
     
 //    @Test
 //    public void testCreateWithWrongUser() {     
-//        UserDao dao = createUserDAOFactory();
+//        UserDAO dao = createUserDAOFactory();
 //        try {
 //            dao.create(newDefaultUser());
 //            fail("Exception for null argument was not threw.");
@@ -141,7 +138,7 @@ public class UserDAOTest {
     @Test
     public void testUpdateWithoutEMF(){
         // UserDAO without Entity Manager Factory
-        UserDao dao = createUserDAOFactoryWithoutEMF();
+        UserDAO dao = createUserDAOFactoryWithoutEMF();
         
         try {
             dao.update(newDefaultUser());
@@ -156,7 +153,7 @@ public class UserDAOTest {
     @Test
     public void testUpdateWithNullArgument(){
         // UserDAO without Entity Manager Factory
-        UserDao dao = createUserDAOFactoryWithoutEMF();
+        UserDAO dao = createUserDAOFactoryWithoutEMF();
         
         try {
             dao.update(null);
@@ -171,7 +168,7 @@ public class UserDAOTest {
     @Test
     public void testValidUpdate(){
         // UserDAO without Entity Manager Factory
-        UserDao dao = createUserDAOFactory();
+        UserDAO dao = createUserDAOFactory();
         User user = newUser("Petr Novak", UserClassEnum.EMPLOYEE, true);
 
         try {
@@ -190,7 +187,7 @@ public class UserDAOTest {
     @Test
     public void testRemoveWithoutEMF() {
 
-        UserDao dao = createUserDAOFactoryWithoutEMF();
+        UserDAO dao = createUserDAOFactoryWithoutEMF();
 
         try {
 
@@ -205,7 +202,7 @@ public class UserDAOTest {
     @Test
     public void testRemoveWithNullArgument() {
         // Remove user that is null 
-        UserDao dao = createUserDAOFactory();
+        UserDAO dao = createUserDAOFactory();
         try {
             dao.remove(null);
             fail("Exception for null argument was not threw.");
@@ -218,7 +215,7 @@ public class UserDAOTest {
     
     @Test
     public void testValidRemove() {
-        UserDao dao = createUserDAOFactory();
+        UserDAO dao = createUserDAOFactory();
         User user = newDefaultUser();
         User result = null;
         try {
@@ -230,7 +227,7 @@ public class UserDAOTest {
         } catch(Exception e) {
             fail("Unexpected exception was threw: " + e + " " + e.getMessage());
         }
-        assertNotNull("User was not removed. ", result);
+        assertNull("User was not removed. ", result);
             
     }
     
@@ -239,7 +236,7 @@ public class UserDAOTest {
      
     @Test
     public void testFindAllWithoutEMF() {
-        UserDao dao = createUserDAOFactoryWithoutEMF();
+        UserDAO dao = createUserDAOFactoryWithoutEMF();
        
         try {
             dao.findAll();
@@ -252,7 +249,7 @@ public class UserDAOTest {
     
     @Test
     public void testValidFindAll() {
-        UserDao dao = createUserDAOFactory();
+        UserDAO dao = createUserDAOFactory();
         User user1 = newUser("Jan Novak", UserClassEnum.EMPLOYEE, false);
         User user2 = newUser("Petr Novak", UserClassEnum.EMPLOYEE, false);
         List<User> results = null;
@@ -279,7 +276,7 @@ public class UserDAOTest {
     
     @Test
     public void testFindByNameWithoutEMF() {
-        UserDao dao = createUserDAOFactoryWithoutEMF();
+        UserDAO dao = createUserDAOFactoryWithoutEMF();
         
         try {
             dao.findByName("Novak");
@@ -292,7 +289,7 @@ public class UserDAOTest {
     
     @Test
     public void testFindByNameWithWrongArgument() {
-        UserDao dao = createUserDAOFactory();
+        UserDAO dao = createUserDAOFactory();
         
         try {
             dao.findByName(null);
@@ -313,7 +310,7 @@ public class UserDAOTest {
     
     @Test
     public void testValidFindByName() {
-        UserDao dao = createUserDAOFactory();
+        UserDAO dao = createUserDAOFactory();
         User user = newUser("Jan Novak", UserClassEnum.EMPLOYEE, false);
         User user2 = newUser("Petr Novak", UserClassEnum.EMPLOYEE, false);
         List<User> all = null;
