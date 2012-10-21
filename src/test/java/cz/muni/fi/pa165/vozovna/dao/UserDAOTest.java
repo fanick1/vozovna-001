@@ -173,9 +173,9 @@ public class UserDAOTest {
 
         try {
             dao.create(user);
-            user.setName("Jan Novy");
+            user.setLastName("Jan Novy");
             dao.update(user);
-            assertNotSame("Name hasn't been updated.", "Petr Novak", user.getName());
+            assertNotSame("Name hasn't been updated.", "Petr Novak", user.getLastName());
         } catch(Exception e) {
             fail("Unexcepted exception was threw: " + e + " " + e.getMessage());
         }
@@ -279,7 +279,7 @@ public class UserDAOTest {
         UserDAO dao = createUserDAOFactoryWithoutEMF();
         
         try {
-            dao.findByName("Novak");
+            dao.findByLastName("Novak");
             fail("Exception for null argument was not threw.");
         } catch(IllegalStateException e) {
         } catch(Exception e) {
@@ -292,7 +292,7 @@ public class UserDAOTest {
         UserDAO dao = createUserDAOFactory();
         
         try {
-            dao.findByName(null);
+            dao.findByLastName(null);
             fail("Exception for null argument was not threw.");
         } catch(IllegalArgumentException e) {
         } catch(Exception e) {
@@ -300,7 +300,7 @@ public class UserDAOTest {
         }
         
         try {
-            dao.findByName("");
+            dao.findByLastName("");
             fail("Exception for empty string as argument was not threw.");
         } catch(IllegalArgumentException e) {
         } catch(Exception e) {
@@ -320,7 +320,7 @@ public class UserDAOTest {
             all = dao.findAll();
             dao.create(user2);
             
-            results = dao.findByName(user.getName());
+            results = dao.findByLastName(user.getLastName());
         } catch(Exception e) {
             fail("Unexpected exception was threw: " + e + " " + e.getMessage());
         }
@@ -344,9 +344,9 @@ public class UserDAOTest {
     
     private void assertDeepEquals(User expected, User actual) {
         assertEquals(expected.getId(), actual.getId());
-        assertEquals(expected.getName(), actual.getName());
+        assertEquals(expected.getLastName(), actual.getLastName());
         assertEquals(expected.getIsAdmin(), actual.getIsAdmin());
-        assertEquals(expected.getUserClassId(), actual.getUserClassId());
+        assertEquals(expected.getUserClass(), actual.getUserClass());
     }
     
     private void assertDeepEquals(List<User> expectedList, List<User> actualList) {
@@ -365,7 +365,7 @@ public class UserDAOTest {
     
     private User newUser(String name, UserClassEnum userClass, Boolean isAdmin) {
         User user = new User();
-        user.setName(name);
+        user.setLastName(name);
         user.setUserClass(userClass);
         user.setIsAdmin(isAdmin);
         return user;

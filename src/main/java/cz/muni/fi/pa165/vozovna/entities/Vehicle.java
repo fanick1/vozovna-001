@@ -13,13 +13,12 @@ import javax.persistence.Id;
  */
 @Entity
 public class Vehicle implements Serializable {
-    
+
     private static final long serialVersionUID = 1L;
     
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    
     private String brand;
     private int maxDistance;
     private String engineType;
@@ -30,6 +29,7 @@ public class Vehicle implements Serializable {
 
     /**
      * Returns id of vehicle.
+     *
      * @return Id of vehicle.
      */
     public Long getId() {
@@ -38,14 +38,14 @@ public class Vehicle implements Serializable {
 
     /**
      * Sets id of vehicle.
+     *
      * @param id Id of vehicle.
      * @throws IllegalArgumentException Throws if given id is null.
      */
     public void setId(Long id) {
-        if(id == null) {
+        if (id == null) {
             throw new IllegalArgumentException("Given id cannot be null!");
         }
-        
         this.id = id;
     }
 
@@ -75,6 +75,7 @@ public class Vehicle implements Serializable {
 
     /**
      * Returns brand of vehicle.
+     *
      * @return Brand of vehicle
      */
     public String getBrand() {
@@ -83,19 +84,20 @@ public class Vehicle implements Serializable {
 
     /**
      * Sets brand of vehicle.
+     *
      * @param brand Brand of vehicle.
      * @throws IllegalArgumentException Throws if given brand is null or empty.
      */
     public void setBrand(String brand) {
-        if(brand == null || brand.isEmpty()) {
+        if (brand == null || brand.isEmpty()) {
             throw new IllegalArgumentException("Given brand cannot be null or empty!");
         }
-        
         this.brand = brand;
     }
 
     /**
      * Returns max distance, which can vehicle go.
+     *
      * @return Max distance, which can vehicle go.
      */
     public int getDistanceCount() {
@@ -104,19 +106,20 @@ public class Vehicle implements Serializable {
 
     /**
      * Sets max distance, which can vehicle go.
+     *
      * @param distanceCount Max distance
      * @throws IllegalArgumentException Throws in case, that distance is less or equal to zero.
      */
     public void setDistanceCount(int distanceCount) {
-        if(distanceCount <= 0) {
+        if (distanceCount <= 0) {
             throw new IllegalArgumentException("Value of distanceCount can't be less than zero.");
         }
-        
         this.maxDistance = distanceCount;
     }
 
     /**
      * Returns type of engine.
+     *
      * @return Type of engine.
      */
     public String getEngineType() {
@@ -125,19 +128,20 @@ public class Vehicle implements Serializable {
 
     /**
      * Set given type of engine to vehicle.
+     *
      * @param engineType Type of engine of vehicle.
      * @throws IllegalArgumentException Throws in case, that given engine type is null or empty.
      */
     public void setEngineType(String engineType) {
-        if(engineType == null || engineType.isEmpty()) {
+        if (engineType == null || engineType.isEmpty()) {
             throw new IllegalArgumentException("Given engine type cannot be null or empty.");
         }
-        
         this.engineType = engineType;
     }
 
     /**
      * Returns vehicle type.
+     *
      * @return Type of vehicle.
      */
     public String getType() {
@@ -146,63 +150,64 @@ public class Vehicle implements Serializable {
 
     /**
      * Sets type of vehicle.
+     *
      * @param type Type of vehicle
      * @throws IllegalArgumentException Throws in case, that given type is null or empty.
      */
     public void setType(String type) {
-        if(type == null || type.isEmpty()) {
+        if (type == null || type.isEmpty()) {
             throw new IllegalArgumentException("Given engine type cannot be null or empty.");
         }
-        
         this.type = type;
     }
 
     /**
      * Returns vehicle identifier number.
+     *
      * @return Vehicle identifier number
      */
     public String getVin() {
         return vin;
     }
 
-
     /**
      * Sets vehicle identifier number.
+     *
      * @param vin Vehicle identifier number
      * @throws IllegalArgumentException Throws in case, that given VIN is null or empty.
      */
     public void setVin(String vin) {
-        if(vin == null || vin.isEmpty()) {
+        if (vin == null || vin.isEmpty()) {
             throw new IllegalArgumentException("Given VIN cannot be null or empty.");
         }
-        
         this.vin = vin;
     }
 
     /**
-     * Returns year, when was vehicle made.
-     * @return 
+     * Returns year, when the vehicle was made.
+     *
+     * @return
      */
     public int getYearMade() {
         return yearMade;
     }
 
     /**
-     * Sets year, when was vehicle made.
+     * Sets year, when the vehicle was made.
+     *
      * @param yearMade Year of made.
      * @throws IllegalArgumentException Throws if year is less than 1900.
      */
     public void setYearMade(int yearMade) {
-        if(yearMade < 1900)
-        {
-            throw new IllegalArgumentException("Value of year must be more than 1900");
+        if (yearMade < 1900) {
+            throw new IllegalArgumentException("Value of year must be higher than 1900");
         }
-        
         this.yearMade = yearMade;
     }
 
     /**
      * Returns user class of vehicle.
+     *
      * @return the user class
      */
     public UserClassEnum getUserClass() {
@@ -211,10 +216,10 @@ public class Vehicle implements Serializable {
 
     /**
      * Sets user class of vehicle.
+     *
      * @param userClass the userClass to set
      */
     public void setUserClass(UserClassEnum userClass) {
         this.userClass = userClass;
     }
-    
 }

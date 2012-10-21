@@ -25,40 +25,46 @@ public class Drive {
 
     @Id
     @Column(name = "id")
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     /**
      * Unique id
      */
     private Long id;
+    
     @Column(name = "distance")
     /**
      * Kilometres traveled in this drive
      */
     private Integer distance;
+    
     @OneToOne(targetEntity = User.class)
     @JoinColumn(name = "id_user")
     /**
      * User, to whom the vehicle is being lent for this drive
      */
     private User user;
+    
     @OneToOne(targetEntity = Vehicle.class)
     @JoinColumn(name = "id_vehicle")
     /**
      * Vehicle which is lent for this drive
      */
     private Vehicle vehicle;
+    
     @Column(name = "date_from")
     @Type(type = "org.jadira.usertype.dateandtime.joda.PersistentDateTime")
     /**
      * Date when the Drive started
      */
     private DateTime dateFrom;
+    
     @Column(name = "date_to")
     @Type(type = "org.jadira.usertype.dateandtime.joda.PersistentDateTime")
     /**
      * Date when the drive ended
      */
     private DateTime dateTo;
+    
     @Column(name = "drive_state")
     /**
      * State of this Drive. (Before drive, drive ongoing, drive cancelled, drive finished)
