@@ -1,0 +1,77 @@
+#summary Soupis obvyklých chyb v kódu
+
+=Informační koutek=
+
+===Dao===
+
+*Vždy zavírat entity manager* ([http://www.objectdb.com/java/jpa/persistence/overview#EntityManager_ link1], [http://javanotepad.blogspot.cz/2007/06/how-to-close-jpa-entitymanger-in-web.html link2])
+
+Je třeba mít ošetřeno, že pokud si sami vytváříme instanci EntityManageru, tak ji potom i zavřeme a tím uvolníme zdroje, které EntityManager používá (např. připojení k databázi). Abychom měli jistotu, že kód se zavíráním Entity Manageru proběhne, je dobré ho mít ve finally bloku.
+
+takto ne:
+{{{
+public User getById(Long id) {
+    // ošetření emf a parametrů
+    EntityManager manager = this.factory.createEntityManager();
+    User user = manager.find(User.class, id);
+    manager.close();
+    return user;
+}
+}}}
+
+takto ano:
+{{{
+public Drive getById(Long id) {
+    // ošetření emf a parametrů
+    EntityManager em = this.emf.createEntityManager();
+    Drive result = null;
+    try {
+        result = em.find(Drive.class, id);
+    } catch (RuntimeException e) {
+        throw e;
+    } finally {
+        em.close();
+    }
+    return result;
+}
+}}}
+
+*Transakci ukončuje commit nebo rollback*
+
+Tahle verze nestačí, protože v případě chyby na řádku "em.persist(vehicle)" už nedojde ke commitu transakce, ani k jejímu rollbacku:
+{{{
+final EntityManager em = this.emf.createEntityManager();
+em.getTransaction().begin();
+em.persist(vehicle);
+// další operace probíhající ve stejné transakci
+em.getTransaction().commit();
+em.close();
+}}}
+
+lepší verze:
+
+{{{
+EntityManager em = emf.createEntityManager();
+EntityTransaction tx = null;
+try {
+    tx = em.getTransaction();
+    tx.begin();
+    em.persist(entity);
+    // další operace probíhající ve stejné transakci
+    tx.commit();
+} catch (Exception e) {
+    if (tx != null && tx.isActive()) {
+    tx.rollback();
+    }
+    // jiné ošetření chyby - vyhození výjimky, pokus o opravu
+} finally {
+    em.close();
+}
+}}}
+
+*Psaní query Stringů*
+Pokud to jde, tak do Stringů nepíšeme jméno třídy napevno, aby se po případném refaktoringu nemusely dotazy procházet a opravovat.
+
+("FROM " + ServiceInterval.class.getName() + " interval ... ")
+
+
