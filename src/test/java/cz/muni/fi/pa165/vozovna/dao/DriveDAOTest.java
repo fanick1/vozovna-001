@@ -31,9 +31,9 @@ import org.junit.Before;
 import org.junit.Test;
 
 import cz.muni.fi.pa165.vozovna.dao.hibernate.DriveDAOHibernateImpl;
-import cz.muni.fi.pa165.vozovna.entities.Drive;
-import cz.muni.fi.pa165.vozovna.entities.Vehicle;
-import cz.muni.fi.pa165.vozovna.entities.User;
+import cz.muni.fi.pa165.vozovna.entity.Drive;
+import cz.muni.fi.pa165.vozovna.entity.Vehicle;
+import cz.muni.fi.pa165.vozovna.entity.User;
 import cz.muni.fi.pa165.vozovna.enums.DriveStateEnum;
 import cz.muni.fi.pa165.vozovna.enums.UserClassEnum;
 

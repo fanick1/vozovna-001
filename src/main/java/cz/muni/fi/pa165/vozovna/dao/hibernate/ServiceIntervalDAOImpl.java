@@ -1,8 +1,8 @@
 package cz.muni.fi.pa165.vozovna.dao.hibernate;
 
 import cz.muni.fi.pa165.vozovna.dao.ServiceIntervalDAO;
-import cz.muni.fi.pa165.vozovna.entities.ServiceInterval;
-import cz.muni.fi.pa165.vozovna.entities.Vehicle;
+import cz.muni.fi.pa165.vozovna.entity.ServiceInterval;
+import cz.muni.fi.pa165.vozovna.entity.Vehicle;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityManager;

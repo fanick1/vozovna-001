@@ -2,8 +2,8 @@ package cz.muni.fi.pa165.vozovna.dao;
 
 import cz.muni.fi.pa165.vozovna.dao.hibernate.ServiceIntervalDAOImpl;
 import cz.muni.fi.pa165.vozovna.dao.hibernate.VehicleDAOHibernateImpl;
-import cz.muni.fi.pa165.vozovna.entities.ServiceInterval;
-import cz.muni.fi.pa165.vozovna.entities.Vehicle;
+import cz.muni.fi.pa165.vozovna.entity.ServiceInterval;
+import cz.muni.fi.pa165.vozovna.entity.Vehicle;
 import cz.muni.fi.pa165.vozovna.enums.UserClassEnum;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;

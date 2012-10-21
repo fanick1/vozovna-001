@@ -1,8 +1,8 @@
 package cz.muni.fi.pa165.vozovna.dao.hibernate;
 
 import cz.muni.fi.pa165.vozovna.dao.DriveDAO;
-import cz.muni.fi.pa165.vozovna.entities.Drive;
-import cz.muni.fi.pa165.vozovna.entities.User;
+import cz.muni.fi.pa165.vozovna.entity.Drive;
+import cz.muni.fi.pa165.vozovna.entity.User;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
