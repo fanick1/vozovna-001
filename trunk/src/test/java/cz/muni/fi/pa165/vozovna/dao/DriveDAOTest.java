@@ -1,43 +1,20 @@
-/**
- *  Copyright 2012 Frantisek Veverka, Eva Neduchalova, Jozef Triscik, Lukas Hajek
- *  The latest (and the greatest) version of this software can be obtained at 
- *	http://code.google.com/p/vozovna-001/
- *
- *  This file is part of Vozovna.
- *   Vozovna is free software: you can redistribute it and/or modify
- *  it under the terms of the GNU General Public License as published by
- *  the Free Software Foundation, either version 3 of the License, or
- *  (at your option) any later version.
- *
- *  Vozovna is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU General Public License for more details.
- *
- *  You should have received a copy of the GNU General Public License
- *  along with Vozovna.  If not, see <http://www.gnu.org/licenses/>.
- */
 package cz.muni.fi.pa165.vozovna.dao;
-
-import static org.junit.Assert.*;
-import java.util.List;
-
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
-
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
 
 import cz.muni.fi.pa165.vozovna.dao.hibernate.DriveDAOHibernateImpl;
 import cz.muni.fi.pa165.vozovna.entity.Drive;
-import cz.muni.fi.pa165.vozovna.entity.Vehicle;
 import cz.muni.fi.pa165.vozovna.entity.User;
+import cz.muni.fi.pa165.vozovna.entity.Vehicle;
 import cz.muni.fi.pa165.vozovna.enums.DriveStateEnum;
 import cz.muni.fi.pa165.vozovna.enums.UserClassEnum;
-
+import java.util.List;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
 import org.joda.time.DateTime;
+import org.junit.After;
+import static org.junit.Assert.*;
+import org.junit.Before;
+import org.junit.Test;
 /**
  * @author Frantisek Veverka, 207422@mail.muni.cz
  */
