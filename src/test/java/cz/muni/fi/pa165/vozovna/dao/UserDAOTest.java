@@ -1,104 +1,80 @@
 package cz.muni.fi.pa165.vozovna.dao;
 
-import cz.muni.fi.pa165.vozovna.dao.hibernate.UserDAOHibernateImpl;
-import cz.muni.fi.pa165.vozovna.entity.User;
-import cz.muni.fi.pa165.vozovna.enums.UserClassEnum;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotSame;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.fail;
+
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
-import javax.persistence.Persistence;
-import static org.junit.Assert.*;
+
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.transaction.annotation.Transactional;
+
+import cz.muni.fi.pa165.vozovna.entity.User;
+import cz.muni.fi.pa165.vozovna.enums.UserClassEnum;
 
 /**
- *
+ * 
  * @author Lukas Hajek, 359617@mail.muni.cz
  */
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration("UserDAOTest-context.xml")
 public class UserDAOTest {
 
-    private static final String PERSISTENCE_UNIT_NAME = "TestingPU";
+    Logger logger = LoggerFactory.getLogger(getClass());
 
-    public UserDAOTest() {
+    @Autowired
+    private UserDAO userDao;
+
+    public void setUserDao(UserDAO userDao) {
+        this.userDao = userDao;
     }
 
-    private UserDAO createUserDAOFactory() {
-        UserDAOHibernateImpl userDAO = new UserDAOHibernateImpl();
-        userDAO.setEntityManagerFactory(Persistence.createEntityManagerFactory(PERSISTENCE_UNIT_NAME));
-        return userDAO;
-    }
-
-    private UserDAO createUserDAOFactoryWithoutEMF() {
-        return new UserDAOHibernateImpl();
-    }
-
-    @Test
-    public void testGetUserByIdWithoutEMF() {
-        // UserDAO without Entity Manager Factory
-        UserDAO dao = createUserDAOFactoryWithoutEMF();
-
-        try {
-            dao.create(newDefaultUser());
-            fail("Exception for null argument was not threw.");
-        } catch (IllegalStateException e) {
-        } catch (Exception e) {
-            fail("Wrong Exception was threw: " + e + " " + e.getMessage());
-        }
-
-    }
 
     @Test
     public void testGetUserByIdWithNullArgument() {
-        // UserDAO without Entity Manager Factory
-        UserDAO dao = createUserDAOFactory();
-
         try {
-            dao.getById(null);
-            fail("Exception for null argument was not threw.");
+            userDao.getById(null);
+            fail("Exception for null argument was not thrown.");
         } catch (IllegalArgumentException e) {
-        } catch (Exception e) {
-            fail("Wrong Exception was threw: " + e + " " + e.getMessage());
+            // OK
         }
     }
 
     @Test
+    @Transactional
     public void testValidCreateAndGetUserById() {
-        UserDAO dao = createUserDAOFactory();
         User user = newDefaultUser();
         User result = null;
         try {
-            dao.create(user);
-            result = dao.getById(user.getId());
+            userDao.create(user);
+            result = userDao.getById(user.getId());
         } catch (Exception e) {
-            fail("Unexpected exception was threw: " + e + " " + e.getMessage());
+            fail("Unexpected exception was thrown: " + e + " " + e.getMessage());
         }
         assertEquals(user, result);
         assertDeepEquals(user, result);
     }
 
     // CREATE
-    @Test
-    public void testCreateWithoutEMF() {
-        UserDAO dao = createUserDAOFactoryWithoutEMF();
-
-        try {
-            dao.create(newDefaultUser());
-            fail("Exception for null argument was not threw.");
-        } catch (IllegalStateException e) {
-        } catch (Exception e) {
-            fail("Wrong Exception was threw: " + e + " " + e.getMessage());
-        }
-    }
 
     @Test
     public void testCreateWithNullArguments() {
-        UserDAO dao = createUserDAOFactory();
         try {
-            dao.create(null);
-            fail("Exception for null argument was not threw.");
+            userDao.create(null);
+            fail("Exception for null argument was not thrown.");
         } catch (IllegalArgumentException e) {
         } catch (Exception e) {
-            fail("Wrong Exception was threw: " + e + " " + e.getMessage());
+            fail("Wrong Exception was thrown: " + e + " " + e.getMessage());
         }
     }
 
@@ -107,133 +83,77 @@ public class UserDAOTest {
 //        UserDAO dao = createUserDAOFactory();
 //        try {
 //            dao.create(newDefaultUser());
-//            fail("Exception for null argument was not threw.");
+//            fail("Exception for null argument was not thrown.");
 //        } catch(IllegalArgumentException e) {
 //        } catch(Exception e) {
-//            fail("Wrong Exception was threw: " + e + " " + e.getMessage() );
+//            fail("Wrong Exception was thrown: " + e + " " + e.getMessage() );
 //        }
 //    }
-    @Test
-    public void testUpdateWithoutEMF() {
-        // UserDAO without Entity Manager Factory
-        UserDAO dao = createUserDAOFactoryWithoutEMF();
+   
 
-        try {
-            dao.update(newDefaultUser());
-            fail("Exception for null argument was not threw.");
-        } catch (IllegalStateException e) {
-        } catch (Exception e) {
-            fail("Wrong Exception was threw: " + e + " " + e.getMessage());
-        }
-
-    }
-
-    @Test
-    public void testUpdateWithNullArgument() {
-        // UserDAO without Entity Manager Factory
-        UserDAO dao = createUserDAOFactoryWithoutEMF();
-
-        try {
-            dao.update(null);
-            fail("Exception for null argument was not threw.");
-        } catch (IllegalArgumentException e) {
-        } catch (Exception e) {
-            fail("Wrong Exception was threw: " + e + " " + e.getMessage());
-        }
-
-    }
 
     @Test
     public void testValidUpdate() {
         // UserDAO without Entity Manager Factory
-        UserDAO dao = createUserDAOFactory();
         User user = newUser("Petr Novak", UserClassEnum.EMPLOYEE, true);
 
         try {
-            dao.create(user);
+            userDao.create(user);
             user.setLastName("Jan Novy");
-            dao.update(user);
+            userDao.update(user);
             assertNotSame("Name hasn't been updated.", "Petr Novak", user.getLastName());
         } catch (Exception e) {
-            fail("Unexcepted exception was threw: " + e + " " + e.getMessage());
+            fail("Unexcepted exception was thrown: " + e + " " + e.getMessage());
         }
 
     }
 
     // REMOVE
-    @Test
-    public void testRemoveWithoutEMF() {
-
-        UserDAO dao = createUserDAOFactoryWithoutEMF();
-
-        try {
-
-            dao.remove(newDefaultUser());
-            fail("Exception for null argument was not threw.");
-        } catch (IllegalStateException e) {
-        } catch (Exception e) {
-            fail("Wrong Exception was threw: " + e + " " + e.getMessage());
-        }
-    }
+  
 
     @Test
     public void testRemoveWithNullArgument() {
         // Remove user that is null 
-        UserDAO dao = createUserDAOFactory();
         try {
-            dao.remove(null);
-            fail("Exception for null argument was not threw.");
+            userDao.remove(null);
+            fail("Exception for null argument was not thrown.");
         } catch (IllegalArgumentException e) {
         } catch (Exception e) {
-            fail("Wrong Exception was threw: " + e + " " + e.getMessage());
+            fail("Wrong Exception was thrown: " + e + " " + e.getMessage());
         }
     }
 
     @Test
     public void testValidRemove() {
-        UserDAO dao = createUserDAOFactory();
         User user = newDefaultUser();
         User result = null;
         try {
-            dao.create(user);
+            userDao.create(user);
             Long id = user.getId();
-            dao.remove(user);
-            result = dao.getById(id);
+            userDao.remove(user);
+            result = userDao.getById(id);
 
         } catch (Exception e) {
-            fail("Unexpected exception was threw: " + e + " " + e.getMessage());
+            fail("Unexpected exception was thrown: " + e + " " + e.getMessage());
         }
         assertNull("User was not removed. ", result);
 
     }
 
     // TEST FIND ALL
-    @Test
-    public void testFindAllWithoutEMF() {
-        UserDAO dao = createUserDAOFactoryWithoutEMF();
-
-        try {
-            dao.findAll();
-            fail("Exception for null argument was not threw.");
-        } catch (IllegalStateException e) {
-        } catch (Exception e) {
-            fail("Wrong Exception was threw: " + e + " " + e.getMessage());
-        }
-    }
-
+   
     @Test
     public void testValidFindAll() {
-        UserDAO dao = createUserDAOFactory();
         User user1 = newUser("Jan Novak", UserClassEnum.EMPLOYEE, false);
         User user2 = newUser("Petr Novak", UserClassEnum.EMPLOYEE, false);
         List<User> results = null;
         try {
-            dao.create(user1);
-            dao.create(user2);
+            userDao.create(user1);
+            userDao.create(user2);
 
-            results = dao.findAll();
+            results = userDao.findAll();
         } catch (Exception e) {
-            fail("Unexpected exception was threw: " + e + " " + e.getMessage());
+            fail("Unexpected exception was thrown: " + e + " " + e.getMessage());
         }
         assertEquals("Unexpected number of results.", 2, results.size());
 
@@ -247,55 +167,41 @@ public class UserDAOTest {
     }
 
     // FIND BY NAME
-    @Test
-    public void testFindByNameWithoutEMF() {
-        UserDAO dao = createUserDAOFactoryWithoutEMF();
-
-        try {
-            dao.findByLastName("Novak");
-            fail("Exception for null argument was not threw.");
-        } catch (IllegalStateException e) {
-        } catch (Exception e) {
-            fail("Wrong Exception was threw: " + e + " " + e.getMessage());
-        }
-    }
-
+   
     @Test
     public void testFindByNameWithWrongArgument() {
-        UserDAO dao = createUserDAOFactory();
 
         try {
-            dao.findByLastName(null);
-            fail("Exception for null argument was not threw.");
+            userDao.findByLastName(null);
+            fail("Exception for null argument was not thrown.");
         } catch (IllegalArgumentException e) {
         } catch (Exception e) {
-            fail("Wrong Exception was threw: " + e + " " + e.getMessage());
+            fail("Wrong Exception was thrown: " + e + " " + e.getMessage());
         }
 
         try {
-            dao.findByLastName("");
-            fail("Exception for empty string as argument was not threw.");
+            userDao.findByLastName("");
+            fail("Exception for empty string as argument was not thrown.");
         } catch (IllegalArgumentException e) {
         } catch (Exception e) {
-            fail("Wrong Exception was threw: " + e + " " + e.getMessage());
+            fail("Wrong Exception was thrown: " + e + " " + e.getMessage());
         }
     }
 
     @Test
     public void testValidFindByName() {
-        UserDAO dao = createUserDAOFactory();
         User user = newUser("Jan Novak", UserClassEnum.EMPLOYEE, false);
         User user2 = newUser("Petr Novak", UserClassEnum.EMPLOYEE, false);
         List<User> all = null;
         List<User> results = null;
         try {
-            dao.create(user);
-            all = dao.findAll();
-            dao.create(user2);
+            userDao.create(user);
+            all = userDao.findAll();
+            userDao.create(user2);
 
-            results = dao.findByLastName(user.getLastName());
+            results = userDao.findByLastName(user.getLastName());
         } catch (Exception e) {
-            fail("Unexpected exception was threw: " + e + " " + e.getMessage());
+            fail("Unexpected exception was thrown: " + e + " " + e.getMessage());
         }
         assertEquals("Unexpected number of results.", 1, results.size());
 
@@ -334,6 +240,9 @@ public class UserDAOTest {
         return user;
 
     }
+
+
+    
     private static Comparator<User> idComparator = new Comparator<User>() {
 
         @Override

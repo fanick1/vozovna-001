@@ -1,42 +1,54 @@
 package cz.muni.fi.pa165.vozovna.dao;
 
-import cz.muni.fi.pa165.vozovna.dao.hibernate.ServiceIntervalDAOImpl;
-import cz.muni.fi.pa165.vozovna.dao.hibernate.VehicleDAOHibernateImpl;
-import cz.muni.fi.pa165.vozovna.entity.ServiceInterval;
-import cz.muni.fi.pa165.vozovna.entity.Vehicle;
-import cz.muni.fi.pa165.vozovna.enums.UserClassEnum;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
 import javax.persistence.EntityManager;
 import javax.persistence.Persistence;
 import javax.persistence.TypedQuery;
+
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+
+import cz.muni.fi.pa165.vozovna.dao.hibernate.ServiceIntervalDAOImpl;
+import cz.muni.fi.pa165.vozovna.entity.ServiceInterval;
+import cz.muni.fi.pa165.vozovna.entity.Vehicle;
+import cz.muni.fi.pa165.vozovna.enums.UserClassEnum;
 
 /**
  *
  * @author Jozef Triscik
  */
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration("ServiceIntervalDAOTest-context.xml")
 public class ServiceIntervalDAOTest {
 
+    Logger logger = LoggerFactory.getLogger(getClass());
+
+    @Autowired
     private ServiceIntervalDAO serviceIntervalDAO;
+
+    public void setServiceIntervalDAO(ServiceIntervalDAO serviceIntervalDAO) {
+        this.serviceIntervalDAO = serviceIntervalDAO;
+    }
+
+
+
     private VehicleDAO vehicleDao;
     private static final String PERSISTENCE_UNIT_NAME = "TestingPU";
 
-    public ServiceIntervalDAOTest() {
-        ServiceIntervalDAOImpl serviceDaoImplementation = new ServiceIntervalDAOImpl();
-        serviceDaoImplementation.setEntityManagerFactory(Persistence.createEntityManagerFactory(PERSISTENCE_UNIT_NAME));
-        this.serviceIntervalDAO = serviceDaoImplementation;
 
-        VehicleDAOHibernateImpl vehicleDaoImpl = new VehicleDAOHibernateImpl();
-        vehicleDaoImpl.setEntityManagerFactory(Persistence.createEntityManagerFactory(PERSISTENCE_UNIT_NAME));
-        this.vehicleDao = vehicleDaoImpl;
-    }
 
     private static Vehicle getVehicle(String brand, int distanceCount, String engineType,
             String type, UserClassEnum userClass, String vin, int year) {
@@ -273,93 +285,5 @@ public class ServiceIntervalDAOTest {
         }
     }
 
-    @Test
-    public void testCreateFactoryNotInitialized() {
-        try {
-            Vehicle toyota = ServiceIntervalDAOTest.getVehicle("Toyota", 20000, "V-8", "Supra", UserClassEnum.MANAGER, "78-88as-ouu899", 2004);
-            ServiceInterval interval1 = ServiceIntervalDAOTest.getServiceInterval(new ArrayList<Date>(), "Prehodeni koles", 7, toyota);
 
-            ServiceIntervalDAO manager = ServiceIntervalDAOTest.getUnitializedServiceIntervalDAO();
-            manager.create(interval1);
-            Assert.fail("Exception about uninitialized factory was not throwed.");
-        } catch (IllegalStateException ex) {
-            System.out.println("Ok");
-        } catch (Exception ex) {
-            Assert.fail("Unexpected exception was throwed: " + ex + " " + ex.toString());
-        }
-    }
-
-    @Test
-    public void testUpdateFactoryNotInitialized() {
-        try {
-            Vehicle toyota = ServiceIntervalDAOTest.getVehicle("Toyota", 20000, "V-8", "Supra", UserClassEnum.MANAGER, "78-88as-ouu899", 2004);
-            ServiceInterval interval1 = ServiceIntervalDAOTest.getServiceInterval(new ArrayList<Date>(), "Prehodeni koles", 7, toyota);
-
-            ServiceIntervalDAO manager = ServiceIntervalDAOTest.getUnitializedServiceIntervalDAO();
-            manager.update(interval1);
-            Assert.fail("Exception about uninitialized factory was not throwed.");
-        } catch (IllegalStateException ex) {
-            System.out.println("Ok");
-        } catch (Exception ex) {
-            Assert.fail("Unexpected exception was throwed: " + ex + " " + ex.toString());
-        }
-    }
-
-    @Test
-    public void testRemoveFactoryNotInitialized() {
-        try {
-            Vehicle toyota = ServiceIntervalDAOTest.getVehicle("Toyota", 20000, "V-8", "Supra", UserClassEnum.MANAGER, "78-88as-ouu899", 2004);
-            ServiceInterval interval1 = ServiceIntervalDAOTest.getServiceInterval(new ArrayList<Date>(), "Prehodeni koles", 7, toyota);
-
-            ServiceIntervalDAO manager = ServiceIntervalDAOTest.getUnitializedServiceIntervalDAO();
-            manager.remove(interval1);
-            Assert.fail("Exception about uninitialized factory was not throwed.");
-        } catch (IllegalStateException ex) {
-            System.out.println("Ok");
-        } catch (Exception ex) {
-            Assert.fail("Unexpected exception was throwed: " + ex + " " + ex.toString());
-        }
-    }
-
-    @Test
-    public void testGetByIdFactoryNotInitialized() {
-        try {
-            ServiceIntervalDAO manager = ServiceIntervalDAOTest.getUnitializedServiceIntervalDAO();
-            manager.getById(new Long("1"));
-            Assert.fail("Exception about uninitialized factory was not throwed.");
-        } catch (IllegalStateException ex) {
-            System.out.println("Ok");
-        } catch (Exception ex) {
-            Assert.fail("Unexpected exception was throwed: " + ex + " " + ex.toString());
-        }
-    }
-
-    @Test
-    public void testFindAllFactoryNotInitialized() {
-        try {
-            ServiceIntervalDAO manager = ServiceIntervalDAOTest.getUnitializedServiceIntervalDAO();
-            manager.findAll();
-            Assert.fail("Exception about uninitialized factory was not throwed.");
-        } catch (IllegalStateException ex) {
-            System.out.println("Ok");
-        } catch (Exception ex) {
-            Assert.fail("Unexpected exception was throwed: " + ex + " " + ex.toString());
-        }
-    }
-
-    @Test
-    public void testFindByVehicleFactoryNotInitialized() {
-        try {
-            Vehicle toyota = ServiceIntervalDAOTest.getVehicle("Toyota", 20000, "V-8", "Yaris", UserClassEnum.MANAGER, "7s-xxas-ouu899", 2004);
-            this.vehicleDao.create(toyota);
-
-            ServiceIntervalDAO manager = ServiceIntervalDAOTest.getUnitializedServiceIntervalDAO();
-            manager.findAllByVehicle(toyota);
-            Assert.fail("Exception about uninitialized factory was not throwed.");
-        } catch (IllegalStateException ex) {
-            System.out.println(ex);
-        } catch (Exception ex) {
-            Assert.fail("Unexpected exception was throwed: " + ex + " " + ex.toString());
-        }
-    }
 }

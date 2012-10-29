@@ -69,6 +69,7 @@ public class Drive {
     /**
      * State of this Drive. (Before drive, drive ongoing, drive cancelled, drive finished)
      */
+    //TODO nastavit mapovani do DB na string
     private DriveStateEnum state;
 
     public DateTime getDateFrom() {
