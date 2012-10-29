@@ -1,267 +1,215 @@
 package cz.muni.fi.pa165.vozovna.dao;
 
-import cz.muni.fi.pa165.vozovna.dao.hibernate.DriveDAOHibernateImpl;
-import cz.muni.fi.pa165.vozovna.entity.Drive;
-import cz.muni.fi.pa165.vozovna.entity.User;
-import cz.muni.fi.pa165.vozovna.entity.Vehicle;
-import cz.muni.fi.pa165.vozovna.enums.DriveStateEnum;
-import cz.muni.fi.pa165.vozovna.enums.UserClassEnum;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.fail;
+
+import java.io.FileInputStream;
+import java.sql.Connection;
 import java.util.List;
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
+
+import javax.sql.DataSource;
+
+import org.dbunit.database.DatabaseConnection;
+import org.dbunit.database.IDatabaseConnection;
+import org.dbunit.dataset.xml.XmlDataSet;
+import org.dbunit.operation.DatabaseOperation;
 import org.joda.time.DateTime;
-import org.junit.After;
-import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
+import org.springframework.jdbc.datasource.DataSourceUtils;
+import org.springframework.test.annotation.DirtiesContext;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+
+import cz.muni.fi.pa165.vozovna.entity.Drive;
+
 /**
  * @author Frantisek Veverka, 207422@mail.muni.cz
  */
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration("DriveDAOTest-context.xml")
 public class DriveDAOTest {
 
-	
-	private DriveDAO driveDao;
-	
-	private static Long driveId1 = 1l;
+    Logger logger = LoggerFactory.getLogger(getClass());
 
-	private Vehicle vehicle;
+    @Autowired
+    private DriveDAO driveDao;
 
-	private User franta;
+    public void setDriveDao(DriveDAO driveDao) {
+        this.driveDao = driveDao;
+    }
 
-	private Drive drive;
+    public static final Long TEST_VEHICLE_ID = new Long(-1l);
+    
+    @Before
+    public void setUpTestData() throws Exception {
+//        ApplicationContext applicationContext = new org.springframework.context.support.ClassPathXmlApplicationContext("cz/muni/fi/pa165/vozovna/dao/DriveDAOTest-context.xml");
+//        DataSource ds = (DataSource) applicationContext.getBean("dataSource");
+//        Connection conn = ds.getConnection();
+//        try {
+//            IDatabaseConnection connection = new DatabaseConnection(conn);
+//            logger.info("*** Deletes data ***");
+//            DatabaseOperation.DELETE_ALL.execute(connection, new XmlDataSet(new FileInputStream("src/test/resources/TestDataSet.xml")));
+//            logger.info("*** Inserts new data ***");
+//            DatabaseOperation.CLEAN_INSERT.execute(connection, new XmlDataSet(new FileInputStream("src/test/resources/TestDataSet.xml")));
+//        } finally {
+//            DataSourceUtils.releaseConnection(conn, ds);
+//            logger.info("*** Finished inserting test data ***");
+//        }
+    }
+    
 
-	private EntityManagerFactory emf;
-	
-	public DriveDAOTest() {
-		emf = Persistence.createEntityManagerFactory("TestingPU");
-	}
-	
-	/**
-	 * @throws java.lang.Exception
-	 */
-	@Before
-	public void setUp() throws Exception {        
-		EntityManager localManager = emf.createEntityManager();
-		localManager.getTransaction().begin();
-		
-		fillData(localManager);
+    /**
+     * Test method for {@link cz.muni.fi.pa165.vozovna.dao.DriveDAO#getById(java.lang.Long)}.
+     */
+    @Test
+    public void testGetById() {
 
-        DriveDAOHibernateImpl driveDaoHibernate = new DriveDAOHibernateImpl();
-        driveDaoHibernate.setEntityManagerFactory(emf);
-        driveDao = driveDaoHibernate;
-        System.err.println("SetUp");
-	}
+        logger.debug("test get Drive by null id");
+        try {
+            driveDao.getById(null);
+            fail("IllegalArgumentException expected when trying to get Drive by null id");
+        } catch (IllegalArgumentException e) {
+            // OK
+        }
 
-	private void fillData(EntityManager localManager) {
-		drive = new Drive();
-        vehicle = new Vehicle();
-        vehicle.setBrand("Skoda");
-        vehicle.setDistanceCount(191400);
-        vehicle.setEngineType("1.3 MPI");
-        vehicle.setType("Felicia GLX");
-        vehicle.setUserClass(UserClassEnum.EMPLOYEE);
-        vehicle.setVin("13EBF1893241");
-        vehicle.setYearMade(1998);
-        localManager.persist(vehicle);
-        franta = new User();
-        franta.setIsAdmin(true);
-        franta.setFirstName("BFU");
-        franta.setUserClass(UserClassEnum.EMPLOYEE);
-        localManager.persist(franta);
-        drive.setDateFrom(DateTime.now().minusDays(1));
-        drive.setDateFrom(DateTime.now());
-        drive.setDistance(Integer.valueOf(100));
-        drive.setState(DriveStateEnum.RESERVED);
-        drive.setUser(franta);
-        drive.setVehicle(vehicle);
-//        drive.setId(driveId1);
+        logger.debug("test get Drive by id which unexists");
+        assertNull("null expected", driveDao.getById(999l));
+
+        logger.debug("test get Drive by id which exists");
+        Drive result = driveDao.getById(TEST_VEHICLE_ID);
+        assertNotNull("getById returned null instead of drive", result);
+        assertEquals("result has wrong id", TEST_VEHICLE_ID, result.getId());
+
+        // TODO assert equals na ostatni parametry - po doplneni testovacich dat
+
+        // assertEquals(drive, test1);
+        // assertEquals(franta, test1.getUser());
+        // assertEquals(vehicle, test1.getVehicle());
+
+    }
+
+    /**
+     * Test method for {@link cz.muni.fi.pa165.vozovna.dao.DriveDAO#create(cz.muni.fi.pa165.vozovna.entities.Drive)}.
+     */
+    @Test
+    @DirtiesContext
+    public void testCreate() {
+
+        logger.debug("test create with null argument");
+        try {
+            driveDao.create(null);
+            fail("IllegalArgumentException expected when trying to create null Drive");
+        } catch (IllegalArgumentException e) {
+            // OK
+        }
+
+        logger.debug("test create normal");
+        Drive newDrive = new Drive();
+        driveDao.create(newDrive);
+        assertNotNull(newDrive.getId());
+
+        logger.debug("test create existing Drive");
+        try {
+            driveDao.create(newDrive); // duplicity
+            fail("creating duplicit Drive shoudn`t be possible; exception expected");
+        } catch (Exception e) {
+            // OK
+        }
+
+    }
+
+    /**
+     * Test method for {@link cz.muni.fi.pa165.vozovna.dao.DriveDAO#update(cz.muni.fi.pa165.vozovna.entities.Drive)}.
+     */
+    @Test
+    public void testUpdate() {
+
+        logger.debug("test update null drive");
+        try {
+            driveDao.getById(null);
+            fail("IllegalArgumentException expected");
+        } catch (IllegalArgumentException e) {
+            // OK
+        }
         
-        localManager.persist(drive);
-        driveId1 = drive.getId();	//store for testing purposes
-        localManager.getTransaction().commit();
-        localManager.close();
-	}
 
-	/**
-	 * @throws java.lang.Exception
-	 */
-	@After
-	public void tearDown() throws Exception {
-		System.err.println("TearDown");
-	}
+        logger.debug("test update drive normal");
+        Drive driveToUpdate = driveDao.getById(TEST_VEHICLE_ID);
+        Drive driveToUpdate2 = driveDao.getById(-1l);
+        Drive driveToUpdate3 = driveDao.getById(new Long(-1l));
+        
+        DateTime oldDateTo = driveToUpdate.getDateTo();
+        DateTime newDateTo = new DateTime();
+        if (newDateTo.equals(oldDateTo)) {
+            newDateTo = newDateTo.plusMinutes(1);
+        }
+        driveToUpdate.setDateTo(newDateTo);
+        driveDao.update(driveToUpdate);
+        Drive updatedDrive = driveDao.getById(TEST_VEHICLE_ID);
+        assertEquals("vehicle hasn't been updated in database", driveToUpdate, updatedDrive);
 
-	/**
-	 * Test method for {@link cz.muni.fi.pa165.vozovna.dao.DriveDAO#getById(java.lang.Long)}.
-	 */
-	@Test
-	public void testGetById1() {
-                System.err.println("testGetById1");
-		try{
-			driveDao.getById(null);
-			fail("IllegalArgumentException expected.");
-		}catch(IllegalArgumentException e){
-			//OK
-		}
-	}
+    }
 
-	/**
-	 * Test method for {@link cz.muni.fi.pa165.vozovna.dao.DriveDAO#getById(java.lang.Long)}.
-	 */
-	@Test
-	public void testGetById2() {
-            System.err.println("testGetById2");
-		assertNull("null expected",driveDao.getById(-1l));
-	}
-	/**
-	 * Test method for {@link cz.muni.fi.pa165.vozovna.dao.DriveDAO#getById(java.lang.Long)}.
-	 */
-	@Test
-	public void testGetById3() {
-            System.err.println("testGetById3");
-		Drive test1 = driveDao.getById(driveId1);
-		assertNotNull(test1);
-		
-		assertEquals(drive, test1);		
-		assertEquals(franta, test1.getUser());
-		assertEquals(vehicle, test1.getVehicle());
-	}
-	/**
-	 * Test method for {@link cz.muni.fi.pa165.vozovna.dao.DriveDAO#create(cz.muni.fi.pa165.vozovna.entities.Drive)}.
-	 */
-	@Test
-	public void testCreate1() {
-            System.err.println("testCreate1");
-		try{
-			driveDao.create(null);
-			fail("IllegalArgumentException expected");
-		}catch(IllegalArgumentException e)
-		{
-			//OK
-		}
-	}
-	/**
-	 * Test method for {@link cz.muni.fi.pa165.vozovna.dao.DriveDAO#create(cz.muni.fi.pa165.vozovna.entities.Drive)}.
-	 */
-	@Test
-	public void testCreate2() {
-            System.err.println("testCreate2");
-		Drive newDrive = new Drive();
-		
-		driveDao.create(newDrive);
-		//OK
-	}
-	/**
-	 * Test method for {@link cz.muni.fi.pa165.vozovna.dao.DriveDAO#create(cz.muni.fi.pa165.vozovna.entities.Drive)}.
-	 */
-	@Test
-	public void testCreate3() {
-            System.err.println("testCreate3");
-		try{
-			driveDao.create(drive);	//duplicity
-			fail("Some exception expected");
-		}catch(Exception e){
-			//OK
-		}
-		
-	}
+    /**
+     * Test method for {@link cz.muni.fi.pa165.vozovna.dao.DriveDAO#remove(cz.muni.fi.pa165.vozovna.entities.Drive)}.
+     */
+    @Test
+    public void testRemove() {
+        logger.debug("test remove null Drive");
+        try {
+            driveDao.remove(null);
+            fail("IllegalArgumentException expected");
+        } catch (IllegalArgumentException e) {
+            // OK
+        }
 
-	/**
-	 * Test method for {@link cz.muni.fi.pa165.vozovna.dao.DriveDAO#remove(cz.muni.fi.pa165.vozovna.entities.Drive)}.
-	 */
-	@Test
-	public void testRemove() {
-            System.err.println("testRemove");
-		try{
-			driveDao.remove(null);
-			fail("IllegalArgumentException expected");
-		}catch(IllegalArgumentException e){
-			//OK
-		}
-	}
+        logger.debug("test remove drive normal");
+        Drive newDrive = new Drive();
+        driveDao.create(newDrive);
+        Long newDriveId = newDrive.getId();
+        assertNotNull("Id of drive is not set. Error in create(Drive drive) method.", newDriveId);
+        driveDao.remove(newDrive);
+        assertNotNull("drive hasn`t been removed", driveDao.getById(newDriveId));
+    }
 
-	/**
-	 * Test method for {@link cz.muni.fi.pa165.vozovna.dao.DriveDAO#update(cz.muni.fi.pa165.vozovna.entities.Drive)}.
-	 */
-	@Test
-	public void testUpdate1() {
-            System.err.println("testUpdate1");
-		try{
-			driveDao.getById(null);
-			fail("IllegalArgumentException expected");
-		}catch(IllegalArgumentException e){
-			//OK
-		}
-		
-		
-	}
-	/**
-	 * Test method for {@link cz.muni.fi.pa165.vozovna.dao.DriveDAO#update(cz.muni.fi.pa165.vozovna.entities.Drive)}.
-	 */
-	@Test
-	public void testUpdate2() {
-		System.err.println("testUpdate2");
-		
-                EntityManager localManager = emf.createEntityManager();
-                Integer distance = 1234;
-		DriveStateEnum state = DriveStateEnum.FINISHED;
-		User user = new User();
-                user.setIsAdmin(false);
-                user.setFirstName("Name");
-                user.setUserClass(UserClassEnum.EMPLOYEE);
-		Vehicle vehicle2 = new Vehicle();
-		
-                
-		Drive existingDrive = driveDao.getById(drive.getId());
-		existingDrive.setDistance(distance);
-		existingDrive.setState(state);
-                localManager.getTransaction().begin();
-                localManager.persist(user);
-                localManager.persist(vehicle2);
-                localManager.getTransaction().commit();
-                existingDrive.setUser(user);
-		existingDrive.setVehicle(vehicle2);
+    /**
+     * Test method for {@link cz.muni.fi.pa165.vozovna.dao.DriveDAO#findAll()}.
+     */
+    @Test
+    public void testFindAll() {
+        logger.debug("test findAll");
+        List<Drive> list = driveDao.findAll();
+        if (list == null) {
+            fail("Non null list expected");
+        }
+        if (list.size() != 1) {
+            fail("Expected list of size 1. Instead got " + list.size());
+        }
+    }
 
-                localManager.close();
-		driveDao.update(existingDrive);
-		
-		Drive existingDrive2 = driveDao.getById(drive.getId());
-		assertEquals(distance, existingDrive2.getDistance());
-		assertEquals(state, existingDrive2.getState());
-		assertEquals(user, existingDrive2.getUser());
-		assertEquals(vehicle2, existingDrive2.getVehicle());
-	}
-	
+    /**
+     * Test method for {@link cz.muni.fi.pa165.vozovna.dao.DriveDAO#findByUser(cz.muni.fi.pa165.vozovna.entities.User)}.
+     */
+    @Test
+    public void testFindByUser() {
+        logger.debug("test findByUser");
+        try {
+            driveDao.findByUser(null);
+            fail("IllegalArgumentException expected");
+        } catch (IllegalArgumentException e) {
+            // OK
+        }
 
-	/**
-	 * Test method for {@link cz.muni.fi.pa165.vozovna.dao.DriveDAO#findAll()}.
-	 */
-	@Test
-	public void testFindAll() {
-            System.err.println("testFindAll");
-		List<Drive> list = driveDao.findAll();
-		if(list == null){
-			fail("Non null list expected");
-		}
-		if(list.size() != 1){
-			fail("List of size 1 expected");
-		}
-		assertEquals(drive,list.get(0));
-	}
+        // TODO až bude vyplněné create-schema.sql, tak sem přidat kontrolu hledání podle uživatele
 
-	/**
-	 * Test method for {@link cz.muni.fi.pa165.vozovna.dao.DriveDAO#findByUser(cz.muni.fi.pa165.vozovna.entities.User)}.
-	 */
-	@Test
-	public void testFindByUser() {
-		System.err.println("testFindByUser");
-		try{
-			driveDao.findByUser(null);
-			fail("IllegalArgumentException expected");
-		}catch(IllegalArgumentException e){
-			//OK
-		}
-		driveDao.findByUser(franta);
-	}
+    }
 
 }
