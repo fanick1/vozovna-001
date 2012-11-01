@@ -9,13 +9,44 @@ import cz.muni.fi.pa165.vozovna.enums.UserClassEnum;
  */
 public class VehicleDTO implements java.io.Serializable {
  
+    /**
+     * Identification key
+     */
     private Long id;
+    
+    /**
+     * Brand of vehicle
+     */
     private String brand;
+    
+    /**
+     * Max distance, which can vehicle go in kilometres.
+     */
     private int maxDistance;
+    
+    /**
+     * Type of engine
+     */
     private String engineType;
+    
+    /**
+     * Vehicle type
+     */
     private String type;
+    
+    /**
+     * Vehicle Identifier Number.
+     */
     private String vin;
+    
+    /**
+     * The year when was vehicle made.
+     */
     private int yearMade;
+    
+    /**
+     * The class of user that can use this vehicle.
+     */
     private UserClassEnum userClass;
 
     

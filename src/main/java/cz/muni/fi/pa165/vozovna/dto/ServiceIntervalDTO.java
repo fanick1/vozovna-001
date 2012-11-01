@@ -28,7 +28,6 @@ public class ServiceIntervalDTO implements java.io.Serializable {
     /**
      * The related vehicle
      */
-    //@Column(nullable = false)
     private VehicleDTO vehicle;
     
     /**
@@ -95,7 +94,7 @@ public class ServiceIntervalDTO implements java.io.Serializable {
     }
     
     /**
-     * Returns serviceInterval with same properties
+     * Returns service interval with same properties
      * @return Instance of Service Interval
      */
     public ServiceInterval toServiceInterval() {
