@@ -1,45 +1,47 @@
 package cz.muni.fi.pa165.vozovna.service.impl;
 
-import cz.muni.fi.pa165.vozovna.dto.ServiceIntervalDTO;
-import cz.muni.fi.pa165.vozovna.dto.VehicleDTO;
-import cz.muni.fi.pa165.vozovna.service.ServiceIntervalService;
+import cz.muni.fi.pa165.vozovna.dto.UserDTO;
+import cz.muni.fi.pa165.vozovna.service.UserService;
 import java.util.List;
+import org.springframework.stereotype.Service;
 
 /**
- *
- * @author Eva Neduchalová, učo 359893
+ * 
+ * @author Lukas Hajek <359617@mail.muni.cz>
  */
-
-public class UserServiceImpl implements ServiceIntervalService {
+@Service
+public class UserServiceImpl implements UserService {
 
     @Override
-    public ServiceIntervalDTO getById(Long id) {
+    public UserDTO getById(Long id) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
     @Override
-    public void create(ServiceIntervalDTO serviceInterval) {
+    public void create(UserDTO user) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
     @Override
-    public void remove(ServiceIntervalDTO serviceInterval) {
+    public void remove(UserDTO user) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
     @Override
-    public void update(ServiceIntervalDTO serviceInterval) {
+    public void update(UserDTO user) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
     @Override
-    public List<ServiceIntervalDTO> findAll() {
+    public List<UserDTO> findAll() {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
     @Override
-    public List<ServiceIntervalDTO> findAllByVehicle(VehicleDTO vehicle) {
+    public List<UserDTO> findByLastName(String lastName) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
+
+   
     
 }

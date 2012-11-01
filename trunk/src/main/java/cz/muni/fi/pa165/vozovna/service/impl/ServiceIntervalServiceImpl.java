@@ -7,7 +7,6 @@ import java.util.List;
 
 /**
  *
- * @author Eva Neduchalová, učo 359893
  */
 public class ServiceIntervalServiceImpl implements ServiceIntervalService {
 

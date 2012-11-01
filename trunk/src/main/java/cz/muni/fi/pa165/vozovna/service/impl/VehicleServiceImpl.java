@@ -1,44 +1,45 @@
 package cz.muni.fi.pa165.vozovna.service.impl;
 
-import cz.muni.fi.pa165.vozovna.dto.ServiceIntervalDTO;
 import cz.muni.fi.pa165.vozovna.dto.VehicleDTO;
-import cz.muni.fi.pa165.vozovna.service.ServiceIntervalService;
+import cz.muni.fi.pa165.vozovna.enums.UserClassEnum;
+import cz.muni.fi.pa165.vozovna.service.VehicleService;
 import java.util.List;
 
 /**
  *
- * @author Eva Neduchalová, učo 359893
  */
-public class VehicleServiceImpl implements ServiceIntervalService {
+public class VehicleServiceImpl implements VehicleService {
 
     @Override
-    public ServiceIntervalDTO getById(Long id) {
+    public VehicleDTO getById(Long id) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
     @Override
-    public void create(ServiceIntervalDTO serviceInterval) {
+    public void create(VehicleDTO vehicle) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
     @Override
-    public void remove(ServiceIntervalDTO serviceInterval) {
+    public void remove(VehicleDTO vehicle) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
     @Override
-    public void update(ServiceIntervalDTO serviceInterval) {
+    public void update(VehicleDTO vehicle) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
     @Override
-    public List<ServiceIntervalDTO> findAll() {
+    public List<VehicleDTO> findAll() {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
     @Override
-    public List<ServiceIntervalDTO> findAllByVehicle(VehicleDTO vehicle) {
+    public List<VehicleDTO> findByUserClass(UserClassEnum userClass) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
+
+   
     
 }

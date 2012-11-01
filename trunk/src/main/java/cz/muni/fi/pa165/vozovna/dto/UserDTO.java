@@ -25,7 +25,7 @@ public class UserDTO implements java.io.Serializable {
     private String lastName;
     
     /**
-     * VozovnaUser's category - important when deciding which vehicles can be reserved
+     * Category - important when deciding which vehicles can be reserved
      */
     private UserClassEnum userClass;
     

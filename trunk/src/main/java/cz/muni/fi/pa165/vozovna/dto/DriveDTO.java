@@ -107,7 +107,7 @@ public class DriveDTO implements java.io.Serializable {
     }
     /**
      * Fills properties from drive
-     * @param drive Pattern drive
+     * @param drive     Pattern drive
      */
     public void fromDrive(Drive drive) {
         id = drive.getId();
@@ -127,7 +127,7 @@ public class DriveDTO implements java.io.Serializable {
     }
 
     /**
-     * Returns user with same properties
+     * Returns drive with same properties
      * @return 
      */
     public Drive toDrive() {
