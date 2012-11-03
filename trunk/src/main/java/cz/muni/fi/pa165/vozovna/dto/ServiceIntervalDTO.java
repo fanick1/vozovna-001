@@ -77,11 +77,19 @@ public class ServiceIntervalDTO implements java.io.Serializable {
         this.description = description;
     }
 
+    public ServiceIntervalDTO() {
+
+    }
+    
+    public ServiceIntervalDTO(ServiceInterval serviceInterval) {
+        fromServiceInterval(serviceInterval);
+    }
+    
     /**
      * Fills properties from serviceInterval
-     * @param serviceInterval Pattern serviceInterval
+     * @param serviceInterval Original Service Interval
      */
-    public void fromServiceInterval(ServiceInterval serviceInterval) {
+    public final void fromServiceInterval(ServiceInterval serviceInterval) {
         id = serviceInterval.getId();
         inspectionInterval = serviceInterval.getInspectionInterval();
         dated = serviceInterval.getDated();

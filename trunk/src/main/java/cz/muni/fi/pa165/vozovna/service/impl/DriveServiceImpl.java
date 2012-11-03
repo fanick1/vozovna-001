@@ -5,6 +5,7 @@ import cz.muni.fi.pa165.vozovna.dto.DriveDTO;
 import cz.muni.fi.pa165.vozovna.dto.UserDTO;
 import cz.muni.fi.pa165.vozovna.entity.Drive;
 import cz.muni.fi.pa165.vozovna.service.DriveService;
+import cz.muni.fi.pa165.vozovna.service.exceptions.DriveServiceFailureException;
 import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,45 +28,96 @@ public class DriveServiceImpl implements DriveService {
     @Override
     @Transactional(readOnly=true)
     public DriveDTO getById(Long id) {
-        Drive drive = driveDAO.getById(id);
+        if (id == null) {
+            return null;
+        }
         
-        DriveDTO dto = new DriveDTO();
-        dto.fromDrive(drive);
-        
-        return dto;
+        Drive drive;
+        try {
+            drive = driveDAO.getById(id);
+        } catch(Exception e) {
+            throw new DriveServiceFailureException("Finding drive by ID was failded.", e);
+        }
+
+        return new DriveDTO(drive);
     }
 
     @Override
     @Transactional
-    public void create(DriveDTO drive) {
-        driveDAO.create(drive.toDrive());        
+    public Long create(DriveDTO drive) {
+        if (drive == null) {
+            throw new IllegalArgumentException("null drive");
+        }
+        Drive entity = drive.toDrive();
+        try {
+            driveDAO.create(entity);     
+        } catch(Exception e) {
+            throw new DriveServiceFailureException("Drive creation was failded.", e);
+        }
+        drive.fromDrive(entity);
+        
+        return entity.getId();
     }
 
     @Override
     @Transactional
     public void remove(DriveDTO drive) {
-        driveDAO.remove(drive.toDrive()); 
+        if (drive == null) {
+            throw new IllegalArgumentException("null drive");
+        }
+        
+        try {
+            driveDAO.remove(drive.toDrive()); 
+            drive.setId(null);
+        } catch(Exception e) {
+            throw new DriveServiceFailureException("Drive deletion was failed.", e);
+        }
+      
     }
 
     @Override
     @Transactional
-    public void update(DriveDTO drive) {
-       driveDAO.update(drive.toDrive()); 
+    public DriveDTO update(DriveDTO drive) {
+        if (drive == null) {
+            throw new IllegalArgumentException("null drive");
+        }
+        
+        Drive entity = drive.toDrive();
+        try {
+            driveDAO.update(entity); 
+        } catch(Exception e) {
+            throw new DriveServiceFailureException("Drive update was failed.", e);
+        }
+        drive.fromDrive(entity);
+        
+        return drive;
     }
 
     @Override
     @Transactional(readOnly=true)
     public List<DriveDTO> findAll() {
-        List<Drive> drives = driveDAO.findAll();
-        
+        List<Drive> drives;
+        try {
+            drives = driveDAO.findAll();
+        } catch(Exception e) {
+            throw new DriveServiceFailureException("Finding all drives were failed.", e);
+        }
         return convertListOfDrivesToListOfDriveDTOs(drives); 
     }
 
     @Override
     @Transactional(readOnly=true)
     public List<DriveDTO> findByUser(UserDTO user) {
-        List<Drive> drives = driveDAO.findByUser(user.toUser());
+        if (user == null) {
+            throw new IllegalArgumentException("null user");
+        }
         
+        List<Drive> drives;
+        try {
+            drives = driveDAO.findByUser(user.toUser());
+        } catch(Exception e) {
+            throw new DriveServiceFailureException("Finding all drives by user were failed.", e);
+        }
         return convertListOfDrivesToListOfDriveDTOs(drives); 
     }
 
@@ -78,9 +130,7 @@ public class DriveServiceImpl implements DriveService {
         List<DriveDTO> result = new ArrayList<>();
         
         for(Drive drive : drives) {
-            DriveDTO dto = new DriveDTO();
-            dto.fromDrive(drive);
-            result.add(dto);
+            result.add(new DriveDTO(drive));
         }
         
         return result; 

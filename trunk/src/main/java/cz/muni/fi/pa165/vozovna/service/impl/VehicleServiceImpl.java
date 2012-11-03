@@ -5,13 +5,14 @@ import cz.muni.fi.pa165.vozovna.dto.VehicleDTO;
 import cz.muni.fi.pa165.vozovna.entity.Vehicle;
 import cz.muni.fi.pa165.vozovna.enums.UserClassEnum;
 import cz.muni.fi.pa165.vozovna.service.VehicleService;
+import cz.muni.fi.pa165.vozovna.service.exceptions.VehicleServiceFailureException;
 import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
- * 
+ * Implementation of Vehicle Service
  * @author Lukas Hajek <359617@mail.muni.cz>
  */
 public class VehicleServiceImpl implements VehicleService {
@@ -26,44 +27,84 @@ public class VehicleServiceImpl implements VehicleService {
     @Override
     @Transactional(readOnly=true)
     public VehicleDTO getById(Long id) {
-        Vehicle vehicle = vehicleDAO.getById(id);
-        
-        VehicleDTO vehicleDTO = new VehicleDTO();
-        vehicleDTO.fromVehicle(vehicle);
-        
-        return vehicleDTO;
+        if (id == null) {
+            return null;
+        }
+        Vehicle vehicle;
+        try {
+            vehicle = vehicleDAO.getById(id);
+        } catch(Exception e) {
+            throw new VehicleServiceFailureException("Finding vehicle by ID was failded.", e);
+        }
+
+        return new VehicleDTO(vehicle);
     }
 
     @Override
     @Transactional
-    public void create(VehicleDTO vehicle) {
-       vehicleDAO.create(vehicle.toVehicle());
+    public Long create(VehicleDTO vehicle) {
+        if (vehicle == null) {
+            throw new IllegalArgumentException("null vehicle");
+        }
+        
+        Vehicle entity = vehicle.toVehicle();
+        try {
+            vehicleDAO.create(entity);
+        } catch(Exception e) {
+            throw new VehicleServiceFailureException("Vehicle creation was failded.", e);
+        }
+        
+        vehicle.fromVehicle(entity);
+        
+        return entity.getId();
     }
 
     @Override
     @Transactional
     public void remove(VehicleDTO vehicle) {
-        vehicleDAO.remove(vehicle.toVehicle());
+        if (vehicle == null) {
+            throw new IllegalArgumentException("null vehicle");
+        }
+        try {
+            vehicleDAO.remove(vehicle.toVehicle());
+            vehicle.setId(null);
+        } catch(Exception e) {
+            throw new VehicleServiceFailureException("Vehicle deletion was failded.", e);
+        }
     }
 
     @Override
     @Transactional
-    public void update(VehicleDTO vehicle) {
-        vehicleDAO.update(vehicle.toVehicle());
+    public VehicleDTO update(VehicleDTO vehicle) {
+        if (vehicle == null) {
+            throw new IllegalArgumentException("null vehicle");
+        }
+        
+        Vehicle entity = vehicle.toVehicle();
+        try {
+            vehicleDAO.update(entity);
+        } catch(Exception e) {
+            throw new VehicleServiceFailureException("Vehicle update was failded.", e);
+        }
+        vehicle.fromVehicle(entity);
+        
+        return vehicle;
     }
 
     @Override
     @Transactional(readOnly=true)
     public List<VehicleDTO> findAll() {
-      
-        List<Vehicle> vehicles = vehicleDAO.findAll();
+        List<Vehicle> vehicles;
+        try {
+            vehicles = vehicleDAO.findAll();
+        } catch(Exception e) {
+            throw new VehicleServiceFailureException("Finding all vehicles was failded.", e);
+        }
         
         // transform from List<Vehicle> to List<VehicleDTO>
         List<VehicleDTO> result = new ArrayList<>();
         for(Vehicle vehicle:vehicles) {
-            VehicleDTO dto = new VehicleDTO();
-            dto.fromVehicle(vehicle);
-            result.add(dto);
+            result.add(new VehicleDTO(vehicle));
         }
         
         return result;
@@ -72,14 +113,20 @@ public class VehicleServiceImpl implements VehicleService {
     @Override
     @Transactional(readOnly=true)
     public List<VehicleDTO> findByUserClass(UserClassEnum userClass) {
+        if (userClass == null) {
+            throw new IllegalArgumentException("userClass");
+        }
+        List<Vehicle> vehicles;
+        try {
+            vehicles = vehicleDAO.findByUserClass(userClass);
+        } catch(Exception e) {
+            throw new VehicleServiceFailureException("Finding all vehicles by user class was failded.", e);
+        }
         
-        List<Vehicle> vehicles = vehicleDAO.findByUserClass(userClass);
-        
+        // transform from List<Vehicle> to List<VehicleDTO>
         List<VehicleDTO> result = new ArrayList<>();
         for(Vehicle vehicle:vehicles) {
-            VehicleDTO dto = new VehicleDTO();
-            dto.fromVehicle(vehicle);
-            result.add(dto);
+            result.add(new VehicleDTO(vehicle));
         }
         
         return result;

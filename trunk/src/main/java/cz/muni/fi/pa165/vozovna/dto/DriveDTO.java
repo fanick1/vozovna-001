@@ -105,11 +105,21 @@ public class DriveDTO implements java.io.Serializable {
     public void setVehicle(VehicleDTO vehicle) {
         this.vehicle = vehicle;
     }
+    
+    
+    public DriveDTO() {
+
+    }
+    
+     public DriveDTO(Drive drive) {
+        fromDrive(drive);
+    }
+    
     /**
      * Fills properties from drive
-     * @param drive     Pattern drive
+     * @param drive     Original drive
      */
-    public void fromDrive(Drive drive) {
+    public final void fromDrive(Drive drive) {
         id = drive.getId();
         distance = drive.getDistance();
         // user

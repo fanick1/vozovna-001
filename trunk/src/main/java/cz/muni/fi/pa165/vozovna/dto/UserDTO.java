@@ -76,12 +76,19 @@ public class UserDTO implements java.io.Serializable {
         this.isAdmin = isAdmin;
     }
     
+    public UserDTO() {
+
+    }
+    
+    public UserDTO(User user) {
+        fromUser(user);
+    }
     
     /**
      * Fills properties from user
-     * @param user Pattern user
+     * @param user Original user
      */
-    public void fromUser(User user) {
+    public final void fromUser(User user) {
         id = user.getId();
         firstName = user.getFirstName();
         lastName = user.getLastName();

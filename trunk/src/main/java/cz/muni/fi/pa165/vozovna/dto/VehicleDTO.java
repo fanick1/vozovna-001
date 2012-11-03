@@ -117,11 +117,19 @@ public class VehicleDTO implements java.io.Serializable {
         this.userClass = userClass;
     }
     
+    public VehicleDTO() {
+
+    }
+    
+    public VehicleDTO(Vehicle vehicle) {
+        fromVehicle(vehicle);
+    }
+    
     /**
      * Fills properties from vehicle
-     * @param vehicle Pattern vehicle
+     * @param vehicle   Original vehicle
      */
-    public void fromVehicle(Vehicle vehicle) {
+    public final void fromVehicle(Vehicle vehicle) {
         id = vehicle.getId();
         brand = vehicle.getBrand();
         maxDistance = vehicle.getDistanceCount();
@@ -134,7 +142,7 @@ public class VehicleDTO implements java.io.Serializable {
     
     /**
      * Returns vehicle with same properties
-     * @return Instance of vehicle
+     * @return  Instance of vehicle
      */
     public Vehicle toVehicle() {
         Vehicle vehicle = new Vehicle();
