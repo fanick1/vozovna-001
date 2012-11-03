@@ -1,6 +1,7 @@
 package cz.muni.fi.pa165.vozovna.service;
 
 import cz.muni.fi.pa165.vozovna.dto.UserDTO;
+import cz.muni.fi.pa165.vozovna.service.exceptions.UserServiceFailureException;
 import java.util.List;
 
 /**
@@ -14,7 +15,7 @@ public interface UserService {
      * @param id        ID of user
      * @return          UserDTO if User with given id exists, null otherwise.
      * @throws IllegalArgumentException     Throws if given id is null.
-     * @throws IllegalStateException        Throws if factory is not set.
+     * @throws UserServiceFailureException  Throws if there is problem with service.
      */
     public UserDTO getById(Long id);
 
@@ -23,16 +24,16 @@ public interface UserService {
      * 
      * @param user      User to save
      * @throws IllegalArgumentException     Throws if given user is null.
-     * @throws IllegalStateException        Throws if factory is not set.
+     * @throws UserServiceFailureException  Throws if there is problem with service.
      */
-    public void create(UserDTO user);
+    public Long create(UserDTO user);
 
     /**
      * Removes given user from database.
      * 
      * @param user      User to remove
      * @throws IllegalArgumentException     Throws if given user is null.
-     * @throws IllegalStateException        Throws if factory is not set.
+     * @throws UserServiceFailureException  Throws if there is problem with service.
      */
     public void remove(UserDTO user);
 
@@ -41,15 +42,15 @@ public interface UserService {
      * 
      * @param user      User to update
      * @throws IllegalArgumentException     Throws if given user is null.
-     * @throws IllegalStateException        Throws if factory is not set.
+     * @throws UserServiceFailureException  Throws if there is problem with service.
      */
-    public void update(UserDTO user);
+    public UserDTO update(UserDTO user);
 
     /**
      * Find and return all users in database.
      * 
      * @return List of all users.
-     * @throws IllegalStateException        Throws if factory is not set.
+     * @throws UserServiceFailureException  Throws if there is problem with service.
      */
     public List<UserDTO> findAll();
 
@@ -59,7 +60,7 @@ public interface UserService {
      * @param lastName      Lastname.
      * @return List of users of given user.
      * @throws IllegalArgumentException     Throws if given user is null.
-     * @throws IllegalStateException        Throws if factory is not set.
+     * @throws UserServiceFailureException  Throws if there is problem with service.
      */
     public List<UserDTO> findByLastName(String lastName);
 

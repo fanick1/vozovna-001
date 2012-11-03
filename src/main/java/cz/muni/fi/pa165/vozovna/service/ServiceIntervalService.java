@@ -14,8 +14,8 @@ public interface ServiceIntervalService {
      * 
      * @param id        ID of service interval
      * @return          ServiceIntervalDTO if Service Interval with given id exists, null otherwise.
-     * @throws IllegalArgumentException     Throws if given id is null.
-     * @throws IllegalStateException        Throws if factory is not set.
+     * @throws IllegalArgumentException                 Throws if given id is null.
+     * @throws ServiceIntervalServiceFailureException   Throws if there is problem with service.
      */
     public ServiceIntervalDTO getById(Long id);
 
@@ -23,17 +23,17 @@ public interface ServiceIntervalService {
      * Saves given service interval into database.
      * 
      * @param serviceInterval      Service Interval to save
-     * @throws IllegalArgumentException     Throws if given service interval is null.
-     * @throws IllegalStateException        Throws if factory is not set.
+     * @throws IllegalArgumentException                 Throws if given service interval is null.
+     * @throws ServiceIntervalServiceFailureException   Throws if there is problem with service.
      */
-    public void create(ServiceIntervalDTO serviceInterval);
+    public Long create(ServiceIntervalDTO serviceInterval);
 
     /** 
      * Removes given service interval from database.
      * 
      * @param serviceInterval      Service Interval to remove
-     * @throws IllegalArgumentException     Throws if given service interval is null.
-     * @throws IllegalStateException        Throws if factory is not set.
+     * @throws IllegalArgumentException                 Throws if given service interval is null.
+     * @throws ServiceIntervalServiceFailureException   Throws if there is problem with service.
      */
     public void remove(ServiceIntervalDTO serviceInterval);
 
@@ -41,26 +41,26 @@ public interface ServiceIntervalService {
      * Updates given service interval in database.
      * 
      * @param serviceInterval      Service Interval to update
-     * @throws IllegalArgumentException     Throws if given service interval is null.
-     * @throws IllegalStateException        Throws if factory is not set.
+     * @throws IllegalArgumentException                 Throws if given service interval is null.
+     * @throws ServiceIntervalServiceFailureException   Throws if there is problem with service.
      */
-    public void update(ServiceIntervalDTO serviceInterval);
+    public ServiceIntervalDTO update(ServiceIntervalDTO serviceInterval);
 
     /**
      * Find and return all service intervals in database.
      * 
      * @return List of all service intervals.
-     * @throws IllegalStateException        Throws if factory is not set.
+     * @throws ServiceIntervalServiceFailureException   Throws if there is problem with service.
      */
     public List<ServiceIntervalDTO> findAll();
 
     /**
      * Find and return service intervals with given lastname.
      * 
-     * @param lastName      Lastname.
+     * @param vehicle      Vehicle witch service intervals should be found.
      * @return List of service intervals of given vehicle.
-     * @throws IllegalArgumentException     Throws if given service interval is null.
-     * @throws IllegalStateException        Throws if factory is not set.
+     * @throws IllegalArgumentException                 Throws if given service interval is null.
+     * @throws ServiceIntervalServiceFailureException   Throws if there is problem with service.
      */
     public List<ServiceIntervalDTO> findAllByVehicle(VehicleDTO vehicle);
 
