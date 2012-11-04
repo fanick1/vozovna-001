@@ -2,8 +2,8 @@ package cz.muni.fi.pa165.vozovna.dao.hibernate;
 
 import java.util.List;
 
-import javax.persistence.TypedQuery;
-
+import org.hibernate.Query;
+import org.hibernate.Session;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -28,9 +28,10 @@ public class DriveDAOHibernateImpl extends GenericDAOHibernateImpl<Drive, Long> 
         if (user == null) {
             throw new IllegalArgumentException("User is null.");
         }
-        List<Drive> result = null;
-        TypedQuery<Drive> query = em.createQuery("FROM " + Drive.class.getName() + " d WHERE d.user = :user", Drive.class);
-        result = query.setParameter("user", user).getResultList();
-        return result;
+
+        final Session session = sessionFactory.getCurrentSession();
+        Query query = session.createQuery("FROM " + Drive.class.getName() + " d WHERE d.user = :user");
+        query.setParameter("user", user);
+        return (List<Drive>) query.list();
     }
 }

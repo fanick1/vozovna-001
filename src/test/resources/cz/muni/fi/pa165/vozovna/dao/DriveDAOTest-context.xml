@@ -18,32 +18,30 @@
 
 
     <context:annotation-config />
-    
+    <context:component-scan base-package="cz.muni.fi.pa165.vozovna.dao" />
+    <context:component-scan base-package="cz.muni.fi.pa165.vozovna.entity" />
+    <context:component-scan base-package="cz.muni.fi.pa165.vozovna.controller" />
 
     <!-- tested class -->
     <bean id="driveDao" class="cz.muni.fi.pa165.vozovna.dao.hibernate.DriveDAOHibernateImpl" />
 
-    <bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
-        <property name="entityManagerFactory" ref="myEmf" />
+    <bean id="transactionManager" class="org.springframework.orm.hibernate4.HibernateTransactionManager">
+        <property name="sessionFactory" ref="sessionFactory" />
     </bean>
     <tx:annotation-driven transaction-manager="transactionManager" />
-    
 
-
-    <bean id="myEmf" class="org.springframework.orm.jpa.LocalEntityManagerFactoryBean">
-        <property name="persistenceUnitName" value="TestingPU" />
-    </bean>
-
-    <jdbc:embedded-database id="dataSource" type="DERBY">
-        <jdbc:script location="classpath:create-schema.sql"/>
-    </jdbc:embedded-database>
+    <jdbc:embedded-database id="dataSource" type="DERBY" />
 
     <bean id="sessionFactory" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
+        <property name="configLocation" value="classpath:hibernate.cfg.xml" />
+        <property name="hibernateProperties">
+            <props>
+                <prop key="hibernate.dialect">org.hibernate.dialect.DerbyDialect</prop>
+                <prop key="hibernate.hbm2ddl.auto">create</prop>
+                <prop key="hibernate.current_session_context_class">org.springframework.orm.hibernate4.SpringSessionContext</prop>
+            </props>
+        </property>
         <property name="dataSource" ref="dataSource" />
     </bean>
-
-<!--     <bean id="transactionManager" class="org.springframework.orm.hibernate4.HibernateTransactionManager"> -->
-<!--         <property name="sessionFactory" ref="sessionFactory" /> -->
-<!--     </bean> -->
 
 </beans>

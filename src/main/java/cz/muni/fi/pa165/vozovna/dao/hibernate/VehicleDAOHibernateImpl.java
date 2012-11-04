@@ -2,8 +2,8 @@ package cz.muni.fi.pa165.vozovna.dao.hibernate;
 
 import java.util.List;
 
-import javax.persistence.TypedQuery;
-
+import org.hibernate.Query;
+import org.hibernate.Session;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -25,9 +25,15 @@ public class VehicleDAOHibernateImpl extends GenericDAOHibernateImpl<Vehicle, Lo
     @Override
     @Transactional
     public List<Vehicle> findByUserClass(UserClassEnum userClass) {
-        TypedQuery<Vehicle> query = em.createQuery("FROM " + Vehicle.class.getName() + " WHERE userClass = :USERCLASS ", Vehicle.class);
+        if (userClass == null) {
+            throw new IllegalArgumentException("userClass is null.");
+        }
+
+        final Session session = sessionFactory.getCurrentSession();
+        Query query = session.createQuery("FROM " + Vehicle.class.getName() + " WHERE userClass = :USERCLASS ");
         query.setParameter("USERCLASS", userClass);
-        List<Vehicle> result = query.getResultList();
-        return result;
+        return (List<Vehicle>) query.list();
+
     }
+
 }

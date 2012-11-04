@@ -3,21 +3,12 @@ package cz.muni.fi.pa165.vozovna.dao;
 import java.io.Serializable;
 import java.util.List;
 
-import javax.persistence.EntityManager;
-
 /**
  * Base DAO with CRUD operations and findAll() method
  *
  * @author eva.neduchalova
  */
 public interface GenericDAO<T, PK extends Serializable> {
-
-    /**
-     * Sets up entityManager
-     *
-     * @param em EntityManager to be set
-     */
-    void setEm(EntityManager em);
 
     /**
      * Returns an entity instance with given id. Returns null if such entity doesn`t exist.

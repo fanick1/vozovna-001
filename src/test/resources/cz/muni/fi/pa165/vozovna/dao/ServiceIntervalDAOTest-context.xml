@@ -18,26 +18,33 @@
 
 
     <context:annotation-config />
-    <tx:annotation-driven transaction-manager="transactionManager" />
+    <context:component-scan base-package="cz.muni.fi.pa165.vozovna.dao" />
+    <context:component-scan base-package="cz.muni.fi.pa165.vozovna.entity" />
+    <context:component-scan base-package="cz.muni.fi.pa165.vozovna.controller" />
 
     <!-- tested class -->
-    <bean id="serviceIntervalDAO" class="cz.muni.fi.pa165.vozovna.dao.hibernate.ServiceIntervalDAOImpl" />
+    <bean id="serviceIntervalDao" class="cz.muni.fi.pa165.vozovna.dao.hibernate.ServiceIntervalDAOImpl" />
 
-
-    <bean id="myEmf" class="org.springframework.orm.jpa.LocalEntityManagerFactoryBean">
-        <property name="persistenceUnitName" value="TestingPU" />
-    </bean>
-
-    <jdbc:embedded-database id="dataSource" type="DERBY">
-        <jdbc:script location="classpath:create-schema.sql"/>
-    </jdbc:embedded-database>
-
-    <bean id="sessionFactory" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
-        <property name="dataSource" ref="dataSource" />
-    </bean>
+    <!-- TODO tohle by tu byt nemelo, mel by se pouzivat mock objekt -->
+    <bean id="vehicleDao" class="cz.muni.fi.pa165.vozovna.dao.hibernate.VehicleDAOHibernateImpl" />
 
     <bean id="transactionManager" class="org.springframework.orm.hibernate4.HibernateTransactionManager">
         <property name="sessionFactory" ref="sessionFactory" />
+    </bean>
+    <tx:annotation-driven transaction-manager="transactionManager" />
+
+    <jdbc:embedded-database id="dataSource" type="DERBY" />
+
+    <bean id="sessionFactory" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
+        <property name="configLocation" value="classpath:hibernate.cfg.xml" />
+        <property name="hibernateProperties">
+            <props>
+                <prop key="hibernate.dialect">org.hibernate.dialect.DerbyDialect</prop>
+                <prop key="hibernate.hbm2ddl.auto">create</prop>
+                <prop key="hibernate.current_session_context_class">org.springframework.orm.hibernate4.SpringSessionContext</prop>
+            </props>
+        </property>
+        <property name="dataSource" ref="dataSource" />
     </bean>
 
 </beans>

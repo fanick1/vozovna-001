@@ -18,11 +18,9 @@
 			http://www.springframework.org/schema/util/spring-util-3.0.xsd"
     default-autowire="byName">
 
-    <!-- used by ImageController -->
-<!--     <util:properties id="globalProperties" location="classpath:config.properties" /> -->
 
-    <!-- for database configuration -->
-<!--     <context:property-placeholder properties-ref="globalProperties" /> -->
+    <util:properties id="globalProperties" location="classpath:config.properties" />
+    <context:property-placeholder properties-ref="globalProperties" />
 
     <context:annotation-config />
     
