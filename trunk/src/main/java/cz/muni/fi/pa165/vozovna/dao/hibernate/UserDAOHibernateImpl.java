@@ -2,8 +2,8 @@ package cz.muni.fi.pa165.vozovna.dao.hibernate;
 
 import java.util.List;
 
-import javax.persistence.TypedQuery;
-
+import org.hibernate.Query;
+import org.hibernate.Session;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -19,12 +19,13 @@ public class UserDAOHibernateImpl extends GenericDAOHibernateImpl<User, Long> im
     @Override
     @Transactional
     public List<User> findByLastName(String lastName) {
-        if (lastName == null || "".equals(lastName)) {
-            throw new IllegalArgumentException("Name cannot be null or empty");
+        if (lastName == null) {
+            throw new IllegalArgumentException("Name cannot be null");
         }
-        TypedQuery<User> query = em.createQuery("FROM " + User.class.getName() + " u WHERE lastName = :Name", User.class);
-        query.setParameter("Name", lastName);
-        List<User> result = query.getResultList();
-        return result;
+        final Session session = sessionFactory.getCurrentSession();
+        Query query = session.createQuery("FROM " + User.class.getName() + " user WHERE user.lastName = :lastName");
+        query.setParameter("lastName", lastName);
+        return (List<User>) query.list();
     }
+
 }
