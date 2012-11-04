@@ -163,7 +163,7 @@ public class DriveDTO implements java.io.Serializable {
         if (obj == null) {
             return false;
         }
-        if (!(obj instanceof Drive)) {
+        if (!(obj instanceof DriveDTO)) {
             return false;
         }
         final DriveDTO other = (DriveDTO) obj;
