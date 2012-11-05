@@ -29,7 +29,7 @@ public class DriveServiceImpl implements DriveService {
     @Transactional(readOnly=true)
     public DriveDTO getById(Long id) {
         if (id == null) {
-            return null;
+            throw new IllegalArgumentException("ID can't be null.");
         }
         
         Drive drive;

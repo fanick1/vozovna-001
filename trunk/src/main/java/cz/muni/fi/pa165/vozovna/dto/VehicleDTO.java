@@ -55,9 +55,6 @@ public class VehicleDTO implements java.io.Serializable {
     }
 
     public void setId(Long id) {
-        if (id == null) {
-            throw new IllegalArgumentException("Given id cannot be null!");
-        }
         this.id = id;
     }
 
