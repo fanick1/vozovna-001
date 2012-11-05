@@ -18,8 +18,6 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.invocation.InvocationOnMock;
 import org.mockito.stubbing.Answer;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -35,11 +33,14 @@ import cz.muni.fi.pa165.vozovna.enums.DriveStateEnum;
 import cz.muni.fi.pa165.vozovna.enums.UserClassEnum;
 import cz.muni.fi.pa165.vozovna.service.exceptions.DriveServiceFailureException;
 
+/**
+ * 
+ * @author Frantisek Veverka, 207422@mail.muni.cz
+ *
+ */
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration("DriveServiceTest-context.xml")
 public class DriveServiceTest {
-
-	private static final Logger LGR = LoggerFactory.getLogger(DriveServiceTest.class);
 	
 	private User existingUser;
 	
@@ -130,7 +131,7 @@ public class DriveServiceTest {
 		         existingDrive.setState(update.getState());
 		         existingDrive.setUser(update.getUser());
 		         existingDrive.setVehicle(update.getVehicle());
-		         return "called with arguments: " + args;			}
+		         return update;			}
 			}
 		).when(driveDAO).update(existingDrive);
 
@@ -214,13 +215,13 @@ public class DriveServiceTest {
 	@Test
 	public void testGetById() {
 
-//		try{
-//			driveService.getById(null);
-//			fail("IllegalArgument exception expected");
-//		}catch(IllegalArgumentException e){
-//			//ok
-//		}
-//		
+		try{
+			driveService.getById(null);
+			fail("IllegalArgument exception expected");
+		}catch(IllegalArgumentException e){
+			//ok
+		}
+		
 		DriveDTO d1 = driveService.getById(EXISTING_ID );
 		assertNotNull("Existing record expected.", d1);
 		assertEquals(EXISTING_ID,d1.getId());	
@@ -323,12 +324,12 @@ public class DriveServiceTest {
 
 	@Test
 	public void testFindAll() {
+
 		List<DriveDTO> x = driveService.findAll();
 		assertNotNull(x);
 		if(x.size() != 1){
 			fail("Size of list expected: 1, got: " + x.size());
 		}
-
 	}
 
 	@Test

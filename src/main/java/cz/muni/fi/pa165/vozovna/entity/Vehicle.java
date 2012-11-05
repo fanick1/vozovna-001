@@ -40,12 +40,8 @@ public class Vehicle implements Serializable {
      * Sets id of vehicle.
      *
      * @param id Id of vehicle.
-     * @throws IllegalArgumentException Throws if given id is null.
      */
     public void setId(Long id) {
-        if (id == null) {
-            throw new IllegalArgumentException("Given id cannot be null!");
-        }
         this.id = id;
     }
 
