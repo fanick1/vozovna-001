@@ -1,7 +1,6 @@
 package cz.muni.fi.pa165.vozovna.service;
 
 import cz.muni.fi.pa165.vozovna.dto.UserDTO;
-import cz.muni.fi.pa165.vozovna.service.exceptions.UserServiceFailureException;
 import java.util.List;
 
 /**
@@ -15,7 +14,7 @@ public interface UserService {
      * @param id        ID of user
      * @return          UserDTO if User with given id exists, null otherwise.
      * @throws IllegalArgumentException     Throws if given id is null.
-     * @throws UserServiceFailureException  Throws if there is problem with service.
+     * @throws DataAccessException          Throws if a data access exception occurred.
      */
     public UserDTO getById(Long id);
 
@@ -24,7 +23,7 @@ public interface UserService {
      * 
      * @param user      User to save
      * @throws IllegalArgumentException     Throws if given user is null.
-     * @throws UserServiceFailureException  Throws if there is problem with service.
+     * @throws DataAccessException          Throws if a data access exception occurred.
      */
     public Long create(UserDTO user);
 
@@ -33,7 +32,7 @@ public interface UserService {
      * 
      * @param user      User to remove
      * @throws IllegalArgumentException     Throws if given user is null.
-     * @throws UserServiceFailureException  Throws if there is problem with service.
+     * @throws DataAccessException          Throws if a data access exception occurred.
      */
     public void remove(UserDTO user);
 
@@ -42,7 +41,7 @@ public interface UserService {
      * 
      * @param user      User to update
      * @throws IllegalArgumentException     Throws if given user is null.
-     * @throws UserServiceFailureException  Throws if there is problem with service.
+     * @throws DataAccessException          Throws if a data access exception occurred.
      */
     public UserDTO update(UserDTO user);
 
@@ -50,7 +49,7 @@ public interface UserService {
      * Find and return all users in database.
      * 
      * @return List of all users.
-     * @throws UserServiceFailureException  Throws if there is problem with service.
+     * @throws DataAccessException          Throws if a data access exception occurred.
      */
     public List<UserDTO> findAll();
 
@@ -60,7 +59,7 @@ public interface UserService {
      * @param lastName      Lastname.
      * @return List of users of given user.
      * @throws IllegalArgumentException     Throws if given user is null.
-     * @throws UserServiceFailureException  Throws if there is problem with service.
+     * @throws DataAccessException          Throws if a data access exception occurred.
      */
     public List<UserDTO> findByLastName(String lastName);
 

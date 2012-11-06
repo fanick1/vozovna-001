@@ -31,7 +31,7 @@ import cz.muni.fi.pa165.vozovna.entity.User;
 import cz.muni.fi.pa165.vozovna.entity.Vehicle;
 import cz.muni.fi.pa165.vozovna.enums.DriveStateEnum;
 import cz.muni.fi.pa165.vozovna.enums.UserClassEnum;
-import cz.muni.fi.pa165.vozovna.service.exceptions.DriveServiceFailureException;
+import org.springframework.dao.DataAccessException;
 
 /**
  * 
@@ -253,7 +253,7 @@ public class DriveServiceTest {
 		try{
 			driveService.create(genericDriveDto);	//duplicity
 			fail("Duplicit record shouldn't be possible.");
-		}catch(DriveServiceFailureException e){
+		}catch(Exception e){
 			//OK?
 		}
 	}
@@ -279,7 +279,7 @@ public class DriveServiceTest {
 		try{
 			driveService.remove(drive);
 			fail("Repeated deletion should throw DriveServiceFailureException");
-		}catch(DriveServiceFailureException e){
+		}catch(Exception e){
 			
 		}
 		

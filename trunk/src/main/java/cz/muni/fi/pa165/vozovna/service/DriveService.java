@@ -2,7 +2,6 @@ package cz.muni.fi.pa165.vozovna.service;
 
 import cz.muni.fi.pa165.vozovna.dto.DriveDTO;
 import cz.muni.fi.pa165.vozovna.dto.UserDTO;
-import cz.muni.fi.pa165.vozovna.service.exceptions.DriveServiceFailureException;
 import java.util.List;
 
 /**
@@ -19,7 +18,7 @@ public interface DriveService {
      * @param id    Drive ID 
      * @return DriveDTO if Drive with given id exists, null otherwise.
      * @throws IllegalArgumentException     Throws if given id is null.
-     * @throws DriveServiceFailureException Throws if there is problem with service.
+     * @throws  Throws if there is problem with service.
      *             
      */
     public DriveDTO getById(Long id);
@@ -29,7 +28,7 @@ public interface DriveService {
      * 
      * @param drive     Drive to save
      * @throws IllegalArgumentException     Throws if given drive is null.
-     * @throws DriveServiceFailureException Throws if there is problem with service.
+     * @throws DataAccessException          Throws if a data access exception occurred.
      */
     public Long create(DriveDTO drive);
 
@@ -38,7 +37,7 @@ public interface DriveService {
      * 
      * @param drive     Drive to remove
      * @throws IllegalArgumentException     Throws if given drive is null.
-     * @throws DriveServiceFailureException Throws if there is problem with service.
+     * @throws DataAccessException          Throws if a data access exception occurred.
      */
     public void remove(DriveDTO drive);
 
@@ -47,7 +46,7 @@ public interface DriveService {
      * 
      * @param drive     Drive to update
      * @throws IllegalArgumentException     Throws if given drive is null.
-     * @throws DriveServiceFailureException Throws if there is problem with service.
+     * @throws DataAccessException          Throws if a data access exception occurred.
      */
     public DriveDTO update(DriveDTO drive);
 
@@ -55,7 +54,7 @@ public interface DriveService {
      * Find and return all drives in database.
      * 
      * @return List of all drives in database.
-     * @throws DriveServiceFailureException Throws if there is problem with service.
+     * @throws DataAccessException          Throws if a data access exception occurred.
      */
     public List<DriveDTO> findAll();
 
@@ -65,7 +64,7 @@ public interface DriveService {
      * @param user      User whose drives we want to be returned.
      * @return List of drives of given user.
      * @throws IllegalArgumentException     Throws if given user is null.
-     * @throws DriveServiceFailureException Throws if there is problem with service.
+     * @throws DataAccessException          Throws if a data access exception occurred.
      */
     public List<DriveDTO> findByUser(UserDTO user);
 

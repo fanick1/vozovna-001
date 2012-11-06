@@ -5,7 +5,6 @@ import cz.muni.fi.pa165.vozovna.dto.DriveDTO;
 import cz.muni.fi.pa165.vozovna.dto.UserDTO;
 import cz.muni.fi.pa165.vozovna.entity.Drive;
 import cz.muni.fi.pa165.vozovna.service.DriveService;
-import cz.muni.fi.pa165.vozovna.service.exceptions.DriveServiceFailureException;
 import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,12 +31,8 @@ public class DriveServiceImpl implements DriveService {
             throw new IllegalArgumentException("ID can't be null.");
         }
         
-        Drive drive;
-        try {
-            drive = driveDAO.getById(id);
-        } catch(Exception e) {
-            throw new DriveServiceFailureException("Finding drive by ID was failded.", e);
-        }
+        Drive drive = driveDAO.getById(id);
+        
 
         return new DriveDTO(drive);
     }
@@ -49,11 +44,9 @@ public class DriveServiceImpl implements DriveService {
             throw new IllegalArgumentException("null drive");
         }
         Drive entity = drive.toDrive();
-        try {
-            driveDAO.create(entity);     
-        } catch(Exception e) {
-            throw new DriveServiceFailureException("Drive creation was failded.", e);
-        }
+        
+        driveDAO.create(entity);     
+        
         drive.fromDrive(entity);
         
         return entity.getId();
@@ -66,13 +59,8 @@ public class DriveServiceImpl implements DriveService {
             throw new IllegalArgumentException("null drive");
         }
         
-        try {
-            driveDAO.remove(drive.toDrive()); 
-            drive.setId(null);
-        } catch(Exception e) {
-            throw new DriveServiceFailureException("Drive deletion was failed.", e);
-        }
-      
+        driveDAO.remove(drive.toDrive()); 
+        drive.setId(null);
     }
 
     @Override
@@ -83,11 +71,9 @@ public class DriveServiceImpl implements DriveService {
         }
         
         Drive entity = drive.toDrive();
-        try {
-            driveDAO.update(entity); 
-        } catch(Exception e) {
-            throw new DriveServiceFailureException("Drive update was failed.", e);
-        }
+        
+        driveDAO.update(entity); 
+        
         drive.fromDrive(entity);
         
         return drive;
@@ -97,11 +83,9 @@ public class DriveServiceImpl implements DriveService {
     @Transactional(readOnly=true)
     public List<DriveDTO> findAll() {
         List<Drive> drives;
-        try {
-            drives = driveDAO.findAll();
-        } catch(Exception e) {
-            throw new DriveServiceFailureException("Finding all drives were failed.", e);
-        }
+        
+        drives = driveDAO.findAll();
+        
         return convertListOfDrivesToListOfDriveDTOs(drives); 
     }
 
@@ -113,11 +97,9 @@ public class DriveServiceImpl implements DriveService {
         }
         
         List<Drive> drives;
-        try {
-            drives = driveDAO.findByUser(user.toUser());
-        } catch(Exception e) {
-            throw new DriveServiceFailureException("Finding all drives by user were failed.", e);
-        }
+        
+        drives = driveDAO.findByUser(user.toUser());
+        
         return convertListOfDrivesToListOfDriveDTOs(drives); 
     }
 

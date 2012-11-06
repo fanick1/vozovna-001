@@ -28,7 +28,7 @@ import cz.muni.fi.pa165.vozovna.dao.UserDAO;
 import cz.muni.fi.pa165.vozovna.dto.UserDTO;
 import cz.muni.fi.pa165.vozovna.entity.User;
 import cz.muni.fi.pa165.vozovna.enums.UserClassEnum;
-import cz.muni.fi.pa165.vozovna.service.exceptions.UserServiceFailureException;
+import org.springframework.dao.DataAccessException;
 
 /**
  * 
@@ -203,7 +203,7 @@ public class UserServiceTest {
 		try{
 			userService.create(userDto);	//duplicity
 			fail("Duplicit records shouldn't be possible.");
-		}catch(UserServiceFailureException e){
+		}catch(Exception e){
 			//OK?
 		}
 	}
@@ -229,7 +229,7 @@ public class UserServiceTest {
 		try{
 			userService.remove(user);
 			fail("Repeated deletion should throw UserServiceFailureException");
-		}catch(UserServiceFailureException e){
+		}catch(Exception e){
 			
 		}
 		

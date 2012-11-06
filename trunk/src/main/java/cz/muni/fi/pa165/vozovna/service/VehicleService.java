@@ -15,8 +15,8 @@ public interface VehicleService {
      * 
      * @param id        ID of vehicle
      * @return          VehicleDTO if Vehicle with given id exists, null otherwise.
-     * @throws IllegalArgumentException         Throws if given id is null.
-     * @throws VehicleServiceFailureException   Throws if there is problem with service.
+     * @throws IllegalArgumentException     Throws if given id is null.
+     * @throws DataAccessException          Throws if a data access exception occurred.
      */
     public VehicleDTO getById(Long id);
 
@@ -24,8 +24,8 @@ public interface VehicleService {
      * Saves given vehicle into database.
      * 
      * @param vehicle      Vehicle to save
-     * @throws IllegalArgumentException         Throws if given vehicle is null.
-     * @throws VehicleServiceFailureException   Throws if there is problem with service.
+     * @throws IllegalArgumentException     Throws if given vehicle is null.
+     * @throws DataAccessException          Throws if a data access exception occurred.
      */
     public Long create(VehicleDTO vehicle);
 
@@ -33,8 +33,8 @@ public interface VehicleService {
      * Removes given vehicle from database.
      * 
      * @param vehicle      Vehicle to remove
-     * @throws IllegalArgumentException         Throws if given vehicle is null.
-     * @throws VehicleServiceFailureException   Throws if there is problem with service.
+     * @throws IllegalArgumentException     Throws if given vehicle is null.
+     * @throws DataAccessException          Throws if a data access exception occurred.
      */
     public void remove(VehicleDTO vehicle);
 
@@ -42,8 +42,8 @@ public interface VehicleService {
      * Updates given vehicle in database.
      * 
      * @param vehicle      Vehicle to update
-     * @throws IllegalArgumentException         Throws if given vehicle is null.
-     * @throws VehicleServiceFailureException   Throws if there is problem with service.
+     * @throws IllegalArgumentException     Throws if given vehicle is null.
+     * @throws DataAccessException          Throws if a data access exception occurred.
      */
     public VehicleDTO update(VehicleDTO vehicle);
 
@@ -51,7 +51,7 @@ public interface VehicleService {
      * Find and return all vehicles in database.
      * 
      * @return List of all vehicles.
-     * @throws VehicleServiceFailureException   Throws if there is problem with service.
+     * @throws DataAccessException          Throws if a data access exception occurred.
      */
     public List<VehicleDTO> findAll();
 
@@ -60,8 +60,8 @@ public interface VehicleService {
      * 
      * @param lastName      Lastname.
      * @return List of vehicles of given vehicle.
-     * @throws IllegalArgumentException         Throws if given vehicle is null.
-     * @throws VehicleServiceFailureException   Throws if there is problem with service.
+     * @throws IllegalArgumentException     Throws if given vehicle is null.
+     * @throws DataAccessException          Throws if a data access exception occurred.
      */
     public List<VehicleDTO> findByUserClass(UserClassEnum userClass);
 }

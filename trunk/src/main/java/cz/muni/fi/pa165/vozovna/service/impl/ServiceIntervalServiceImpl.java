@@ -5,7 +5,6 @@ import cz.muni.fi.pa165.vozovna.dto.ServiceIntervalDTO;
 import cz.muni.fi.pa165.vozovna.dto.VehicleDTO;
 import cz.muni.fi.pa165.vozovna.entity.ServiceInterval;
 import cz.muni.fi.pa165.vozovna.service.ServiceIntervalService;
-import cz.muni.fi.pa165.vozovna.service.exceptions.ServiceIntervalServiceFailureException;
 import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,12 +31,7 @@ public class ServiceIntervalServiceImpl implements ServiceIntervalService {
             return null;
         }
         
-        ServiceInterval interval;
-        try {
-            interval = serviceIntervalDAO.getById(id);
-        } catch(Exception e) {
-            throw new ServiceIntervalServiceFailureException("Finding service interval by ID was failded.", e);
-        }
+        ServiceInterval interval = serviceIntervalDAO.getById(id);
     
         return new ServiceIntervalDTO(interval);
     }
@@ -50,11 +44,9 @@ public class ServiceIntervalServiceImpl implements ServiceIntervalService {
         }
         
         ServiceInterval entity = serviceInterval.toServiceInterval();
-        try {
-            serviceIntervalDAO.create(entity);
-        } catch(Exception e) {
-            throw new ServiceIntervalServiceFailureException("Service interval creation was failded.", e);
-        }
+        
+        serviceIntervalDAO.create(entity);
+        
         serviceInterval.fromServiceInterval(entity);
         
         return entity.getId();
@@ -67,12 +59,8 @@ public class ServiceIntervalServiceImpl implements ServiceIntervalService {
             throw new IllegalArgumentException("null serviceInterval");
         }
         
-        try {
-            serviceIntervalDAO.remove(serviceInterval.toServiceInterval());
-            serviceInterval.setId(null);
-        } catch(Exception e) {
-            throw new ServiceIntervalServiceFailureException("Service interval deletion was failded.", e);
-        }
+        serviceIntervalDAO.remove(serviceInterval.toServiceInterval());
+        serviceInterval.setId(null);
     }
 
     @Override
@@ -83,11 +71,9 @@ public class ServiceIntervalServiceImpl implements ServiceIntervalService {
         }
         
         ServiceInterval entity = serviceInterval.toServiceInterval();
-        try {
-            serviceIntervalDAO.update(entity);
-        } catch(Exception e) {
-            throw new ServiceIntervalServiceFailureException("Service interval update was failded.", e);
-        }    
+        
+        serviceIntervalDAO.update(entity);
+        
         serviceInterval.fromServiceInterval(entity); // propagate changes
         
         return serviceInterval;
@@ -97,13 +83,8 @@ public class ServiceIntervalServiceImpl implements ServiceIntervalService {
     @Transactional(readOnly=true)
     public List<ServiceIntervalDTO> findAll() {
         // Find
-        List<ServiceInterval> intervals;
-        try {
-            intervals = serviceIntervalDAO.findAll();
-        } catch(Exception e) {
-            throw new ServiceIntervalServiceFailureException("Finding all service intervals were failded.", e);
-        }    
-        
+        List<ServiceInterval> intervals = serviceIntervalDAO.findAll();
+                
         // Transform result from List of Entities to List of DTOs
         List<ServiceIntervalDTO> result = new ArrayList<>();
         for(ServiceInterval entity : intervals) {
@@ -121,13 +102,8 @@ public class ServiceIntervalServiceImpl implements ServiceIntervalService {
         }
         
         // Find
-        List<ServiceInterval> intervals;
-        try {
-            intervals = serviceIntervalDAO.findAllByVehicle(vehicle.toVehicle());
-        } catch(Exception e) {
-            throw new ServiceIntervalServiceFailureException("Finding all service intervals by vehicle were failded.", e);
-        }    
-        
+        List<ServiceInterval> intervals = serviceIntervalDAO.findAllByVehicle(vehicle.toVehicle());
+                
         // Transform result from List of Entities to List of DTOs
         List<ServiceIntervalDTO> result = new ArrayList<>();
         for(ServiceInterval entity : intervals) {
