@@ -4,7 +4,6 @@ import cz.muni.fi.pa165.vozovna.dao.UserDAO;
 import cz.muni.fi.pa165.vozovna.dto.UserDTO;
 import cz.muni.fi.pa165.vozovna.entity.User;
 import cz.muni.fi.pa165.vozovna.service.UserService;
-import cz.muni.fi.pa165.vozovna.service.exceptions.UserServiceFailureException;
 import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,13 +33,8 @@ public class UserServiceImpl implements UserService {
         }
         
         // get user
-        User user;
-        try {
-            user = userDAO.getById(id);
-        } catch(Exception e) {
-            throw new UserServiceFailureException("Finding user by ID was failded.", e);
-        }
-
+        User user = userDAO.getById(id);
+ 
         return  new UserDTO(user);
     }
 
@@ -52,11 +46,9 @@ public class UserServiceImpl implements UserService {
         }
         
         User entity = user.toUser();
-        try {
-            userDAO.create(entity);
-        } catch(Exception e) {
-            throw new UserServiceFailureException("User creation was failded.", e);
-        }
+        
+        userDAO.create(entity);
+        
         
         user.fromUser(entity);
         
@@ -69,12 +61,10 @@ public class UserServiceImpl implements UserService {
         if (user == null) {
             throw new IllegalArgumentException("null user");
         }
-        try {
-            userDAO.remove(user.toUser());
-            user.setId(null);
-        } catch(Exception e) {
-            throw new UserServiceFailureException("User deletion was failed.", e);
-        }
+        
+        userDAO.remove(user.toUser());
+        user.setId(null);
+        
     }
 
     @Override
@@ -85,11 +75,8 @@ public class UserServiceImpl implements UserService {
         }
         User entity = user.toUser();
         
-        try {
-            userDAO.update(entity);
-        } catch(Exception e) {
-            throw new UserServiceFailureException("User update was failed.", e);
-        }
+        userDAO.update(entity);
+       
         user.fromUser(entity);
         
         return user;
@@ -99,13 +86,8 @@ public class UserServiceImpl implements UserService {
     @Transactional(readOnly = true)
     public List<UserDTO> findAll() {
         // find
-        List<User> users;
-        try {
-             users = userDAO.findAll();
-        } catch(Exception e) {
-            throw new UserServiceFailureException("Finding all users was failed.", e);
-        }
-        
+        List<User> users = userDAO.findAll();
+                
         //  transform results
         List<UserDTO> result = new ArrayList<>();
         for(User user:users) {
@@ -122,13 +104,8 @@ public class UserServiceImpl implements UserService {
         }
         
         // find
-        List<User> users;
-        try {
-             users = userDAO.findByLastName(lastName);
-        } catch(Exception e) {
-            throw new UserServiceFailureException("Finding all users by last name was failed.", e);
-        }
-        
+        List<User> users = userDAO.findByLastName(lastName);
+                
         // transform results
         List<UserDTO> result = new ArrayList<>();
         for(User user:users) {

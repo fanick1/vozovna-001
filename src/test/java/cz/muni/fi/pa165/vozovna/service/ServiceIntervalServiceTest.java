@@ -31,7 +31,7 @@ import cz.muni.fi.pa165.vozovna.dto.VehicleDTO;
 import cz.muni.fi.pa165.vozovna.entity.ServiceInterval;
 import cz.muni.fi.pa165.vozovna.entity.Vehicle;
 import cz.muni.fi.pa165.vozovna.enums.UserClassEnum;
-import cz.muni.fi.pa165.vozovna.service.exceptions.ServiceIntervalServiceFailureException;
+import org.springframework.dao.DataAccessException;
 
 /**
  * 
@@ -220,7 +220,7 @@ public class ServiceIntervalServiceTest {
 		try{
 			serviceIntervalService.create(serviceIntervalDto);	//duplicity
 			fail("Duplicit records shouldn't be possible.");
-		}catch(ServiceIntervalServiceFailureException e){
+		}catch(Exception e){
 			//OK?
 		}
 	}
@@ -246,7 +246,7 @@ public class ServiceIntervalServiceTest {
 		try{
 			serviceIntervalService.remove(serviceIntervalDTO);
 			fail("Repeated deletion should throw ServiceIntervalFailureException");
-		}catch(ServiceIntervalServiceFailureException e){
+		}catch(Exception e){
 			
 		}
 		

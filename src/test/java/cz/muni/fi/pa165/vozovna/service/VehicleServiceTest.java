@@ -27,7 +27,7 @@ import cz.muni.fi.pa165.vozovna.dao.VehicleDAO;
 import cz.muni.fi.pa165.vozovna.dto.VehicleDTO;
 import cz.muni.fi.pa165.vozovna.entity.Vehicle;
 import cz.muni.fi.pa165.vozovna.enums.UserClassEnum;
-import cz.muni.fi.pa165.vozovna.service.exceptions.VehicleServiceFailureException;
+import org.springframework.dao.DataAccessException;
 
 /**
  * 
@@ -208,7 +208,7 @@ public class VehicleServiceTest {
 		try{
 			vehicleService.create(vehicleDto);	//duplicity
 			fail("Duplicit records shouldn't be possible.");
-		}catch(VehicleServiceFailureException e){
+		}catch(Exception e){
 			//OK?
 		}
 	}
@@ -234,7 +234,7 @@ public class VehicleServiceTest {
 		try{
 			vehicleService.remove(vehicle);
 			fail("Repeated deletion should throw VehicleServiceFailureException");
-		}catch(VehicleServiceFailureException e){
+		}catch(Exception e){
 			
 		}
 		

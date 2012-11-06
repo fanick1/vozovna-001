@@ -5,7 +5,6 @@ import cz.muni.fi.pa165.vozovna.dto.VehicleDTO;
 import cz.muni.fi.pa165.vozovna.entity.Vehicle;
 import cz.muni.fi.pa165.vozovna.enums.UserClassEnum;
 import cz.muni.fi.pa165.vozovna.service.VehicleService;
-import cz.muni.fi.pa165.vozovna.service.exceptions.VehicleServiceFailureException;
 import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,13 +29,8 @@ public class VehicleServiceImpl implements VehicleService {
         if (id == null) {
             return null;
         }
-        Vehicle vehicle;
-        try {
-            vehicle = vehicleDAO.getById(id);
-        } catch(Exception e) {
-            throw new VehicleServiceFailureException("Finding vehicle by ID was failded.", e);
-        }
-
+        Vehicle vehicle = vehicleDAO.getById(id);
+        
         return new VehicleDTO(vehicle);
     }
 
@@ -48,11 +42,8 @@ public class VehicleServiceImpl implements VehicleService {
         }
         
         Vehicle entity = vehicle.toVehicle();
-        try {
-            vehicleDAO.create(entity);
-        } catch(Exception e) {
-            throw new VehicleServiceFailureException("Vehicle creation was failded.", e);
-        }
+        
+        vehicleDAO.create(entity);
         
         vehicle.fromVehicle(entity);
         
@@ -65,12 +56,9 @@ public class VehicleServiceImpl implements VehicleService {
         if (vehicle == null) {
             throw new IllegalArgumentException("null vehicle");
         }
-        try {
-            vehicleDAO.remove(vehicle.toVehicle());
-            vehicle.setId(null);
-        } catch(Exception e) {
-            throw new VehicleServiceFailureException("Vehicle deletion was failded.", e);
-        }
+        
+        vehicleDAO.remove(vehicle.toVehicle());
+        vehicle.setId(null);
     }
 
     @Override
@@ -81,11 +69,9 @@ public class VehicleServiceImpl implements VehicleService {
         }
         
         Vehicle entity = vehicle.toVehicle();
-        try {
-            vehicleDAO.update(entity);
-        } catch(Exception e) {
-            throw new VehicleServiceFailureException("Vehicle update was failded.", e);
-        }
+        
+        vehicleDAO.update(entity);
+        
         vehicle.fromVehicle(entity);
         
         return vehicle;
@@ -94,13 +80,8 @@ public class VehicleServiceImpl implements VehicleService {
     @Override
     @Transactional(readOnly=true)
     public List<VehicleDTO> findAll() {
-        List<Vehicle> vehicles;
-        try {
-            vehicles = vehicleDAO.findAll();
-        } catch(Exception e) {
-            throw new VehicleServiceFailureException("Finding all vehicles was failded.", e);
-        }
-        
+        List<Vehicle> vehicles = vehicleDAO.findAll();
+                
         // transform from List<Vehicle> to List<VehicleDTO>
         List<VehicleDTO> result = new ArrayList<>();
         for(Vehicle vehicle:vehicles) {
@@ -116,13 +97,8 @@ public class VehicleServiceImpl implements VehicleService {
         if (userClass == null) {
             throw new IllegalArgumentException("userClass");
         }
-        List<Vehicle> vehicles;
-        try {
-            vehicles = vehicleDAO.findByUserClass(userClass);
-        } catch(Exception e) {
-            throw new VehicleServiceFailureException("Finding all vehicles by user class was failded.", e);
-        }
-        
+        List<Vehicle> vehicles = vehicleDAO.findByUserClass(userClass);
+                
         // transform from List<Vehicle> to List<VehicleDTO>
         List<VehicleDTO> result = new ArrayList<>();
         for(Vehicle vehicle:vehicles) {
