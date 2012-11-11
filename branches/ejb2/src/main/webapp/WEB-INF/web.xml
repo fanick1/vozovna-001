@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee"
-    xmlns:web="http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
-    id="WebApp_ID" version="3.0">
+<web-app id="WebApp_ID" version="3.0" xmlns="http://java.sun.com/xml/ns/javaee" xmlns:web="http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd">
     <display-name>bakalarka</display-name>
-
     <context-param>
         <param-name>contextConfigLocation</param-name>
         <param-value>
@@ -12,12 +9,10 @@
         /WEB-INF/db-config.xml
     </param-value>
     </context-param>
-
     <!-- nastartuje Spring -->
     <listener>
         <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
     </listener>
-
     <!-- registrace DispatcherServletu a jeho namapování na všechno.htm -->
     <servlet>
         <servlet-name>vehicleManagement</servlet-name>
@@ -28,17 +23,14 @@
         <servlet-name>vehicleManagement</servlet-name>
         <url-pattern>/</url-pattern>
     </servlet-mapping>
-
     <!-- doba v minutách než session expiruje; nastavení není povinné -->
     <session-config>
         <session-timeout>20</session-timeout>
     </session-config>
-
     <!-- nastavení úvodní stránky -->
     <welcome-file-list>
         <welcome-file>index.jsp</welcome-file>
     </welcome-file-list>
-
     <!-- Spring Security ZAČÁTEK -->
     <filter>
         <filter-name>springSecurityFilterChain</filter-name>
@@ -49,8 +41,6 @@
         <url-pattern>/*</url-pattern>
     </filter-mapping>
     <!-- Spring Security KONEC -->
-
-
     <!-- proti rozbíjení diakritiky ZAČÁTEK -->
     <filter>
         <filter-name>characterEncodingFilter</filter-name>
@@ -69,8 +59,6 @@
         <url-pattern>/*</url-pattern>
     </filter-mapping>
     <!-- proti rozbíjení diakritiky KONEC -->
-
-
     <!-- chyby, které nezachytí Spring ZAČÁTEK -->
     <error-page>
         <error-code>400</error-code>
@@ -85,5 +73,14 @@
         <location>/defaultError.jsp</location>
     </error-page>
     <!-- chyby, které nezachytí Spring KONEC -->
-
+    <ejb-local-ref>
+        <ejb-ref-name>userFacade</ejb-ref-name>
+        <ejb-ref-type>Session</ejb-ref-type>
+        <ejb-link>VehicleManagement-1.0-SNAPSHOT#UserFacade</ejb-link>
+    </ejb-local-ref>
+    <ejb-local-ref>
+        <ejb-ref-name>userFacade1</ejb-ref-name>
+        <ejb-ref-type>Session</ejb-ref-type>
+        <ejb-link>VehicleManagement-1.0-SNAPSHOT#UserFacade</ejb-link>
+    </ejb-local-ref>
 </web-app>
