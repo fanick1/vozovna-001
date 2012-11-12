@@ -3,10 +3,13 @@ package cz.muni.fi.pa165.vozovna.dao;
 import cz.muni.fi.pa165.vozovna.entity.User;
 import java.util.List;
 
+import javax.ejb.Local;
+
 /**
  *
  * @author eva.neduchalova
  */
+@Local
 public interface UserDAO extends GenericDAO<User, Long> {
 
     /**
