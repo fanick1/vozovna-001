@@ -8,6 +8,7 @@ import cz.muni.fi.pa165.vozovna.service.DriveService;
 import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
@@ -15,6 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
  * 
  * @author Lukas Hajek <359617@mail.muni.cz>
  */
+@Service
 public class DriveServiceImpl implements DriveService {
 
     private DriveDAO driveDAO;
