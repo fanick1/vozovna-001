@@ -8,12 +8,14 @@ import cz.muni.fi.pa165.vozovna.service.VehicleService;
 import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
  * Implementation of Vehicle Service
  * @author Lukas Hajek <359617@mail.muni.cz>
  */
+@Service
 public class VehicleServiceImpl implements VehicleService {
 
     private VehicleDAO vehicleDAO;

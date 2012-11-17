@@ -4,13 +4,13 @@
 <log4j:configuration xmlns:log4j="http://jakarta.apache.org/log4j/" debug="true">
 
     <root>
-        <priority value="ALL"></priority>
+        <priority value="DEBUG"></priority>
         <appender-ref ref="file"></appender-ref>
         <appender-ref ref="stdout"></appender-ref>
     </root>
 
     <logger name="cz.muni.fi.vozovna">
-        <level value="ALL"></level>
+        <level value="DEBUG"></level>
     </logger>
 
     <appender name="stdout" class="org.apache.log4j.ConsoleAppender">
@@ -20,7 +20,7 @@
     </appender>
 
     <appender name="file" class="org.apache.log4j.appender.TimeAndSizeRollingAppender">
-        <param name="File" value="/tmp/logs/VehicleManagement.log" />
+        <param name="File" value="c:/tmp/logs/VehicleManagement.log" />
         <param name="DateRollEnforced" value="true" />
         <param name="DatePattern" value=".yyyy-MM-dd" />
         <param name="MaxFileSize" value="20MB" />

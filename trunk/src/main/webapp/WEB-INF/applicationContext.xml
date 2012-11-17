@@ -25,6 +25,7 @@
     <context:annotation-config />
     
     <context:component-scan base-package="cz.muni.fi.pa165.vozovna.dao" />
+    <context:component-scan base-package="cz.muni.fi.pa165.vozovna.service" />
     <context:component-scan base-package="cz.muni.fi.pa165.vozovna.entity" />
     <context:component-scan base-package="cz.muni.fi.pa165.vozovna.controller" />
 
