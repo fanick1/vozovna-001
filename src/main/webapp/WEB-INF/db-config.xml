@@ -27,7 +27,7 @@
 
     <bean id="sessionFactory" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
         <property name="dataSource" ref="dataSource" />
-        <property name="packagesToScan" value="cz.iba.contributionranking.entity" />
+        <property name="packagesToScan" value="cz.muni.fi.pa165.vozovna.entity" />
         <property name="hibernateProperties">
             <props>
                 <prop key="hibernate.dialect">${jdbc.hibernate.dialect}</prop>

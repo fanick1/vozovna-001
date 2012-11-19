@@ -22,7 +22,7 @@ public class VehicleDTO implements java.io.Serializable {
     /**
      * Max distance, which can vehicle go in kilometres.
      */
-    private int maxDistance;
+    private Integer maxDistance;
     
     /**
      * Type of engine
@@ -42,7 +42,7 @@ public class VehicleDTO implements java.io.Serializable {
     /**
      * The year when was vehicle made.
      */
-    private int yearMade;
+    private Integer yearMade;
     
     /**
      * The class of user that can use this vehicle.
@@ -66,11 +66,11 @@ public class VehicleDTO implements java.io.Serializable {
         this.brand = brand;
     }
 
-    public int getDistanceCount() {
+    public Integer getDistanceCount() {
         return maxDistance;
     }
 
-    public void setDistanceCount(int distanceCount) {
+    public void setDistanceCount(Integer distanceCount) {
         this.maxDistance = distanceCount;
     }
 
@@ -98,11 +98,11 @@ public class VehicleDTO implements java.io.Serializable {
         this.vin = vin;
     }
 
-    public int getYearMade() {
+    public Integer getYearMade() {
         return yearMade;
     }
 
-    public void setYearMade(int yearMade) {
+    public void setYearMade(Integer yearMade) {
         this.yearMade = yearMade;
     }
 

@@ -24,7 +24,7 @@ public class UserDrivesController {
 
     @RequestMapping(value = "/drives", method = RequestMethod.GET)
     public String userDrives(HttpServletRequest request, ModelMap model, Principal principal) {
-
+        
         //model.put("drives", driveService.findByUser(user));
         logger.debug("tajcto");
 

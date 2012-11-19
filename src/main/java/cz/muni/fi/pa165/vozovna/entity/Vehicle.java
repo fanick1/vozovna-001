@@ -2,6 +2,7 @@ package cz.muni.fi.pa165.vozovna.entity;
 
 import cz.muni.fi.pa165.vozovna.enums.UserClassEnum;
 import java.io.Serializable;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -17,14 +18,28 @@ public class Vehicle implements Serializable {
     private static final long serialVersionUID = 1L;
     
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+    
+    @Column(nullable = false, length=20)
     private String brand;
-    private int maxDistance;
+    
+    @Column(nullable = true)
+    private Integer maxDistance;
+    
+    @Column(nullable = false, length=20)
     private String engineType;
+    
+    @Column(nullable = false, length=40)
     private String type;
+    
+    @Column(nullable = false, length=17)
     private String vin;
-    private int yearMade;
+    
+    @Column(nullable = true)
+    private Integer yearMade;
+    
+    @Column(nullable = false)
     private UserClassEnum userClass;
 
     /**
@@ -96,7 +111,7 @@ public class Vehicle implements Serializable {
      *
      * @return Max distance, which can vehicle go.
      */
-    public int getDistanceCount() {
+    public Integer getDistanceCount() {
         return maxDistance;
     }
 
@@ -106,8 +121,8 @@ public class Vehicle implements Serializable {
      * @param distanceCount Max distance
      * @throws IllegalArgumentException Throws in case, that distance is less or equal to zero.
      */
-    public void setDistanceCount(int distanceCount) {
-        if (distanceCount <= 0) {
+    public void setDistanceCount(Integer distanceCount) {
+        if (distanceCount != null && distanceCount < 0) {
             throw new IllegalArgumentException("Value of distanceCount can't be less than zero.");
         }
         this.maxDistance = distanceCount;
@@ -184,7 +199,7 @@ public class Vehicle implements Serializable {
      *
      * @return
      */
-    public int getYearMade() {
+    public Integer getYearMade() {
         return yearMade;
     }
 
@@ -194,8 +209,8 @@ public class Vehicle implements Serializable {
      * @param yearMade Year of made.
      * @throws IllegalArgumentException Throws if year is less than 1900.
      */
-    public void setYearMade(int yearMade) {
-        if (yearMade < 1900) {
+    public void setYearMade(Integer yearMade) {
+        if (yearMade != null && yearMade < 1900) {
             throw new IllegalArgumentException("Value of year must be higher than 1900");
         }
         this.yearMade = yearMade;
