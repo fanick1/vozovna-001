@@ -40,4 +40,10 @@ public enum UserClassEnum {
     public static List<UserClassEnum> getAllUserClasses() {
         return Arrays.asList(values());
     }
+
+    @Override
+    public String toString() {
+        return getName();
+    }
+    
 }

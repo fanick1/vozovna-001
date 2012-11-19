@@ -123,7 +123,7 @@ public class UserDAOTest {
     @Test
     public void testValidUpdate() {
         // UserDAO without Entity Manager Factory
-        User user = newUser("Petr Novak", UserClassEnum.EMPLOYEE, true);
+        User user = newUser("Petr", "Novak", UserClassEnum.EMPLOYEE, true);
 
         try {
             userDao.create(user);
@@ -213,12 +213,13 @@ public class UserDAOTest {
 
     // Factories
     private User newDefaultUser() {
-        return newUser("Jan Novak", UserClassEnum.EMPLOYEE, false);
+        return newUser("Jan", "Novak", UserClassEnum.EMPLOYEE, false);
     }
 
-    private User newUser(String name, UserClassEnum userClass, Boolean isAdmin) {
+    private User newUser(String firstName, String lastName, UserClassEnum userClass, Boolean isAdmin) {
         User user = new User();
-        user.setLastName(name);
+        user.setFirstName(firstName);
+        user.setLastName(lastName);
         user.setUserClass(userClass);
         user.setIsAdmin(isAdmin);
         return user;

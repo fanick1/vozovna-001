@@ -32,7 +32,7 @@ public class VehicleServiceImpl implements VehicleService {
             return null;
         }
         Vehicle vehicle = vehicleDAO.getById(id);
-        
+
         return new VehicleDTO(vehicle);
     }
 
@@ -58,8 +58,9 @@ public class VehicleServiceImpl implements VehicleService {
         if (vehicle == null) {
             throw new IllegalArgumentException("null vehicle");
         }
-        
-        vehicleDAO.remove(vehicle.toVehicle());
+        Vehicle v = vehicle.toVehicle();
+            
+        vehicleDAO.remove(v);
         vehicle.setId(null);
     }
 

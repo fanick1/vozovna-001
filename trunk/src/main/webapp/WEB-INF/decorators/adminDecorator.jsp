@@ -1,10 +1,10 @@
 <%@ include file="../jspf/taglibs.jspf"%>
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title><sitemesh:write property='title' /></title>
-<link href="<c:url value="/resources/css/style.css" />" type="text/css" rel="stylesheet" />
-<!-- <sitemesh:write property='head' /> -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title><sitemesh:write property='title' /></title>
+    <link href="<c:url value="/resources/css/style.css" />" type="text/css" rel="stylesheet" />
+    <sitemesh:write property='head' />
 <style>
 </style>
 </head>
