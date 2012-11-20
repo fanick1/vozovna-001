@@ -1,75 +1,79 @@
 package cz.muni.fi.pa165.vozovna.entity;
 
-import cz.muni.fi.pa165.vozovna.enums.DriveStateEnum;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
-import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+
+import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.Parameter;
 import org.hibernate.annotations.Type;
 import org.joda.time.DateTime;
 
+import cz.muni.fi.pa165.vozovna.enums.DriveStateEnum;
+
 /**
  * Drive. Used both for vehicle reservation and drive reports.
- *
+ * 
  * @author eva.neduchalova
  */
 @Entity
 @Table(name = "Drives")
-@SequenceGenerator(name = "drive_id_sequence", sequenceName = "drive_id_sequence", allocationSize = 1)
 public class Drive {
 
     @Id
     @Column(name = "id")
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(generator = "drive_id_sequence")
+    @GenericGenerator(name = "drive_id_sequence", strategy = "org.hibernate.id.enhanced.SequenceStyleGenerator", parameters = {
+            @Parameter(name = "sequence_name", value = "drive_id_sequence"), @Parameter(name = "initial_value", value = "1"),
+            @Parameter(name = "increment_size", value = "1") })
     /**
      * Unique id
      */
     private Long id;
-    
+
     @Column(name = "distance")
     /**
      * Kilometres traveled in this drive
      */
     private Integer distance;
-    
+
     @OneToOne(targetEntity = User.class)
     @JoinColumn(name = "id_user")
     /**
      * User, to whom the vehicle is being lent for this drive
      */
     private User user;
-    
+
     @OneToOne(targetEntity = Vehicle.class)
     @JoinColumn(name = "id_vehicle")
     /**
      * Vehicle which is lent for this drive
      */
     private Vehicle vehicle;
-    
+
     @Column(name = "date_from")
     @Type(type = "org.jadira.usertype.dateandtime.joda.PersistentDateTime")
     /**
      * Date when the Drive started
      */
     private DateTime dateFrom;
-    
+
     @Column(name = "date_to")
     @Type(type = "org.jadira.usertype.dateandtime.joda.PersistentDateTime")
     /**
      * Date when the drive ended
      */
     private DateTime dateTo;
-    
+
     @Column(name = "drive_state")
     /**
      * State of this Drive. (Before drive, drive ongoing, drive cancelled, drive finished)
      */
-    //TODO nastavit mapovani do DB na string
+    // TODO nastavit mapovani do DB na string
     private DriveStateEnum state;
 
     public DateTime getDateFrom() {
@@ -130,9 +134,8 @@ public class Drive {
 
     @Override
     public String toString() {
-        return "Drive{" + "id=" + id + ", distance=" + distance + ", user=" + user
-                + ", vehicle=" + vehicle + ", dateFrom=" + dateFrom + ", dateTo="
-                + dateTo + ", state=" + state + '}';
+        return "Drive{" + "id=" + id + ", distance=" + distance + ", user=" + user + ", vehicle=" + vehicle + ", dateFrom=" + dateFrom
+                + ", dateTo=" + dateTo + ", state=" + state + '}';
     }
 
     @Override

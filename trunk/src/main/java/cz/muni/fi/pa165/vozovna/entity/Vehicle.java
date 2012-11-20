@@ -1,50 +1,57 @@
 package cz.muni.fi.pa165.vozovna.entity;
 
-import cz.muni.fi.pa165.vozovna.enums.UserClassEnum;
 import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
+import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.Parameter;
+
+import cz.muni.fi.pa165.vozovna.enums.UserClassEnum;
+
 /**
- *
+ * 
  * @author Jozef Triscik
  */
 @Entity
 public class Vehicle implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    
+
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(generator = "vehicle_id_sequence")
+    @GenericGenerator(name = "vehicle_id_sequence", strategy = "org.hibernate.id.enhanced.SequenceStyleGenerator", parameters = {
+            @Parameter(name = "sequence_name", value = "vehicle_id_sequence"), @Parameter(name = "initial_value", value = "1"),
+            @Parameter(name = "increment_size", value = "1") })
     private Long id;
-    
-    @Column(nullable = false, length=20)
+
+    @Column(nullable = false, length = 20)
     private String brand;
-    
+
     @Column(nullable = true)
     private Integer maxDistance;
-    
-    @Column(nullable = false, length=20)
+
+    @Column(nullable = false, length = 20)
     private String engineType;
-    
-    @Column(nullable = false, length=40)
+
+    @Column(nullable = false, length = 40)
     private String type;
-    
-    @Column(nullable = false, length=17)
+
+    @Column(nullable = false, length = 17)
     private String vin;
-    
+
     @Column(nullable = true)
     private Integer yearMade;
-    
+
     @Column(nullable = false)
     private UserClassEnum userClass;
 
     /**
      * Returns id of vehicle.
-     *
+     * 
      * @return Id of vehicle.
      */
     public Long getId() {
@@ -53,7 +60,7 @@ public class Vehicle implements Serializable {
 
     /**
      * Sets id of vehicle.
-     *
+     * 
      * @param id Id of vehicle.
      */
     public void setId(Long id) {
@@ -86,7 +93,7 @@ public class Vehicle implements Serializable {
 
     /**
      * Returns brand of vehicle.
-     *
+     * 
      * @return Brand of vehicle
      */
     public String getBrand() {
@@ -95,7 +102,7 @@ public class Vehicle implements Serializable {
 
     /**
      * Sets brand of vehicle.
-     *
+     * 
      * @param brand Brand of vehicle.
      * @throws IllegalArgumentException Throws if given brand is null or empty.
      */
@@ -108,7 +115,7 @@ public class Vehicle implements Serializable {
 
     /**
      * Returns max distance, which can vehicle go.
-     *
+     * 
      * @return Max distance, which can vehicle go.
      */
     public Integer getDistanceCount() {
@@ -117,7 +124,7 @@ public class Vehicle implements Serializable {
 
     /**
      * Sets max distance, which can vehicle go.
-     *
+     * 
      * @param distanceCount Max distance
      * @throws IllegalArgumentException Throws in case, that distance is less or equal to zero.
      */
@@ -130,7 +137,7 @@ public class Vehicle implements Serializable {
 
     /**
      * Returns type of engine.
-     *
+     * 
      * @return Type of engine.
      */
     public String getEngineType() {
@@ -139,7 +146,7 @@ public class Vehicle implements Serializable {
 
     /**
      * Set given type of engine to vehicle.
-     *
+     * 
      * @param engineType Type of engine of vehicle.
      * @throws IllegalArgumentException Throws in case, that given engine type is null or empty.
      */
@@ -152,7 +159,7 @@ public class Vehicle implements Serializable {
 
     /**
      * Returns vehicle type.
-     *
+     * 
      * @return Type of vehicle.
      */
     public String getType() {
@@ -161,7 +168,7 @@ public class Vehicle implements Serializable {
 
     /**
      * Sets type of vehicle.
-     *
+     * 
      * @param type Type of vehicle
      * @throws IllegalArgumentException Throws in case, that given type is null or empty.
      */
@@ -174,7 +181,7 @@ public class Vehicle implements Serializable {
 
     /**
      * Returns vehicle identifier number.
-     *
+     * 
      * @return Vehicle identifier number
      */
     public String getVin() {
@@ -183,7 +190,7 @@ public class Vehicle implements Serializable {
 
     /**
      * Sets vehicle identifier number.
-     *
+     * 
      * @param vin Vehicle identifier number
      * @throws IllegalArgumentException Throws in case, that given VIN is null or empty.
      */
@@ -196,7 +203,7 @@ public class Vehicle implements Serializable {
 
     /**
      * Returns year, when the vehicle was made.
-     *
+     * 
      * @return
      */
     public Integer getYearMade() {
@@ -205,7 +212,7 @@ public class Vehicle implements Serializable {
 
     /**
      * Sets year, when the vehicle was made.
-     *
+     * 
      * @param yearMade Year of made.
      * @throws IllegalArgumentException Throws if year is less than 1900.
      */
@@ -218,7 +225,7 @@ public class Vehicle implements Serializable {
 
     /**
      * Returns user class of vehicle.
-     *
+     * 
      * @return the user class
      */
     public UserClassEnum getUserClass() {
@@ -227,7 +234,7 @@ public class Vehicle implements Serializable {
 
     /**
      * Sets user class of vehicle.
-     *
+     * 
      * @param userClass the userClass to set
      */
     public void setUserClass(UserClassEnum userClass) {
