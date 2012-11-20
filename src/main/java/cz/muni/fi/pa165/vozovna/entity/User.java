@@ -1,21 +1,35 @@
 package cz.muni.fi.pa165.vozovna.entity;
 
-import cz.muni.fi.pa165.vozovna.enums.UserClassEnum;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Transient;
+
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+
+import cz.muni.fi.pa165.vozovna.enums.UserClassEnum;
 
 /**
  * The User class represents any user present in the application
- *
+ * 
  * @author Frantisek Veverka, 207422@mail.muni.cz
  */
 @Entity
 @Table(name = "Users")
-public class User {
+public class User implements org.springframework.security.core.userdetails.UserDetails {
+
+    @Transient
+    public static final String ROLE_ADMIN = "ROLE_ADMIN";
+    @Transient
+    public static final String ROLE_USER = "ROLE_USER";
 
     /**
      * Unique users ID
@@ -23,30 +37,45 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
-    
+
     /**
      * Users firstName
      */
     @Column(length = 50)
     private String firstName;
-    
+
     /**
      * Users lastName
      */
     @Column(length = 50)
     private String lastName;
-    
+
     /**
-     * VozovnaUser's category - important when deciding which vehicles can be reserved
+     * User class - important when deciding which vehicles can be reserved
      */
     @Column(nullable = false)
     private UserClassEnum userClass;
-    
+
     /**
      * True if this user is administrator
      */
     @Column(nullable = false)
     private Boolean isAdmin;
+
+    @Column(nullable = false)
+    private String username;
+
+    @Column(nullable = false)
+    private String password;
+
+    @Column(nullable = false)
+    private Boolean enabled;
+
+    public User() {
+        super();
+        this.enabled = Boolean.TRUE;
+        this.isAdmin = Boolean.FALSE;
+    }
 
     /**
      * @return the id
@@ -132,7 +161,7 @@ public class User {
             return false;
         }
         User other = (User) obj;
-        if (id == null || other.id == null) { //can't compare null ids
+        if (id == null || other.id == null) { // can't compare null ids
             return false;
         } else if (!id.equals(other.id)) {
             return false;
@@ -159,4 +188,58 @@ public class User {
         builder.append("]");
         return builder.toString();
     }
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        List<GrantedAuthority> roles = new ArrayList<GrantedAuthority>(1);
+        if (Boolean.TRUE.equals(isAdmin)) {
+            roles.add(new SimpleGrantedAuthority(ROLE_ADMIN));
+        } else {
+            roles.add(new SimpleGrantedAuthority(ROLE_USER));
+        }
+        return roles;
+    }
+
+    @Override
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    @Override
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public void setEnabled(Boolean enabled) {
+        this.enabled = enabled;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return enabled;
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return enabled;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return enabled;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return enabled;
+    }
+
 }

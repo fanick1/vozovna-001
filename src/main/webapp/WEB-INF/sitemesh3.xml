@@ -7,5 +7,6 @@
     <mapping path="/login" exclue="true"/>
     <mapping path="/logout" exclue="true"/>
     <mapping path="/loginfailed" exclue="true"/>
+    <mapping path="/login/generate" exclue="true"/>
     
 </sitemesh>

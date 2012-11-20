@@ -43,7 +43,7 @@ public abstract class GenericDAOHibernateImpl<T, PK extends Serializable> implem
     @Override
     @Transactional
     public void create(T entity) {
-        sessionFactory.getCurrentSession().clear();
+        sessionFactory.getCurrentSession().flush();
         sessionFactory.getCurrentSession().save(entity);
         
     }
@@ -58,7 +58,7 @@ public abstract class GenericDAOHibernateImpl<T, PK extends Serializable> implem
     @Transactional
     public void remove(T entity) {
         Session s = sessionFactory.getCurrentSession();
-        s.clear();
+        s.flush();
         s.delete(entity);
     }
 
