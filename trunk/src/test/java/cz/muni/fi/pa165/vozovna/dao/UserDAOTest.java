@@ -124,6 +124,9 @@ public class UserDAOTest {
     public void testValidUpdate() {
         // UserDAO without Entity Manager Factory
         User user = newUser("Petr", "Novak", UserClassEnum.EMPLOYEE, true);
+        user.setPassword("my secret pass");
+        user.setUsername("petnov");
+        user.setEnabled(true);
 
         try {
             userDao.create(user);
@@ -213,7 +216,12 @@ public class UserDAOTest {
 
     // Factories
     private User newDefaultUser() {
-        return newUser("Jan", "Novak", UserClassEnum.EMPLOYEE, false);
+        User user = newUser("Jan", "Novak", UserClassEnum.EMPLOYEE, false);
+        user.setPassword("my secret pass");
+        user.setUsername("jannov");
+        user.setEnabled(true);
+        
+        return user;
     }
 
     private User newUser(String firstName, String lastName, UserClassEnum userClass, Boolean isAdmin) {
