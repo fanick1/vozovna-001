@@ -3,13 +3,21 @@ package cz.muni.fi.pa165.vozovna.entity;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
-import javax.persistence.*;
-import org.hibernate.annotations.Type;
-import org.joda.time.DateTime;
+
+import javax.persistence.Column;
+import javax.persistence.ElementCollection;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.persistence.Temporal;
+
+import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.Parameter;
 
 /**
  * The Entity represents service interval.
- *
+ * 
  * @author Lukas Hajek, 359617@mail.muni.cz
  */
 @Entity
@@ -20,31 +28,33 @@ public class ServiceInterval implements Serializable {
      * Unique users ID
      */
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(generator = "service_interval_id_sequence")
+    @GenericGenerator(name = "service_interval_id_sequence", strategy = "org.hibernate.id.enhanced.SequenceStyleGenerator", parameters = {
+            @Parameter(name = "sequence_name", value = "service_interval_id_sequence"), @Parameter(name = "initial_value", value = "1"),
+            @Parameter(name = "increment_size", value = "1") })
     private Long id;
-    
-    
+
     /**
      * The required time interval between two service inspections (in days).
      */
     @Column(nullable = false)
     private int inspectionInterval;
-    
+
     /**
      * The dates when vehicle was inspected.
      */
     @ElementCollection
     @Temporal(javax.persistence.TemporalType.DATE)
-    //@Type(type = "org.jadira.usertype.dateandtime.joda.PersistentDateTime")
+    // @Type(type = "org.jadira.usertype.dateandtime.joda.PersistentDateTime")
     private List<Date> dated;
-    
+
     /**
      * The related vehicle
      */
-    //@Column(nullable = false)
+    // @Column(nullable = false)
     @ManyToOne()
     private Vehicle vehicle;
-    
+
     /**
      * Description of service interval. E.g: wheel exchange
      */
@@ -71,7 +81,7 @@ public class ServiceInterval implements Serializable {
 
     /**
      * Sets time interval between two service inspections
-     *
+     * 
      * @param inspectionInterval Interval between two service inspections (in days)
      * @throws IllegalArgumentException If inspectionInterval is less or equals to 0
      */
@@ -131,8 +141,8 @@ public class ServiceInterval implements Serializable {
 
     @Override
     public String toString() {
-        return "ServiceInterval{" + "id=" + id + ", inspectionInterval=" + inspectionInterval
-                + ", dated=" + dated + ", vehicle=" + vehicle + ", description=" + description + '}';
+        return "ServiceInterval{" + "id=" + id + ", inspectionInterval=" + inspectionInterval + ", dated=" + dated + ", vehicle=" + vehicle
+                + ", description=" + description + '}';
     }
 
     @Override

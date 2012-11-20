@@ -7,11 +7,12 @@ import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
+import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.Parameter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
@@ -35,7 +36,10 @@ public class User implements org.springframework.security.core.userdetails.UserD
      * Unique users ID
      */
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(generator = "user_id_sequence")
+    @GenericGenerator(name = "user_id_sequence", strategy = "org.hibernate.id.enhanced.SequenceStyleGenerator", parameters = {
+            @Parameter(name = "sequence_name", value = "user_id_sequence"), @Parameter(name = "initial_value", value = "1"),
+            @Parameter(name = "increment_size", value = "1") })
     private Long id;
 
     /**
@@ -224,21 +228,33 @@ public class User implements org.springframework.security.core.userdetails.UserD
 
     @Override
     public boolean isEnabled() {
+        if (enabled == null) {
+            return false;
+        }
         return enabled;
     }
 
     @Override
     public boolean isAccountNonExpired() {
+        if (enabled == null) {
+            return false;
+        }
         return enabled;
     }
 
     @Override
     public boolean isAccountNonLocked() {
+        if (enabled == null) {
+            return false;
+        }
         return enabled;
     }
 
     @Override
     public boolean isCredentialsNonExpired() {
+        if (enabled == null) {
+            return false;
+        }
         return enabled;
     }
 
