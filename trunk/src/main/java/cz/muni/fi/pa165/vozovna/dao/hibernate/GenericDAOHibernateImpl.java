@@ -6,7 +6,6 @@ import java.lang.reflect.Type;
 import java.util.List;
 
 import javax.annotation.Resource;
-import javax.persistence.EntityManager;
 
 import org.hibernate.Criteria;
 import org.hibernate.Session;
@@ -23,7 +22,7 @@ import cz.muni.fi.pa165.vozovna.dao.GenericDAO;
 public abstract class GenericDAOHibernateImpl<T, PK extends Serializable> implements GenericDAO<T, PK> {
 
     private Class<T> entityClass;
-    
+
     @Resource(name = "sessionFactory")
     protected SessionFactory sessionFactory;
 
@@ -43,9 +42,8 @@ public abstract class GenericDAOHibernateImpl<T, PK extends Serializable> implem
     @Override
     @Transactional
     public void create(T entity) {
-        sessionFactory.getCurrentSession().flush();
         sessionFactory.getCurrentSession().save(entity);
-        
+
     }
 
     @Override
@@ -57,9 +55,7 @@ public abstract class GenericDAOHibernateImpl<T, PK extends Serializable> implem
     @Override
     @Transactional
     public void remove(T entity) {
-        Session s = sessionFactory.getCurrentSession();
-        s.flush();
-        s.delete(entity);
+        sessionFactory.getCurrentSession().delete(entity);
     }
 
     @Override
