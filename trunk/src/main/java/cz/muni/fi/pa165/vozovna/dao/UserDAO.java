@@ -68,4 +68,13 @@ public interface UserDAO extends GenericDAO<User, Long> {
      * @throws IllegalStateException Throws if factory is not initialized.
      */
     List<User> findByLastName(String lastName);
+
+    /**
+     * Returns User with given username. Returns null if such user does not exist.
+     * 
+     * @param username username of demanded user
+     * @return User if exists, null otherwise.
+     * @throws IllegalArgumentException Throws if given username is null.
+     */
+    User getByUsername(String username);
 }

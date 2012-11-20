@@ -63,4 +63,6 @@ public interface UserService {
      */
     public List<UserDTO> findByLastName(String lastName);
 
+    void generateTestUsersIfNoneExist();
+
 }

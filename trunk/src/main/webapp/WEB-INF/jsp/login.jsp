@@ -26,13 +26,8 @@
         <fmt:message key="login.request" />
     </h3>
 
+    <a href="<c:url value='login/generate' />">Vygenerovat testovaci loginy admin-admin a user-user</a>
 
-    Loginy jsou zatím natvrdo v security-config.xml
-        <span style="margin-left: 20px"> <br />&lt;user name="admin" password="admin" authorities="ROLE_USER,
-            ROLE_ADMIN" /&gt;
-        </span>
-        <span style="margin-left: 20px"> <br />&lt;user name="user" password="user" authorities="ROLE_USER" /&gt;
-        </span>
 
     <c:if test="${not empty error}">
         <div class="errorblock">
@@ -60,5 +55,14 @@
         </table>
 
     </form>
+
+
+
+
+
+
+
+
+
 </body>
 </html>
