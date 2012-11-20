@@ -57,12 +57,18 @@
         <column>isAdmin</column>
         <column>lastName</column>
         <column>userClass</column>
+        <column>enabled</column>
+        <column>password</column>
+        <column>username</column>
         <row>
             <value>-1</value>
             <value>Arnold</value>
             <value>false</value>
             <value>Rimmer</value>
             <value>1</value>
+            <value>true</value>
+            <value>mysecretpass</value>
+            <value>arny225</value>
         </row>
     </table>
 
