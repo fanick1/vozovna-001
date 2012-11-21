@@ -8,14 +8,24 @@ import org.aspectj.lang.annotation.Aspect;
 import org.springframework.ui.ModelMap;
 
 /**
+ * Aspect for handling viewing messages from session
+ * 
  * @author Eva Neduchalová
  * 
  */
 @Aspect
 public class MessagesPrinterAspect {
 
-    // @Around("execution(*cz.muni.fi.pa165.vozovna.controller.admin.UsersController.*(..)) && args(model, session) )")
-    @Around("execution(* cz.muni.fi.pa165.vozovna.controller.admin.UsersController.*(..)) && args( .., model, session)")
+    /**
+     * Puts message and error object from session into model and removes them from session.
+     * 
+     * @param pjp
+     * @param model
+     * @param session
+     * @return
+     * @throws Throwable
+     */
+    @Around("execution(* cz.muni.fi.pa165.vozovna.controller..*.*(..)) && args( .., model, session)")
     public Object onAction(ProceedingJoinPoint pjp, ModelMap model, HttpSession session) throws Throwable {
 
         if (model != null && session != null) {
@@ -25,9 +35,7 @@ public class MessagesPrinterAspect {
             session.setAttribute("error", null);
         }
 
-        Object result = pjp.proceed();
-
-        return result;
+        return pjp.proceed();
     }
 
 }
