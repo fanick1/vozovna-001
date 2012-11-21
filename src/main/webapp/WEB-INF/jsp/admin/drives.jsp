@@ -8,11 +8,6 @@
 </head>
 <body>
 
-    <h1>
-        <fmt:message key="admin.drives.title" />
-    </h1>
-
-
 
 
 </body>

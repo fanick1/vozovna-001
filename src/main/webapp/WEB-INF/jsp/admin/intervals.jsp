@@ -8,11 +8,6 @@
 </head>
 <body>
 
-    <h1>
-        <fmt:message key="admin.serviceIntervals.title" />
-    </h1>
-
-
 
 
 </body>

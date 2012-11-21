@@ -8,10 +8,7 @@
 </head>
 <body>
 
-    <h1>
-        <fmt:message key="vehicles.title" />
-    </h1>
-
+ 
     <br />Tady si bude uživatel rezervovat vozidla. Na stránce budou dvě pole, do kterých uživatel zadá datum, v jakém
     časovém rozmezí se mu mají vozidla vypsat. Tato pole by mohla být formou kalendáře, ale pro začátek nám bude stačit
     zadávat to textově. Pod tím tabulka s odpovídajícími vozidly (filtr na datum a na uživatelovu třídu). Třídu
