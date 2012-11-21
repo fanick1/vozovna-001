@@ -128,7 +128,9 @@
                             
                             <form:select path="userClass">
                                 <c:forEach var="item" items="${userClasses}">
-                                    <form:option value="${item}"> ${item} </form:option>
+                                    <form:option value="${item}">
+                                        <fmt:message key="${item.code}" />
+                                    </form:option>
                                 </c:forEach>
                                 
                             </form:select>

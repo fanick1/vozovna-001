@@ -8,10 +8,6 @@
 </head>
 <body>
 
-    <h1>
-        <fmt:message key="drives.title" />
-    </h1>
-
     <br />Tady bude mít uživatel výpis vlastních jízd
 
 

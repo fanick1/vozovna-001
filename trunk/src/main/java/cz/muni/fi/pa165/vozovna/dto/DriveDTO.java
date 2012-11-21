@@ -1,11 +1,13 @@
 package cz.muni.fi.pa165.vozovna.dto;
 
+import org.joda.time.DateTime;
+
 import cz.muni.fi.pa165.vozovna.entity.Drive;
 import cz.muni.fi.pa165.vozovna.enums.DriveStateEnum;
-import org.joda.time.DateTime;
 
 /**
  * DTO of Drive
+ * 
  * @author Lukas Hajek <359617@mail.muni.cz>
  */
 public class DriveDTO implements java.io.Serializable {
@@ -19,25 +21,21 @@ public class DriveDTO implements java.io.Serializable {
      * Kilometres traveled in this drive
      */
     private Integer distance;
-    
 
     /**
      * User, to whom the vehicle is being lent for this drive
      */
     private UserDTO user;
-    
 
     /**
      * Vehicle which is lent for this drive
      */
     private VehicleDTO vehicle;
-    
 
     /**
      * Date when the Drive started
      */
     private DateTime dateFrom;
-    
 
     /**
      * Date when the drive ended
@@ -49,7 +47,6 @@ public class DriveDTO implements java.io.Serializable {
      */
     private DriveStateEnum state;
 
-    
     public DateTime getDateFrom() {
         return dateFrom;
     }
@@ -105,19 +102,18 @@ public class DriveDTO implements java.io.Serializable {
     public void setVehicle(VehicleDTO vehicle) {
         this.vehicle = vehicle;
     }
-    
-    
+
     public DriveDTO() {
 
     }
-    
-     public DriveDTO(Drive drive) {
+
+    public DriveDTO(Drive drive) {
         fromDrive(drive);
     }
-    
+
     /**
      * Fills properties from drive
-     * @param drive     Original drive
+     * @param drive Original drive
      */
     public final void fromDrive(Drive drive) {
         id = drive.getId();
@@ -130,7 +126,7 @@ public class DriveDTO implements java.io.Serializable {
         VehicleDTO vehicleDTO = new VehicleDTO();
         vehicleDTO.fromVehicle(drive.getVehicle());
         vehicle = vehicleDTO;
-        
+
         dateFrom = drive.getDateFrom();
         dateTo = drive.getDateTo();
         state = drive.getState();
@@ -138,26 +134,28 @@ public class DriveDTO implements java.io.Serializable {
 
     /**
      * Returns drive with same properties
-     * @return 
+     * @return
      */
     public Drive toDrive() {
         Drive drive = new Drive();
         drive.setId(id);
         drive.setDistance(distance);
-        drive.setUser(user.toUser());
+        // FIXME nepouzivat toNewUser!
+        drive.setUser(user.toNewUser());
         drive.setVehicle(vehicle.toVehicle());
         drive.setDateFrom(dateFrom);
         drive.setDateTo(dateTo);
         drive.setState(state);
-        
+
         return drive;
     }
 
     @Override
     public String toString() {
-        return "DriveDTO{" + "id=" + id + ", distance=" + distance + ", user=" + user + ", vehicle=" + vehicle + ", dateFrom=" + dateFrom + ", dateTo=" + dateTo + ", state=" + state + '}';
+        return "DriveDTO{" + "id=" + id + ", distance=" + distance + ", user=" + user + ", vehicle=" + vehicle + ", dateFrom=" + dateFrom
+                + ", dateTo=" + dateTo + ", state=" + state + '}';
     }
-           
+
     @Override
     public boolean equals(Object obj) {
         if (obj == null) {
@@ -179,6 +177,5 @@ public class DriveDTO implements java.io.Serializable {
         hash = 47 * hash + (this.id != null ? this.id.hashCode() : 0);
         return hash;
     }
-    
-       
+
 }

@@ -1,12 +1,8 @@
 package cz.muni.fi.pa165.vozovna.service.impl;
 
-import cz.muni.fi.pa165.vozovna.dao.UserDAO;
-import cz.muni.fi.pa165.vozovna.dto.UserDTO;
-import cz.muni.fi.pa165.vozovna.entity.User;
-import cz.muni.fi.pa165.vozovna.enums.UserClassEnum;
-import cz.muni.fi.pa165.vozovna.service.UserService;
 import java.util.ArrayList;
 import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.security.authentication.encoding.PasswordEncoder;
@@ -16,8 +12,14 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import cz.muni.fi.pa165.vozovna.dao.UserDAO;
+import cz.muni.fi.pa165.vozovna.dto.UserDTO;
+import cz.muni.fi.pa165.vozovna.entity.User;
+import cz.muni.fi.pa165.vozovna.enums.UserClassEnum;
+import cz.muni.fi.pa165.vozovna.service.UserService;
+
 /**
- * Implementation User's Service Layer 
+ * Implementation User's Service Layer
  * 
  * @author Lukas Hajek (359617@mail.muni.cz)
  */
@@ -30,19 +32,21 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     public void setUserDAO(UserDAO userDAO) {
         this.userDAO = userDAO;
     }
-    
+
     @Autowired
     PasswordEncoder passwordEncoder;
-    
+
     @Override
     @Transactional(readOnly = true)
     public UserDTO getById(Long id) {
         if (id == null) {
+            throw new IllegalArgumentException("null id");
+        }
+        User user = userDAO.getById(id);
+        if (user == null) {
             return null;
         }
-        // get user
-        User user = userDAO.getById(id);
-        return  new UserDTO(user);
+        return new UserDTO(user);
     }
 
     @Override
@@ -51,7 +55,11 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         if (user == null) {
             throw new IllegalArgumentException("null user");
         }
-        User entity = user.toUser();
+        if (user.getId() != null) {
+            throw new IllegalArgumentException("user has set id");
+        }
+        User entity = user.toNewUser();
+        entity.setPassword(passwordEncoder.encodePassword(user.getPassword(), ""));
         userDAO.create(entity);
         user.fromUser(entity);
         return entity.getId();
@@ -63,7 +71,10 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         if (user == null) {
             throw new IllegalArgumentException("null user");
         }
-        userDAO.remove(user.toUser());
+        if (user.getId() == null) {
+            throw new IllegalArgumentException("user unexists");
+        }
+        userDAO.remove(userDAO.getById(user.getId()));
         user.setId(null);
     }
 
@@ -73,7 +84,27 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         if (user == null) {
             throw new IllegalArgumentException("null user");
         }
-        User entity = user.toUser();
+        if (user.getId() == null) {
+            throw new IllegalArgumentException("user has no id set");
+        }
+        User entity = userDAO.getById(user.getId());
+        if (entity == null) {
+            throw new IllegalArgumentException("user unexists");
+        }
+
+        entity.setFirstName(user.getFirstName());
+        entity.setLastName(user.getLastName());
+        entity.setUserClass(user.getUserClass());
+        entity.setIsAdmin(user.getIsAdmin());
+        entity.setUsername(user.getUsername());
+
+        if (!entity.getPassword().equals(user.getPassword())) {
+            // password changed
+            entity.setPassword(passwordEncoder.encodePassword(user.getPassword(), ""));
+        }
+
+        entity.setEnabled(user.getEnabled());
+
         userDAO.update(entity);
         user.fromUser(entity);
         return user;
@@ -84,11 +115,11 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     public List<UserDTO> findAll() {
         // find
         List<User> users = userDAO.findAll();
-                
-        //  transform results
+
+        // transform results
         List<UserDTO> result = new ArrayList<>();
-        for(User user:users) {
-           result.add(new UserDTO(user));
+        for (User user : users) {
+            result.add(new UserDTO(user));
         }
         return result;
     }
@@ -96,23 +127,22 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     @Override
     @Transactional(readOnly = true)
     public List<UserDTO> findByLastName(String lastName) {
-        if(lastName == null) {
+        if (lastName == null) {
             throw new IllegalArgumentException("null lastName");
         }
-        
+
         // find
         List<User> users = userDAO.findByLastName(lastName);
-                
+
         // transform results
         List<UserDTO> result = new ArrayList<>();
-        for(User user:users) {
+        for (User user : users) {
             result.add(new UserDTO(user));
         }
-        
+
         return result;
     }
-  
-    
+
     @Override
     @Transactional(readOnly = true)
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException, DataAccessException {
@@ -158,7 +188,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
             userDAO.create(newUser);
 
         }
-        
+
     }
-    
+
 }

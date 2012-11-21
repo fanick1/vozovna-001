@@ -90,6 +90,14 @@ p,ul,ol {
     margin: 16px;
 }
 
+.messageblock {
+    color: MidnightBlue;
+    background-color: azure;
+    border: 3px solid LightCyan;
+    padding: 8px;
+    margin: 16px;
+}
+
 a {
     text-decoration: none;
     color: #5E5E5E;

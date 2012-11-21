@@ -16,7 +16,7 @@ import cz.muni.fi.pa165.vozovna.service.UserService;
 
 @Controller
 public class LoginController {
-    
+
     @Autowired
     UserService userService;
 
@@ -38,11 +38,11 @@ public class LoginController {
     public String login(ModelMap model) {
         return "login";
     }
-    
+
     @RequestMapping(value = "/login/generate", method = RequestMethod.GET)
     public String generateLogins(ModelMap model) {
         userService.generateTestUsersIfNoneExist();
-        return "login";
+        return "redirect:/login";
     }
 
     @RequestMapping(value = "/loginfailed", method = RequestMethod.GET)
