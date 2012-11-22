@@ -1,6 +1,7 @@
 package cz.muni.fi.pa165.vozovna.dto;
 
 import cz.muni.fi.pa165.vozovna.entity.ServiceInterval;
+import cz.muni.fi.pa165.vozovna.entity.Vehicle;
 import java.util.Date;
 import java.util.List;
 
@@ -97,8 +98,11 @@ public class ServiceIntervalDTO implements java.io.Serializable {
         
         // vehicle
         VehicleDTO vehicleDTO = new VehicleDTO();
-        vehicleDTO.fromVehicle(serviceInterval.getVehicle());
-        vehicle = vehicleDTO;
+        Vehicle v = serviceInterval.getVehicle();
+        if (v != null) {
+            vehicleDTO.fromVehicle(serviceInterval.getVehicle());
+            vehicle = vehicleDTO;
+        }
     }
     
     /**

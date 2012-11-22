@@ -1,12 +1,16 @@
 package cz.muni.fi.pa165.vozovna.service.impl;
 
 import cz.muni.fi.pa165.vozovna.dao.ServiceIntervalDAO;
+import cz.muni.fi.pa165.vozovna.dao.VehicleDAO;
 import cz.muni.fi.pa165.vozovna.dto.ServiceIntervalDTO;
 import cz.muni.fi.pa165.vozovna.dto.VehicleDTO;
 import cz.muni.fi.pa165.vozovna.entity.ServiceInterval;
+import cz.muni.fi.pa165.vozovna.entity.Vehicle;
 import cz.muni.fi.pa165.vozovna.service.ServiceIntervalService;
 import java.util.ArrayList;
 import java.util.List;
+import org.hibernate.criterion.Criterion;
+import org.hibernate.criterion.Order;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -24,6 +28,13 @@ public class ServiceIntervalServiceImpl implements ServiceIntervalService {
     @Autowired
     public void setUserDAO(ServiceIntervalDAO serviceIntervalDAO) {
         this.serviceIntervalDAO = serviceIntervalDAO;
+    }
+    
+    private VehicleDAO vehicleDAO;
+
+    @Autowired
+     public void setVehicleDAO(VehicleDAO vehicleDAO) {
+        this.vehicleDAO = vehicleDAO;
     }
     
     @Override
@@ -46,7 +57,7 @@ public class ServiceIntervalServiceImpl implements ServiceIntervalService {
         }
         
         ServiceInterval entity = serviceInterval.toServiceInterval();
-        
+        // save
         serviceIntervalDAO.create(entity);
         
         serviceInterval.fromServiceInterval(entity);
@@ -60,8 +71,14 @@ public class ServiceIntervalServiceImpl implements ServiceIntervalService {
         if (serviceInterval == null) {
             throw new IllegalArgumentException("null serviceInterval");
         }
+        ServiceInterval entity = serviceIntervalDAO.getById(serviceInterval.getId());
+        if (entity == null) {
+            throw new IllegalArgumentException("service interval doesn't exists");
+        }
+        // delete
+        serviceIntervalDAO.remove(entity);
         
-        serviceIntervalDAO.remove(serviceInterval.toServiceInterval());
+        // propagate
         serviceInterval.setId(null);
     }
 
@@ -72,11 +89,30 @@ public class ServiceIntervalServiceImpl implements ServiceIntervalService {
             throw new IllegalArgumentException("null serviceInterval");
         }
         
-        ServiceInterval entity = serviceInterval.toServiceInterval();
+        ServiceInterval entity = serviceIntervalDAO.getById(serviceInterval.getId());
+        if (entity == null) {
+            throw new IllegalArgumentException("service interval doesn't exist");
+        }
         
+        // update
+        entity.setDated(serviceInterval.getDated());
+        entity.setDescription(serviceInterval.getDescription());
+        entity.setInspectionInterval(serviceInterval.getInspectionInterval());
+        VehicleDTO associatedVehicleDTO = serviceInterval.getVehicle();
+        if (associatedVehicleDTO == null) {
+            throw new IllegalArgumentException("Service Interval have to become to vehicle.");
+        }
+        Vehicle associatedVehicle = vehicleDAO.getById(associatedVehicleDTO.getId());
+        if (associatedVehicle == null) {
+            throw new IllegalStateException("Vehicle doesn't exist.");
+        }
+        entity.setVehicle(associatedVehicle);
+        
+        // save
         serviceIntervalDAO.update(entity);
         
-        serviceInterval.fromServiceInterval(entity); // propagate changes
+        // propagate changes
+        serviceInterval.fromServiceInterval(entity); 
         
         return serviceInterval;
     }
@@ -84,16 +120,10 @@ public class ServiceIntervalServiceImpl implements ServiceIntervalService {
     @Override
     @Transactional(readOnly=true)
     public List<ServiceIntervalDTO> findAll() {
-        // Find
-        List<ServiceInterval> intervals = serviceIntervalDAO.findAll();
+        // find
+        List<ServiceInterval> result = serviceIntervalDAO.findAll();
                 
-        // Transform result from List of Entities to List of DTOs
-        List<ServiceIntervalDTO> result = new ArrayList<>();
-        for(ServiceInterval entity : intervals) {
-            result.add(new ServiceIntervalDTO(entity));
-        }
-        
-        return result;
+        return convertListOfIntervalsToListOfIntervalDTOs(result);
     }
 
     @Override
@@ -103,16 +133,35 @@ public class ServiceIntervalServiceImpl implements ServiceIntervalService {
             throw new IllegalArgumentException("null vehicle");
         }
         
-        // Find
-        List<ServiceInterval> intervals = serviceIntervalDAO.findAllByVehicle(vehicle.toVehicle());
-                
-        // Transform result from List of Entities to List of DTOs
-        List<ServiceIntervalDTO> result = new ArrayList<>();
-        for(ServiceInterval entity : intervals) {
-            result.add(new ServiceIntervalDTO(entity));
-        }
-        
-        return result;
+        // find
+        List<ServiceInterval> result = serviceIntervalDAO.findAllByVehicle(vehicle.toVehicle());
+
+        return convertListOfIntervalsToListOfIntervalDTOs(result);
     }
     
+    
+    @Override
+    @Transactional(readOnly=true)
+    public List<ServiceIntervalDTO> findByCriteria(List<Criterion> criterion, List<Order> orders) {
+        
+        List<ServiceInterval> result = serviceIntervalDAO.findByCriteria(criterion, orders);
+        
+        return convertListOfIntervalsToListOfIntervalDTOs(result); 
+    }
+
+    /**
+     * Converts list of service intervals to list of service interval DTOs
+     * 
+     * @param list List of service intervals
+     * @return List of Drive Data Transform Objects
+     */
+    private static List<ServiceIntervalDTO> convertListOfIntervalsToListOfIntervalDTOs(List<ServiceInterval> intervals) {
+        List<ServiceIntervalDTO> result = new ArrayList<>();
+
+        for (ServiceInterval item : intervals) {
+            result.add(new ServiceIntervalDTO(item));
+        }
+
+        return result;
+    }
 }

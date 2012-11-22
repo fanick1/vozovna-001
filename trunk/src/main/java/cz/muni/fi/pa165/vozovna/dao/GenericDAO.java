@@ -2,6 +2,8 @@ package cz.muni.fi.pa165.vozovna.dao;
 
 import java.io.Serializable;
 import java.util.List;
+import org.hibernate.criterion.Criterion;
+import org.hibernate.criterion.Order;
 
 /**
  * Base DAO with CRUD operations and findAll() method
@@ -54,4 +56,8 @@ public interface GenericDAO<T, PK extends Serializable> {
      * @throws IllegalStateException Throws if factory is not set.
      */
     List<T> findAll();
+    
+    
+    List<T> findByCriteria(List<Criterion> criterions, List<Order> orders);
+    
 }

@@ -3,6 +3,8 @@ package cz.muni.fi.pa165.vozovna.service;
 import cz.muni.fi.pa165.vozovna.dto.VehicleDTO;
 import cz.muni.fi.pa165.vozovna.enums.UserClassEnum;
 import java.util.List;
+import org.hibernate.criterion.Criterion;
+import org.hibernate.criterion.Order;
 
 /**
  * Vehicle Service
@@ -64,4 +66,7 @@ public interface VehicleService {
      * @throws DataAccessException          Throws if a data access exception occurred.
      */
     public List<VehicleDTO> findByUserClass(UserClassEnum userClass);
+    
+    
+    public List<VehicleDTO> findByCriteria(List<Criterion> criterion, List<Order> orders);
 }

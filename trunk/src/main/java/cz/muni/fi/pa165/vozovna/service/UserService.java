@@ -2,6 +2,8 @@ package cz.muni.fi.pa165.vozovna.service;
 
 import cz.muni.fi.pa165.vozovna.dto.UserDTO;
 import java.util.List;
+import org.hibernate.criterion.Criterion;
+import org.hibernate.criterion.Order;
 
 /**
  * User Service 
@@ -64,5 +66,9 @@ public interface UserService {
     public List<UserDTO> findByLastName(String lastName);
 
     void generateTestUsersIfNoneExist();
+    
+    public List<UserDTO> findByCriteria(List<Criterion> criterion, List<Order> orders);
+    
+    public UserDTO getByUsername(String username);
 
 }

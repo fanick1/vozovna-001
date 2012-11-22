@@ -1,22 +1,19 @@
 package cz.muni.fi.pa165.vozovna.entity;
 
+import cz.muni.fi.pa165.vozovna.enums.UserClassEnum;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Transient;
-
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Parameter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
-
-import cz.muni.fi.pa165.vozovna.enums.UserClassEnum;
 
 /**
  * The User class represents any user present in the application
@@ -66,7 +63,7 @@ public class User implements org.springframework.security.core.userdetails.UserD
     @Column(nullable = false)
     private Boolean isAdmin;
 
-    @Column(nullable = false)
+    @Column(nullable = false, unique=true)
     private String username;
 
     @Column(nullable = false)
@@ -189,6 +186,10 @@ public class User implements org.springframework.security.core.userdetails.UserD
         builder.append(userClass);
         builder.append(", isAdmin=");
         builder.append(isAdmin);
+        builder.append(", username=");
+        builder.append(username);
+        builder.append(", enabled=");
+        builder.append(enabled);
         builder.append("]");
         return builder.toString();
     }

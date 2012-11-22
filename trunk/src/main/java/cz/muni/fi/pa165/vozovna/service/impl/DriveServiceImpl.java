@@ -1,18 +1,22 @@
 package cz.muni.fi.pa165.vozovna.service.impl;
 
+import cz.muni.fi.pa165.vozovna.dao.DriveDAO;
+import cz.muni.fi.pa165.vozovna.dao.UserDAO;
+import cz.muni.fi.pa165.vozovna.dao.VehicleDAO;
+import cz.muni.fi.pa165.vozovna.dto.DriveDTO;
+import cz.muni.fi.pa165.vozovna.dto.UserDTO;
+import cz.muni.fi.pa165.vozovna.dto.VehicleDTO;
+import cz.muni.fi.pa165.vozovna.entity.Drive;
+import cz.muni.fi.pa165.vozovna.entity.User;
+import cz.muni.fi.pa165.vozovna.entity.Vehicle;
+import cz.muni.fi.pa165.vozovna.service.DriveService;
 import java.util.ArrayList;
 import java.util.List;
-
+import org.hibernate.criterion.Criterion;
+import org.hibernate.criterion.Order;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import cz.muni.fi.pa165.vozovna.dao.DriveDAO;
-import cz.muni.fi.pa165.vozovna.dao.UserDAO;
-import cz.muni.fi.pa165.vozovna.dto.DriveDTO;
-import cz.muni.fi.pa165.vozovna.dto.UserDTO;
-import cz.muni.fi.pa165.vozovna.entity.Drive;
-import cz.muni.fi.pa165.vozovna.service.DriveService;
 
 /**
  * Implementation of Drive service.
@@ -34,6 +38,13 @@ public class DriveServiceImpl implements DriveService {
     @Autowired
     public void setUserDAO(UserDAO userDAO) {
         this.userDAO = userDAO;
+    }
+    
+    private VehicleDAO vehicleDAO;
+
+    @Autowired
+    public void setVehicleDAO(VehicleDAO vehicleDAO) {
+        this.vehicleDAO = vehicleDAO;
     }
 
     @Override
@@ -69,8 +80,11 @@ public class DriveServiceImpl implements DriveService {
         if (drive == null) {
             throw new IllegalArgumentException("null drive");
         }
-
-        driveDAO.remove(drive.toDrive());
+        Drive entity = driveDAO.getById(drive.getId());
+        if (entity == null) {
+            throw new IllegalArgumentException("drive does not exist");
+        }
+        driveDAO.remove(entity);
         drive.setId(null);
     }
 
@@ -80,9 +94,26 @@ public class DriveServiceImpl implements DriveService {
         if (drive == null) {
             throw new IllegalArgumentException("null drive");
         }
-
-        Drive entity = drive.toDrive();
-
+        Drive entity = driveDAO.getById(drive.getId());
+        if (entity == null) {
+            throw new IllegalArgumentException("drive does not exist");
+        }
+        
+        // copy DTO's attributes into existing entity
+        VehicleDTO v = drive.getVehicle();
+        if (v != null) {
+            entity.setVehicle(vehicleDAO.getById(v.getId()));
+        }
+        UserDTO u = drive.getUser();
+        if (u != null) {
+            entity.setUser(userDAO.getById(u.getId()));
+        }
+        
+        entity.setDistance(drive.getDistance());
+        entity.setState(drive.getState());
+        entity.setDateFrom(drive.getDateFrom());
+        entity.setDateTo(drive.getDateTo());
+        
         driveDAO.update(entity);
 
         drive.fromDrive(entity);
@@ -106,13 +137,28 @@ public class DriveServiceImpl implements DriveService {
         if (user == null) {
             throw new IllegalArgumentException("null user");
         }
+        // get user
         if (user.getId() == null) {
-            return new ArrayList<DriveDTO>();
+            //return new ArrayList<DriveDTO>();
+            throw new IllegalArgumentException("user is not stored in system");
         }
-
-        List<Drive> drives = driveDAO.findByUser(userDAO.getById(user.getId()));
+        User userEntity = userDAO.getById(user.getId());
+        if (userEntity == null) {
+            throw new IllegalStateException("nonexisting user");
+        }
+        // find
+        List<Drive> drives = driveDAO.findByUser(userEntity);
 
         return convertListOfDrivesToListOfDriveDTOs(drives);
+    }
+    
+    @Override
+    @Transactional(readOnly=true)
+    public List<DriveDTO> findByCriteria(List<Criterion> criterion, List<Order> orders) {
+        
+        List<Drive> drives = driveDAO.findByCriteria(criterion, orders);
+        
+        return convertListOfDrivesToListOfDriveDTOs(drives); 
     }
 
     /**

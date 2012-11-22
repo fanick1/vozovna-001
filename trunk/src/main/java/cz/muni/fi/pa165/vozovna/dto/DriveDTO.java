@@ -3,6 +3,8 @@ package cz.muni.fi.pa165.vozovna.dto;
 import org.joda.time.DateTime;
 
 import cz.muni.fi.pa165.vozovna.entity.Drive;
+import cz.muni.fi.pa165.vozovna.entity.User;
+import cz.muni.fi.pa165.vozovna.entity.Vehicle;
 import cz.muni.fi.pa165.vozovna.enums.DriveStateEnum;
 
 /**
@@ -120,12 +122,19 @@ public class DriveDTO implements java.io.Serializable {
         distance = drive.getDistance();
         // user
         UserDTO userDTO = new UserDTO();
-        userDTO.fromUser(drive.getUser());
-        user = userDTO;
+        User u = drive.getUser(); 
+        if (u != null) {
+            userDTO.fromUser(drive.getUser());
+            this.user = userDTO;
+        }
         // vehicle
         VehicleDTO vehicleDTO = new VehicleDTO();
-        vehicleDTO.fromVehicle(drive.getVehicle());
-        vehicle = vehicleDTO;
+        Vehicle v = drive.getVehicle();
+        if (v != null) {
+            vehicleDTO.fromVehicle(drive.getVehicle());
+            vehicle = vehicleDTO;  
+        }
+        
 
         dateFrom = drive.getDateFrom();
         dateTo = drive.getDateTo();

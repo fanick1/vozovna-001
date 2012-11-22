@@ -119,6 +119,9 @@ public class UserDTO implements java.io.Serializable {
      * @param user Original user
      */
     public final void fromUser(User user) {
+        if (user == null) {
+            return;
+        }
         id = user.getId();
         firstName = user.getFirstName();
         lastName = user.getLastName();
