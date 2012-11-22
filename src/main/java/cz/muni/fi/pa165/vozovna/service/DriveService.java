@@ -3,6 +3,8 @@ package cz.muni.fi.pa165.vozovna.service;
 import cz.muni.fi.pa165.vozovna.dto.DriveDTO;
 import cz.muni.fi.pa165.vozovna.dto.UserDTO;
 import java.util.List;
+import org.hibernate.criterion.Criterion;
+import org.hibernate.criterion.Order;
 
 /**
  * Drive Service
@@ -67,5 +69,7 @@ public interface DriveService {
      * @throws DataAccessException          Throws if a data access exception occurred.
      */
     public List<DriveDTO> findByUser(UserDTO user);
+    
+    public List<DriveDTO> findByCriteria(List<Criterion> criterion, List<Order> orders);
 
 }

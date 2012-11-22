@@ -168,10 +168,14 @@ public class UserServiceTest {
 	@Test
 	public void testGetById() {
 
-		if(null != userService.getById(null)){
-			fail("Null expected");
-		}
-		
+//		if(null != userService.getById(null)){
+//			fail("Null expected");
+//		}
+		try {
+            userService.getById(null);
+            fail("null id - IllegalArgumentException expected");
+        } catch (IllegalArgumentException e){}
+        
 		UserDTO u1 = userService.getById(existingUserID);
 		assertNotNull("Existing record expected.", u1);
 		assertEquals(existingUserID,u1.getId());	
@@ -196,16 +200,20 @@ public class UserServiceTest {
 		}
 		UserDTO userDto = new UserDTO();
 		userDto.setId(15l);
-		Long id = userService.create(userDto);
-		assertNotNull(id);
-		assertEquals("IDs should be equal.", id, userDto.getId());
-
-		try{
-			userService.create(userDto);	//duplicity
-			fail("Duplicit records shouldn't be possible.");
-		}catch(Exception e){
-			//OK?
-		}
+        try {
+            Long id = userService.create(userDto);
+            fail("Create user with setted id should be forbidden.");
+        } catch (IllegalArgumentException e) {}
+//		assertNotNull(id);
+//		assertEquals("IDs should be equal.", id, userDto.getId());
+//
+//		try{
+//			userService.create(userDto);	//duplicity
+//			fail("Duplicit records shouldn't be possible.");
+//		}catch(Exception e){
+//			//OK?
+//		}
+        
 	}
 
 	@Test

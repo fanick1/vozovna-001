@@ -1,8 +1,11 @@
 package cz.muni.fi.pa165.vozovna.service;
 
+
 import cz.muni.fi.pa165.vozovna.dto.ServiceIntervalDTO;
 import cz.muni.fi.pa165.vozovna.dto.VehicleDTO;
 import java.util.List;
+import org.hibernate.criterion.Criterion;
+import org.hibernate.criterion.Order;
 
 /**
  * Serivice Interval Service 
@@ -63,5 +66,7 @@ public interface ServiceIntervalService {
      * @throws DataAccessException          Throws if a data access exception occurred.
      */
     public List<ServiceIntervalDTO> findAllByVehicle(VehicleDTO vehicle);
+    
+    public List<ServiceIntervalDTO> findByCriteria(List<Criterion> criterion, List<Order> orders);
 
 }

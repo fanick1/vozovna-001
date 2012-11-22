@@ -1,8 +1,14 @@
 package cz.muni.fi.pa165.vozovna.service.impl;
 
+import cz.muni.fi.pa165.vozovna.dao.UserDAO;
+import cz.muni.fi.pa165.vozovna.dto.UserDTO;
+import cz.muni.fi.pa165.vozovna.entity.User;
+import cz.muni.fi.pa165.vozovna.enums.UserClassEnum;
+import cz.muni.fi.pa165.vozovna.service.UserService;
 import java.util.ArrayList;
 import java.util.List;
-
+import org.hibernate.criterion.Criterion;
+import org.hibernate.criterion.Order;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.security.authentication.encoding.PasswordEncoder;
@@ -11,12 +17,6 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import cz.muni.fi.pa165.vozovna.dao.UserDAO;
-import cz.muni.fi.pa165.vozovna.dto.UserDTO;
-import cz.muni.fi.pa165.vozovna.entity.User;
-import cz.muni.fi.pa165.vozovna.enums.UserClassEnum;
-import cz.muni.fi.pa165.vozovna.service.UserService;
 
 /**
  * Implementation User's Service Layer
@@ -98,7 +98,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         entity.setIsAdmin(user.getIsAdmin());
         entity.setUsername(user.getUsername());
 
-        if (!entity.getPassword().equals(user.getPassword())) {
+        if (entity.getPassword() != null && !entity.getPassword().equals(user.getPassword())) {
             // password changed
             entity.setPassword(passwordEncoder.encodePassword(user.getPassword(), ""));
         }
@@ -134,13 +134,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         // find
         List<User> users = userDAO.findByLastName(lastName);
 
-        // transform results
-        List<UserDTO> result = new ArrayList<>();
-        for (User user : users) {
-            result.add(new UserDTO(user));
-        }
-
-        return result;
+        return convertListOfUsersToListOfUserDTOs(users);
     }
 
     @Override
@@ -158,6 +152,47 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         return user;
     }
 
+    @Override
+    @Transactional(readOnly = true)
+    public UserDTO getByUsername(String username) {
+        if (username == null) {
+            throw new IllegalArgumentException("null id");
+        }
+
+        User user = userDAO.getByUsername(username);
+        
+        if (user == null) {
+            return null;
+        }
+
+        return new UserDTO(user);
+    }
+    
+    // @Override
+    @Transactional(readOnly=true)
+    public List<UserDTO> findByCriteria(List<Criterion> criterion, List<Order> orders) {
+        
+        List<User> result = userDAO.findByCriteria(criterion, orders);
+        
+        return convertListOfUsersToListOfUserDTOs(result); 
+    }
+
+    /**
+     * Converts list of vehicles to list of vehicle DTOs
+     * 
+     * @param list  List of vehicles
+     * @return List of Drive Data Transform Objects
+     */
+    private static List<UserDTO> convertListOfUsersToListOfUserDTOs(List<User> entities) {
+        List<UserDTO> result = new ArrayList<>();
+
+        for (User item : entities) {
+            result.add(new UserDTO(item));
+        }
+
+        return result;
+    }
+    
     /**
      * Uloží do DB dva uživatele: <br/>
      * user: admin, pass: admin, roles: ROLE_ADMIN <br/>

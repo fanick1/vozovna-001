@@ -7,6 +7,8 @@ import cz.muni.fi.pa165.vozovna.enums.UserClassEnum;
 import cz.muni.fi.pa165.vozovna.service.VehicleService;
 import java.util.ArrayList;
 import java.util.List;
+import org.hibernate.criterion.Criterion;
+import org.hibernate.criterion.Order;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -73,7 +75,7 @@ public class VehicleServiceImpl implements VehicleService {
         }
         Vehicle entity = vehicleDAO.getById(vehicle.getId());
 
-        // copy DTO`s attributes into existing entity
+        //  copy DTO`s attributes into existing entity
         entity.setBrand(vehicle.getBrand());
         entity.setDistanceCount(vehicle.getDistanceCount());
         entity.setEngineType(vehicle.getEngineType());
@@ -90,15 +92,10 @@ public class VehicleServiceImpl implements VehicleService {
     @Override
     @Transactional(readOnly = true)
     public List<VehicleDTO> findAll() {
+        
         List<Vehicle> vehicles = vehicleDAO.findAll();
 
-        // transform from List<Vehicle> to List<VehicleDTO>
-        List<VehicleDTO> result = new ArrayList<>();
-        for (Vehicle vehicle : vehicles) {
-            result.add(new VehicleDTO(vehicle));
-        }
-
-        return result;
+        return convertListOfVehiclesToListOfVehicleDTOs(vehicles);
     }
 
     @Override
@@ -109,13 +106,31 @@ public class VehicleServiceImpl implements VehicleService {
         }
         List<Vehicle> vehicles = vehicleDAO.findByUserClass(userClass);
 
-        // transform from List<Vehicle> to List<VehicleDTO>
+        return convertListOfVehiclesToListOfVehicleDTOs(vehicles);
+    }
+
+    @Override
+    @Transactional(readOnly=true)
+    public List<VehicleDTO> findByCriteria(List<Criterion> criterion, List<Order> orders) {
+        
+        List<Vehicle> result = vehicleDAO.findByCriteria(criterion, orders);
+        
+        return convertListOfVehiclesToListOfVehicleDTOs(result); 
+    }
+
+    /**
+     * Converts list of vehicles to list of vehicle DTOs
+     * 
+     * @param list  List of vehicles
+     * @return List of Vehicle Data Transform Objects
+     */
+    private static List<VehicleDTO> convertListOfVehiclesToListOfVehicleDTOs(List<Vehicle> intervals) {
         List<VehicleDTO> result = new ArrayList<>();
-        for (Vehicle vehicle : vehicles) {
-            result.add(new VehicleDTO(vehicle));
+
+        for (Vehicle item : intervals) {
+            result.add(new VehicleDTO(item));
         }
 
         return result;
     }
-
 }

@@ -12,7 +12,11 @@
     <context:annotation-config />
 
 	 <bean id="serviceIntervalDao" class="org.mockito.Mockito" factory-method="mock"> 
-	 <constructor-arg value="cz.muni.fi.pa165.vozovna.dao.ServiceIntervalDAO"/> </bean>
+        <constructor-arg value="cz.muni.fi.pa165.vozovna.dao.ServiceIntervalDAO"/> 
+     </bean>
+     <bean id="vehicleDao" class="org.mockito.Mockito" factory-method="mock"> 
+        <constructor-arg value="cz.muni.fi.pa165.vozovna.dao.VehicleDAO"/> 
+     </bean>
 
     <!-- tested class -->
     <bean id="serviceIntervalService" class="cz.muni.fi.pa165.vozovna.service.impl.ServiceIntervalServiceImpl"/>
