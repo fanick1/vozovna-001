@@ -16,8 +16,10 @@ import cz.muni.fi.pa165.vozovna.service.VehicleService;
 import cz.muni.fi.pa165.vozovna.validators.VehicleValidator;
 import java.util.LinkedList;
 import java.util.List;
+import javax.servlet.http.HttpSession;
 import org.springframework.beans.propertyeditors.StringTrimmerEditor;
 import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.WebDataBinder;
@@ -42,9 +44,8 @@ public class VehiclesController {
     
     // List
     @RequestMapping(value = "/admin/vehicles")
-    public String viewVehiclesList(Model model) throws Exception {
-        //Map<String, Object> model = new HashMap<String, Object>();
-        List<VehicleDTO> vehicleDTOs = null;
+    public String viewVehiclesList(ModelMap model, HttpSession session) throws Exception {
+        List<VehicleDTO> vehicleDTOs;
 
         vehicleDTOs = vehicleService.findAll();
 
@@ -60,62 +61,65 @@ public class VehiclesController {
     
      // Show
     @RequestMapping(value = "/admin/vehicles/show", params="id")
-    public String viewVehiclesList(@RequestParam("id") Long id, Model model) throws Exception {
+    public String viewVehiclesList(@RequestParam("id") Long id, ModelMap model, HttpSession session) throws Exception {
 
-        VehicleDTO dto = vehicleService.getById(id);
+        VehicleDTO vehicle = vehicleService.getById(id);
 
-        model.addAttribute("vehicle", dto.toVehicle());
+        model.put("vehicle", vehicle);
         
         return "admin/vehicles/show";
     }
     
     // Add
     @RequestMapping(value = "/admin/vehicles/add", method = RequestMethod.GET)
-    public String viewEmptyForm(Model model) 
+    public String viewEmptyForm(ModelMap model, HttpSession session) 
             throws PageNotFoundException 
     {
-        Vehicle newVehicle = new Vehicle();
+        VehicleDTO newVehicle = new VehicleDTO();
 
-        model.addAttribute("vehicle", newVehicle);
+        model.put("vehicleDTO", newVehicle);
         return "admin/vehicles/addOrEdit";
     }
 
     // Edit
     @RequestMapping(value = "/admin/vehicles/edit", params = "id", method = RequestMethod.GET)
-    public String viewFilledForm(@RequestParam("id") Long id, Model model) throws Exception {
+    public String viewFilledForm(@RequestParam("id") Long id, ModelMap model, HttpSession session) throws Exception {
         VehicleDTO vehicleDTOToEdit = vehicleService.getById(id);
         if (vehicleDTOToEdit == null) {
             throw new PageNotFoundException("Vehicle with id " + id + "doesn't exist.");
         }
         
-        model.addAttribute("vehicle", (vehicleDTOToEdit).toVehicle());
+        model.put("vehicleDTO", vehicleDTOToEdit);
         
         return "admin/vehicles/addOrEdit";
     }
 
     // Submited add/edit form
     @RequestMapping(value = {"/admin/vehicles/add", "/admin/vehicles/edit"}, method = RequestMethod.POST)
-    public String submitEditForm(@Validated @ModelAttribute("vehicle") Vehicle vehicle, BindingResult result, Model model)
+    public String submitEditForm(@Validated @ModelAttribute("vehicle") VehicleDTO vehicle, BindingResult result, ModelMap model, HttpSession session)
             throws PageNotFoundException 
     {
 
         if (result.hasErrors()) {
+            model.put("vehicleDTO", vehicle);
             return "/admin/vehicles/addOrEdit";
         }
 
-        VehicleDTO vehicleDTO = new VehicleDTO(vehicle);
+        //VehicleDTO vehicleDTO = new VehicleDTO(vehicle);
         if (vehicle.getId() == null) {
-            vehicleService.create(vehicleDTO);
+            vehicleService.create(vehicle);
+            session.setAttribute("message", "admin.vehicles.create.msg.successful");
         } else {
-            vehicleService.update(vehicleDTO);
+            vehicleService.update(vehicle);
+            session.setAttribute("message", "admin.vehicles.update.msg.successful");
         }
 
-        return "redirect:/admin/vehicles/show?id=" + vehicleDTO.getId();
+        return "redirect:/admin/vehicles/show?id=" + vehicle.getId();
     }
 
     // Delete
     @RequestMapping(value = "/admin/vehicles/delete", params = "id")
-    public String deleteById(@RequestParam("id") Long id) throws Exception {
+    public String deleteById(@RequestParam("id") Long id, ModelMap model, HttpSession session) throws Exception {
 
         VehicleDTO vehicleToDelete = vehicleService.getById(id);
 
@@ -124,7 +128,7 @@ public class VehiclesController {
         }
 
         vehicleService.remove(vehicleToDelete);
-
+        session.setAttribute("message", "admin.vehicles.delete.msg.successful");
         return "redirect:/admin/vehicles/";
     }
     
