@@ -13,24 +13,26 @@ public enum DriveStateEnum {
     /**
      * Vozidlo je rezervováno pro jízdu.
      */
-    RESERVED("reserved"),
+    RESERVED("reserved", "drive.state.reserved"),
     /**
      * Jízda právě probíhá (vozidlo je půjčeno).
      */
-    ONGOING("ongoing"),
+    ONGOING("ongoing", "drive.state.ongoing"),
     /**
      * Již proběhlá jízda.
      */
-    FINISHED("finished"),
+    FINISHED("finished", "drive.state.finished"),
     /**
      * Zrušená jízda.
      */
-    CANCELLED("cancelled");
+    CANCELLED("cancelled", "drive.state.cancelled");
     
     private String name;
-
-    private DriveStateEnum(String name) {
+    private String code;
+    
+    private DriveStateEnum(String name, String code) {
         this.name = name;
+        this.code = code;
     }
 
     public String getName() {
@@ -40,7 +42,15 @@ public enum DriveStateEnum {
     public void setName(String name) {
         this.name = name;
     }
+    
+    public String getCode() {
+        return code;
+    }
 
+    public void setCode(String code) {
+        this.code = code;
+    }
+    
     public static List<DriveStateEnum> getAllDriveStates() {
         return Arrays.asList(values());
     }

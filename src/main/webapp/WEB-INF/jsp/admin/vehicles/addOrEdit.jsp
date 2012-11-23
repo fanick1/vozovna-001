@@ -5,7 +5,7 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <title>
-        <fmt:message key="admin.vehicles.title" /> : 
+        <!--<fmt:message key="admin.vehicles.title" /> : -->
         <c:choose>
             <c:when test="${model.vehicle.id == null}">
 				<fmt:message key="admin.vehicles.add.title" />		
@@ -66,18 +66,7 @@
 </head>
 <body>  
     
-    <h1>
-        <c:choose>
-            <c:when test="${model.vehicle.id == null}">
-				<fmt:message key="admin.vehicles.add.title" />		
-            </c:when>                  
-            <c:otherwise>
-                <fmt:message key="admin.vehicles.edit.title" />
-            </c:otherwise>			
-       </c:choose> 
-   </h1>
-
-		<c:set var="userClasses" value="<%=cz.muni.fi.pa165.vozovna.enums.UserClassEnum.values()%>" />
+   		<c:set var="userClasses" value="<%=cz.muni.fi.pa165.vozovna.enums.UserClassEnum.values()%>" />
 		<div class="form">
 			<form:form commandName="vehicle" method="post" id="vehicle-edit-form">
 				<div class="chyby">
@@ -85,45 +74,45 @@
 				</div>
 				<table>
 					<tr>
-						<c:if test="${model.vehicle.id != null}">
-							<td><form:label path="id">ID: ${model.vehicle.id}</form:label></td>
+						<c:if test="${vehicle.id != null}">
+							<td><form:label path="id"><fmt:message key="vehicle.id" /></form:label></td>
 		
-							<td><form:hidden path="id" /></td>
+							<td><form:hidden path="id" />${vehicle.id}</td>
 						</c:if>
 					</tr>
 					<tr>
-						<td><form:label path="brand"><fmt:message key="vehicles.brand" /></form:label></td>
+						<td><form:label path="brand"><fmt:message key="vehicle.brand" /></form:label></td>
 						<td><form:input path="brand" maxlength="20" /></td>
 						<td><form:errors path="brand" /></td>
 					</tr>
                     <tr>
-						<td><form:label path="type"><fmt:message key="vehicles.type" /></form:label></td>
+						<td><form:label path="type"><fmt:message key="vehicle.type" /></form:label></td>
 						<td><form:input path="type" maxlength="40" /></td>
 						<td><form:errors path="type" /></td>
 					</tr>
                     <tr>
-						<td><form:label path="engineType"><fmt:message key="vehicles.engineType" /></form:label></td>
+						<td><form:label path="engineType"><fmt:message key="vehicle.engineType" /></form:label></td>
                         <td><form:input path="engineType" maxlength="20" /></td>
 						<td><form:errors path="engineType" /></td>
 					</tr>
                     
 					<tr>
-						<td><form:label path="yearMade"><fmt:message key="vehicles.yearMade" /></form:label></td>
+						<td><form:label path="yearMade"><fmt:message key="vehicle.yearMade" /></form:label></td>
                         <td><form:input path="yearMade" maxlength="4"  /></td>
 						<td><form:errors path="yearMade" /></td>
 					</tr>
 					<tr>
-						<td><form:label path="distanceCount"><fmt:message key="vehicles.distanceCount" /></form:label></td>
+						<td><form:label path="distanceCount"><fmt:message key="vehicle.distanceCount" /></form:label></td>
                         <td><form:input path="distanceCount" maxlength="7" /></td>
 						<td><form:errors path="distanceCount" /></td>
 					</tr>
                     <tr>
-						<td><form:label path="vin"><fmt:message key="vehicles.vin" /></form:label></td>
+						<td><form:label path="vin"><fmt:message key="vehicle.vin" /></form:label></td>
                         <td><form:input path="vin" maxlength="17" /></td>
 						<td><form:errors path="vin" /></td>
 					</tr>
                     <tr>
-						<td><form:label path="userClass"><fmt:message key="vehicles.userClass" /></form:label></td>
+						<td><form:label path="userClass"><fmt:message key="vehicle.userClass" /></form:label></td>
                         <td>
                             
                             <form:select path="userClass">

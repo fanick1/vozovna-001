@@ -7,7 +7,7 @@
         <title><fmt:message key="admin.vehicles.show.title" /></title>
     </head>
     <body>
-        <h1><fmt:message key="admin.vehicles.show.title" /></h1>
+       
         <a href="<c:url value="/admin/vehicles" />"><fmt:message key="vehicles.list" /></a>
         <table>
             <tr>
@@ -41,7 +41,7 @@
             </tr>
             <tr>
                 <td><fmt:message key="vehicles.userClass" /></td>
-                <td>${vehicle.userClass}</td>
+                <td><fmt:message key="${vehicle.userClass.code}" /></td>
                 <td><form:errors path="userClass" /></td>
             </tr>
         </table>
