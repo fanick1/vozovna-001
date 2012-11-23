@@ -100,7 +100,8 @@ p,ul,ol {
 
 a {
     text-decoration: none;
-    color: #5E5E5E;
+    /*color: #5E5E5E;*/
+    color: #000000;
 }
 
 a:hover {
@@ -551,6 +552,7 @@ table.grid {
     border-style: none;
     border-collapse: collapse;
     margin: 5px 0;
+    width: 100%;
 }
 table.grid tr {
     border-bottom: 1px solid #DBDBDB;
@@ -574,8 +576,43 @@ table.grid td {
 }
 
 table.grid tr:nth-child(2n) td {
-    background-color: #FCFCFC;
+    background-color: #F2F7EA;
 }
 table.grid tr:hover td {
-    background-color: #ddf6ff;   
+    background-color: #EAFFFF;   
+}
+.detail  {
+    padding: 10px;
+    background-color: #F2F7EA;
+    border: 0px none;
+}
+.detail td, table.detail th {
+    vertical-align: top;
+}
+.detail td {
+    text-align: left;
+    line-height: 120%;
+}
+.detail th {
+    text-align: left;
+}
+.detail input[type=text], .detail select, .detail textarea  {
+    padding: 2px;
+    display: block;
+}
+.detail input[type=submit], .detail input[type=button], .detail button  {
+    padding: 4px 8px;
+    margin-left: 0px;
+    cursor: pointer;
+}
+.detail td.value {
+    padding: 5px 0;
+    line-height: 120%;
+}
+.detail label.error {
+    color: red;
+    font-size: 12px;
+    margin: 3px;
+    color: #ff0000;
+
 }

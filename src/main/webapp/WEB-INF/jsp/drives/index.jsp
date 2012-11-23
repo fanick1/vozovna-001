@@ -65,7 +65,7 @@
                         <td>
                             <!--< jsp: useBean id="now" class="java.util.Date"/>
                             < c :if test=" $ { item.dateFrom.compare(now) gt 0}">-->
-                                <a href="<c:url value="drives/start?id=${item.id}" />" class="link-drive-start"><fmt:message key="drives.changeState.start" /></a>
+                                <a href="<c:url value="drives/start?id=${item.id}" />" class="link-drive-start"><fmt:message key="drives.changeState.start" /></a> | 
                             <!--< /c : if>-->
                             <a href="<c:url value="drives/cancel?id=${item.id}" />" class="link-drive-cancel"><fmt:message key="drives.changeState.cancel" /></a>
                         </td>
@@ -87,11 +87,6 @@
         </c:forEach>
         
     </table>
-
-
-
-
-
 
 
 </body>

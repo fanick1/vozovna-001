@@ -1,5 +1,6 @@
 package cz.muni.fi.pa165.vozovna.validators;
 
+import cz.muni.fi.pa165.vozovna.dto.VehicleDTO;
 import cz.muni.fi.pa165.vozovna.entity.Vehicle;
 import org.springframework.validation.Errors;
 import org.springframework.validation.ValidationUtils;
@@ -13,7 +14,7 @@ public class VehicleValidator implements Validator {
 
     @Override
     public boolean supports(Class<?> clazz) {
-        return Vehicle.class.isAssignableFrom(clazz);
+        return VehicleDTO.class.isAssignableFrom(clazz);
     }
 
     @Override
@@ -27,7 +28,7 @@ public class VehicleValidator implements Validator {
         ValidationUtils.rejectIfEmpty(errors, "yearMade", "error.vehicle.yearMade");
         ValidationUtils.rejectIfEmpty(errors, "userClass", "error.vehicle.userClass");
 
-        Vehicle vehicle = (Vehicle) obj;
+        VehicleDTO vehicle = (VehicleDTO) obj;
 
         // validate yearMade
         if(vehicle.getYearMade() < 1900) {
