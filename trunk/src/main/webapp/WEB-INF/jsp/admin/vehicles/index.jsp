@@ -17,30 +17,31 @@
     </script>
 </head>
 <body>
-    
-    <h1>
-        <fmt:message key="admin.vehicles.title" />
-    </h1>
-
 	<div>
 		<a href="<c:url value="/admin/vehicles/add" />"><fmt:message key="admin.vehicles.add" /></a>
         | <fmt:message key="admin.vehicles.found" />: ${vehicles.size()}
 	</div>
 	<table class="grid">
-		<tr>
-			<th><fmt:message key="vehicles.id" /></th>
-            <th><fmt:message key="vehicles.brand" /></th>
-			<th><fmt:message key="vehicles.type" /></th>
-            <th colspan="3"></th>
+        <colgroup>
+            <col span="3" />
+            <col style="width: 230px;"/>
+        </colgroup>
+        <tr>
+			<th><fmt:message key="vehicle.id" /></th>
+            <th><fmt:message key="vehicle.brand" /></th>
+			<th><fmt:message key="vehicle.type" /></th>
+            <th></th>
 		</tr>
 		<c:forEach  items="${vehicles}" var="vehicle">
 			<tr>
 				<td>${vehicle.id}</td>
 				<td>${vehicle.brand}</td>
 				<td>${vehicle.type}</td>
-				<td><a href="<c:url value="/admin/vehicles/show?id=${vehicle.id}" />"><fmt:message key="actions.show" /></a></td>
-				<td><a href="<c:url value="/admin/vehicles/edit?id=${vehicle.id}" />"><fmt:message key="actions.edit" /></a></td>
-                <td><a href="<c:url value="/admin/vehicles/delete?id=${vehicle.id}" />" class="remove"><fmt:message key="actions.delete" /></a></td>
+				<td>
+                    <a href="<c:url value="/admin/vehicles/show?id=${vehicle.id}" />"><fmt:message key="actions.show" /></a> |
+                    <a href="<c:url value="/admin/vehicles/edit?id=${vehicle.id}" />"><fmt:message key="actions.edit" /></a> | 
+                    <a href="<c:url value="/admin/vehicles/delete?id=${vehicle.id}" />" class="remove"><fmt:message key="actions.delete" /></a>
+                </td>
 			</tr>
 		</c:forEach>
 	

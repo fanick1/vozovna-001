@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title><fmt:message key="header.title" /> - <sitemesh:write property='title' /></title>
 <link href="<c:url value="/resources/css/style.css" />" type="text/css" rel="stylesheet" />
-<!-- <sitemesh:write property='head' /> -->
+ <sitemesh:write property='head' /> 
 <style>
 </style>
 </head>
