@@ -43,6 +43,12 @@ public class DriveDTO implements java.io.Serializable {
      * Date when the drive ended
      */
     private DateTime dateTo;
+    
+    
+    private Long userId;
+    private Long vehicleId;
+    
+    
 
     /**
      * State of this Drive. (Before drive, drive ongoing, drive cancelled, drive finished)
@@ -104,6 +110,26 @@ public class DriveDTO implements java.io.Serializable {
     public void setVehicle(VehicleDTO vehicle) {
         this.vehicle = vehicle;
     }
+    
+    
+    public Long getUserId() {
+        return userId;
+    }
+
+    
+    public void setUserId(Long userId) {
+        this.userId = userId;
+    }
+
+    
+    public Long getVehicleId() {
+        return vehicleId;
+    }
+
+    
+    public void setVehicleId(Long vehicleId) {
+        this.vehicleId = vehicleId;
+    }
 
     public DriveDTO() {
 
@@ -145,13 +171,17 @@ public class DriveDTO implements java.io.Serializable {
      * Returns drive with same properties
      * @return
      */
-    public Drive toDrive() {
+    public Drive toNewDrive() {
         Drive drive = new Drive();
-        drive.setId(id);
+        //drive.setId(id);
         drive.setDistance(distance);
         // FIXME nepouzivat toNewUser!
-        drive.setUser(user.toNewUser());
-        drive.setVehicle(vehicle.toVehicle());
+        if (user != null) {
+            drive.setUser(user.toNewUser());
+        }
+        if (vehicle != null) {
+            drive.setVehicle(vehicle.toVehicle());
+        }
         drive.setDateFrom(dateFrom);
         drive.setDateTo(dateTo);
         drive.setState(state);
