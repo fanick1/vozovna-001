@@ -167,6 +167,10 @@ public class VehicleDTO implements java.io.Serializable {
         return hash;
     }
 
+    public String getFullName() {
+        return this.brand + " " + this.type + " (" + this.yearMade + ")";
+    }
+
     @Override
     public boolean equals(Object object) {
         if (!(object instanceof VehicleDTO)) {

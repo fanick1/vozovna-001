@@ -8,18 +8,50 @@
 </head>
 <body>
 
- 
-    <br />Tady si bude uživatel rezervovat vozidla. Na stránce budou dvě pole, do kterých uživatel zadá datum, v jakém
-    časovém rozmezí se mu mají vozidla vypsat. Tato pole by mohla být formou kalendáře, ale pro začátek nám bude stačit
-    zadávat to textově. Pod tím tabulka s odpovídajícími vozidly (filtr na datum a na uživatelovu třídu). Třídu
-    uživatele si můžem dát jako hidden atribut. (Lepší by bylo získávat to z přihlašovacích údají, ale na to ještě
-    nejsme dost Spring Security mistři)
+    <div>
+        <spring:url var="actionUrl" value="/vehicles" />
+        <form method="post" action="${actionUrl}" >
+
+            <tr>
+                <td><label for="startDate" >Start date:</label></td>
+                <td><input type="date" name="startDate" id="startDate" /></td>
+            </tr>
+            <tr>
+                <td><label for="endDate" >End date:</label></td>
+                <td><input type="date" name="endDate" id="endDate" /></td>
+            </tr>
+            <tr>
+                <td><input type="submit" name="findVehicles"  /></td>
+            </tr>
+
+        </form>
+
+        <table class="grid">
+            <colgroup>
+                <col span="3" />
+                <col style="width: 230px;"/>
+            </colgroup>
+            <tr>
+                <th><fmt:message key="vehicle.id" /></th>
+                <th><fmt:message key="vehicle.brand" /></th>
+                <th><fmt:message key="vehicle.type" /></th>
+                <th></th>
+            </tr>
+            <c:forEach  items="${vehicles}" var="vehicle">
+                <tr>
+                    <td>${vehicle.id}</td>
+                    <td>${vehicle.brand}</td>
+                    <td>${vehicle.type}</td>
+                    <td>
+                        <a href="<c:url value="/reserveForm?id=${vehicle.id}" />"><fmt:message key="vehicle.reserve" /></a>
+                    </td>
+                </tr>
+            </c:forEach>
+
+        </table><br>
 
 
-
-
-
-
+    </div>
 
 
 </body>

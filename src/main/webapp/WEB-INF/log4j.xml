@@ -10,7 +10,7 @@
     </root>
 
     <logger name="cz.muni.fi.vozovna">
-        <level value="DEBUG"></level>
+        <level value="DEBUG" />
     </logger>
 
     <appender name="stdout" class="org.apache.log4j.ConsoleAppender">

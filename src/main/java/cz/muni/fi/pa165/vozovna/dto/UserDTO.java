@@ -139,6 +139,7 @@ public class UserDTO implements java.io.Serializable {
      */
     public User toNewUser() {
         User user = new User();
+        user.setId(id);
         user.setFirstName(firstName);
         user.setLastName(lastName);
         user.setUserClass(userClass);
@@ -147,6 +148,10 @@ public class UserDTO implements java.io.Serializable {
         user.setPassword(password);
         user.setEnabled(enabled);
         return user;
+    }
+
+    public String getFullName() {
+        return this.firstName + " " + this.lastName + " (" + this.username + ")";
     }
 
     @Override

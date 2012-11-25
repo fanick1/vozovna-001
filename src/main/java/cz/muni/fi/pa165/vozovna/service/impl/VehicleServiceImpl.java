@@ -2,6 +2,7 @@ package cz.muni.fi.pa165.vozovna.service.impl;
 
 import cz.muni.fi.pa165.vozovna.dao.VehicleDAO;
 import cz.muni.fi.pa165.vozovna.dto.VehicleDTO;
+import cz.muni.fi.pa165.vozovna.entity.User;
 import cz.muni.fi.pa165.vozovna.entity.Vehicle;
 import cz.muni.fi.pa165.vozovna.enums.UserClassEnum;
 import cz.muni.fi.pa165.vozovna.service.VehicleService;
@@ -9,6 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.Order;
+import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -21,12 +23,13 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class VehicleServiceImpl implements VehicleService {
 
+    @Autowired
     private VehicleDAO vehicleDAO;
 
-    @Autowired
-    public void setUserDAO(VehicleDAO vehicleDAO) {
-        this.vehicleDAO = vehicleDAO;
-    }
+
+//    public void setUserDAO(VehicleDAO vehicleDAO) {
+//        this.vehicleDAO = vehicleDAO;
+//    }
 
     @Override
     @Transactional(readOnly = true)
@@ -132,5 +135,20 @@ public class VehicleServiceImpl implements VehicleService {
         }
 
         return result;
+    }
+
+    /**
+     * Returns available cars for uesr between given dates.
+     *
+     * @param user        User, for which we want cars.
+     * @param startDate   Date, from which we want reservate car.
+     * @param endDate     Date, to which we want reservate car.
+     *
+     * @throws IllegalArgumentException If any of argument is null.
+     */
+    public List<VehicleDTO> getAvailableVehicles(User user,  DateTime startDate, DateTime endDate) {
+        return convertListOfVehiclesToListOfVehicleDTOs(this.vehicleDAO.getAvailableVehicles(user, startDate, endDate));
+
+
     }
 }
