@@ -5,6 +5,7 @@ body {
     font-family: Arial, Helvetica, sans-serif;
     font-size: 14px;
     color: #787878;
+    /*background: url("../img/img01.jpg") repeat;*/
 }
 
 h1,h2,h3 {
@@ -17,6 +18,7 @@ h1,h2,h3 {
 
 h1 {
     font-size: 2em;
+    /*color: #283313;*/
 }
 
 h2 {
@@ -32,17 +34,18 @@ body {
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
     margin: 0;
     padding: 0;
-    margin-left: 200px;
-    margin-right: 150px;
+    /*margin-left: 200px;
+    margin-right: 150px;*/
     padding: 20px;
-    border-left: 1px solid #eee;
-    border-right: 1px solid #eee;
+    /*border-left: 1px solid #eee;
+    border-right: 1px solid #eee;*/
 }
 
 h1 {
     text-align: center;
     padding: 20px;
     font-size: 50px;
+    text-shadow: 1px 1px 0px rgba(0, 0, 0, .2);
 }
 
 table {
@@ -83,19 +86,30 @@ p,ul,ol {
 }
 
 .errorblock {
-    color: #ff0000;
+    /*color: #ff0000;
     background-color: #ffEEEE;
-    border: 3px solid #ff0000;
-    padding: 8px;
+    border: 3px solid #ff0000;*/
+    color: #A33030;
+    background-color: #F5DEDE;
+    border: 3px solid #D26464;
+    padding: 12px;
     margin: 16px;
+    cursor: default;
+    font-weight: bold;
 }
 
 .messageblock {
-    color: MidnightBlue;
+    /*color: MidnightBlue;
     background-color: azure;
-    border: 3px solid LightCyan;
-    padding: 8px;
+    border: 3px solid LightCyan;*/
+    color: #527800;
+    background-color: #F2F7EA;
+    border: 3px solid #88B634;
+    
+    padding: 12px;
     margin: 16px;
+    cursor: default;
+    font-weight: bold;
 }
 
 a {
@@ -117,6 +131,13 @@ a:hover {
     margin: 0px auto;
 }
 
+#layout-body {
+    width: 750px;
+    margin: 0 auto;
+    text-align: left;
+    
+    
+}
 /* Header */
 #header-wrapper {
     overflow: hidden;
@@ -128,7 +149,7 @@ a:hover {
     height: 100px;
     margin: 0 auto;
     padding: 0px 50px;
-    background: url(images/img02.jpg) repeat;
+    background: url("../imag/img02.jpg") repeat;
 }
 
 /* Logo */
@@ -226,6 +247,7 @@ a:hover {
     float: none;
     margin: 15 auto 10 auto;
     padding: 0;
+    text-align: left;
 }
 
 #menu ul {
@@ -572,11 +594,11 @@ table.grid th {
 }
 table.grid td {
     padding: 5px;
-    background-color: #F8F8F8;
+    background-color: #F4F9EE;
 }
 
 table.grid tr:nth-child(2n) td {
-    background-color: #F2F7EA;
+    background-color: #EAF2DB;
 }
 table.grid tr:hover td {
     background-color: #EAFFFF;   
@@ -596,7 +618,7 @@ table.grid tr:hover td {
 .detail th {
     text-align: left;
 }
-.detail input[type=text], .detail select, .detail textarea  {
+.detail input[type=text], .detail input[type=password], .detail select, .detail textarea  {
     padding: 2px;
     display: block;
 }
@@ -616,3 +638,22 @@ table.grid tr:hover td {
     color: #ff0000;
 
 }
+.detail span.error {
+            color: red;
+            font-size: 12px;
+            margin: 3px;
+            color: #ff0000;
+        }
+.number {
+    text-align: right !important;
+}
+.form-errors {
+
+            color: #A33030;
+            background-color: #F5DEDE;
+            border: 3px solid #D26464;
+            padding: 12px;
+            margin: 16px;
+            cursor: default;
+            font-weight: bold;
+        }

@@ -81,9 +81,11 @@
         <c:set var="userClasses" value="<%=cz.muni.fi.pa165.vozovna.enums.UserClassEnum.values()%>" />
         <div class="form">
             <form:form commandName="vehicleDTO" method="post" id="vehicle-edit-form">
-                <div class="chyby">
-                    <form:errors path="*" cssStyle="color:red" />
-                </div>
+                <c:if test="${not empty requestScope['org.springframework.validation.BindingResult.vehicleDTO'].allErrors}">
+                    <div class="form-errors">
+                        <form:errors path="*" cssStyle="color:red" />
+                    </div>
+                </c:if>
                 <table class="detail">
                     <colgroup>
                         <col style="width: 200px" />
@@ -100,34 +102,46 @@
                         <td>
                             <form:label path="brand"><fmt:message key="vehicle.brand" />:</form:label>
                         </td>
-                        <td><form:input path="brand" maxlength="20" /></td>
-                        <td><form:errors path="brand" /></td>
+                        <td>
+                            <form:input path="brand" maxlength="20" />
+                            <form:errors path="brand" cssClass="error" />
+                        </td>
                     </tr>
                     <tr>
                         <td><form:label path="type"><fmt:message key="vehicle.type" />:</form:label></td>
-                        <td><form:input path="type" maxlength="40" /></td>
-                        <td><form:errors path="type" /></td>
+                        <td>
+                            <form:input path="type" maxlength="40" />
+                            <form:errors path="type" cssClass="error" />
+                        </td>
                     </tr>
                     <tr>
                         <td><form:label path="engineType"><fmt:message key="vehicle.engineType" />:</form:label></td>
-                        <td><form:input path="engineType" maxlength="20" /></td>
-                        <td><form:errors path="engineType" /></td>
+                        <td>
+                            <form:input path="engineType" maxlength="20" />
+                            <form:errors path="engineType" cssClass="error" />
+                        </td>
                     </tr>
 
                     <tr>
                         <td><form:label path="yearMade"><fmt:message key="vehicle.yearMade" />:</form:label></td>
-                        <td><form:input path="yearMade" maxlength="4"  /></td>
-                        <td><form:errors path="yearMade" /></td>
+                        <td>
+                            <form:input path="yearMade" maxlength="4"  />
+                            <form:errors path="yearMade" cssClass="error" />
+                        </td>
                     </tr>
                     <tr>
                         <td><form:label path="distanceCount"><fmt:message key="vehicle.distanceCount" />:</form:label></td>
-                        <td><form:input path="distanceCount" maxlength="7" /></td>
-                        <td><form:errors path="distanceCount" /></td>
+                        <td>
+                            <form:input path="distanceCount" maxlength="7" />
+                            <form:errors path="distanceCount" cssClass="error" />
+                        </td>
                     </tr>
                     <tr>
                         <td><form:label path="vin"><fmt:message key="vehicle.vin" />:</form:label></td>
-                        <td><form:input path="vin" maxlength="17" /></td>
-                        <td><form:errors path="vin" /></td>
+                        <td>
+                            <form:input path="vin" maxlength="17" />
+                            <form:errors path="vin" cssClass="error" />
+                        </td>
                     </tr>
                     <tr>
                         <td><form:label path="userClass"><fmt:message key="vehicle.userClass" />:</form:label></td>
@@ -142,8 +156,8 @@
                                 
                             </form:select>
                         
+                            <form:errors path="userClass" cssClass="error" />
                         </td>
-                        <td><form:errors path="userClass" /></td>
                     </tr>
                     
                     

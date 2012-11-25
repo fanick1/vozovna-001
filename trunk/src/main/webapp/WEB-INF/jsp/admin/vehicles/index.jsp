@@ -23,20 +23,25 @@
         </div>
         <table class="grid">
             <colgroup>
-                <col span="3" />
-                <col style="width: 230px;"/>
+                <col style="width: 50px;" />
+                <col />
+                <col />
+                <col />
+                <col style="width: 200px;"/>
             </colgroup>
             <tr>
                 <th><fmt:message key="vehicle.id" /></th>
                 <th><fmt:message key="vehicle.brand" /></th>
                 <th><fmt:message key="vehicle.type" /></th>
+                <th><fmt:message key="vehicle.engineType" /></th>
                 <th></th>
             </tr>
             <c:forEach  items="${vehicles}" var="vehicle">
                 <tr>
-                    <td>${vehicle.id}</td>
+                    <td class="number">${vehicle.id}</td>
                     <td>${vehicle.brand}</td>
                     <td>${vehicle.type}</td>
+                    <td>${vehicle.engineType}</td>
                     <td>
                         <a href="<c:url value="/admin/vehicles/show?id=${vehicle.id}" />"><fmt:message key="actions.show" /></a> |
                         <a href="<c:url value="/admin/vehicles/edit?id=${vehicle.id}" />"><fmt:message key="actions.edit" /></a> | 
