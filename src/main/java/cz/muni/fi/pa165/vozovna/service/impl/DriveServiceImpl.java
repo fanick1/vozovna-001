@@ -65,12 +65,17 @@ public class DriveServiceImpl implements DriveService {
         if (drive == null) {
             throw new IllegalArgumentException("null drive");
         }
-        Drive entity = drive.toDrive();
+        Drive entity = drive.toNewDrive();
 
+        if (drive.getUserId() != null) {
+            entity.setUser(userDAO.getById(drive.getUserId()));
+        }
+        if (drive.getVehicleId() != null) {
+            entity.setVehicle(vehicleDAO.getById(drive.getVehicleId()));
+        }
+        
         driveDAO.create(entity);
-
         drive.fromDrive(entity);
-
         return entity.getId();
     }
 
