@@ -39,7 +39,7 @@
             </tr>
             <c:forEach  items="${vehicles}" var="vehicle">
                 <tr>
-                    <td>${vehicle.id}</td>
+                    <td class="number">${vehicle.id}</td>
                     <td>${vehicle.brand}</td>
                     <td>${vehicle.type}</td>
                     <td>

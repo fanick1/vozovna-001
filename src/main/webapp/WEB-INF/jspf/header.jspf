@@ -1,4 +1,4 @@
-<div style="float: right">
+<div style="text-align: right;">
     <fmt:message key="header.language" />
     <a href="?language=en"><fmt:message key="header.language.english" /></a>
         | 

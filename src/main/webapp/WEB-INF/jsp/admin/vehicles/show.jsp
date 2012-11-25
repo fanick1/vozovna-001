@@ -55,6 +55,7 @@
                 <td><fmt:message key="${vehicle.userClass.code}" /></td>
             </tr>
         </table>
-        <a href="<c:url value="/admin/vehicles" />"><fmt:message key="vehicles.list" /></a>
+            <br>
+            <a href="<c:url value="/admin/vehicles" />"><fmt:message key="vehicles.list" /></a>
     </body>
 </html>

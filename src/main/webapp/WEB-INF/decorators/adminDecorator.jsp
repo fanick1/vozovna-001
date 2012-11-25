@@ -10,6 +10,7 @@
 </head>
 
 <body>
+<div id="layout-body">
     <%@ include file="/WEB-INF/jspf/header.jspf"%>
 
     <%--    <fmt:message key="header.userLogged" />: <sec:authentication property="principal.username" /> --%>
@@ -42,6 +43,6 @@
     </c:if>
 
     <sitemesh:write property='body' />
-
+</div>
 </body>
 </html>

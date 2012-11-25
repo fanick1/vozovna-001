@@ -49,17 +49,21 @@
             <th><fmt:message key="drive.dateTo" /></th>
             <th><fmt:message key="drive.state" /></th>
             <th><fmt:message key="drive.vehicle" /></th>
+            <th><fmt:message key="vehicle.brand" /></th>
+            <th><fmt:message key="vehicle.type" /></th>
             <th><fmt:message key="drive.actions" /></th>
         </tr>
         
         <c:forEach var="item" items="${drives}">
             <tr>
-                <td>${item.id}</td>
+                <td class="number">${item.id}</td>
                 <!-- < fmt : formatDate value="" / > --->
                 <td><joda:format pattern="d.M.yyyy" value="${item.dateFrom}"/></td>
                 <td><joda:format pattern="d.M.yyyy" value="${item.dateTo}"/></td>
                 <td><fmt:message key="${item.state.code}" /></td>
-                <td>${item.vehicle.id}</td>
+                <td class="number">${item.vehicle.id}</td>
+                <td>${item.vehicle.brand}</td>
+                <td>${item.vehicle.type}</td>
                 <c:choose>
                     <c:when test="${item.state.name == 'reserved'}">
                         <td>
