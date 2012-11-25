@@ -28,6 +28,15 @@
                     <target>1.7</target>
                 </configuration>
             </plugin>
+            <plugin>
+                <groupId>org.apache.tomcat.maven</groupId>
+                <artifactId>tomcat7-maven-plugin</artifactId>
+                <version>2.0</version>
+                <configuration>
+                	<port>8080</port>
+                	<contextFile>${project.build.directory}/${project.build.finalName}/META-INF/context_embedded.xml</contextFile>                	
+                </configuration>
+            </plugin>
         </plugins>
 
         <testResources>
