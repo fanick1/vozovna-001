@@ -1,10 +1,13 @@
 package cz.muni.fi.pa165.vozovna.service;
 
 import cz.muni.fi.pa165.vozovna.dto.VehicleDTO;
+import cz.muni.fi.pa165.vozovna.entity.User;
+import cz.muni.fi.pa165.vozovna.entity.Vehicle;
 import cz.muni.fi.pa165.vozovna.enums.UserClassEnum;
 import java.util.List;
 import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.Order;
+import org.joda.time.DateTime;
 
 /**
  * Vehicle Service
@@ -69,4 +72,15 @@ public interface VehicleService {
     
     
     public List<VehicleDTO> findByCriteria(List<Criterion> criterion, List<Order> orders);
+
+    /**
+     * Returns available cars for uesr between given dates.
+     *
+     * @param user        User, for which we want cars.
+     * @param startDate   Date, from which we want reservate car.
+     * @param endDate     Date, to which we want reservate car.
+     *
+     * @throws IllegalArgumentException If any of argument is null.
+     */
+    public List<VehicleDTO> getAvailableVehicles(User user,  DateTime startDate, DateTime endDate);
 }
