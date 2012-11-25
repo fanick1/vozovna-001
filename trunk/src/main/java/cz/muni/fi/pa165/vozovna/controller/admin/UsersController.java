@@ -21,6 +21,11 @@ import cz.muni.fi.pa165.vozovna.enums.UserClassEnum;
 import cz.muni.fi.pa165.vozovna.service.UserService;
 import cz.muni.fi.pa165.vozovna.validators.UserFormValidator;
 
+/**
+ * 
+ * @author Eva Neduchalová
+ *
+ */
 @Controller
 public class UsersController {
 

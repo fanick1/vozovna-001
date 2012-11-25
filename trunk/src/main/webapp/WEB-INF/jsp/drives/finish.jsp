@@ -63,8 +63,8 @@
             </tr>
             <tr>
                 <td>${drive.id}</td>
-                <td>${drive.dateFrom}</td>
-                <td>${drive.dateTo}</td>
+                <td><joda:format pattern="d.M.yyyy" value="${item.dateFrom}"/></td>
+                <td><joda:format pattern="d.M.yyyy" value="${item.dateTo}"/></td>
             </tr>
         </table>
     </div>
