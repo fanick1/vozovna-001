@@ -48,7 +48,8 @@
                     vin:            {required:  " <fmt:message key="error.vehicle.vin" />", 
                                      maxlength: " <fmt:message key="error.vehicle.vin.maxLength" />"  },
                     distanceCount: 	{required:  " <fmt:message key="error.vehicle.distanceCount" />", 
-                                     number:    " <fmt:message key="error.vehicle.distanceCount.number" />"},
+                                     number:    " <fmt:message key="error.vehicle.distanceCount.number" />",
+                                     min:       " <fmt:message key="error.vehicle.distanceCount.aboveZero" />"},
                     yearMade:       {required:  " <fmt:message key="error.vehicle.yearMade" />", 
                                      number:    " <fmt:message key="error.vehicle.yearMade.number" />",
                                      min:       " <fmt:message key="error.vehicle.yearMade.min" />",
@@ -89,10 +90,10 @@
                         <col style="width: 300px" />
                     </colgroup>
                     <tr>
-                        <c:if test="${vehicle.id != null}">
+                        <c:if test="${vehicleDTO.id != null}">
                             <td><form:label path="id"><fmt:message key="vehicle.id" />:</form:label></td>
 
-                            <td class="value"><form:hidden path="id" />${vehicle.id}</td>
+                            <td class="value"><form:hidden path="id" />${vehicleDTO.id}</td>
                         </c:if>
                     </tr>
                     <tr>

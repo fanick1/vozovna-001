@@ -56,8 +56,8 @@
             <tr>
                 <td>${item.id}</td>
                 <!-- < fmt : formatDate value="" / > --->
-                <td>${item.dateFrom}</td>
-                <td>${item.dateTo}</td>
+                <td><joda:format pattern="d.M.yyyy" value="${item.dateFrom}"/></td>
+                <td><joda:format pattern="d.M.yyyy" value="${item.dateTo}"/></td>
                 <td><fmt:message key="${item.state.code}" /></td>
                 <td>${item.vehicle.id}</td>
                 <c:choose>
