@@ -102,8 +102,14 @@ public class IntervalsController {
 
     // Edit
     @RequestMapping(value = "/admin/intervals/edit", params = "id", method = RequestMethod.GET)
-    public String viewFilledForm(@RequestParam("id") Long id, ModelMap model, HttpSession session) throws Exception {
+    public String viewFilledForm(@RequestParam("id") Long id, @RequestParam(value = "vehicleId", required = false) Long vehicleID, HttpServletRequest request,  ModelMap model, HttpSession session) throws Exception {
+
         ServiceIntervalDTO interval = this.serviceIntervalService.getById(id);
+        if(vehicleID != null) {
+            VehicleDTO vehicleDTO = this.vehicleService.getById(vehicleID);
+            interval.setVehicle(vehicleDTO);
+        }
+
         if (interval == null) {
             session.setAttribute("error", "admin.intervals.edit.msg.unexists");
             return "redirect:/admin/intervals/index";
@@ -115,11 +121,6 @@ public class IntervalsController {
     @RequestMapping(value = { "/admin/intervals/add", "/admin/intervals/edit" }, method = RequestMethod.POST)
     public String submitEditForm(@ModelAttribute("intervalDTO") ServiceIntervalDTO interval,
                                  HttpSession session) {
-
-//        if (result.hasErrors()) {
-//            model.put("intervalDTO", interval);
-//            return "/admin/intervals/addOrEdit";
-//        }
 
         if (interval.getId() == null) {
             this.serviceIntervalService.create(interval);
@@ -138,6 +139,14 @@ public class IntervalsController {
 
         model.put("vehicles", this.vehicleService.findAll());
         return "/admin/intervals/vehicleSelect";
+    }
+
+    // Vehicle select
+    @RequestMapping(value = "/admin/intervals/vehicleSelect2",method = RequestMethod.GET)
+    public String showVehiclesForEdit(HttpServletRequest request, ModelMap model) throws Exception {
+
+        model.put("vehicles", this.vehicleService.findAll());
+        return "/admin/intervals/vehicleSelect2";
     }
 
     // Show

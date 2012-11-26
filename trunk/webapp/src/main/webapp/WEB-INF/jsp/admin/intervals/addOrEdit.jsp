@@ -74,7 +74,7 @@
                     <form:input readonly="true" path="vehicle.fullName" maxlength="40" />
                     <form:errors path="vehicle" cssClass="error" />
                 </td>
-                <%--<td><a href="<c:url value="/admin/intervals/vehicleSelect" />"><fmt:message key="admin.intervals.vehicleSelect" /></a></td>--%>
+                <td><a href="<c:url value="/admin/intervals/vehicleSelect2?intervalId=${intervalDTO.id}" />"><fmt:message key="admin.intervals.vehicleSelect" /></a></td>
             </tr>
             <tr>
                 <td><form:label path="inspectionInterval"><fmt:message key="interval.inspectionInterval" />:</form:label></td>
