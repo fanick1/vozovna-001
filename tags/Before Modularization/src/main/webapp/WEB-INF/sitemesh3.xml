@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<sitemesh>
+    <mapping path="/*" decorator="/WEB-INF/decorators/userDecorator.jsp" />
+    <mapping path="/admin/*" decorator="/WEB-INF/decorators/adminDecorator.jsp" />
+    
+    <mapping path="/login" exclue="true"/>
+    <mapping path="/logout" exclue="true"/>
+    <mapping path="/loginfailed" exclue="true"/>
+    <mapping path="/login/generate" exclue="true"/>
+    
+</sitemesh>

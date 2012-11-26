@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-configuration PUBLIC "-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+                                         "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+
+<hibernate-configuration>
+	<session-factory>
+<!-- 	<session-factory name="HibernateSessionFactory"> -->
+
+		<mapping class="cz.muni.fi.pa165.vozovna.entity.Drive" />
+		<mapping class="cz.muni.fi.pa165.vozovna.entity.User" />
+        <mapping class="cz.muni.fi.pa165.vozovna.entity.Vehicle" />
+        <mapping class="cz.muni.fi.pa165.vozovna.entity.ServiceInterval" />
+
+
+	</session-factory>
+</hibernate-configuration>
+

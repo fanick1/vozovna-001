@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns:security="http://www.springframework.org/schema/security" xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="
+           http://www.springframework.org/schema/beans
+           http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+           http://www.springframework.org/schema/security
+           http://www.springframework.org/schema/security/spring-security-3.1.xsd">
+
+    <bean id="daoAuthenticationProvider" class="org.springframework.security.authentication.dao.DaoAuthenticationProvider">
+        <property name="userDetailsService" ref="userService" />
+        <property name="passwordEncoder" ref="passwordEncoder" />
+<!--         <property name="saltSource" ref="saltSource" /> -->
+    </bean>
+
+    <bean id="authenticationManager" class="org.springframework.security.authentication.ProviderManager">
+        <property name="providers">
+            <list>
+                <ref local="daoAuthenticationProvider" />
+            </list>
+        </property>
+    </bean>
+
+    <bean id="passwordEncoder" class="org.springframework.security.authentication.encoding.ShaPasswordEncoder">
+        <constructor-arg value="256" />
+    </bean>
+
+<!--     <bean id="saltSource" class="org.springframework.security.authentication.dao.ReflectionSaltSource"> -->
+<!--         <property name="userPropertyToUse" value="registrationDate" /> -->
+<!--     </bean> -->
+
+    <!-- Automatically receives AuthenticationEvent messages -->
+    <bean id="loggerListener" class="org.springframework.security.authentication.event.LoggerListener" />
+
+    <security:http auto-config='true' access-denied-page="/exceptions/forbidden">
+        <security:intercept-url pattern="/admin/" access="ROLE_ADMIN" requires-channel="https" />
+        <security:intercept-url pattern="/" access="ROLE_USER" />
+        <security:form-login login-page="/login" default-target-url="/welcome.htm"
+            authentication-failure-url="/loginfailed" />
+        <security:logout logout-success-url="/logout" />
+        <security:session-management invalid-session-url="/login" />
+    </security:http>
+
+    <security:authentication-manager>
+        <security:authentication-provider user-service-ref="userService">
+            <security:password-encoder ref="passwordEncoder" />
+        </security:authentication-provider>
+    </security:authentication-manager>
+
+    <!-- Business login method security -->
+    <security:global-method-security secured-annotations="enabled" jsr250-annotations="enabled" />
+
+</beans>

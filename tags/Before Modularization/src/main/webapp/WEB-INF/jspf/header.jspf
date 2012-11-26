@@ -1,0 +1,8 @@
+<div style="text-align: right;">
+    <fmt:message key="header.language" />
+    <a href="?language=en"><fmt:message key="header.language.english" /></a>
+        | 
+        <a href="?language=cs"><fmt:message key="header.language.czech" /></a>
+        | 
+        <a href="?language=sk"><fmt:message key="header.language.slovak" /></a>
+</div>
