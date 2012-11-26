@@ -20,7 +20,7 @@
         <li class="menu"><a href="<c:url value="/admin/users" />"><fmt:message key="links.admin.users" /></a></li>
         <li class="menu"><a href="<c:url value="/admin/vehicles" />"><fmt:message key="links.admin.vehicles" /></a></li>
         <li class="menu"><a href="<c:url value="/admin/drives" />"><fmt:message key="links.admin.drives" /></a></li>
-        <li class="menu"><a href="<c:url value="/admin/intervals" />"><fmt:message
+        <li class="menu"><a href="<c:url value="/admin/intervals/index" />"><fmt:message
                     key="links.admin.serviceIntervals" /></a></li>
         <li class="menu"><a href="<c:url value="j_spring_security_logout" />"><fmt:message key="links.logout" /></a></li>
     </ul>
