@@ -1,0 +1,96 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<dataset>
+
+    <table name="Vehicle">
+        <column>id</column>
+        <column>brand</column>
+        <column>engineType</column>
+        <column>maxDistance</column>
+        <column>type</column>
+        <column>userClass</column>
+        <column>vin</column>
+        <column>yearMade</column>
+        <row>
+            <value>-1</value>
+            <value>Značečka</value>
+            <value>TDCI</value>
+            <value>5000</value>
+            <value>Autobus</value>
+            <value>1</value>
+            <value>ABC 98-76</value>
+            <value>2011</value>
+        </row>
+    </table>
+
+
+    <table name="ServiceInterval">
+        <column>id</column>
+        <column>description</column>
+        <column>inspectionInterval</column>
+        <column>vehicle_id</column>
+        <row>
+            <value>-1</value>
+            <value>window cleaning!</value>
+            <value>30</value>
+            <value>-1</value>
+        </row>
+    </table>
+
+
+    <table name="ServiceInterval_dated">
+        <column>ServiceInterval_id</column>
+        <column>dated</column>
+        <row>
+            <value>-1</value>
+            <value>2012-10-15</value>
+        </row>
+        <row>
+            <value>-1</value>
+            <value>2012-09-13</value>
+        </row>
+    </table>
+
+
+    <table name="Users">
+        <column>id</column>
+        <column>firstName</column>
+        <column>isAdmin</column>
+        <column>lastName</column>
+        <column>userClass</column>
+        <column>enabled</column>
+        <column>password</column>
+        <column>username</column>
+        <row>
+            <value>-1</value>
+            <value>Arnold</value>
+            <value>false</value>
+            <value>Rimmer</value>
+            <value>1</value>
+            <value>true</value>
+            <value>mysecretpass</value>
+            <value>arny225</value>
+        </row>
+    </table>
+
+
+    <table name="Drives">
+        <column>id</column>
+        <column>date_from</column>
+        <column>date_to</column>
+        <column>distance</column>
+        <column>drive_state</column>
+        <column>id_user</column>
+        <column>id_vehicle</column>
+        <row>
+            <value>-1</value>
+            <value>2012-10-01</value>
+            <value>2012-10-07</value>
+            <value>60</value>
+            <value>1</value>
+            <value>-1</value>
+            <value>-1</value>
+        </row>
+    </table>
+
+
+</dataset>
