@@ -54,7 +54,7 @@
                 <tr>
                     <td><form:label path="distance">
                             <fmt:message key="drive.distance" />:</form:label></td>
-                    <td><form:input path="distance" maxlength="5" /></td>
+                    <td><form:input path="distance" maxlength="5" type="number" /></td>
                     <td><form:errors path="distance" /></td>
                 </tr>
 
@@ -96,12 +96,3 @@
 
 </body>
 </html>
-
-
-
-
-
-
-
-
-

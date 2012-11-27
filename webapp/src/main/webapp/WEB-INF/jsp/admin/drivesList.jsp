@@ -12,7 +12,17 @@
         <a href="<c:url value="/admin/drives/new/" />"><fmt:message key="drives.add" /></a>
     </div>
 
-    <table>
+    <table class="grid">
+    <colgroup>
+            <col style="width: 40px;"/>
+            <col />
+            <col />
+            <col />
+            <col style="width: 60px;"/>
+            <col style="width: 60px;"/>
+            <col />
+            <col style="width: 120px;"/>
+        </colgroup>
         <tr>
             <th><fmt:message key="drive.id" /></th>
             <th><fmt:message key="drive.dateFrom" /></th>
@@ -35,7 +45,7 @@
                 <td><c:if test="${not empty drive.vehicle}">
                 [${drive.vehicle.id}] ${drive.vehicle.brand} ${drive.vehicle.type} ${drive.vehicle.vin} </c:if></td>
                 <td><a href="<c:url value="/admin/drives/edit/${drive.id}" />"><fmt:message key="actions.edit" /></a>
-                    | <a href="<c:url value="/admin/drives/delete/${drive.id}" />"><fmt:message key="actions.delete" /></a>
+                    | <a href="<c:url value="/admin/drives/delete/${drive.id}" />" class="remove"><fmt:message key="actions.delete" /></a>
                 </td>
             </tr>
         </c:forEach>
