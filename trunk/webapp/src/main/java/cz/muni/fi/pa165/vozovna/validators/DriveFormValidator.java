@@ -36,6 +36,13 @@ public class DriveFormValidator implements Validator {
         if (drive.getVehicle() == null && drive.getVehicleId() == null) {
             errors.reject("error.drive.vehicle.missing");
         }
+        
+        if (drive.getDistance() != null) {
+            Integer dis = drive.getDistance();
+            if (dis.intValue() < 0) {
+                errors.rejectValue("distance", "error.drive.distance.low");
+            }
+        }
 
     }
 

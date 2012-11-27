@@ -28,7 +28,7 @@ public class LoginController {
             return "redirect:login";
         }
         if (request.isUserInRole("ROLE_ADMIN")) {
-            return "redirect:/admin/drives";
+            return "redirect:/admin/users";
         } else {
             return "redirect:drives";
         }
