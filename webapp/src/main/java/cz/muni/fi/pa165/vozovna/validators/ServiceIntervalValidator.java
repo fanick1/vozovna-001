@@ -1,19 +1,18 @@
 package cz.muni.fi.pa165.vozovna.validators;
 
+import cz.muni.fi.pa165.vozovna.dto.ServiceIntervalDTO;
 import org.springframework.validation.Errors;
 import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
 
-import cz.muni.fi.pa165.vozovna.dto.DriveDTO;
-
 /**
- * @author Eva Neduchalov√°, 359893
+ * @author Eva Neduchalov·, 359893
  */
 public class ServiceIntervalValidator implements Validator {
 
     @Override
     public boolean supports(Class<?> clazz) {
-        return DriveDTO.class.isAssignableFrom(clazz);
+        return ServiceIntervalDTO.class.isAssignableFrom(clazz);
     }
 
     @Override
@@ -22,8 +21,11 @@ public class ServiceIntervalValidator implements Validator {
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "inspectionInterval", "error.interval.inspectionInterval.missing");
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "description", "error.interval.description.missing");
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "vehicle", "error.interval.vehicle.missing");
-
-        // ServiceIntervalDTO interval = (ServiceIntervalDTO) target;
+        
+        ServiceIntervalDTO interval = (ServiceIntervalDTO) target;
+        if (interval.getInspectionInterval() <= 0) {
+            errors.rejectValue("inspectionInterval", "error.interval.inspectionInterval.notPositive");
+        }
 
     }
 

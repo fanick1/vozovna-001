@@ -19,7 +19,7 @@
         <ul id="menu">
             <li class="menu"><a href="<c:url value="/drives" />"><fmt:message key="links.drives" /></a></li>
             <li class="menu"><a href="<c:url value="/vehicles" />"><fmt:message key="links.vehicles" /></a></li>
-            <li class="menu"><a href="<c:url value="j_spring_security_logout" />"><fmt:message key="links.logout" /></a></li>
+            <li class="menu"><a href="<c:url value="/j_spring_security_logout" />"><fmt:message key="links.logout" /></a></li>
         </ul>
         <br />
 

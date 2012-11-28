@@ -30,9 +30,11 @@
     <div class="form">
 
         <form:form commandName="drive" method="post" id="drive-finish">
-            <div class="chyby">
-                <form:errors path="*" cssStyle="color:red" />
-            </div>
+            <c:if test="${not empty requestScope['org.springframework.validation.BindingResult.drive'].allErrors}">
+                    <div class="form-errors">
+                        <form:errors path="*" cssStyle="color:red" />
+                    </div>
+            </c:if>
             <table class="detail">
                 <tr>
                     <th><form:label path="distance"><fmt:message key="drive.distance" /> (<fmt:message key="drive.km" />):</form:label></th>
@@ -96,5 +98,3 @@
 
     </body>
 </html>
-
-

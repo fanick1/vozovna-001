@@ -3,14 +3,24 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title><fmt:message key="admin.drives.title" /></title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title><fmt:message key="admin.drives.title" /></title>
+    <script type="text/javascript" src="http://code.jquery.com/jquery-latest.js"></script> 
+    <script type="text/javascript">
+        $("a.remove").live("click",function(event){
+            event.stopPropagation();
+            if(!confirm("<fmt:message key="admin.drives.confirm.delete" />")) {
+                event.preventDefault();
+            }       
+         });
+    </script>
 </head>
 <body>
 
     <div>
         <a href="<c:url value="/admin/drives/new/" />"><fmt:message key="drives.add" /></a>
     </div>
+
 
     <table class="grid">
     <colgroup>
