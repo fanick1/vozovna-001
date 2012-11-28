@@ -19,6 +19,7 @@ import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 
 import cz.muni.fi.pa165.vozovna.service.ServiceIntervalService;
+import cz.muni.fi.pa165.vozovna.validators.ServiceIntervalValidator;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -37,6 +38,12 @@ public class IntervalsController {
     @Autowired
     private VehicleService vehicleService;
 
+     @InitBinder
+    protected void initBinder(WebDataBinder binder) {
+        binder.setValidator(new ServiceIntervalValidator());
+ 
+    }
+    
     private void initData() {
         VehicleDTO vehicle = new VehicleDTO();
         vehicle.setBrand("dsgds");
@@ -119,9 +126,14 @@ public class IntervalsController {
     }
 
     @RequestMapping(value = { "/admin/intervals/add", "/admin/intervals/edit" }, method = RequestMethod.POST)
-    public String submitEditForm(@ModelAttribute("intervalDTO") ServiceIntervalDTO interval,
-                                 HttpSession session) {
-
+    public String submitEditForm(@Validated @ModelAttribute("intervalDTO") ServiceIntervalDTO interval,  BindingResult result,
+            ModelMap model, HttpSession session) {
+        
+        if (result.hasErrors()) {
+            model.put("intervalDTO", interval);
+            return "admin/intervals/addOrEdit";
+        }
+        
         if (interval.getId() == null) {
             this.serviceIntervalService.create(interval);
             session.setAttribute("message", "admin.intervals.create.msg.successful");

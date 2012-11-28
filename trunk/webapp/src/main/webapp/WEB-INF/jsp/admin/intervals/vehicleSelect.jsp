@@ -4,7 +4,7 @@
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <title><fmt:message key="admin.vehicles.title" /></title>
+    <title><fmt:message key="admin.interval.vehicleSelect.title" /></title>
 
 </head>
 <body>

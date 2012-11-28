@@ -618,7 +618,7 @@ table.grid tr:hover td {
 .detail th {
     text-align: left;
 }
-.detail input[type=text], .detail input[type=password], .detail select, .detail textarea  {
+.detail input[type=text], .detail input[type=password], .detail input[type=date], .detail select, .detail textarea  {
     padding: 2px;
     display: block;
 }

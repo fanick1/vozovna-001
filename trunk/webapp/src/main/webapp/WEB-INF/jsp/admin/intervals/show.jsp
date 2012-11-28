@@ -36,7 +36,7 @@
     </tr>
     <tr>
         <th><fmt:message key="interval.vehicle" />:</th>
-        <td>${interval.vehicle}</td>
+        <td>[ID: ${interval.vehicle.id}]<br/> ${interval.vehicle.brand} <br/> ${interval.vehicle.type} <br/>(${interval.vehicle.yearMade})</td>
     </tr>
 </table>
 <br>
