@@ -23,32 +23,32 @@
             </colgroup>
             <tr>
                 <th><fmt:message key="vehicle.id" />:</th>
-                <td>${vehicle.id}</td>
+                <td><c:out value="${vehicle.id}"/></td>
             </tr>
             <tr>
                 <th><fmt:message key="vehicle.brand" />:</th>
-                <td>${vehicle.brand}</td>
+                <td><c:out value="${vehicle.brand}"/></td>
             </tr>
             <tr>
                 <th><fmt:message key="vehicle.type" />:</th>
-                <td>${vehicle.type}</td>
+                <td><c:out value="${vehicle.type}"/></td>
 
             </tr>
             <tr>
                 <th><fmt:message key="vehicle.engineType" />:</th>
-                <td>${vehicle.engineType}</td>
+                <td><c:out value="${vehicle.engineType}"/></td>
             </tr>
             <tr>
                 <th><fmt:message key="vehicle.yearMade" />:</th>
-                <td>${vehicle.yearMade}</td>
+                <td><c:out value="${vehicle.yearMade}"/></td>
             </tr>
             <tr>
                 <th><fmt:message key="vehicle.distanceCount" />:</th>
-                <td>${vehicle.distanceCount}</td>
+                <td><c:out value="${vehicle.distanceCount}"/></td>
             </tr>
             <tr>
                 <th><fmt:message key="vehicle.vin" />:</th>
-                <td>${vehicle.vin}</td>
+                <td><c:out value="${vehicle.vin}"/></td>
             </tr>
             <tr>
                 <th><fmt:message key="vehicle.userClass" />:</th>

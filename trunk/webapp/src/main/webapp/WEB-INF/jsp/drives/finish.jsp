@@ -85,10 +85,10 @@
 
             </tr>
             <tr>
-                <td>${drive.vehicle.id}</td>
-                <td>${drive.vehicle.brand}</td>
-                <td>${drive.vehicle.type}</td>
-                <td>${drive.vehicle.vin}</td>
+                <td><c:out value="${drive.vehicle.id}"/></td>
+                <td><c:out value="${drive.vehicle.brand}"/></td>
+                <td><c:out value="${drive.vehicle.type}"/></td>
+                <td><c:out value="${drive.vehicle.vin}"/></td>
             </tr>
         </table>
     </div>

@@ -70,9 +70,9 @@
             </tr>
             <c:forEach  items="${vehicles}" var="vehicle">
                 <tr>
-                    <td class="number">${vehicle.id}</td>
-                    <td>${vehicle.brand}</td>
-                    <td>${vehicle.type}</td>
+                    <td class="number"><c:out value="${vehicle.id}"/></td>
+                    <td><c:out value="${vehicle.brand}"/></td>
+                    <td><c:out value="${vehicle.type}"/></td>
                     <td>
                         <a href="<c:url value="/reserveForm?id=${vehicle.id}" />"><fmt:message key="vehicle.reserve" /></a>
                     </td>

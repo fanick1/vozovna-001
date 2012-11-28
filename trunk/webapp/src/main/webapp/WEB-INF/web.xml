@@ -12,6 +12,11 @@
             /WEB-INF/db-config.xml
         </param-value>
     </context-param>
+
+    <context-param>
+        <param-name>defaultHtmlEscape</param-name>
+        <param-value>true</param-value>
+    </context-param>
     
     <context-param>
         <param-name>contextPath</param-name>

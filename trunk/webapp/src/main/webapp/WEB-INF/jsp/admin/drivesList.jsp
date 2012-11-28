@@ -45,15 +45,15 @@
         </tr>
         <c:forEach items="${drives}" var="drive">
             <tr>
-                <td>${drive.id}</td>
+                <td><c:out value="${drive.id}"/></td>
                 <td><joda:format pattern="d.M.yyyy" value="${drive.dateFrom}" /></td>
                 <td><joda:format pattern="d.M.yyyy" value="${drive.dateTo}" /></td>
                 <td><fmt:message key="${drive.state.code}" /></td>
-                <td>${drive.distance}</td>
+                <td><c:out value="${drive.distance}"/></td>
                 <td><c:if test="${not empty drive.user != null}">
-                [${drive.user.id}] ${drive.user.firstName} ${drive.user.lastName} </c:if></td>
+                [<c:out value="${drive.user.id}"/>] <c:out value="${drive.user.firstName}"/> <c:out value="${drive.user.lastName}"/> </c:if></td>
                 <td><c:if test="${not empty drive.vehicle}">
-                [${drive.vehicle.id}] ${drive.vehicle.brand} ${drive.vehicle.type} ${drive.vehicle.vin} </c:if></td>
+                [<c:out value="${drive.vehicle.id}"/>] <c:out value="${drive.vehicle.brand}"/> <c:out value="${drive.vehicle.type}"/> <c:out value="${drive.vehicle.vin}"/> </c:if></td>
                 <td><a href="<c:url value="/admin/drives/edit/${drive.id}" />"><fmt:message key="actions.edit" /></a>
                     | <a href="<c:url value="/admin/drives/delete/${drive.id}" />" class="remove"><fmt:message key="actions.delete" /></a>
                 </td>

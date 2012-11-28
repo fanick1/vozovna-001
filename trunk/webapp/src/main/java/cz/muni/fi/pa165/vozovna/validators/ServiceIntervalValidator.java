@@ -6,7 +6,7 @@ import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
 
 /**
- * @author Eva Neduchalov·, 359893
+ * @author Eva Neduchalov√°, 359893
  */
 public class ServiceIntervalValidator implements Validator {
 

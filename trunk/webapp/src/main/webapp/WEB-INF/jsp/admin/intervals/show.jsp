@@ -23,20 +23,20 @@
     </colgroup>
     <tr>
         <th><fmt:message key="interval.id" />:</th>
-        <td>${interval.id}</td>
+        <td><c:out value="${interval.id}"/></td>
     </tr>
     <tr>
         <th><fmt:message key="interval.description" />:</th>
-        <td>${interval.description}</td>
+        <td><c:out value="${interval.description}"/></td>
     </tr>
     <tr>
         <th><fmt:message key="interval.inspectionInterval" />:</th>
-        <td>${interval.inspectionInterval}</td>
+        <td><c:out value="${interval.inspectionInterval}"/></td>
 
     </tr>
     <tr>
         <th><fmt:message key="interval.vehicle" />:</th>
-        <td>[ID: ${interval.vehicle.id}]<br/> ${interval.vehicle.brand} <br/> ${interval.vehicle.type} <br/>(${interval.vehicle.yearMade})</td>
+        <td>[ID: <c:out value="${interval.vehicle.id}"/>] <br/> <c:out value="${interval.vehicle.brand}"/> <br/> <c:out value="${interval.vehicle.type}"/> <br/>(<c:out value="${interval.vehicle.yearMade}"/>)</td>
     </tr>
 </table>
 <br>

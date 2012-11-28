@@ -48,10 +48,10 @@
         </tr>
         <c:forEach items="${users}" var="user">
             <tr>
-                <td class="number">${user.id}</td>
-                <td>${user.username}</td>
-                <td>${user.firstName}</td>
-                <td>${user.lastName}</td>
+                <td class="number"><c:out value="${user.id}"/></td>
+                <td><c:out value="${user.username}"/></td>
+                <td><c:out value="${user.firstName}"/></td>
+                <td><c:out value="${user.lastName}"/></td>
                 <td><c:choose><c:when test="${user.enabled}"><fmt:message key="users.enabled.true.short" /></c:when>
                     <c:otherwise><fmt:message key="users.enabled.false.short" /></c:otherwise></c:choose></td>
                 <td><c:choose><c:when test="${user.isAdmin}"><fmt:message key="users.role.admin" /></c:when>

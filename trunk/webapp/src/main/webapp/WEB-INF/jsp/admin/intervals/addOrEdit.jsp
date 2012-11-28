@@ -84,7 +84,7 @@
                     <form:label path="description"><fmt:message key="interval.description" />:</form:label>
                 </td>
                 <td>
-                    <form:input path="description" maxlength="100" />
+                    <form:input path="description"  maxlength="100" />
                     <form:errors path="description" cssClass="error" />
                 </td>
             </tr>
