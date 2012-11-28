@@ -61,9 +61,9 @@
                 <td><joda:format pattern="d.M.yyyy" value="${item.dateFrom}"/></td>
                 <td><joda:format pattern="d.M.yyyy" value="${item.dateTo}"/></td>
                 <td><fmt:message key="${item.state.code}" /></td>
-                <td class="number">${item.vehicle.id}</td>
-                <td>${item.vehicle.brand}</td>
-                <td>${item.vehicle.type}</td>
+                <td class="number"><c:out value="${item.vehicle.id}"/></td>
+                <td><c:out value="${item.vehicle.brand}"/></td>
+                <td><c:out value="${item.vehicle.type}"/></td>
                 <c:choose>
                     <c:when test="${item.state.name == 'reserved'}">
                         <td>

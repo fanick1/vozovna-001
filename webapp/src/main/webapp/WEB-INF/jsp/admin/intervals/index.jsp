@@ -41,9 +41,9 @@
         <c:forEach  items="${intervals}" var="interval">
             <tr>
                 <td class="number">${interval.id}</td>
-                <td>${interval.inspectionInterval}</td>
-                <td>${interval.vehicle.fullName}</td>
-                <td>${interval.description}</td>
+                <td><c:out value="${interval.inspectionInterval}"/></td>
+                <td><c:out value="${interval.vehicle.fullName}"/></td>
+                <td><c:out value="${interval.description}" /></td>
                 <td>
                     <a href="<c:url value="/admin/intervals/show?id=${interval.id}" />"><fmt:message key="actions.show" /></a> |
                     <a href="<c:url value="/admin/intervals/edit?id=${interval.id}" />"><fmt:message key="actions.edit" /></a> |

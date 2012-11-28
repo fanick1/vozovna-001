@@ -26,9 +26,9 @@
     <c:forEach  items="${vehicles}" var="vehicle">
         <tr>
             <td class="number">${vehicle.id}</td>
-            <td>${vehicle.brand}</td>
-            <td>${vehicle.type}</td>
-            <td>${vehicle.engineType}</td>
+            <td><c:out value="${vehicle.brand}"/></td>
+            <td><c:out value="${vehicle.type}"/></td>
+            <td><c:out value="${vehicle.engineType}"/></td>
             <td>
                 <a href="<c:url value="/admin/intervals/edit?id=${intervalDTO.id}&vehicleId=${vehicle.id}" />"><fmt:message key="actions.select" /></a>
             </td>
