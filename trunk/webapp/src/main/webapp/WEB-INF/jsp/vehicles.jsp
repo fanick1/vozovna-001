@@ -45,10 +45,10 @@
             <form method="post" action="${actionUrl}" >
                 <table id="choose-dates">
                 <tr>
-                    <td><label for="startDate" >Start date:</label></td>
+                    <td><label for="startDate" ><fmt:message key="drives.startDate" /></label></td>
                     <td><input type="date" name="startDate" id="startDate" /></td>
                 
-                    <td><label for="endDate" >End date:</label></td>
+                    <td><label for="endDate" ><fmt:message key="drives.endDate" /></label></td>
                     <td><input type="date" name="endDate" id="endDate" /></td>
                
                     <td><input type="submit" name="findVehicles"  /></td>
