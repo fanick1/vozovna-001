@@ -36,7 +36,7 @@ import cz.muni.fi.pa165.vozovna.enums.UserClassEnum;
 @ContextConfiguration("ServiceIntervalDAOTest-context.xml")
 public class ServiceIntervalDAOTest {
 
-    Logger logger = LoggerFactory.getLogger(getClass());
+    private static final Logger logger = LoggerFactory.getLogger(ServiceIntervalDAOTest.class);
 
     @Autowired
     private ServiceIntervalDAO serviceIntervalDAO;
@@ -60,9 +60,9 @@ public class ServiceIntervalDAOTest {
         try {
             IDatabaseConnection connection = new DatabaseConnection(conn);
             logger.info("*** Deletes data ***");
-            DatabaseOperation.DELETE_ALL.execute(connection, new XmlDataSet(new FileInputStream("src/test/resources/TestDataSet.xml")));
+            DatabaseOperation.DELETE_ALL.execute(connection, new XmlDataSet(ClassLoader.getSystemResourceAsStream("TestDataSet.xml")));
             logger.info("*** Inserts new data ***");
-            DatabaseOperation.CLEAN_INSERT.execute(connection, new XmlDataSet(new FileInputStream("src/test/resources/TestDataSet.xml")));
+            DatabaseOperation.CLEAN_INSERT.execute(connection, new XmlDataSet(ClassLoader.getSystemResourceAsStream("TestDataSet.xml")));
         } finally {
             DataSourceUtils.releaseConnection(conn, ds);
             logger.info("*** Finished inserting test data ***");
