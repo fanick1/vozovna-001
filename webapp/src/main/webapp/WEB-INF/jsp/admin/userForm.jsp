@@ -44,7 +44,7 @@
                 </tr>
                 <tr>
                     <td><form:label path="password"><fmt:message key="user.labels.password" />:</form:label></td>
-                    <td><form:input path="password" maxlength="20" /><form:errors path="password" cssClass="error" /></td>
+                    <td><form:input path="password" maxlength="20" type="password" /><form:errors path="password" cssClass="error" /></td>
                 </tr>
                 <tr>
                     <td><form:label path="isAdmin"><fmt:message key="user.labels.isAdmin" />:</form:label></td>
