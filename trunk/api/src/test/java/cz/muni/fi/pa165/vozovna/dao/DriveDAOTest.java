@@ -2,7 +2,7 @@ package cz.muni.fi.pa165.vozovna.dao;
 
 import cz.muni.fi.pa165.vozovna.entity.Drive;
 
-import java.io.FileInputStream;
+import java.io.File;
 import java.sql.Connection;
 import java.util.List;
 import javax.sql.DataSource;
@@ -34,7 +34,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 @ContextConfiguration("DriveDAOTest-context.xml")
 public class DriveDAOTest {
 
-    Logger logger = LoggerFactory.getLogger(getClass());
+    private static final Logger logger = LoggerFactory.getLogger(DriveDAOTest.class);
 
     @Autowired
     private DriveDAO driveDao;
@@ -54,9 +54,12 @@ public class DriveDAOTest {
         try {
             IDatabaseConnection connection = new DatabaseConnection(conn);
             logger.info("*** Deletes data ***");
-            DatabaseOperation.DELETE_ALL.execute(connection, new XmlDataSet(new FileInputStream("TestDataSet.xml")));
+            
+            File f = new File("classpath:/TestDataSet.xml");
+            logger.warn("Path: {}", f.getAbsolutePath());
+            DatabaseOperation.DELETE_ALL.execute(connection, new XmlDataSet(ClassLoader.getSystemResourceAsStream("TestDataSet.xml")));
             logger.info("*** Inserts new data ***");
-            DatabaseOperation.CLEAN_INSERT.execute(connection, new XmlDataSet(new FileInputStream("TestDataSet.xml")));
+            DatabaseOperation.CLEAN_INSERT.execute(connection, new XmlDataSet(ClassLoader.getSystemResourceAsStream("TestDataSet.xml")));
         } finally {
             DataSourceUtils.releaseConnection(conn, ds);
             logger.info("*** Finished inserting test data ***");

@@ -33,7 +33,7 @@ import cz.muni.fi.pa165.vozovna.enums.UserClassEnum;
 @ContextConfiguration("VehicleDAOTest-context.xml")
 public class VehicleDAOTest {
     
-    Logger logger = LoggerFactory.getLogger(getClass());
+    private static final Logger logger = LoggerFactory.getLogger(VehicleDAOTest.class);
     public static final Long TEST_VEHICLE_ID = new Long(-1l);
 
     @Autowired
@@ -51,9 +51,9 @@ public class VehicleDAOTest {
         try {
             IDatabaseConnection connection = new DatabaseConnection(conn);
             logger.info("*** Deletes data ***");
-            DatabaseOperation.DELETE_ALL.execute(connection, new XmlDataSet(new FileInputStream("src/test/resources/TestDataSet.xml")));
+            DatabaseOperation.DELETE_ALL.execute(connection, new XmlDataSet(ClassLoader.getSystemResourceAsStream("TestDataSet.xml")));
             logger.info("*** Inserts new data ***");
-            DatabaseOperation.CLEAN_INSERT.execute(connection, new XmlDataSet(new FileInputStream("src/test/resources/TestDataSet.xml")));
+            DatabaseOperation.CLEAN_INSERT.execute(connection, new XmlDataSet(ClassLoader.getSystemResourceAsStream("TestDataSet.xml")));
         } finally {
             DataSourceUtils.releaseConnection(conn, ds);
             logger.info("*** Finished inserting test data ***");
