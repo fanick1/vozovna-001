@@ -1,6 +1,5 @@
 <%@ include file="/WEB-INF/jspf/taglibs.jspf"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -13,7 +12,7 @@
     <script type="text/javascript">
         //if (datefield.type!="date"){ //if browser doesn't support input type="date", initialize date picker widget:
         $(function() {
-            $('input[type=date]').datepicker({
+            $('input[type=text]').datepicker({
             // specify the same format as the spec
             dateFormat: 'yy-mm-dd'
             });
@@ -39,19 +38,16 @@
 <body>
 
     <div>
-        <spring:url var="actionUrl" value="/vehicles" />
+        
         <div class="detail">
-            
-            <form method="post" action="${actionUrl}" >
+            <form method="get" action="vehicles" >
                 <table id="choose-dates">
                 <tr>
-                    <td><label for="startDate" ><fmt:message key="drives.startDate" /></label></td>
-                    <td><input type="date" name="startDate" id="startDate" /></td>
-                
-                    <td><label for="endDate" ><fmt:message key="drives.endDate" /></label></td>
-                    <td><input type="date" name="endDate" id="endDate" /></td>
-               
-                    <td><input type="submit" name="findVehicles"  /></td>
+                    <td><label for="from" ><fmt:message key="drives.startDate" /></label></td>
+                    <td><input type="text" name="from" id="from" value="<c:out value="${dateFrom}"/>" /></td>
+                    <td><label for="to" ><fmt:message key="drives.endDate" /></label></td>
+                    <td><input type="text" name="to" id="to" value="<c:out value="${dateTo}"/>" /></td>
+                    <td><input type="submit" /></td>
                 </tr>
                 </table>
             </form>
@@ -74,7 +70,7 @@
                     <td><c:out value="${vehicle.brand}"/></td>
                     <td><c:out value="${vehicle.type}"/></td>
                     <td>
-                        <a href="<c:url value="/reserveForm?id=${vehicle.id}" />"><fmt:message key="vehicle.reserve" /></a>
+                        <a href="<c:url value="/reserveForm?id=${vehicle.id}&from=${dateFrom}&to=${dateTo}" />"><fmt:message key="vehicle.reserve" /></a>
                     </td>
                 </tr>
             </c:forEach>
