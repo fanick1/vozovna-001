@@ -83,4 +83,6 @@ public interface VehicleService {
      * @throws IllegalArgumentException If any of argument is null.
      */
     public List<VehicleDTO> getAvailableVehicles(User user,  DateTime startDate, DateTime endDate);
+    
+    public List<VehicleDTO> getAvailableVehicles(UserClassEnum userClass, DateTime startDate, DateTime endDate);
 }

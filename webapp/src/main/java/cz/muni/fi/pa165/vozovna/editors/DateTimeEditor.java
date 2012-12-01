@@ -8,6 +8,8 @@ import org.joda.time.DateTime;
  * @author Eva Neduchalová, 359893
  */
 public class DateTimeEditor extends PropertyEditorSupport {
+    
+    public static final String DATE_FORMAT = "yyyy-MM-dd";
 
     @Override
     public void setAsText(String text) throws IllegalArgumentException {
@@ -25,7 +27,7 @@ public class DateTimeEditor extends PropertyEditorSupport {
         if (dateTime == null) {
             return null;
         } else {
-            return dateTime.toString("YYYY-MM-dd");
+            return dateTime.toString(DATE_FORMAT);
         }
     }
 

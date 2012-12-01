@@ -3,7 +3,6 @@ package cz.muni.fi.pa165.vozovna.controller;
 import cz.muni.fi.pa165.vozovna.dto.DriveDTO;
 import cz.muni.fi.pa165.vozovna.dto.UserDTO;
 import cz.muni.fi.pa165.vozovna.enums.DriveStateEnum;
-import cz.muni.fi.pa165.vozovna.exceptions.PageNotFoundException;
 import java.security.Principal;
 
 
@@ -71,15 +70,15 @@ public class UserDrivesController {
      * @throws PageNotFoundException
      */
     @RequestMapping(value = "/drives", method = RequestMethod.GET)
-    public String viewVehiclesList(ModelMap model, Principal principal) throws PageNotFoundException {
+    public String viewVehiclesList(ModelMap model, Principal principal) {
         //get current User
         String principalName = SecurityContextHolder.getContext().getAuthentication().getName();
         if (principalName == null) {
-            throw new PageNotFoundException("Couldn't get current user's username.");
+            //throw new PageNotFoundException("Couldn't get current user's username.");
         }
         UserDTO user = userService.getByUsername(principalName); 
         if (user == null) {
-            throw new PageNotFoundException("Current user doesn't exist.");
+            //throw new PageNotFoundException("Current user doesn't exist.");
         }
         
         // find drives
@@ -99,21 +98,21 @@ public class UserDrivesController {
     @RequestMapping(value = "/drives/cancel", params={"id"}) 
     public String actionCancelDrive(@RequestParam("id") Long id, ModelMap model, HttpSession session) throws Exception {
         if (id == null) {
-            throw new PageNotFoundException("Missing argument id.");
+            //throw new PageNotFoundException("Missing argument id.");
         }
         // get drive
         DriveDTO drive = driveService.getById(id);
         if (drive == null) {
-            throw new PageNotFoundException("Drive not found.");
+           // throw new PageNotFoundException("Drive not found.");
         }
         
         // check user's permission
         UserDTO currentUser = getCurrentUser();
         if (currentUser == null) {
-            throw new PageNotFoundException("Current user didn't found.");
+            //throw new PageNotFoundException("Current user didn't found.");
         }
         if (drive.getUser().getId() != currentUser.getId()) {
-            throw new PageNotFoundException("User can't change state of foreign drive.");
+           // throw new PageNotFoundException("User can't change state of foreign drive.");
         }
         
         // check state of current drive 
@@ -136,22 +135,22 @@ public class UserDrivesController {
     @RequestMapping(value = "/drives/start", params="id") 
     public String actionChangeDriveState(@RequestParam("id") Long id, ModelMap model, HttpSession session) throws Exception {
         if (id == null) {
-            throw new PageNotFoundException("Missing argument id.");
+            //throw new PageNotFoundException("Missing argument id.");
         }
 
         // get drive
         DriveDTO drive = driveService.getById(id);
         if (drive == null) {
-            throw new PageNotFoundException("Drive not found.");
+          //  throw new PageNotFoundException("Drive not found.");
         }
         
         // check user's permission
         UserDTO currentUser = getCurrentUser();
         if (currentUser == null) {
-            throw new PageNotFoundException("Current user didn't found.");
+           // throw new PageNotFoundException("Current user didn't found.");
         }
         if (drive.getUser().getId() != currentUser.getId()) {
-            throw new PageNotFoundException("User can't change state of foreign drive.");
+           // throw new PageNotFoundException("User can't change state of foreign drive.");
         }
    
         // check state of current drive 
@@ -197,21 +196,21 @@ public class UserDrivesController {
     public String viewFinishForm(@RequestParam("id") Long id, ModelMap model, HttpSession session) throws Exception {
         
         if (id == null) {
-            throw new PageNotFoundException("Missing argument ID.");
+           // throw new PageNotFoundException("Missing argument ID.");
         }
         // get drive
         DriveDTO driveDTOToFinish = driveService.getById(id);
         if (driveDTOToFinish == null) {
-            throw new PageNotFoundException("Drive with id " + id + "doesn't exist.");
+          //  throw new PageNotFoundException("Drive with id " + id + "doesn't exist.");
         }
         
         // check user's permission
         UserDTO currentUser = getCurrentUser();
         if (currentUser == null) {
-            throw new PageNotFoundException("Current user didn't found.");
+          //  throw new PageNotFoundException("Current user didn't found.");
         }
         if (driveDTOToFinish.getUser().getId() != currentUser.getId()) {
-            throw new PageNotFoundException("User can't change state of foreign drive.");
+           // throw new PageNotFoundException("User can't change state of foreign drive.");
         }
         
         // check state of current drive 
@@ -230,22 +229,22 @@ public class UserDrivesController {
     @RequestMapping(value = "/drives/finish", method = RequestMethod.POST)
     public String submittedFinishForm(@ModelAttribute("drive") DriveDTO drive, BindingResult result, ModelMap model, HttpSession session) throws Exception {
         if (drive == null || drive.getId() == null) {
-            throw new PageNotFoundException("Missing drive.");
+           // throw new PageNotFoundException("Missing drive.");
         }
         if (result.hasErrors()) {
             return "drives/finish";
         }
         DriveDTO driveDTO = driveService.getById(drive.getId());
         if (driveDTO == null) {
-            throw new PageNotFoundException("Drive didn't found.");
+          //  throw new PageNotFoundException("Drive didn't found.");
         }
         // check user's permission
         UserDTO currentUser = getCurrentUser();
         if (currentUser == null) {
-            throw new PageNotFoundException("Current user didn't found.");
+          //  throw new PageNotFoundException("Current user didn't found.");
         }
         if (driveDTO.getUser().getId() != currentUser.getId()) {
-            throw new PageNotFoundException("User can't change state of foreign drive.");
+          //  throw new PageNotFoundException("User can't change state of foreign drive.");
         }
         
         // check state of current drive 

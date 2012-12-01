@@ -84,4 +84,6 @@ public interface VehicleDAO extends GenericDAO<Vehicle, Long> {
      * @throws IllegalArgumentException If any of argument is null.
      */
     public List<Vehicle> getAvailableVehicles(User user,  DateTime startDate, DateTime endDate);
+    
+    public List<Vehicle> getAvailableVehicles(UserClassEnum userClass, DateTime startDate, DateTime endDate);
 }

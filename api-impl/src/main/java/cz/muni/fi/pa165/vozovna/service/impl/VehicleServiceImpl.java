@@ -146,9 +146,15 @@ public class VehicleServiceImpl implements VehicleService {
      *
      * @throws IllegalArgumentException If any of argument is null.
      */
+    @Override
     public List<VehicleDTO> getAvailableVehicles(User user,  DateTime startDate, DateTime endDate) {
         return convertListOfVehiclesToListOfVehicleDTOs(this.vehicleDAO.getAvailableVehicles(user, startDate, endDate));
 
 
+    }
+
+    @Override
+    public List<VehicleDTO> getAvailableVehicles(UserClassEnum userClass, DateTime startDate, DateTime endDate) {
+        return convertListOfVehiclesToListOfVehicleDTOs(this.vehicleDAO.getAvailableVehicles(userClass, startDate, endDate));
     }
 }
