@@ -31,12 +31,24 @@
             <div class="errorblock">
                 <fmt:message key="${error}" />
             </div>
+	        <%
+		        String attName = request.getParameter("error");
+		        synchronized (session) {
+			        session.removeAttribute("error");
+		        }
+	        %>
         </c:if>
 
         <c:if test="${not empty message}">
             <div class="messageblock">
                 <fmt:message key="${message}" />
             </div>
+	        <%
+		        String attName = request.getParameter("message");
+		        synchronized (session) {
+			        session.removeAttribute("message");
+		        }
+	        %>
         </c:if>
 
         <sitemesh:write property='body' />
