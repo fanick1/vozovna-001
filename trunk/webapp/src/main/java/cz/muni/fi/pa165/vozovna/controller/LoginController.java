@@ -41,7 +41,7 @@ public class LoginController {
 
     @RequestMapping(value = "/login/generate", method = RequestMethod.GET)
     public String generateLogins(ModelMap model) {
-        userService.generateTestUsersIfNoneExist();
+        userService.generateTestDataIfNoneExist();
         return "redirect:/login";
     }
 
