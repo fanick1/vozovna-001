@@ -1,65 +1,31 @@
 package cz.muni.fi.pa165.vozovna.dao;
 
-import java.io.FileInputStream;
-import java.sql.Connection;
 import java.util.List;
-
-import javax.sql.DataSource;
 
 import junit.framework.Assert;
 
-import org.dbunit.database.DatabaseConnection;
-import org.dbunit.database.IDatabaseConnection;
-import org.dbunit.dataset.xml.XmlDataSet;
-import org.dbunit.operation.DatabaseOperation;
-import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ApplicationContext;
-import org.springframework.jdbc.datasource.DataSourceUtils;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import cz.muni.fi.pa165.vozovna.AbstractGenericApiTest;
 import cz.muni.fi.pa165.vozovna.entity.Vehicle;
 import cz.muni.fi.pa165.vozovna.enums.UserClassEnum;
 
 /**
  * @author eva.neduchalova
  */
-@RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration("VehicleDAOTest-context.xml")
-public class VehicleDAOTest {
+public abstract class VehicleDAOTest extends AbstractGenericApiTest{
     
     private static final Logger logger = LoggerFactory.getLogger(VehicleDAOTest.class);
     public static final Long TEST_VEHICLE_ID = new Long(-1l);
 
-    @Autowired
     private VehicleDAO vehicleDao;
 
     public void setVehicleDao(VehicleDAO vehicleDao) {
         this.vehicleDao = vehicleDao;
     }
     
-    @Before
-    public void setUpTestData() throws Exception {
-        ApplicationContext applicationContext = new org.springframework.context.support.ClassPathXmlApplicationContext("cz/muni/fi/pa165/vozovna/dao/DriveDAOTest-context.xml");
-        DataSource ds = (DataSource) applicationContext.getBean("dataSource");
-        Connection conn = ds.getConnection();
-        try {
-            IDatabaseConnection connection = new DatabaseConnection(conn);
-            logger.info("*** Deletes data ***");
-            DatabaseOperation.DELETE_ALL.execute(connection, new XmlDataSet(ClassLoader.getSystemResourceAsStream("TestDataSet.xml")));
-            logger.info("*** Inserts new data ***");
-            DatabaseOperation.CLEAN_INSERT.execute(connection, new XmlDataSet(ClassLoader.getSystemResourceAsStream("TestDataSet.xml")));
-        } finally {
-            DataSourceUtils.releaseConnection(conn, ds);
-            logger.info("*** Finished inserting test data ***");
-        }
-    }
-
     private static Vehicle createTestVehicle(String brand, int distanceCount, String engineType,
             String type, UserClassEnum userClass, String vin, int year) {
         Vehicle vehicle = new Vehicle();
