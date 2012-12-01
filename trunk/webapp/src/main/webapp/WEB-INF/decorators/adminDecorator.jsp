@@ -35,7 +35,6 @@
             <fmt:message key="${error}" />
         </div>
 	    <%
-		    String attName = request.getParameter("error");
 		    synchronized (session) {
 			    session.removeAttribute("error");
 		    }
@@ -47,7 +46,6 @@
             <fmt:message key="${message}" />
         </div>
 		<%
-			String attName = request.getParameter("message");
 			synchronized (session) {
 				session.removeAttribute("message");
 			}
