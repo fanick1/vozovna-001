@@ -32,5 +32,4 @@ public class UserEditor extends PropertyEditorSupport {
             return user.getId().toString();
         }
     }
-
 }

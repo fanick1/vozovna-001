@@ -21,14 +21,13 @@ public class DateListEditor extends PropertyEditorSupport {
             SimpleDateFormat sdf = new java.text.SimpleDateFormat("yyyy-MM-dd");
             List<Date> dates = new LinkedList<>();
             for (String line : lines) {
-                if(line.equals("")) {
+                if (line.equals("")) {
                     continue;
                 }
-                    
+
                 try {
                     dates.add(((Date) sdf.parse(line)));
                 } catch (ParseException ex) {
-                    
                 }
             }
 
@@ -43,13 +42,12 @@ public class DateListEditor extends PropertyEditorSupport {
             return null;
         } else {
             StringBuilder asText = new StringBuilder();
-            
+
             SimpleDateFormat sdf = new java.text.SimpleDateFormat("YYYY-MM-dd");
-            for (Date date: dates) {
+            for (Date date : dates) {
                 asText.append(sdf.format(date)).append("\n");
             }
             return asText.toString();
         }
     }
-
 }

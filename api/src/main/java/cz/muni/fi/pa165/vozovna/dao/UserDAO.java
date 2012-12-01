@@ -71,7 +71,7 @@ public interface UserDAO extends GenericDAO<User, Long> {
 
     /**
      * Returns User with given username. Returns null if such user does not exist.
-     * 
+     *
      * @param username username of demanded user
      * @return User if exists, null otherwise.
      * @throws IllegalArgumentException Throws if given username is null.

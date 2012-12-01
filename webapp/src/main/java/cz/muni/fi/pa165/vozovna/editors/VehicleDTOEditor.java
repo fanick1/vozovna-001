@@ -32,5 +32,4 @@ public class VehicleDTOEditor extends PropertyEditorSupport {
             return vehicle.getId().toString();
         }
     }
-
 }

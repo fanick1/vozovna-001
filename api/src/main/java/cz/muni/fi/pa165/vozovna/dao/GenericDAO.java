@@ -56,8 +56,6 @@ public interface GenericDAO<T, PK extends Serializable> {
      * @throws IllegalStateException Throws if factory is not set.
      */
     List<T> findAll();
-    
-    
+
     List<T> findByCriteria(List<Criterion> criterions, List<Order> orders);
-    
 }

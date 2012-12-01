@@ -32,5 +32,4 @@ public class ServiceIntervalEditor extends PropertyEditorSupport {
             return serviceInterval.getId().toString();
         }
     }
-
 }

@@ -37,13 +37,10 @@ import cz.muni.fi.pa165.vozovna.validators.DriveFormValidator;
 public class DrivesController {
 
     protected final Log logger = LogFactory.getLog(getClass());
-
     @Autowired
     DriveService driveService;
-
     @Autowired
     UserService userService;
-
     @Autowired
     VehicleService vehicleService;
 
@@ -130,5 +127,4 @@ public class DrivesController {
         }
         return "redirect:/admin/drives";
     }
-
 }

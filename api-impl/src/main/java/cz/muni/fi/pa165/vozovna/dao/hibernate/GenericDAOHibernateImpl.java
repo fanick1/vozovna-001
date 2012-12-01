@@ -15,13 +15,12 @@ import org.springframework.transaction.annotation.Transactional;
 
 /**
  * Hibernate implementation of base DAO with CRUD operations and findAll() method
- * 
+ *
  * @author eva.neduchalova
  */
 public abstract class GenericDAOHibernateImpl<T, PK extends Serializable> implements GenericDAO<T, PK> {
 
     private Class<T> entityClass;
-
     @Resource(name = "sessionFactory")
     protected SessionFactory sessionFactory;
 
@@ -64,7 +63,7 @@ public abstract class GenericDAOHibernateImpl<T, PK extends Serializable> implem
         final Criteria crit = session.createCriteria(entityClass);
         return crit.list();
     }
-    
+
     @Override
     @Transactional
     public List<T> findByCriteria(List<Criterion> criterions, List<Order> orders) {

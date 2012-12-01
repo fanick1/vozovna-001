@@ -19,7 +19,6 @@ public class LoginController {
 
     @Autowired
     UserService userService;
-
     protected final Log logger = LogFactory.getLog(getClass());
 
     @RequestMapping(value = "/welcome", method = RequestMethod.GET)
@@ -55,5 +54,4 @@ public class LoginController {
     public String logout(ModelMap model) {
         return "login";
     }
-
 }

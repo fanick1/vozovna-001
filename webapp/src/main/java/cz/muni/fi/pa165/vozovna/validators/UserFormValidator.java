@@ -1,10 +1,9 @@
 package cz.muni.fi.pa165.vozovna.validators;
 
+import cz.muni.fi.pa165.vozovna.dto.UserDTO;
 import org.springframework.validation.Errors;
 import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
-
-import cz.muni.fi.pa165.vozovna.dto.UserDTO;
 
 public class UserFormValidator implements Validator {
 
@@ -25,5 +24,4 @@ public class UserFormValidator implements Validator {
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "enabled", "error.user.enabled");
 
     }
-
 }

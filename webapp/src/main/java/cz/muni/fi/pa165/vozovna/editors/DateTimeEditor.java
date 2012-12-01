@@ -1,14 +1,13 @@
 package cz.muni.fi.pa165.vozovna.editors;
 
 import java.beans.PropertyEditorSupport;
-
 import org.joda.time.DateTime;
 
 /**
  * @author Eva Neduchalová, 359893
  */
 public class DateTimeEditor extends PropertyEditorSupport {
-    
+
     public static final String DATE_FORMAT = "yyyy-MM-dd";
 
     @Override
@@ -30,5 +29,4 @@ public class DateTimeEditor extends PropertyEditorSupport {
             return dateTime.toString(DATE_FORMAT);
         }
     }
-
 }

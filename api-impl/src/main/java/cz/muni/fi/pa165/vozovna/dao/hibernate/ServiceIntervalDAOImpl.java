@@ -1,16 +1,14 @@
 package cz.muni.fi.pa165.vozovna.dao.hibernate;
 
+import cz.muni.fi.pa165.vozovna.dao.ServiceIntervalDAO;
+import cz.muni.fi.pa165.vozovna.entity.ServiceInterval;
+import cz.muni.fi.pa165.vozovna.entity.Vehicle;
 import java.util.ArrayList;
 import java.util.List;
-
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
-
-import cz.muni.fi.pa165.vozovna.dao.ServiceIntervalDAO;
-import cz.muni.fi.pa165.vozovna.entity.ServiceInterval;
-import cz.muni.fi.pa165.vozovna.entity.Vehicle;
 
 /**
  * @author eva.neduchalova

@@ -1,10 +1,9 @@
 package cz.muni.fi.pa165.vozovna.validators;
 
+import cz.muni.fi.pa165.vozovna.dto.VehicleDTO;
 import org.springframework.validation.Errors;
 import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
-
-import cz.muni.fi.pa165.vozovna.dto.VehicleDTO;
 
 /**
  *
@@ -31,18 +30,18 @@ public class VehicleValidator implements Validator {
         VehicleDTO vehicle = (VehicleDTO) obj;
 
         // validate yearMade
-        if(vehicle.getYearMade() < 1900) {
+        if (vehicle.getYearMade() < 1900) {
             errors.rejectValue("yearMade", "error.vehicle.yearMade.min");
         }
         // validate yearMade
-        if(vehicle.getYearMade() > 2100) {
+        if (vehicle.getYearMade() > 2100) {
             errors.rejectValue("yearMade", "error.vehicle.yearMade.max");
         }
         // validate yearMade
-        if(vehicle.getDistanceCount() < 0) {
+        if (vehicle.getDistanceCount() < 0) {
             errors.rejectValue("distanceCount", "error.vehicle.distanceCount.lsThanZero");
         }
-        
+
         // brand
         if (vehicle.getBrand().length() > 20) {
             errors.rejectValue("brand", "error.vehicle.brand.maxLength");
@@ -55,12 +54,11 @@ public class VehicleValidator implements Validator {
         if (vehicle.getEngineType().length() > 20) {
             errors.rejectValue("engineType", "error.vehicle.engineType.maxLength");
         }
-        
+
         // vin
         if (vehicle.getVin().length() > 17) {
             errors.rejectValue("vin", "error.vehicle.vin.maxLength");
         }
 
     }
-
 }
