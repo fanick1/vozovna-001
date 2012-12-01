@@ -1,70 +1,34 @@
 package cz.muni.fi.pa165.vozovna.dao;
 
+import cz.muni.fi.pa165.vozovna.AbstractGenericApiTest;
 import cz.muni.fi.pa165.vozovna.entity.Drive;
 
-import java.io.File;
-import java.sql.Connection;
 import java.util.List;
-import javax.sql.DataSource;
-import org.dbunit.database.DatabaseConnection;
-import org.dbunit.database.IDatabaseConnection;
-import org.dbunit.dataset.xml.XmlDataSet;
-import org.dbunit.operation.DatabaseOperation;
 import org.joda.time.DateTime;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.fail;
-import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ApplicationContext;
-import org.springframework.jdbc.datasource.DataSourceUtils;
 import org.springframework.test.annotation.DirtiesContext;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 /**
  * @author Frantisek Veverka, 207422@mail.muni.cz
  */
-@RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration("DriveDAOTest-context.xml")
-public class DriveDAOTest {
+public abstract class DriveDAOTest extends AbstractGenericApiTest{
 
     private static final Logger logger = LoggerFactory.getLogger(DriveDAOTest.class);
 
-    @Autowired
-    private DriveDAO driveDao;
 
+    private DriveDAO driveDao;
+    
     public void setDriveDao(DriveDAO driveDao) {
         this.driveDao = driveDao;
     }
 
     public static final Long TEST_VEHICLE_ID = new Long(-1l);
-
-    @Before
-    public void setUpTestData() throws Exception {
-        ApplicationContext applicationContext = new org.springframework.context.support.ClassPathXmlApplicationContext(
-                "cz/muni/fi/pa165/vozovna/dao/DriveDAOTest-context.xml");
-        DataSource ds = (DataSource) applicationContext.getBean("dataSource");
-        Connection conn = ds.getConnection();
-        try {
-            IDatabaseConnection connection = new DatabaseConnection(conn);
-            logger.info("*** Deletes data ***");
-            
-            File f = new File("classpath:/TestDataSet.xml");
-            logger.warn("Path: {}", f.getAbsolutePath());
-            DatabaseOperation.DELETE_ALL.execute(connection, new XmlDataSet(ClassLoader.getSystemResourceAsStream("TestDataSet.xml")));
-            logger.info("*** Inserts new data ***");
-            DatabaseOperation.CLEAN_INSERT.execute(connection, new XmlDataSet(ClassLoader.getSystemResourceAsStream("TestDataSet.xml")));
-        } finally {
-            DataSourceUtils.releaseConnection(conn, ds);
-            logger.info("*** Finished inserting test data ***");
-        }
-    }
 
     /**
      * Test method for {@link cz.muni.fi.pa165.vozovna.dao.DriveDAO#getById(java.lang.Long)}.

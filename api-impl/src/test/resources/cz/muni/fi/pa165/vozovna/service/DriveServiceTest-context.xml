@@ -22,5 +22,9 @@
      </bean>
 
     <!-- tested class -->
-    <bean id="driveService" class="cz.muni.fi.pa165.vozovna.service.impl.DriveServiceImpl"/>
+    <bean id="driveService" class="cz.muni.fi.pa165.vozovna.service.impl.DriveServiceImpl">
+    	<property name="driveDAO" ref="driveDao"/>
+    	<property name="userDAO" ref="userDao"/>
+    	<property name="vehicleDAO" ref="vehicleDao"/>
+    </bean>
 </beans>

@@ -145,7 +145,7 @@
 			<version>1.2</version>
 		</dependency>
 
-		<!-- Spring Security ZAČ�?TEK -->
+		<!-- Spring Security ZAČÁTEK -->
 		<dependency>
 			<groupId>org.springframework.security</groupId>
 			<artifactId>spring-security-core</artifactId>
@@ -168,7 +168,7 @@
 		</dependency>
 		<!-- Spring Security KONEC -->
 
-		<!-- Spring ZAČ�?TEK -->
+		<!-- Spring ZAČÁTEK -->
 		<!-- TODO protřídit, co opravdu používám -->
 		<dependency>
 			<groupId>org.springframework</groupId>

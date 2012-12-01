@@ -16,33 +16,23 @@ import java.util.Set;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.mockito.invocation.InvocationOnMock;
 import org.mockito.stubbing.Answer;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import cz.muni.fi.pa165.vozovna.dao.VehicleDAO;
 import cz.muni.fi.pa165.vozovna.dto.VehicleDTO;
 import cz.muni.fi.pa165.vozovna.entity.Vehicle;
 import cz.muni.fi.pa165.vozovna.enums.UserClassEnum;
-import org.springframework.dao.DataAccessException;
 
 /**
  * 
  * @author Frantisek Veverka, 207422@mail.muni.cz
 *
  */
-@RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration("VehicleServiceTest-context.xml")
-public class VehicleServiceTest {
+public abstract class VehicleServiceTest {
 
-
-	@Autowired
 	private  VehicleService vehicleService; 
 	
-	@Autowired
 	private  VehicleDAO vehicleDao;
 
 	private Vehicle existingVehicle;

@@ -15,12 +15,8 @@ import java.util.Set;
 import org.joda.time.DateTime;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.mockito.invocation.InvocationOnMock;
 import org.mockito.stubbing.Answer;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import cz.muni.fi.pa165.vozovna.dao.DriveDAO;
 import cz.muni.fi.pa165.vozovna.dto.DriveDTO;
@@ -31,16 +27,13 @@ import cz.muni.fi.pa165.vozovna.entity.User;
 import cz.muni.fi.pa165.vozovna.entity.Vehicle;
 import cz.muni.fi.pa165.vozovna.enums.DriveStateEnum;
 import cz.muni.fi.pa165.vozovna.enums.UserClassEnum;
-import org.springframework.dao.DataAccessException;
 
 /**
  * 
  * @author Frantisek Veverka, 207422@mail.muni.cz
  *
  */
-@RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration("DriveServiceTest-context.xml")
-public class DriveServiceTest {
+public abstract class DriveServiceTest {
 	
 	private User existingUser;
 	
@@ -202,12 +195,10 @@ public class DriveServiceTest {
 		driveDAO.create(existingDrive);
 	}
 
-	@Autowired
 	public void setDriveDAO(DriveDAO driveDAO) {
 		this.driveDAO = driveDAO;
 	}
 	
-	@Autowired
 	public void setDriveService(DriveService driveService) {
 		this.driveService = driveService;
 	}

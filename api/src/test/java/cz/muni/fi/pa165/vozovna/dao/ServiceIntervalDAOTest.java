@@ -1,29 +1,15 @@
 package cz.muni.fi.pa165.vozovna.dao;
 
-import java.io.FileInputStream;
-import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import javax.sql.DataSource;
-
-import org.dbunit.database.DatabaseConnection;
-import org.dbunit.database.IDatabaseConnection;
-import org.dbunit.dataset.xml.XmlDataSet;
-import org.dbunit.operation.DatabaseOperation;
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ApplicationContext;
-import org.springframework.jdbc.datasource.DataSourceUtils;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import cz.muni.fi.pa165.vozovna.AbstractGenericApiTest;
 import cz.muni.fi.pa165.vozovna.entity.ServiceInterval;
 import cz.muni.fi.pa165.vozovna.entity.Vehicle;
 import cz.muni.fi.pa165.vozovna.enums.UserClassEnum;
@@ -32,43 +18,22 @@ import cz.muni.fi.pa165.vozovna.enums.UserClassEnum;
  *
  * @author Jozef Triscik
  */
-@RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration("ServiceIntervalDAOTest-context.xml")
-public class ServiceIntervalDAOTest {
+public abstract class ServiceIntervalDAOTest extends AbstractGenericApiTest{
 
     private static final Logger logger = LoggerFactory.getLogger(ServiceIntervalDAOTest.class);
 
-    @Autowired
     private ServiceIntervalDAO serviceIntervalDAO;
 
     public void setServiceIntervalDAO(ServiceIntervalDAO serviceIntervalDAO) {
         this.serviceIntervalDAO = serviceIntervalDAO;
     }
 
-    @Autowired
     private VehicleDAO vehicleDao;
 
     public void setVehicleDao(VehicleDAO vehicleDao) {
         this.vehicleDao = vehicleDao;
     }
     
-    @Before
-    public void setUpTestData() throws Exception {
-        ApplicationContext applicationContext = new org.springframework.context.support.ClassPathXmlApplicationContext("cz/muni/fi/pa165/vozovna/dao/DriveDAOTest-context.xml");
-        DataSource ds = (DataSource) applicationContext.getBean("dataSource");
-        Connection conn = ds.getConnection();
-        try {
-            IDatabaseConnection connection = new DatabaseConnection(conn);
-            logger.info("*** Deletes data ***");
-            DatabaseOperation.DELETE_ALL.execute(connection, new XmlDataSet(ClassLoader.getSystemResourceAsStream("TestDataSet.xml")));
-            logger.info("*** Inserts new data ***");
-            DatabaseOperation.CLEAN_INSERT.execute(connection, new XmlDataSet(ClassLoader.getSystemResourceAsStream("TestDataSet.xml")));
-        } finally {
-            DataSourceUtils.releaseConnection(conn, ds);
-            logger.info("*** Finished inserting test data ***");
-        }
-    }
-
     private static Vehicle getVehicle(String brand, int distanceCount, String engineType,
             String type, UserClassEnum userClass, String vin, int year) {
 

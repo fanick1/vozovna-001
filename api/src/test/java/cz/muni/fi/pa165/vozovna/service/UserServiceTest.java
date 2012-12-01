@@ -17,32 +17,23 @@ import java.util.Set;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.mockito.invocation.InvocationOnMock;
 import org.mockito.stubbing.Answer;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import cz.muni.fi.pa165.vozovna.dao.UserDAO;
 import cz.muni.fi.pa165.vozovna.dto.UserDTO;
 import cz.muni.fi.pa165.vozovna.entity.User;
 import cz.muni.fi.pa165.vozovna.enums.UserClassEnum;
-import org.springframework.dao.DataAccessException;
 
 /**
  * 
  * @author Frantisek Veverka, 207422@mail.muni.cz
  *
  */
-@RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration("UserServiceTest-context.xml")
-public class UserServiceTest {
+public abstract class UserServiceTest {
 
-	@Autowired
 	private  UserService userService; 
 	
-	@Autowired
 	private  UserDAO userDao;
 
 	private String existingUserLastName = "LAST";

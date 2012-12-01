@@ -20,4 +20,5 @@
 
     <!-- tested class -->
     <bean id="serviceIntervalService" class="cz.muni.fi.pa165.vozovna.service.impl.ServiceIntervalServiceImpl"/>
+    
 </beans>

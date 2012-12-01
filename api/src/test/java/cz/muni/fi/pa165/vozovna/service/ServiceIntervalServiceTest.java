@@ -18,12 +18,8 @@ import java.util.Set;
 import org.joda.time.DateTime;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.mockito.invocation.InvocationOnMock;
 import org.mockito.stubbing.Answer;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import cz.muni.fi.pa165.vozovna.dao.ServiceIntervalDAO;
 import cz.muni.fi.pa165.vozovna.dto.ServiceIntervalDTO;
@@ -31,20 +27,16 @@ import cz.muni.fi.pa165.vozovna.dto.VehicleDTO;
 import cz.muni.fi.pa165.vozovna.entity.ServiceInterval;
 import cz.muni.fi.pa165.vozovna.entity.Vehicle;
 import cz.muni.fi.pa165.vozovna.enums.UserClassEnum;
-import org.springframework.dao.DataAccessException;
 
 /**
  * 
  * @author Frantisek Veverka, 207422@mail.muni.cz
  *
  */
-@RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration("ServiceIntervalServiceTest-context.xml")
-public class ServiceIntervalServiceTest {
-	@Autowired
+public abstract class ServiceIntervalServiceTest {
+
 	private  ServiceIntervalService serviceIntervalService; 
 	
-	@Autowired
 	private  ServiceIntervalDAO serviceIntervalDao;
 
 	private Vehicle existingVehicle;
