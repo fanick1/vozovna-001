@@ -19,6 +19,7 @@ import org.mockito.invocation.InvocationOnMock;
 import org.mockito.stubbing.Answer;
 
 import cz.muni.fi.pa165.vozovna.dao.DriveDAO;
+import cz.muni.fi.pa165.vozovna.dao.UserDAO;
 import cz.muni.fi.pa165.vozovna.dto.DriveDTO;
 import cz.muni.fi.pa165.vozovna.dto.UserDTO;
 import cz.muni.fi.pa165.vozovna.dto.VehicleDTO;
@@ -37,6 +38,8 @@ public abstract class DriveServiceTest {
 	
 	private User existingUser;
 	
+	private UserDAO userDAO;
+
 	private UserDTO existingUserDTO;
 	
 	private Vehicle existingVehicle;
@@ -112,6 +115,22 @@ public abstract class DriveServiceTest {
 		existingDrive.setState(DriveStateEnum.RESERVED);
 		existingDrive.setUser(existingUser);
 		existingDrive.setVehicle(existingVehicle);
+		
+		doAnswer(new Answer<Object>() {
+			@Override
+			public Object answer(InvocationOnMock invocation) throws Throwable {
+				 Object[] args = invocation.getArguments();
+				 Long id = (Long) args[0];
+				 if (id == existingUser.getId())
+				 {
+					 return existingUser;
+				 }
+				 else { 
+					 throw new IllegalArgumentException("User with id " + id +"  was not found. Check the implementation of this mock.");
+				 }
+			}
+		}
+		).when(userDAO).getById(existingUser.getId());
 		
 		doAnswer(new Answer<Object>() {
 			@Override
@@ -194,12 +213,16 @@ public abstract class DriveServiceTest {
 
 		driveDAO.create(existingDrive);
 	}
+	
+	public void setUserDAO(final UserDAO userDAO) {
+		this.userDAO = userDAO;
+	}
 
-	public void setDriveDAO(DriveDAO driveDAO) {
+	public void setDriveDAO(final DriveDAO driveDAO) {
 		this.driveDAO = driveDAO;
 	}
 	
-	public void setDriveService(DriveService driveService) {
+	public void setDriveService(final DriveService driveService) {
 		this.driveService = driveService;
 	}
 	
@@ -344,6 +367,21 @@ public abstract class DriveServiceTest {
 		List<DriveDTO> list = driveService.findByUser(existingUserDTO);
 		if(list.size() != 1){
 			fail("Size of list expected: 1, got: " + list.size());		}
+		
+	}
+	
+	@Test
+	public void testFindNonExistingUser(){
+
+		UserDTO nonExisting = new UserDTO();
+		
+		try{
+			driveService.findByUser(nonExisting);
+			fail("Some exception expected.");
+		}catch(Exception e)
+		{
+			
+		}
 		
 	}
 

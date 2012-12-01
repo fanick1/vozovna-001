@@ -11,7 +11,7 @@
 
     <context:annotation-config />
 
-	 <bean id="driveDao" class="org.mockito.Mockito" factory-method="mock"> 
+	 <bean id="driveDao" class="org.mockito.Mockito" factory-method="mock" > 
         <constructor-arg value="cz.muni.fi.pa165.vozovna.dao.DriveDAO"/> 
      </bean>
      <bean id="userDao" class="org.mockito.Mockito" factory-method="mock"> 

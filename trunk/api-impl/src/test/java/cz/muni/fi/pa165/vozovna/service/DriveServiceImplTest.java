@@ -6,6 +6,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import cz.muni.fi.pa165.vozovna.dao.DriveDAO;
+import cz.muni.fi.pa165.vozovna.dao.UserDAO;
 
 /**
  * @author Frantisek Veverka, 207422@mail.muni.cz
@@ -18,6 +19,11 @@ public class DriveServiceImplTest extends DriveServiceTest {
 	@Autowired
 	public void setDriveDAO(DriveDAO driveDAO) {
 		super.setDriveDAO(driveDAO);
+	}
+
+	@Autowired
+	public void setUserDAO(UserDAO userDAO) {
+		super.setUserDAO(userDAO);
 	}
 	
 	@Autowired
