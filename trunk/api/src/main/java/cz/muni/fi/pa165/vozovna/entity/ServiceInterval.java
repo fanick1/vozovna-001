@@ -3,13 +3,18 @@ package cz.muni.fi.pa165.vozovna.entity;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
+import javax.persistence.CollectionTable;
 
 import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OrderBy;
+import javax.persistence.OrderColumn;
 import javax.persistence.Temporal;
 
 import org.hibernate.annotations.GenericGenerator;
@@ -43,7 +48,9 @@ public class ServiceInterval implements Serializable {
     /**
      * The dates when vehicle was inspected.
      */
-    @ElementCollection
+    @ElementCollection(fetch = FetchType.EAGER)
+    //@CollectionTable(name="SERVICEINTERVAL_DATED",joinColumns={@JoinColumn(name="SERVICEINTERVAL_ID")})
+    //@OrderBy("DATED DESC")
     @Temporal(javax.persistence.TemporalType.DATE)
     // @Type(type = "org.jadira.usertype.dateandtime.joda.PersistentDateTime")
     private List<Date> dated;

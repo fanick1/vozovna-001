@@ -6,6 +6,17 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <title><fmt:message key="admin.intervals.show.title" /></title>
 
+    <script type="text/javascript" src="http://code.jquery.com/jquery-latest.js"></script>
+    <script type="text/javascript">
+
+        $("a.inspect").live("click",function(event){
+            event.stopPropagation();
+            if(!confirm("<fmt:message key="admin.intervals.confirmInspection" />")) {
+                event.preventDefault();
+            }
+        });
+    </script>
+    
     <style>
         .detail {
             width: 500px;
@@ -35,11 +46,22 @@
 
     </tr>
     <tr>
+        <th><fmt:message key="interval.dated" />:</th>
+        <td>
+            <c:forEach var="item" items="${interval.dated}">
+                ${item}<br>
+            </c:forEach>
+            <a href="<c:url value="/admin/intervals/inspect?id=${interval.id}" />" class="inspect"><fmt:message key="admin.intervals.inspect" /></a>
+        </td>
+
+    </tr>
+    <tr>
         <th><fmt:message key="interval.vehicle" />:</th>
-        <td>[ID: <c:out value="${interval.vehicle.id}"/>] <br/> <c:out value="${interval.vehicle.brand}"/> <br/> <c:out value="${interval.vehicle.type}"/> <br/>(<c:out value="${interval.vehicle.yearMade}"/>)</td>
+        <td>[ID: <a href="<c:url value="/admin/vehicles/show?id=${interval.vehicle.id}" />"><c:out value="${interval.vehicle.id}"/></a>] <br/> <c:out value="${interval.vehicle.brand}"/> <br/> <c:out value="${interval.vehicle.type}"/> <br/>(<c:out value="${interval.vehicle.yearMade}"/>)</td>
     </tr>
 </table>
-<br>
+
+<br/>
 <a href="<c:url value="/admin/intervals/index" />"><fmt:message key="intervals.list" /></a>
 </body>
 </html>
