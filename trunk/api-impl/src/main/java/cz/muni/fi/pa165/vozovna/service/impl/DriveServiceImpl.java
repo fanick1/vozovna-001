@@ -19,7 +19,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 /**
  * Implementation of Drive service.
- * 
+ *
  * @author Lukas Hajek <359617@mail.muni.cz>
  */
 @Service
@@ -31,14 +31,12 @@ public class DriveServiceImpl implements DriveService {
     public void setDriveDAO(DriveDAO driveDAO) {
         this.driveDAO = driveDAO;
     }
-
     private UserDAO userDAO;
 
     @Autowired
     public void setUserDAO(UserDAO userDAO) {
         this.userDAO = userDAO;
     }
-    
     private VehicleDAO vehicleDAO;
 
     @Autowired
@@ -72,7 +70,7 @@ public class DriveServiceImpl implements DriveService {
         if (drive.getVehicleId() != null) {
             entity.setVehicle(vehicleDAO.getById(drive.getVehicleId()));
         }
-        
+
         driveDAO.create(entity);
         drive.fromDrive(entity);
         return entity.getId();
@@ -102,7 +100,7 @@ public class DriveServiceImpl implements DriveService {
         if (entity == null) {
             throw new IllegalArgumentException("drive does not exist");
         }
-        
+
         // copy DTO's attributes into existing entity
         VehicleDTO v = drive.getVehicle();
         if (v != null) {
@@ -112,12 +110,12 @@ public class DriveServiceImpl implements DriveService {
         if (u != null) {
             entity.setUser(userDAO.getById(u.getId()));
         }
-        
+
         entity.setDistance(drive.getDistance());
         entity.setState(drive.getState());
         entity.setDateFrom(drive.getDateFrom());
         entity.setDateTo(drive.getDateTo());
-        
+
         driveDAO.update(entity);
 
         drive.fromDrive(entity);
@@ -155,19 +153,19 @@ public class DriveServiceImpl implements DriveService {
 
         return convertListOfDrivesToListOfDriveDTOs(drives);
     }
-    
+
     @Override
-    @Transactional(readOnly=true)
+    @Transactional(readOnly = true)
     public List<DriveDTO> findByCriteria(List<Criterion> criterion, List<Order> orders) {
-        
+
         List<Drive> drives = driveDAO.findByCriteria(criterion, orders);
-        
-        return convertListOfDrivesToListOfDriveDTOs(drives); 
+
+        return convertListOfDrivesToListOfDriveDTOs(drives);
     }
 
     /**
      * Converts list of drives to list of drive DTOs
-     * 
+     *
      * @param list List of drives
      * @return List of Drive Data Transform Objects
      */
@@ -180,5 +178,4 @@ public class DriveServiceImpl implements DriveService {
 
         return result;
     }
-
 }

@@ -22,7 +22,7 @@ import cz.muni.fi.pa165.vozovna.service.UserService;
 import cz.muni.fi.pa165.vozovna.validators.UserFormValidator;
 
 /**
- * 
+ *
  * @author Eva Neduchalová
  *
  */
@@ -30,7 +30,6 @@ import cz.muni.fi.pa165.vozovna.validators.UserFormValidator;
 public class UsersController {
 
     protected final Log logger = LogFactory.getLog(getClass());
-
     @Autowired
     UserService userService;
 
@@ -103,5 +102,4 @@ public class UsersController {
         }
         return "redirect:/admin/users";
     }
-
 }

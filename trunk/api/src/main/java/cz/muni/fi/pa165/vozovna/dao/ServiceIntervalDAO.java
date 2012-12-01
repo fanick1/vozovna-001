@@ -21,7 +21,7 @@ public interface ServiceIntervalDAO extends GenericDAO<ServiceInterval, Long> {
      */
     @Override
     public ServiceInterval getById(Long id);
- 
+
     /**
      * Saves given Service Interval
      *

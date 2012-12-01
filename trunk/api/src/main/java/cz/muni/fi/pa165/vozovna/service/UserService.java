@@ -65,7 +65,7 @@ public interface UserService {
      */
     public List<UserDTO> findByLastName(String lastName);
 
-    void generateTestDataIfNoneExist();
+    public void generateTestDataIfNoneExist();
     
     public List<UserDTO> findByCriteria(List<Criterion> criterion, List<Order> orders);
     

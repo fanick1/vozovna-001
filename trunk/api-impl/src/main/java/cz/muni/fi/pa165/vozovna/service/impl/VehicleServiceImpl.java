@@ -17,7 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 /**
  * Implementation of Vehicle Service
- * 
+ *
  * @author Lukas Hajek <359617@mail.muni.cz>
  */
 @Service
@@ -26,11 +26,9 @@ public class VehicleServiceImpl implements VehicleService {
     @Autowired
     private VehicleDAO vehicleDAO;
 
-
 //    public void setUserDAO(VehicleDAO vehicleDAO) {
 //        this.vehicleDAO = vehicleDAO;
 //    }
-
     @Override
     @Transactional(readOnly = true)
     public VehicleDTO getById(Long id) {
@@ -95,7 +93,7 @@ public class VehicleServiceImpl implements VehicleService {
     @Override
     @Transactional(readOnly = true)
     public List<VehicleDTO> findAll() {
-        
+
         List<Vehicle> vehicles = vehicleDAO.findAll();
 
         return convertListOfVehiclesToListOfVehicleDTOs(vehicles);
@@ -113,18 +111,18 @@ public class VehicleServiceImpl implements VehicleService {
     }
 
     @Override
-    @Transactional(readOnly=true)
+    @Transactional(readOnly = true)
     public List<VehicleDTO> findByCriteria(List<Criterion> criterion, List<Order> orders) {
-        
+
         List<Vehicle> result = vehicleDAO.findByCriteria(criterion, orders);
-        
-        return convertListOfVehiclesToListOfVehicleDTOs(result); 
+
+        return convertListOfVehiclesToListOfVehicleDTOs(result);
     }
 
     /**
      * Converts list of vehicles to list of vehicle DTOs
-     * 
-     * @param list  List of vehicles
+     *
+     * @param list List of vehicles
      * @return List of Vehicle Data Transform Objects
      */
     private static List<VehicleDTO> convertListOfVehiclesToListOfVehicleDTOs(List<Vehicle> intervals) {
@@ -140,14 +138,14 @@ public class VehicleServiceImpl implements VehicleService {
     /**
      * Returns available cars for uesr between given dates.
      *
-     * @param user        User, for which we want cars.
-     * @param startDate   Date, from which we want reservate car.
-     * @param endDate     Date, to which we want reservate car.
+     * @param user User, for which we want cars.
+     * @param startDate Date, from which we want reservate car.
+     * @param endDate Date, to which we want reservate car.
      *
      * @throws IllegalArgumentException If any of argument is null.
      */
     @Override
-    public List<VehicleDTO> getAvailableVehicles(User user,  DateTime startDate, DateTime endDate) {
+    public List<VehicleDTO> getAvailableVehicles(User user, DateTime startDate, DateTime endDate) {
         return convertListOfVehiclesToListOfVehicleDTOs(this.vehicleDAO.getAvailableVehicles(user, startDate, endDate));
 
 

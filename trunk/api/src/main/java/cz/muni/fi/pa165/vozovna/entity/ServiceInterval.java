@@ -3,26 +3,20 @@ package cz.muni.fi.pa165.vozovna.entity;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
-import javax.persistence.CollectionTable;
-
 import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OrderBy;
-import javax.persistence.OrderColumn;
 import javax.persistence.Temporal;
-
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Parameter;
 
 /**
  * The Entity represents service interval.
- * 
+ *
  * @author Lukas Hajek, 359617@mail.muni.cz
  */
 @Entity
@@ -35,16 +29,15 @@ public class ServiceInterval implements Serializable {
     @Id
     @GeneratedValue(generator = "service_interval_id_sequence")
     @GenericGenerator(name = "service_interval_id_sequence", strategy = "org.hibernate.id.enhanced.SequenceStyleGenerator", parameters = {
-            @Parameter(name = "sequence_name", value = "service_interval_id_sequence"), @Parameter(name = "initial_value", value = "1"),
-            @Parameter(name = "increment_size", value = "1") })
+        @Parameter(name = "sequence_name", value = "service_interval_id_sequence"),
+        @Parameter(name = "initial_value", value = "1"),
+        @Parameter(name = "increment_size", value = "1")})
     private Long id;
-
     /**
      * The required time interval between two service inspections (in days).
      */
     @Column(nullable = false)
     private int inspectionInterval;
-
     /**
      * The dates when vehicle was inspected.
      */
@@ -54,14 +47,12 @@ public class ServiceInterval implements Serializable {
     @Temporal(javax.persistence.TemporalType.DATE)
     // @Type(type = "org.jadira.usertype.dateandtime.joda.PersistentDateTime")
     private List<Date> dated;
-
     /**
      * The related vehicle
      */
     // @Column(nullable = false)
     @ManyToOne()
     private Vehicle vehicle;
-
     /**
      * Description of service interval. E.g: wheel exchange
      */
@@ -88,7 +79,7 @@ public class ServiceInterval implements Serializable {
 
     /**
      * Sets time interval between two service inspections
-     * 
+     *
      * @param inspectionInterval Interval between two service inspections (in days)
      * @throws IllegalArgumentException If inspectionInterval is less or equals to 0
      */

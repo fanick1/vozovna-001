@@ -17,7 +17,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
 /**
  * The User class represents any user present in the application
- * 
+ *
  * @author Frantisek Veverka, 207422@mail.muni.cz
  */
 @Entity
@@ -28,47 +28,40 @@ public class User implements org.springframework.security.core.userdetails.UserD
     public static final String ROLE_ADMIN = "ROLE_ADMIN";
     @Transient
     public static final String ROLE_USER = "ROLE_USER";
-
     /**
      * Unique users ID
      */
     @Id
     @GeneratedValue(generator = "user_id_sequence")
     @GenericGenerator(name = "user_id_sequence", strategy = "org.hibernate.id.enhanced.SequenceStyleGenerator", parameters = {
-            @Parameter(name = "sequence_name", value = "user_id_sequence"), @Parameter(name = "initial_value", value = "1"),
-            @Parameter(name = "increment_size", value = "1") })
+        @Parameter(name = "sequence_name", value = "user_id_sequence"),
+        @Parameter(name = "initial_value", value = "1"),
+        @Parameter(name = "increment_size", value = "1")})
     private Long id;
-
     /**
      * Users firstName
      */
     @Column(length = 50)
     private String firstName;
-
     /**
      * Users lastName
      */
     @Column(length = 50)
     private String lastName;
-
     /**
      * User class - important when deciding which vehicles can be reserved
      */
     @Column(nullable = false)
     private UserClassEnum userClass;
-
     /**
      * True if this user is administrator
      */
     @Column(nullable = false)
     private Boolean isAdmin;
-
-    @Column(nullable = false, unique=true)
+    @Column(nullable = false, unique = true)
     private String username;
-
     @Column(nullable = false)
     private String password;
-
     @Column(nullable = false)
     private Boolean enabled;
 
@@ -258,5 +251,4 @@ public class User implements org.springframework.security.core.userdetails.UserD
         }
         return enabled;
     }
-
 }

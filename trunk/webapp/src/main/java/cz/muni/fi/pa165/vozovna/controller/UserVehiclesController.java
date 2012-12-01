@@ -5,7 +5,6 @@ import cz.muni.fi.pa165.vozovna.dto.UserDTO;
 import cz.muni.fi.pa165.vozovna.dto.VehicleDTO;
 import cz.muni.fi.pa165.vozovna.editors.DateTimeEditor;
 import cz.muni.fi.pa165.vozovna.enums.DriveStateEnum;
-import cz.muni.fi.pa165.vozovna.enums.UserClassEnum;
 import cz.muni.fi.pa165.vozovna.service.DriveService;
 import cz.muni.fi.pa165.vozovna.service.UserService;
 import cz.muni.fi.pa165.vozovna.service.VehicleService;
@@ -15,7 +14,6 @@ import java.util.List;
 import javax.servlet.http.HttpSession;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.joda.time.DateTime;
 import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.StringTrimmerEditor;
@@ -97,7 +95,7 @@ public class UserVehiclesController {
             session.setAttribute("error", "user.vehicles.err.wrongParams");
             return "redirect:/vehicles";
         }
-        
+
         List<VehicleDTO> availableVehicles = vehicleService.getAvailableVehicles(user.getUserClass(), from, to);
         if (!availableVehicles.contains(vehicle)) {
             session.setAttribute("error", "user.vehicles.err.wrongParams");

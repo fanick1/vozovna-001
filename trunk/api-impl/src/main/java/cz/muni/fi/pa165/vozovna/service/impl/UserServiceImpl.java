@@ -3,8 +3,6 @@ package cz.muni.fi.pa165.vozovna.service.impl;
 import cz.muni.fi.pa165.vozovna.dao.ServiceIntervalDAO;
 import cz.muni.fi.pa165.vozovna.dao.UserDAO;
 import cz.muni.fi.pa165.vozovna.dao.VehicleDAO;
-import cz.muni.fi.pa165.vozovna.dao.hibernate.ServiceIntervalDAOImpl;
-import cz.muni.fi.pa165.vozovna.dao.hibernate.VehicleDAOHibernateImpl;
 import cz.muni.fi.pa165.vozovna.dto.UserDTO;
 import cz.muni.fi.pa165.vozovna.entity.ServiceInterval;
 import cz.muni.fi.pa165.vozovna.entity.User;
@@ -29,25 +27,22 @@ import org.springframework.transaction.annotation.Transactional;
 
 /**
  * Implementation User's Service Layer
- * 
+ *
  * @author Lukas Hajek (359617@mail.muni.cz)
  */
 @Service("userService")
 public class UserServiceImpl implements UserService, UserDetailsService {
 
     private UserDAO userDAO;
-
-	@Autowired
-	private VehicleDAO vehicleDAO;
-
-	@Autowired
-	private ServiceIntervalDAO serviceIntervalDAO;
+    @Autowired
+    private VehicleDAO vehicleDAO;
+    @Autowired
+    private ServiceIntervalDAO serviceIntervalDAO;
 
     @Autowired
     public void setUserDAO(UserDAO userDAO) {
         this.userDAO = userDAO;
     }
-
     @Autowired
     PasswordEncoder passwordEncoder;
 
@@ -175,27 +170,27 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         }
 
         User user = userDAO.getByUsername(username);
-        
+
         if (user == null) {
             return null;
         }
 
         return new UserDTO(user);
     }
-    
+
     // @Override
-    @Transactional(readOnly=true)
+    @Transactional(readOnly = true)
     public List<UserDTO> findByCriteria(List<Criterion> criterion, List<Order> orders) {
-        
+
         List<User> result = userDAO.findByCriteria(criterion, orders);
-        
-        return convertListOfUsersToListOfUserDTOs(result); 
+
+        return convertListOfUsersToListOfUserDTOs(result);
     }
 
     /**
      * Converts list of vehicles to list of vehicle DTOs
-     * 
-     * @param list  List of vehicles
+     *
+     * @param list List of vehicles
      * @return List of Drive Data Transform Objects
      */
     private static List<UserDTO> convertListOfUsersToListOfUserDTOs(List<User> entities) {
@@ -207,11 +202,10 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
         return result;
     }
-    
+
     /**
-     * Uloží do DB dva uživatele: <br/>
-     * user: admin, pass: admin, roles: ROLE_ADMIN <br/>
-     * user: user, pass: user, roles: ROLE_USER
+     * Uloží do DB dva uživatele: <br/> user: admin, pass: admin, roles: ROLE_ADMIN <br/> user: user, pass: user,
+     * roles: ROLE_USER
      */
     @Override
     @Transactional
@@ -237,141 +231,139 @@ public class UserServiceImpl implements UserService, UserDetailsService {
             newUser.setUserClass(UserClassEnum.EMPLOYEE);
             userDAO.create(newUser);
 
-	        User president = new User();
-	        president.setUsername("president");
-	        president.setPassword(passwordEncoder.encodePassword("president", null));
-	        president.setFirstName("Barack");
-	        president.setLastName("Obama");
-	        president.setIsAdmin(Boolean.FALSE);
-	        president.setUserClass(UserClassEnum.PRESIDENT);
-	        userDAO.create(president);
+            User president = new User();
+            president.setUsername("president");
+            president.setPassword(passwordEncoder.encodePassword("president", null));
+            president.setFirstName("Barack");
+            president.setLastName("Obama");
+            president.setIsAdmin(Boolean.FALSE);
+            president.setUserClass(UserClassEnum.PRESIDENT);
+            userDAO.create(president);
 
-	        User manager = new User();
-	        manager.setUsername("manager");
-	        manager.setPassword(passwordEncoder.encodePassword("manager", null));
-	        manager.setFirstName("John");
-	        manager.setLastName("Goodman");
-	        manager.setIsAdmin(Boolean.FALSE);
-	        manager.setUserClass(UserClassEnum.MANAGER);
-	        userDAO.create(manager);
+            User manager = new User();
+            manager.setUsername("manager");
+            manager.setPassword(passwordEncoder.encodePassword("manager", null));
+            manager.setFirstName("John");
+            manager.setLastName("Goodman");
+            manager.setIsAdmin(Boolean.FALSE);
+            manager.setUserClass(UserClassEnum.MANAGER);
+            userDAO.create(manager);
 
-	        User employee = new User();
-	        employee.setUsername("employee");
-	        employee.setPassword(passwordEncoder.encodePassword("employee", null));
-	        employee.setFirstName("Brandon");
-	        employee.setLastName("Frasier");
-	        employee.setIsAdmin(Boolean.FALSE);
-	        employee.setUserClass(UserClassEnum.EMPLOYEE);
-	        userDAO.create(employee);
+            User employee = new User();
+            employee.setUsername("employee");
+            employee.setPassword(passwordEncoder.encodePassword("employee", null));
+            employee.setFirstName("Brandon");
+            employee.setLastName("Frasier");
+            employee.setIsAdmin(Boolean.FALSE);
+            employee.setUserClass(UserClassEnum.EMPLOYEE);
+            userDAO.create(employee);
 
-	        Vehicle fabia = new Vehicle();
-	        fabia.setBrand("Škoda");
-	        fabia.setDistanceCount(30000);
-	        fabia.setEngineType("1.4 TDi");
-	        fabia.setType("Fabia");
-	        fabia.setUserClass(UserClassEnum.MANAGER);
-	        fabia.setVin("147ef-5482c-664de");
-	        fabia.setYearMade(2001);
-	        if(vehicleDAO != null){
-	            vehicleDAO.create(fabia);
-	        }
-	        else {
-		        System.out.println("toto je skuska");
-	        }
+            Vehicle fabia = new Vehicle();
+            fabia.setBrand("Škoda");
+            fabia.setDistanceCount(30000);
+            fabia.setEngineType("1.4 TDi");
+            fabia.setType("Fabia");
+            fabia.setUserClass(UserClassEnum.MANAGER);
+            fabia.setVin("147ef-5482c-664de");
+            fabia.setYearMade(2001);
+            if (vehicleDAO != null) {
+                vehicleDAO.create(fabia);
+            } else {
+                System.out.println("toto je skuska");
+            }
 
-	        Vehicle octavia = new Vehicle();
-	        octavia.setBrand("Škoda");
-	        octavia.setDistanceCount(50000);
-	        octavia.setEngineType("1.9 TDi 96 kW");
-	        octavia.setType("Octavia");
-	        octavia.setUserClass(UserClassEnum.PRESIDENT);
-	        octavia.setVin("1xxef-12D3c-AA4de");
-	        octavia.setYearMade(2010);
-	        vehicleDAO.create(octavia);
+            Vehicle octavia = new Vehicle();
+            octavia.setBrand("Škoda");
+            octavia.setDistanceCount(50000);
+            octavia.setEngineType("1.9 TDi 96 kW");
+            octavia.setType("Octavia");
+            octavia.setUserClass(UserClassEnum.PRESIDENT);
+            octavia.setVin("1xxef-12D3c-AA4de");
+            octavia.setYearMade(2010);
+            vehicleDAO.create(octavia);
 
-	        Vehicle peugeot = new Vehicle();
-	        peugeot.setBrand("Peugeot");
-	        peugeot.setDistanceCount(30000);
-	        peugeot.setEngineType("V6");
-	        peugeot.setType("607");
-	        peugeot.setUserClass(UserClassEnum.EMPLOYEE);
-	        peugeot.setVin("154ef-4788c-613de");
-	        peugeot.setYearMade(2003);
-	        vehicleDAO.create(peugeot);
+            Vehicle peugeot = new Vehicle();
+            peugeot.setBrand("Peugeot");
+            peugeot.setDistanceCount(30000);
+            peugeot.setEngineType("V6");
+            peugeot.setType("607");
+            peugeot.setUserClass(UserClassEnum.EMPLOYEE);
+            peugeot.setVin("154ef-4788c-613de");
+            peugeot.setYearMade(2003);
+            vehicleDAO.create(peugeot);
 
-	        Vehicle tatra = new Vehicle();
-	        tatra.setBrand("Tatra");
-	        tatra.setDistanceCount(40000);
-	        tatra.setEngineType("V12 T3-930");
-	        tatra.setType("815");
-	        tatra.setUserClass(UserClassEnum.EMPLOYEE);
-	        tatra.setVin("1afef-ds82c-6134e");
-	        tatra.setYearMade(1983);
-	        vehicleDAO.create(tatra);
+            Vehicle tatra = new Vehicle();
+            tatra.setBrand("Tatra");
+            tatra.setDistanceCount(40000);
+            tatra.setEngineType("V12 T3-930");
+            tatra.setType("815");
+            tatra.setUserClass(UserClassEnum.EMPLOYEE);
+            tatra.setVin("1afef-ds82c-6134e");
+            tatra.setYearMade(1983);
+            vehicleDAO.create(tatra);
 
-	        SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy");
-	        List<Date> dates = new ArrayList();
-	        try {
-		        dates.add(dateFormat.parse("17.5.2012"));
-		        dates.add(dateFormat.parse("17.11.2012"));
-	        } catch (Exception ex) {
-		        // ignore
-	        }
+            SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy");
+            List<Date> dates = new ArrayList();
+            try {
+                dates.add(dateFormat.parse("17.5.2012"));
+                dates.add(dateFormat.parse("17.11.2012"));
+            } catch (Exception ex) {
+                // ignore
+            }
 
-	        ServiceInterval interval = new ServiceInterval();
-	        interval.setDated(dates);
-	        interval.setDescription("Vymena koles");
-	        interval.setInspectionInterval(183);
-	        interval.setVehicle(fabia);
-	        serviceIntervalDAO.create(interval);
+            ServiceInterval interval = new ServiceInterval();
+            interval.setDated(dates);
+            interval.setDescription("Vymena koles");
+            interval.setInspectionInterval(183);
+            interval.setVehicle(fabia);
+            serviceIntervalDAO.create(interval);
 
-	        dates = new ArrayList();
-	        try {
-		        dates.add(dateFormat.parse("3.1.2012"));
-		        dates.add(dateFormat.parse("3.4.2012"));
-		        dates.add(dateFormat.parse("3.7.2012"));
-	        } catch (Exception ex) {
-		        // ignore
-	        }
+            dates = new ArrayList();
+            try {
+                dates.add(dateFormat.parse("3.1.2012"));
+                dates.add(dateFormat.parse("3.4.2012"));
+                dates.add(dateFormat.parse("3.7.2012"));
+            } catch (Exception ex) {
+                // ignore
+            }
 
-	        interval = new ServiceInterval();
-	        interval.setDated(dates);
-	        interval.setDescription("Kontrola brzd");
-	        interval.setInspectionInterval(90);
-	        interval.setVehicle(octavia);
-	        serviceIntervalDAO.create(interval);
+            interval = new ServiceInterval();
+            interval.setDated(dates);
+            interval.setDescription("Kontrola brzd");
+            interval.setInspectionInterval(90);
+            interval.setVehicle(octavia);
+            serviceIntervalDAO.create(interval);
 
-	        dates = new ArrayList();
-	        try {
-		        dates.add(dateFormat.parse("3.1.2012"));
-		        dates.add(dateFormat.parse("3.1.2013"));
-	        } catch (Exception ex) {
-		        // ignore
-	        }
+            dates = new ArrayList();
+            try {
+                dates.add(dateFormat.parse("3.1.2012"));
+                dates.add(dateFormat.parse("3.1.2013"));
+            } catch (Exception ex) {
+                // ignore
+            }
 
-	        interval = new ServiceInterval();
-	        interval.setDated(dates);
-	        interval.setDescription("Kontrola nosnosti");
-	        interval.setInspectionInterval(365);
-	        interval.setVehicle(tatra);
-	        serviceIntervalDAO.create(interval);
+            interval = new ServiceInterval();
+            interval.setDated(dates);
+            interval.setDescription("Kontrola nosnosti");
+            interval.setInspectionInterval(365);
+            interval.setVehicle(tatra);
+            serviceIntervalDAO.create(interval);
 
-	        dates = new ArrayList();
-	        try {
-		        dates.add(dateFormat.parse("8.4.2012"));
-		        dates.add(dateFormat.parse("8.4.2013"));
-	        } catch (Exception ex) {
-		        // ignore
-	        }
+            dates = new ArrayList();
+            try {
+                dates.add(dateFormat.parse("8.4.2012"));
+                dates.add(dateFormat.parse("8.4.2013"));
+            } catch (Exception ex) {
+                // ignore
+            }
 
-	        interval = new ServiceInterval();
-	        interval.setDated(dates);
-	        interval.setDescription("Kontrola svetel");
-	        interval.setInspectionInterval(365);
-	        interval.setVehicle(peugeot);
-	        serviceIntervalDAO.create(interval);
+            interval = new ServiceInterval();
+            interval.setDated(dates);
+            interval.setDescription("Kontrola svetel");
+            interval.setInspectionInterval(365);
+            interval.setVehicle(peugeot);
+            serviceIntervalDAO.create(interval);
 
         }
     }
-
 }

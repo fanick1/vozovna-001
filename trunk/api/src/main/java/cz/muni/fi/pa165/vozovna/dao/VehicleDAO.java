@@ -3,9 +3,8 @@ package cz.muni.fi.pa165.vozovna.dao;
 import cz.muni.fi.pa165.vozovna.entity.User;
 import cz.muni.fi.pa165.vozovna.entity.Vehicle;
 import cz.muni.fi.pa165.vozovna.enums.UserClassEnum;
-import org.joda.time.DateTime;
-
 import java.util.List;
+import org.joda.time.DateTime;
 
 /**
  * Vehicle DAO Interface
@@ -77,13 +76,13 @@ public interface VehicleDAO extends GenericDAO<Vehicle, Long> {
     /**
      * Returns available cars for uesr between given dates.
      *
-     * @param user        User, for which we want cars.
-     * @param startDate   Date, from which we want reservate car.
-     * @param endDate     Date, to which we want reservate car.
+     * @param user User, for which we want cars.
+     * @param startDate Date, from which we want reservate car.
+     * @param endDate Date, to which we want reservate car.
      *
      * @throws IllegalArgumentException If any of argument is null.
      */
-    public List<Vehicle> getAvailableVehicles(User user,  DateTime startDate, DateTime endDate);
-    
+    public List<Vehicle> getAvailableVehicles(User user, DateTime startDate, DateTime endDate);
+
     public List<Vehicle> getAvailableVehicles(UserClassEnum userClass, DateTime startDate, DateTime endDate);
 }
