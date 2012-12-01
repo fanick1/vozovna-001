@@ -22,6 +22,7 @@ import org.mockito.invocation.InvocationOnMock;
 import org.mockito.stubbing.Answer;
 
 import cz.muni.fi.pa165.vozovna.dao.ServiceIntervalDAO;
+import cz.muni.fi.pa165.vozovna.dao.VehicleDAO;
 import cz.muni.fi.pa165.vozovna.dto.ServiceIntervalDTO;
 import cz.muni.fi.pa165.vozovna.dto.VehicleDTO;
 import cz.muni.fi.pa165.vozovna.entity.ServiceInterval;
@@ -45,12 +46,18 @@ public abstract class ServiceIntervalServiceTest {
 	
 	private List<Date> serviced = Arrays.asList(DateTime.now().minusDays(10).toDate(),DateTime.now().minusDays(5).toDate());
 	
+	private VehicleDAO vehicleDAO;	//mock
+	
 	public void setServiceIntervalService(ServiceIntervalService serviceIntervalService) {
 		this.serviceIntervalService = serviceIntervalService;
 	}
 
 	public void setServiceIntervalDao(ServiceIntervalDAO serviceIntervalDao) {
 		this.serviceIntervalDao = serviceIntervalDao;
+	}
+	
+	public void setVehicleDAO(VehicleDAO vehicleDAO){
+		this.vehicleDAO = vehicleDAO;
 	}
 	
 	@Before
@@ -74,7 +81,19 @@ public abstract class ServiceIntervalServiceTest {
 		existingServiceInterval.setInspectionInterval(40);
 		existingServiceInterval.setVehicle(existingVehicle);
 	
-		
+		doAnswer(new Answer<Object>() {
+
+			@Override
+			public Object answer(InvocationOnMock invocation) throws Throwable {
+				Object[] args = invocation.getArguments();
+				Long id= (Long) args[0];
+				if(id == existingVehicle.getId()){
+					return 	existingVehicle;
+				}else{
+					throw new IllegalArgumentException("Unknown vehicle with id " + id +". Check implementation of this Mock.");
+				}
+			}
+		}).when(vehicleDAO).getById(any(Long.class));
 		
 		doAnswer(new Answer<Object>() {
 

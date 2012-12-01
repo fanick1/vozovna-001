@@ -6,6 +6,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import cz.muni.fi.pa165.vozovna.dao.ServiceIntervalDAO;
+import cz.muni.fi.pa165.vozovna.dao.VehicleDAO;
 
 /**
  * @author Frantisek Veverka, 207422@mail.muni.cz
@@ -25,4 +26,11 @@ public class ServiceIntervalServiceImplTest extends ServiceIntervalServiceTest {
 	public void setServiceIntervalDao(ServiceIntervalDAO serviceIntervalDao) {
 		super.setServiceIntervalDao(serviceIntervalDao);
 	}
+
+	@Override
+	@Autowired
+	public void setVehicleDAO(VehicleDAO vehicleDao) {
+		super.setVehicleDAO(vehicleDao);
+	}
+
 }

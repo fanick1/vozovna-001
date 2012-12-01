@@ -8,7 +8,6 @@ import cz.muni.fi.pa165.vozovna.dto.UserDTO;
 import cz.muni.fi.pa165.vozovna.dto.VehicleDTO;
 import cz.muni.fi.pa165.vozovna.entity.Drive;
 import cz.muni.fi.pa165.vozovna.entity.User;
-import cz.muni.fi.pa165.vozovna.entity.Vehicle;
 import cz.muni.fi.pa165.vozovna.service.DriveService;
 import java.util.ArrayList;
 import java.util.List;
@@ -149,7 +148,7 @@ public class DriveServiceImpl implements DriveService {
         }
         User userEntity = userDAO.getById(user.getId());
         if (userEntity == null) {
-            throw new IllegalStateException("nonexisting user");
+            throw new IllegalArgumentException("nonexisting user");
         }
         // find
         List<Drive> drives = driveDAO.findByUser(userEntity);

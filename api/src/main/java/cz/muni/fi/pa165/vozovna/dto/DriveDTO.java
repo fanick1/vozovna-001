@@ -173,7 +173,7 @@ public class DriveDTO implements java.io.Serializable {
      */
     public Drive toNewDrive() {
         Drive drive = new Drive();
-        //drive.setId(id);
+        drive.setId(id);
         drive.setDistance(distance);
         // FIXME nepouzivat toNewUser!
         if (user != null) {
