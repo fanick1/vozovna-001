@@ -6,6 +6,7 @@ import javax.validation.Valid;
 import cz.muni.fi.pa165.vozovna.dto.DriveDTO;
 import cz.muni.fi.pa165.vozovna.dto.UserDTO;
 import cz.muni.fi.pa165.vozovna.dto.VehicleDTO;
+import cz.muni.fi.pa165.vozovna.entity.User;
 import cz.muni.fi.pa165.vozovna.enums.DriveStateEnum;
 import cz.muni.fi.pa165.vozovna.enums.UserClassEnum;
 import cz.muni.fi.pa165.vozovna.service.DriveService;
@@ -56,85 +57,35 @@ public class UserVehiclesController {
     @InitBinder
     public void initBinder(WebDataBinder binder) {
         binder.registerCustomEditor(Date.class, new PropertyEditorSupport() {
-            @Override
-            public String getAsText() {
-                Date date = (Date) getValue();
-                SimpleDateFormat dateFormat = new SimpleDateFormat(DATE_FORMAT);
-                return dateFormat.format(date);
-            }
+	        @Override
+	        public String getAsText() {
+		        Date date = (Date) getValue();
+		        SimpleDateFormat dateFormat = new SimpleDateFormat(DATE_FORMAT);
+		        return dateFormat.format(date);
+	        }
 
-            @Override
-            public void setAsText(String s) throws IllegalArgumentException {
-                DateFormat dateFormat = new SimpleDateFormat(DATE_FORMAT);
-                try {
-                    setValue(dateFormat.parse(s));
-                } catch (ParseException e) {
-                    throw new RuntimeException("Failed to parse string '" + s + "' to date");
-                }
+	        @Override
+	        public void setAsText(String s) throws IllegalArgumentException {
+		        DateFormat dateFormat = new SimpleDateFormat(DATE_FORMAT);
+		        try {
+			        setValue(dateFormat.parse(s));
+		        } catch (ParseException e) {
+			        throw new RuntimeException("Failed to parse string '" + s + "' to date");
+		        }
 
-            }
+	        }
 
         });
-
-
-        this.initData();
     }
 
-    private void initData() {
-
-        if(this.vehicleService.findAll().size() > 0) {
-            return;
-        }
-
-        VehicleDTO dto = new VehicleDTO();
-        dto.setBrand("aaa");
-        dto.setDistanceCount(21);
-        dto.setEngineType("sss");
-        dto.setType("type");
-        dto.setUserClass(UserClassEnum.EMPLOYEE);
-        dto.setVin("wetewt");
-        dto.setYearMade(2013);
-
-        this.vehicleService.create(dto);
-
-        SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy");
-
-        try {
-
-            DriveDTO drive = new DriveDTO();
-            drive.setUser(this.userService.getByUsername("user"));
-            drive.setDateFrom(new DateTime(dateFormat.parse("11.3.2012")));
-            drive.setDateTo(new DateTime(dateFormat.parse("18.3.2012")));
-            drive.setState(DriveStateEnum.RESERVED);
-            drive.setDistance(124);
-            drive.setVehicle(dto);
-
-            this.driveService.create(drive);
-
-            drive = new DriveDTO();
-            drive.setUser(this.userService.getByUsername("user"));
-            drive.setDateFrom(new DateTime(dateFormat.parse("23.3.2012")));
-            drive.setDateTo(new DateTime(dateFormat.parse("25.3.2012")));
-            drive.setState(DriveStateEnum.RESERVED);
-            drive.setDistance(12);
-            drive.setVehicle(dto);
-
-            this.driveService.create(drive);
-
-        } catch (ParseException e) {
-            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
-        }
-
-    }
-
-    private void disposeData() {
-        this.vehicleId = null;
-    }
+//    private void disposeData() {
+//        this.vehicleId = null;
+//    }
 
     @RequestMapping(value = "/vehicles", method = RequestMethod.GET)
     public String userVehicles(HttpServletRequest request, ModelMap model, Principal principal) {
 
-        this.disposeData();
+//        this.disposeData();
 
         String startDate = request.getParameter("startDate");
         String endDate = request.getParameter("endDate");
@@ -147,10 +98,16 @@ public class UserVehiclesController {
         }
         else
         {
-//            this.vehicleService.getAvailableVehicles(this.userService.getByUsername(
-//                    principal.getName()).toNewUser(), new DateTime(startDate), new DateTime(endDate));
+	        SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy");
 
-            model.addAttribute("vehicles", this.vehicleService.findAll());
+	        User user = this.userService.getByUsername(principal.getName()).toNewUser();
+	        try {
+	            model.addAttribute("vehicles",
+			            this.vehicleService.getAvailableVehicles(
+					            user, new DateTime(dateFormat.parse(startDate)), new DateTime(dateFormat.parse(endDate))));
+	        } catch (ParseException ex) {
+		        logger.fatal(ex.getMessage());
+	        }
         }
         return "vehicles";
     }

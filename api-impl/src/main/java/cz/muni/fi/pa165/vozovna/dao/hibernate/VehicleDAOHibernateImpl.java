@@ -6,10 +6,7 @@ import java.util.List;
 import cz.muni.fi.pa165.vozovna.dao.DriveDAO;
 import cz.muni.fi.pa165.vozovna.entity.Drive;
 import cz.muni.fi.pa165.vozovna.entity.User;
-import org.hibernate.Criteria;
-import org.hibernate.HibernateException;
-import org.hibernate.Query;
-import org.hibernate.Session;
+import org.hibernate.*;
 import org.hibernate.criterion.CriteriaQuery;
 import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.Restrictions;
@@ -22,6 +19,8 @@ import org.springframework.transaction.annotation.Transactional;
 import cz.muni.fi.pa165.vozovna.dao.VehicleDAO;
 import cz.muni.fi.pa165.vozovna.entity.Vehicle;
 import cz.muni.fi.pa165.vozovna.enums.UserClassEnum;
+
+import javax.persistence.criteria.CriteriaBuilder;
 
 /**
  * Vehicle DAO using Hibernate
@@ -61,17 +60,16 @@ public class VehicleDAOHibernateImpl extends GenericDAOHibernateImpl<Vehicle, Lo
             throw new IllegalArgumentException("Given dates cannot be null");
         }
 
-        final Session session = sessionFactory.getCurrentSession();
-        Query query = session.createQuery(
-                "FROM " + Vehicle.class.getName() + " AS v INNER JOIN " + Drive.class.getName() +
-                        " AS d WHERE v.userClass = :USERCLASS AND d.dateTo > :DATETO AND d.dateFrom < :DATEFROM" +
-                        " AND d.state <> :DRIVESTATEONE AND d.state <> :DRIVESTATETWO");
-        query.setParameter("USERCLASS", user.getUserClass());
-        query.setParameter("DATETO", startDate);
-        query.setParameter("DATEFROM", endDate);
-        query.setParameter("DRIVESTATEONE", "RESERVED");
-        query.setParameter("DRIVESTATETWO", "RESERVED");
 
-        return (List<Vehicle>) query.list();
+        final Session session = sessionFactory.getCurrentSession();
+
+	    Query query = session.createQuery(
+			    "FROM Vehicle h WHERE userClass = :USERCLASS AND ((SELECT COUNT(*) FROM Drive AS d JOIN d.vehicle AS v WHERE h.id = v.id AND d.dateTo > :STARTDATE AND d.dateFrom < :STARTDATE) = 0) AND ((SELECT COUNT(*) FROM Drive AS d JOIN d.vehicle AS v WHERE h.id = v.id AND d.dateTo > :ENDDATE AND d.dateFrom < :ENDDATE) = 0) AND ((SELECT COUNT(*) FROM Drive AS d JOIN d.vehicle AS v WHERE h.id = v.id AND d.dateTo < :ENDDATE AND d.dateFrom > :STARTDATE) = 0)"
+	    );
+	    query.setParameter("USERCLASS", user.getUserClass());
+	    query.setParameter("STARTDATE", startDate);
+	    query.setParameter("ENDDATE", endDate);
+
+	    return (List<Vehicle>) query.list();
     }
 }
