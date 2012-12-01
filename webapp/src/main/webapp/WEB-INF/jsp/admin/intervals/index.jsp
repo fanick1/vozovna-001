@@ -14,6 +14,12 @@
                 event.preventDefault();
             }
         });
+        $("a.inspect").live("click",function(event){
+            event.stopPropagation();
+            if(!confirm("<fmt:message key="admin.intervals.confirmInspection" />")) {
+                event.preventDefault();
+            }
+        });
     </script>
 
 </head>
@@ -26,7 +32,7 @@
     <table class="grid">
         <colgroup>
             <col style="width: 50px;" />
-            <col />
+            <col style="width: 80px;" />
             <col />
             <col />
             <col style="width: 200px;"/>
@@ -40,12 +46,13 @@
         </tr>
         <c:forEach  items="${intervals}" var="interval">
             <tr>
-                <td class="number">${interval.id}</td>
-                <td><c:out value="${interval.inspectionInterval}"/></td>
-                <td><c:out value="${interval.vehicle.fullName}"/></td>
+                <td class="number"><a href="<c:url value="/admin/intervals/show?id=${interval.id}" />">${interval.id}</a></td>
+                <td class="number"><c:out value="${interval.inspectionInterval}"/></td>
+                <td><a href="<c:url value="/admin/vehicles/show?id=${interval.vehicle.id}" />"><c:out value="${interval.vehicle.fullName}"/></a></td>
                 <td><c:out value="${interval.description}" /></td>
                 <td>
                     <a href="<c:url value="/admin/intervals/show?id=${interval.id}" />"><fmt:message key="actions.show" /></a> |
+                    <a href="<c:url value="/admin/intervals/inspect?id=${interval.id}" />" class="inspect"><fmt:message key="admin.intervals.inspect" /></a> | 
                     <a href="<c:url value="/admin/intervals/edit?id=${interval.id}" />"><fmt:message key="actions.edit" /></a> |
                     <a href="<c:url value="/admin/intervals/delete?id=${interval.id}" />" class="remove"><fmt:message key="actions.delete" /></a>
                 </td>

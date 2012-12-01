@@ -103,7 +103,13 @@
                     <form:errors path="inspectionInterval" cssClass="error" />
                 </td>
             </tr>
-
+            <tr>
+                <td><form:label path="dated"><fmt:message key="interval.dated" />:</form:label></td>
+                <td>
+                    <form:textarea path="dated" rows="6" />
+                    <form:errors path="dated" cssClass="error" />
+                </td>
+            </tr>
 
             <tr>
                 <td>&nbsp; </td>

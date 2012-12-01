@@ -5,6 +5,7 @@ import javax.servlet.http.HttpSession;
 
 import cz.muni.fi.pa165.vozovna.dto.ServiceIntervalDTO;
 import cz.muni.fi.pa165.vozovna.dto.VehicleDTO;
+import cz.muni.fi.pa165.vozovna.editors.DateListEditor;
 import cz.muni.fi.pa165.vozovna.enums.UserClassEnum;
 import cz.muni.fi.pa165.vozovna.service.VehicleService;
 import org.apache.commons.logging.Log;
@@ -41,6 +42,7 @@ public class IntervalsController {
      @InitBinder
     protected void initBinder(WebDataBinder binder) {
         binder.setValidator(new ServiceIntervalValidator());
+        binder.registerCustomEditor(List.class, new DateListEditor());
  
     }
     
@@ -163,7 +165,7 @@ public class IntervalsController {
 
     // Show
     @RequestMapping(value = "/admin/intervals/show", params = "id")
-    public String viewVehicle(@RequestParam("id") Long id, ModelMap model, HttpSession session) throws Exception {
+    public String viewInterval(@RequestParam("id") Long id, ModelMap model, HttpSession session) throws Exception {
         ServiceIntervalDTO interval = this.serviceIntervalService.getById(id);
         if (interval == null) {
             session.setAttribute("error", "admin.intervals.show.msg.unexists");
@@ -186,6 +188,21 @@ public class IntervalsController {
 
         this.serviceIntervalService.remove(interval);
         session.setAttribute("message", "admin.intervals.delete.msg.successful");
+        return "redirect:/admin/intervals/index";
+    }
+    
+    // Inspect vehicle
+    @RequestMapping(value = "/admin/intervals/inspect", params = "id")
+    public String actionInspectInterval(@RequestParam("id") Long id, ModelMap model, HttpSession session) throws Exception {
+        ServiceIntervalDTO interval = this.serviceIntervalService.getById(id);
+        if (interval == null) {
+            session.setAttribute("error", "admin.intervals.show.msg.unexists");
+            return "redirect:/admin/intervals/index";
+        }
+        List<Date> dates = interval.getDated();
+        dates.add(new Date());
+        serviceIntervalService.update(interval);
+        session.setAttribute("message", "admin.intervals.inspect.msg.successful");
         return "redirect:/admin/intervals/index";
     }
 }
