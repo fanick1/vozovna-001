@@ -21,6 +21,7 @@
 				<configuration>
 					<source>1.7</source>
 					<target>1.7</target>
+					<encoding>UTF-8</encoding>
 				</configuration>
 			</plugin>
 
@@ -146,30 +147,30 @@
 			<version>1.2</version>
 		</dependency>
 
-		<!-- Spring Security ZAČ�?TEK -->
+		<!-- Spring Security ZAČ�?TEK -->
 		<dependency>
 			<groupId>org.springframework.security</groupId>
 			<artifactId>spring-security-core</artifactId>
-			<version>3.1.0.RELEASE</version>
+			<version>${org.springframework.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.security</groupId>
 			<artifactId>spring-security-web</artifactId>
-			<version>3.1.0.RELEASE</version>
+			<version>${org.springframework.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.security</groupId>
 			<artifactId>spring-security-config</artifactId>
-			<version>3.1.0.RELEASE</version>
+			<version>${org.springframework.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.security</groupId>
 			<artifactId>spring-security-taglibs</artifactId>
-			<version>3.1.0.RELEASE</version>
+			<version>${org.springframework.version}</version>
 		</dependency>
 		<!-- Spring Security KONEC -->
 
-		<!-- Spring ZAČ�?TEK -->
+		<!-- Spring ZAČ�?TEK -->
 		<!-- TODO protřídit, co opravdu používám -->
 		<dependency>
 			<groupId>org.springframework</groupId>
@@ -234,5 +235,28 @@
 		</dependency>
 		<!-- Spring KONEC -->
 
+		<!-- web services  -->
+		<dependency>
+			<groupId>cz.muni.fi.pa165</groupId>
+			<artifactId>VehicleManagement-ws</artifactId>
+			<version>1.0.0</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.cxf</groupId>
+			<artifactId>cxf-rt-frontend-jaxws</artifactId>
+			<version>2.7.2-SNAPSHOT</version>
+		</dependency>
+<dependency><groupId>org.apache.cxf</groupId><artifactId>cxf-rt-frontend-jaxws</artifactId><version>2.7.2-SNAPSHOT</version></dependency>
 	</dependencies>
+				
+<repositories>
+	<repository>
+		<id>apache-snapshots</id>
+		<name>Apache SNAPSHOT Repository</name>
+		<url>http://repository.apache.org/snapshots/</url>
+		<snapshots>
+			<enabled>true</enabled>
+		</snapshots>
+	</repository>
+</repositories>
 </project>

@@ -9,7 +9,7 @@ import org.springframework.ui.ModelMap;
 /**
  * Aspect for handling viewing information and error messages from session
  *
- * @author Eva Neduchalová
+ * @author Eva Neduchalova
  *
  */
 @Aspect
