@@ -23,6 +23,7 @@
     <context:component-scan base-package="cz.muni.fi.pa165.vozovna.service" />
     <context:component-scan base-package="cz.muni.fi.pa165.vozovna.entity" />
     <context:component-scan base-package="cz.muni.fi.pa165.vozovna.controller" />
+	<context:component-scan base-package="cz.muni.fi.pa165.vozovna.ws" />
 
     <mvc:annotation-driven />
 

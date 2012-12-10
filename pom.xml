@@ -9,5 +9,6 @@
   	<module>api</module>
   	<module>api-impl</module>
   	<module>webapp</module>
+  	<module>ws</module>
   </modules>
 </project>
