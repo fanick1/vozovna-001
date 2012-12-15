@@ -5,8 +5,6 @@ import cz.muni.fi.pa165.vozovna.service.UserService;
 import java.util.List;
 import javax.jws.WebMethod;
 import javax.jws.WebService;
-import org.hibernate.criterion.Criterion;
-import org.hibernate.criterion.Order;
 import org.springframework.beans.factory.annotation.Autowired;
 
 @WebService
