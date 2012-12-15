@@ -1,21 +1,11 @@
 package cz.muni.fi.pa165.vozovna.service.impl;
 
-import cz.muni.fi.pa165.vozovna.dao.ServiceIntervalDAO;
 import cz.muni.fi.pa165.vozovna.dao.UserDAO;
-import cz.muni.fi.pa165.vozovna.dao.VehicleDAO;
 import cz.muni.fi.pa165.vozovna.dto.UserDTO;
-import cz.muni.fi.pa165.vozovna.entity.ServiceInterval;
 import cz.muni.fi.pa165.vozovna.entity.User;
-import cz.muni.fi.pa165.vozovna.entity.Vehicle;
-import cz.muni.fi.pa165.vozovna.enums.UserClassEnum;
 import cz.muni.fi.pa165.vozovna.service.UserService;
-
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
-import org.hibernate.criterion.Criterion;
-import org.hibernate.criterion.Order;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.security.authentication.encoding.PasswordEncoder;
@@ -34,10 +24,6 @@ import org.springframework.transaction.annotation.Transactional;
 public class UserServiceImpl implements UserService, UserDetailsService {
 
     private UserDAO userDAO;
-    @Autowired
-    private VehicleDAO vehicleDAO;
-    @Autowired
-    private ServiceIntervalDAO serviceIntervalDAO;
 
     @Autowired
     public void setUserDAO(UserDAO userDAO) {
@@ -178,15 +164,6 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         return new UserDTO(user);
     }
 
-    // @Override
-//    @Transactional(readOnly = true)
-//    public List<UserDTO> findByCriteria(List<Criterion> criterion, List<Order> orders) {
-//
-//        List<User> result = userDAO.findByCriteria(criterion, orders);
-//
-//        return convertListOfUsersToListOfUserDTOs(result);
-//    }
-
     /**
      * Converts list of vehicles to list of vehicle DTOs
      *
@@ -202,7 +179,4 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
         return result;
     }
-
-
-    
 }
