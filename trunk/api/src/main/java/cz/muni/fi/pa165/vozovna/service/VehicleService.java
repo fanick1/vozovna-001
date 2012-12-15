@@ -2,11 +2,8 @@ package cz.muni.fi.pa165.vozovna.service;
 
 import cz.muni.fi.pa165.vozovna.dto.VehicleDTO;
 import cz.muni.fi.pa165.vozovna.entity.User;
-import cz.muni.fi.pa165.vozovna.entity.Vehicle;
 import cz.muni.fi.pa165.vozovna.enums.UserClassEnum;
 import java.util.List;
-import org.hibernate.criterion.Criterion;
-import org.hibernate.criterion.Order;
 import org.joda.time.DateTime;
 
 /**
@@ -61,17 +58,6 @@ public interface VehicleService {
     public List<VehicleDTO> findAll();
 
     /**
-     * Find and return vehicles with given lastname.
-     * 
-     * @param lastName      Lastname.
-     * @return List of vehicles of given vehicle.
-     * @throws IllegalArgumentException     Throws if given vehicle is null.
-     * @throws DataAccessException          Throws if a data access exception occurred.
-     */
-    public List<VehicleDTO> findByUserClass(UserClassEnum userClass);
-    
-
-    /**
      * Returns available cars for uesr between given dates.
      *
      * @param user        User, for which we want cars.
@@ -80,7 +66,7 @@ public interface VehicleService {
      *
      * @throws IllegalArgumentException If any of argument is null.
      */
-    public List<VehicleDTO> getAvailableVehicles(User user,  DateTime startDate, DateTime endDate);
+    public List<VehicleDTO> getAvailableVehicles(User user, DateTime startDate, DateTime endDate);
     
     public List<VehicleDTO> getAvailableVehicles(UserClassEnum userClass, DateTime startDate, DateTime endDate);
 }

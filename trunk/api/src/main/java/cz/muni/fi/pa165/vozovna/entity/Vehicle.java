@@ -1,16 +1,13 @@
 package cz.muni.fi.pa165.vozovna.entity;
 
+import cz.muni.fi.pa165.vozovna.enums.UserClassEnum;
 import java.io.Serializable;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Parameter;
-
-import cz.muni.fi.pa165.vozovna.enums.UserClassEnum;
 
 /**
  * 

@@ -1,7 +1,6 @@
 package cz.muni.fi.pa165.vozovna;
 
 import org.junit.Before;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 /**

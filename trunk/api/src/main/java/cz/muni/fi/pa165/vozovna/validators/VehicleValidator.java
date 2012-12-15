@@ -1,10 +1,9 @@
 package cz.muni.fi.pa165.vozovna.validators;
 
+import cz.muni.fi.pa165.vozovna.dto.VehicleDTO;
 import org.springframework.validation.Errors;
 import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
-
-import cz.muni.fi.pa165.vozovna.dto.VehicleDTO;
 
 /**
  *

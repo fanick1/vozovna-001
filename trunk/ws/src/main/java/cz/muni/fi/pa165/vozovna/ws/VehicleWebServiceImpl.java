@@ -52,11 +52,6 @@ public class VehicleWebServiceImpl implements VehicleWebService {
 		return vehicleServiceDelegate.findAll();
 	}
 
-	@Override
-	@WebMethod
-	public List<VehicleDTO> findByUserClass(UserClassEnum userClass) {
-		return vehicleServiceDelegate.findByUserClass(userClass);
-	}
 	
 	@Override
 	@WebMethod(operationName="getAvailableVehiclesForUser",action="EFGH")

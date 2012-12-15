@@ -8,8 +8,6 @@ import cz.muni.fi.pa165.vozovna.enums.UserClassEnum;
 import cz.muni.fi.pa165.vozovna.service.VehicleService;
 import java.util.ArrayList;
 import java.util.List;
-import org.hibernate.criterion.Criterion;
-import org.hibernate.criterion.Order;
 import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -98,26 +96,6 @@ public class VehicleServiceImpl implements VehicleService {
 
         return convertListOfVehiclesToListOfVehicleDTOs(vehicles);
     }
-
-    @Override
-    @Transactional(readOnly = true)
-    public List<VehicleDTO> findByUserClass(UserClassEnum userClass) {
-        if (userClass == null) {
-            throw new IllegalArgumentException("userClass");
-        }
-        List<Vehicle> vehicles = vehicleDAO.findByUserClass(userClass);
-
-        return convertListOfVehiclesToListOfVehicleDTOs(vehicles);
-    }
-
-//    @Override
-//    @Transactional(readOnly = true)
-//    public List<VehicleDTO> findByCriteria(List<Criterion> criterion, List<Order> orders) {
-//
-//        List<Vehicle> result = vehicleDAO.findByCriteria(criterion, orders);
-//
-//        return convertListOfVehiclesToListOfVehicleDTOs(result);
-//    }
 
     /**
      * Converts list of vehicles to list of vehicle DTOs

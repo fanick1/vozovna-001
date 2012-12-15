@@ -1,9 +1,8 @@
 package cz.muni.fi.pa165.vozovna.test;
 
+import cz.muni.fi.pa165.vozovna.TestSetup;
 import java.sql.Connection;
-
 import javax.sql.DataSource;
-
 import org.dbunit.database.DatabaseConnection;
 import org.dbunit.database.IDatabaseConnection;
 import org.dbunit.dataset.xml.XmlDataSet;
@@ -11,8 +10,6 @@ import org.dbunit.operation.DatabaseOperation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.jdbc.datasource.DataSourceUtils;
-
-import cz.muni.fi.pa165.vozovna.TestSetup;
 
 /**
  * DB setup using dbunit and spring

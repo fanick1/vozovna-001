@@ -124,10 +124,7 @@ public class DriveServiceImpl implements DriveService {
     @Override
     @Transactional(readOnly = true)
     public List<DriveDTO> findAll() {
-        List<Drive> drives;
-
-        drives = driveDAO.findAll();
-
+        List<Drive> drives = driveDAO.findAll();
         return convertListOfDrivesToListOfDriveDTOs(drives);
     }
 
@@ -139,7 +136,6 @@ public class DriveServiceImpl implements DriveService {
         }
         // get user
         if (user.getId() == null) {
-            //return new ArrayList<DriveDTO>();
             throw new IllegalArgumentException("user is not stored in system");
         }
         User userEntity = userDAO.getById(user.getId());

@@ -9,8 +9,6 @@ import cz.muni.fi.pa165.vozovna.entity.Vehicle;
 import cz.muni.fi.pa165.vozovna.service.ServiceIntervalService;
 import java.util.ArrayList;
 import java.util.List;
-import org.hibernate.criterion.Criterion;
-import org.hibernate.criterion.Order;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -99,7 +97,7 @@ public class ServiceIntervalServiceImpl implements ServiceIntervalService {
         entity.setInspectionInterval(serviceInterval.getInspectionInterval());
         VehicleDTO associatedVehicleDTO = serviceInterval.getVehicle();
         if (associatedVehicleDTO == null) {
-            throw new IllegalArgumentException("Service Interval have to become to vehicle.");
+            throw new IllegalArgumentException("Service Interval must belong to vehicle.");
         }
         Vehicle associatedVehicle = vehicleDAO.getById(associatedVehicleDTO.getId());
         if (associatedVehicle == null) {
@@ -119,33 +117,9 @@ public class ServiceIntervalServiceImpl implements ServiceIntervalService {
     @Override
     @Transactional(readOnly = true)
     public List<ServiceIntervalDTO> findAll() {
-        // find
         List<ServiceInterval> result = serviceIntervalDAO.findAll();
-
         return convertListOfIntervalsToListOfIntervalDTOs(result);
     }
-
-    @Override
-    @Transactional(readOnly = true)
-    public List<ServiceIntervalDTO> findAllByVehicle(VehicleDTO vehicle) {
-        if (vehicle == null) {
-            throw new IllegalArgumentException("null vehicle");
-        }
-
-        // find
-        List<ServiceInterval> result = serviceIntervalDAO.findAllByVehicle(vehicle.toVehicle());
-
-        return convertListOfIntervalsToListOfIntervalDTOs(result);
-    }
-
-//    @Override
-//    @Transactional(readOnly = true)
-//    public List<ServiceIntervalDTO> findByCriteria(List<Criterion> criterion, List<Order> orders) {
-//
-//        List<ServiceInterval> result = serviceIntervalDAO.findByCriteria(criterion, orders);
-//
-//        return convertListOfIntervalsToListOfIntervalDTOs(result);
-//    }
 
     /**
      * Converts list of service intervals to list of service interval DTOs

@@ -47,13 +47,6 @@ public class UserWebServiceImpl implements UserWebService{
 
 	@Override
 	@WebMethod
-	public List<UserDTO> findByLastName(String lastName) {
-		return userServiceDelegate.findByLastName(lastName);
-	}
-
-
-	@Override
-	@WebMethod
 	public UserDTO getByUsername(String username) {
 		return userServiceDelegate.getByUsername(username);
 	}

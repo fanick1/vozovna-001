@@ -30,7 +30,8 @@ public class DriveDAOHibernateImpl extends GenericDAOHibernateImpl<Drive, Long> 
         }
 
         final Session session = sessionFactory.getCurrentSession();
-        Query query = session.createQuery("FROM " + Drive.class.getName() + " d WHERE d.user = :user ORDER BY d.dateFrom DESC");
+        Query query = session.createQuery("FROM " + Drive.class.getName() 
+                + " d WHERE d.user = :user ORDER BY d.dateFrom DESC");
         query.setParameter("user", user);
         return (List<Drive>) query.list();
     }
@@ -42,11 +43,12 @@ public class DriveDAOHibernateImpl extends GenericDAOHibernateImpl<Drive, Long> 
         }
 
         final Session session = sessionFactory.getCurrentSession();
-        Query query = session.createQuery("FROM " + Drive.class.getName() + " d WHERE d.vehicle = :vehicle AND d.state = :stateOngoing");
+        Query query = session.createQuery("FROM " + Drive.class.getName() 
+                + " d WHERE d.vehicle = :vehicle AND d.state = :stateOngoing");
         query.setParameter("vehicle", drive.getVehicle());
         query.setParameter("stateOngoing", DriveStateEnum.ONGOING);
         List<Drive> ongoingDrives = (List<Drive>) query.list();
-        
+
         return ongoingDrives.isEmpty();
 
     }
