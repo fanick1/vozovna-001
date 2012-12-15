@@ -64,16 +64,6 @@ public interface VehicleDAO extends GenericDAO<Vehicle, Long> {
     public List<Vehicle> findAll();
 
     /**
-     * Returns list of vehicles that are assigned to given userClass
-     *
-     * @param userClass
-     * @return java.util.List List with vehicles
-     * @throws IllegalArgumentException If userClass is invalid
-     * @throws IllegalStateException If the Entity Manager Factory is not set.
-     */
-    public List<Vehicle> findByUserClass(UserClassEnum userClass);
-
-    /**
      * Returns available cars for uesr between given dates.
      *
      * @param user User, for which we want cars.

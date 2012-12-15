@@ -1,11 +1,10 @@
 package cz.muni.fi.pa165.vozovna.dto;
 
-import org.joda.time.DateTime;
-
 import cz.muni.fi.pa165.vozovna.entity.Drive;
 import cz.muni.fi.pa165.vozovna.entity.User;
 import cz.muni.fi.pa165.vozovna.entity.Vehicle;
 import cz.muni.fi.pa165.vozovna.enums.DriveStateEnum;
+import org.joda.time.DateTime;
 
 /**
  * DTO of Drive

@@ -2,8 +2,6 @@ package cz.muni.fi.pa165.vozovna.dao;
 
 import java.io.Serializable;
 import java.util.List;
-import org.hibernate.criterion.Criterion;
-import org.hibernate.criterion.Order;
 
 /**
  * Base DAO with CRUD operations and findAll() method

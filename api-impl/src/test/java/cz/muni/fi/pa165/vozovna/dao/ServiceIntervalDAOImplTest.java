@@ -1,11 +1,9 @@
 package cz.muni.fi.pa165.vozovna.dao;
+import cz.muni.fi.pa165.vozovna.TestSetup;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-
-import cz.muni.fi.pa165.vozovna.TestSetup;
-import cz.muni.fi.pa165.vozovna.dao.ServiceIntervalDAOTest;
 
 
 /**

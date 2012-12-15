@@ -2,8 +2,6 @@ package cz.muni.fi.pa165.vozovna.service;
 
 import cz.muni.fi.pa165.vozovna.dto.UserDTO;
 import java.util.List;
-import org.hibernate.criterion.Criterion;
-import org.hibernate.criterion.Order;
 
 /**
  * User Service 
@@ -56,15 +54,13 @@ public interface UserService {
     public List<UserDTO> findAll();
 
     /**
-     * Find and return users with given lastname.
+     * Find and return users with given username.
      * 
-     * @param lastName      Lastname.
-     * @return List of users of given user.
-     * @throws IllegalArgumentException     Throws if given user is null.
+     * @param username      username.
+     * @return userDTO of user with given username
+     * @throws IllegalArgumentException     Throws if given username is null.
      * @throws DataAccessException          Throws if a data access exception occurred.
      */
-    public List<UserDTO> findByLastName(String lastName);
-    
     public UserDTO getByUsername(String username);
 
 }

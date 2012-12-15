@@ -23,11 +23,12 @@ public class ServiceIntervalDAOImpl extends GenericDAOHibernateImpl<ServiceInter
             throw new IllegalArgumentException("null vehicle");
         }
         if (vehicle.getId() == null) {
-            // pro nové vozidlo můžeme přímo vrátit prázdný list bez dotazování se do DB
+            // for new vehicle we don't need to query database
             return new ArrayList<ServiceInterval>();
         }
         final Session session = sessionFactory.getCurrentSession();
-        Query query = session.createQuery("FROM " + ServiceInterval.class.getName() + " interval WHERE interval.vehicle = :vehicle");
+        Query query = session.createQuery("FROM " + ServiceInterval.class.getName()
+                + " interval WHERE interval.vehicle = :vehicle");
         query.setParameter("vehicle", vehicle);
         return (List<ServiceInterval>) query.list();
     }

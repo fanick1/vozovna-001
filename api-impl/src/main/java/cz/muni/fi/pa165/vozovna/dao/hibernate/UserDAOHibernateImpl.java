@@ -20,10 +20,11 @@ public class UserDAOHibernateImpl extends GenericDAOHibernateImpl<User, Long> im
     @Transactional
     public List<User> findByLastName(String lastName) {
         if (lastName == null) {
-            throw new IllegalArgumentException("Name cannot be null");
+            throw new IllegalArgumentException("lastName cannot be null");
         }
         final Session session = sessionFactory.getCurrentSession();
-        Query query = session.createQuery("FROM " + User.class.getName() + " user WHERE user.lastName = :lastName");
+        Query query = session.createQuery("FROM " + User.class.getName() 
+                + " user WHERE user.lastName = :lastName");
         query.setParameter("lastName", lastName);
         return (List<User>) query.list();
     }

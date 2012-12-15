@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package cz.muni.fi.pa165.vozovna.service.impl;
 
 import cz.muni.fi.pa165.vozovna.dao.ServiceIntervalDAO;
@@ -12,6 +8,7 @@ import cz.muni.fi.pa165.vozovna.entity.User;
 import cz.muni.fi.pa165.vozovna.entity.Vehicle;
 import cz.muni.fi.pa165.vozovna.enums.UserClassEnum;
 import cz.muni.fi.pa165.vozovna.service.DevelopementDataGenerator;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -25,7 +22,7 @@ import org.springframework.transaction.annotation.Transactional;
  *
  * @author Eva Neduchalová, uèo 359893
  */
-public class DevelopementDataGeneratorImpl implements DevelopementDataGenerator{
+public class DevelopementDataGeneratorImpl implements DevelopementDataGenerator {
 
     @Autowired
     private UserDAO userDAO;
@@ -37,9 +34,10 @@ public class DevelopementDataGeneratorImpl implements DevelopementDataGenerator{
     PasswordEncoder passwordEncoder;
 
     /**
-     * Generates test data into DB
+     * Generates test data including users admin (password admin) and user (password user)
      */
     @Transactional
+    @Override
     public void generateTestDataIfNoneExist() {
 
         if (userDAO.findAll().isEmpty()) {
@@ -135,7 +133,7 @@ public class DevelopementDataGeneratorImpl implements DevelopementDataGenerator{
             try {
                 dates.add(dateFormat.parse("17.5.2012"));
                 dates.add(dateFormat.parse("17.11.2012"));
-            } catch (Exception ex) {
+            } catch (ParseException ex) {
                 // ignore
             }
 
@@ -151,7 +149,7 @@ public class DevelopementDataGeneratorImpl implements DevelopementDataGenerator{
                 dates.add(dateFormat.parse("3.1.2012"));
                 dates.add(dateFormat.parse("3.4.2012"));
                 dates.add(dateFormat.parse("3.7.2012"));
-            } catch (Exception ex) {
+            } catch (ParseException ex) {
                 // ignore
             }
 
@@ -166,7 +164,7 @@ public class DevelopementDataGeneratorImpl implements DevelopementDataGenerator{
             try {
                 dates.add(dateFormat.parse("3.1.2012"));
                 dates.add(dateFormat.parse("3.1.2013"));
-            } catch (Exception ex) {
+            } catch (ParseException ex) {
                 // ignore
             }
 
@@ -181,7 +179,7 @@ public class DevelopementDataGeneratorImpl implements DevelopementDataGenerator{
             try {
                 dates.add(dateFormat.parse("8.4.2012"));
                 dates.add(dateFormat.parse("8.4.2013"));
-            } catch (Exception ex) {
+            } catch (ParseException ex) {
                 // ignore
             }
 

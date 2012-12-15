@@ -122,19 +122,6 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
     @Override
     @Transactional(readOnly = true)
-    public List<UserDTO> findByLastName(String lastName) {
-        if (lastName == null) {
-            throw new IllegalArgumentException("null lastName");
-        }
-
-        // find
-        List<User> users = userDAO.findByLastName(lastName);
-
-        return convertListOfUsersToListOfUserDTOs(users);
-    }
-
-    @Override
-    @Transactional(readOnly = true)
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException, DataAccessException {
         if (username == null) {
             throw new UsernameNotFoundException("Invalid username (null)");
@@ -162,21 +149,5 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         }
 
         return new UserDTO(user);
-    }
-
-    /**
-     * Converts list of vehicles to list of vehicle DTOs
-     *
-     * @param list List of vehicles
-     * @return List of Drive Data Transform Objects
-     */
-    private static List<UserDTO> convertListOfUsersToListOfUserDTOs(List<User> entities) {
-        List<UserDTO> result = new ArrayList<>();
-
-        for (User item : entities) {
-            result.add(new UserDTO(item));
-        }
-
-        return result;
     }
 }

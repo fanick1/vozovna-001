@@ -12,7 +12,6 @@ import org.apache.commons.logging.LogFactory;
 import org.hibernate.*;
 import org.joda.time.DateTime;
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
 
 /**
  * Vehicle DAO using Hibernate
@@ -24,46 +23,9 @@ public class VehicleDAOHibernateImpl extends GenericDAOHibernateImpl<Vehicle, Lo
 
     protected final Log logger = LogFactory.getLog(getClass());
 
-    /*
-     * (non-Javadoc) @see cz.muni.fi.pa165.vozovna.dao.VehicleDAO#findByUserClass(int)
-     */
-    @Override
-    @Transactional
-    public List<Vehicle> findByUserClass(UserClassEnum userClass) {
-        if (userClass == null) {
-            throw new IllegalArgumentException("userClass is null.");
-        }
-
-        final Session session = sessionFactory.getCurrentSession();
-        Query query = session.createQuery("FROM " + Vehicle.class.getName() + " WHERE userClass = :USERCLASS ");
-        query.setParameter("USERCLASS", userClass);
-        return (List<Vehicle>) query.list();
-
-    }
-
     @Override
     public List<Vehicle> getAvailableVehicles(User user, DateTime startDate, DateTime endDate) {
-
-        if (user == null) {
-            throw new IllegalArgumentException("Given user is null");
-        }
-
-        if (startDate == null || endDate == null) {
-            throw new IllegalArgumentException("Given dates cannot be null");
-        }
-
-
-        final Session session = sessionFactory.getCurrentSession();
-
-        Query query = session.createQuery(
-                "FROM Vehicle h WHERE userClass = :USERCLASS "
-                + "AND ((SELECT COUNT(*) FROM Drive AS d JOIN d.vehicle AS v WHERE h.id = v.id AND d.dateTo > :STARTDATE AND d.dateFrom < :STARTDATE) = 0) "
-                + "AND ((SELECT COUNT(*) FROM Drive AS d JOIN d.vehicle AS v WHERE h.id = v.id AND d.dateTo > :ENDDATE AND d.dateFrom < :ENDDATE) = 0) AND ((SELECT COUNT(*) FROM Drive AS d JOIN d.vehicle AS v WHERE h.id = v.id AND d.dateTo < :ENDDATE AND d.dateFrom > :STARTDATE) = 0)");
-        query.setParameter("USERCLASS", user.getUserClass());
-        query.setParameter("STARTDATE", startDate);
-        query.setParameter("ENDDATE", endDate);
-
-        return (List<Vehicle>) query.list();
+        return getAvailableVehicles(user.getUserClass(), startDate, endDate);
     }
 
     @Override
@@ -91,7 +53,6 @@ public class VehicleDAOHibernateImpl extends GenericDAOHibernateImpl<Vehicle, Lo
         query.setParameter("dateTo", endDate);
         query.setParameter("stateReserved", DriveStateEnum.RESERVED);
         query.setParameter("stateOngoing", DriveStateEnum.ONGOING);
-        logger.warn(query.toString());
         return (List<Vehicle>) query.list();
     }
 }

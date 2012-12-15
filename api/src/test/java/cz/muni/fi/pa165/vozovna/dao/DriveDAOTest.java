@@ -2,13 +2,9 @@ package cz.muni.fi.pa165.vozovna.dao;
 
 import cz.muni.fi.pa165.vozovna.AbstractGenericApiTest;
 import cz.muni.fi.pa165.vozovna.entity.Drive;
-
 import java.util.List;
 import org.joda.time.DateTime;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.fail;
+import static org.junit.Assert.*;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
