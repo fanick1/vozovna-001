@@ -70,8 +70,6 @@ public interface VehicleService {
      */
     public List<VehicleDTO> findByUserClass(UserClassEnum userClass);
     
-    
-    public List<VehicleDTO> findByCriteria(List<Criterion> criterion, List<Order> orders);
 
     /**
      * Returns available cars for uesr between given dates.

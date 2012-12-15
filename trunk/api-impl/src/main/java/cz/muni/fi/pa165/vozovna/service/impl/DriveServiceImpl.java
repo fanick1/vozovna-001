@@ -11,8 +11,6 @@ import cz.muni.fi.pa165.vozovna.entity.User;
 import cz.muni.fi.pa165.vozovna.service.DriveService;
 import java.util.ArrayList;
 import java.util.List;
-import org.hibernate.criterion.Criterion;
-import org.hibernate.criterion.Order;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -156,11 +154,22 @@ public class DriveServiceImpl implements DriveService {
 
     @Override
     @Transactional(readOnly = true)
-    public List<DriveDTO> findByCriteria(List<Criterion> criterion, List<Order> orders) {
-
-        List<Drive> drives = driveDAO.findByCriteria(criterion, orders);
-
-        return convertListOfDrivesToListOfDriveDTOs(drives);
+    public boolean isVehicleFromDriveAvailable(DriveDTO drive) {
+        if (drive == null) {
+            throw new IllegalArgumentException("null drive");
+        }
+        
+        Drive entity;
+        if (drive.getId() == null) {
+            entity = drive.toNewDrive();
+        } else {
+            entity = driveDAO.getById(drive.getId());
+            if (entity == null) {
+                throw new IllegalArgumentException("drive unexists");
+            }
+        }
+        
+        return driveDAO.isVehicleFromDriveAvailable(entity);
     }
 
     /**

@@ -73,11 +73,4 @@ public class VehicleWebServiceImpl implements VehicleWebService {
 		return vehicleServiceDelegate.getAvailableVehicles(userClass, startDate, endDate);
 	}
 
-	@Override
-	@WebMethod(exclude=true)
-	public List<VehicleDTO> findByCriteria(List<Criterion> criterion,
-			List<Order> orders) {
-		throw new UnsupportedOperationException();
-	}
-
 }

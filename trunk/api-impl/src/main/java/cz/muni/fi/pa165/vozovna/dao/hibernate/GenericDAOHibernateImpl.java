@@ -64,27 +64,4 @@ public abstract class GenericDAOHibernateImpl<T, PK extends Serializable> implem
         return crit.list();
     }
 
-    @Override
-    @Transactional
-    public List<T> findByCriteria(List<Criterion> criterions, List<Order> orders) {
-        final Session session = sessionFactory.getCurrentSession();
-        final Criteria crit = session.createCriteria(entityClass);
-        if (criterions != null) {
-            for (Criterion criterion : criterions) {
-                if (criterion == null) {
-                    continue;
-                }
-                crit.add(criterion);
-            }
-        }
-        if (orders != null) {
-            for (Order order : orders) {
-                if (order == null) {
-                    continue;
-                }
-                crit.addOrder(order);
-            }
-        }
-        return crit.list();
-    }
 }

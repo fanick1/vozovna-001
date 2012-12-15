@@ -57,5 +57,4 @@ public interface GenericDAO<T, PK extends Serializable> {
      */
     List<T> findAll();
 
-    List<T> findByCriteria(List<Criterion> criterions, List<Order> orders);
 }

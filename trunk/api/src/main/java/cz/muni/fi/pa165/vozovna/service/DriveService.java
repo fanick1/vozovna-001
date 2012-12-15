@@ -3,8 +3,6 @@ package cz.muni.fi.pa165.vozovna.service;
 import cz.muni.fi.pa165.vozovna.dto.DriveDTO;
 import cz.muni.fi.pa165.vozovna.dto.UserDTO;
 import java.util.List;
-import org.hibernate.criterion.Criterion;
-import org.hibernate.criterion.Order;
 
 /**
  * Drive Service
@@ -70,6 +68,12 @@ public interface DriveService {
      */
     public List<DriveDTO> findByUser(UserDTO user);
     
-    public List<DriveDTO> findByCriteria(List<Criterion> criterion, List<Order> orders);
+    /**
+     * Finds out whether the vehicle of given drive has currently any ongoing drive.
+     * 
+     * @param drive
+     * @return true if vehicle of this drive has no ongoing drive. false otherwise
+     */
+    public boolean isVehicleFromDriveAvailable(DriveDTO drive);
 
 }

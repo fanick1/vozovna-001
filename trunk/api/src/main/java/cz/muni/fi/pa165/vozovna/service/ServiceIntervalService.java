@@ -66,7 +66,6 @@ public interface ServiceIntervalService {
      * @throws DataAccessException          Throws if a data access exception occurred.
      */
     public List<ServiceIntervalDTO> findAllByVehicle(VehicleDTO vehicle);
-    
-    public List<ServiceIntervalDTO> findByCriteria(List<Criterion> criterion, List<Order> orders);
+
 
 }
