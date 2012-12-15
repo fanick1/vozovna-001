@@ -68,4 +68,15 @@ public interface DriveDAO extends GenericDAO<Drive, Long> {
      * @throws IllegalStateException Throws if factory is not set.
      */
     public List<Drive> findByUser(User user);
+
+    /**
+     * Finds out whether the vehicle of given drive has currently any ongoing drive.
+     * 
+     * @param drive
+     * @return true if vehicle of this drive has no ongoing drive. false otherwise
+     * @throws IllegalArgumentException Throws if given drive is null or has set id but unexists
+     */
+    public boolean isVehicleFromDriveAvailable(Drive drive);
+
+
 }

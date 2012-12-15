@@ -138,14 +138,14 @@ public class ServiceIntervalServiceImpl implements ServiceIntervalService {
         return convertListOfIntervalsToListOfIntervalDTOs(result);
     }
 
-    @Override
-    @Transactional(readOnly = true)
-    public List<ServiceIntervalDTO> findByCriteria(List<Criterion> criterion, List<Order> orders) {
-
-        List<ServiceInterval> result = serviceIntervalDAO.findByCriteria(criterion, orders);
-
-        return convertListOfIntervalsToListOfIntervalDTOs(result);
-    }
+//    @Override
+//    @Transactional(readOnly = true)
+//    public List<ServiceIntervalDTO> findByCriteria(List<Criterion> criterion, List<Order> orders) {
+//
+//        List<ServiceInterval> result = serviceIntervalDAO.findByCriteria(criterion, orders);
+//
+//        return convertListOfIntervalsToListOfIntervalDTOs(result);
+//    }
 
     /**
      * Converts list of service intervals to list of service interval DTOs

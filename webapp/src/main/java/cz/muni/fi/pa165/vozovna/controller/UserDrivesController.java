@@ -3,50 +3,33 @@ package cz.muni.fi.pa165.vozovna.controller;
 import cz.muni.fi.pa165.vozovna.dto.DriveDTO;
 import cz.muni.fi.pa165.vozovna.dto.UserDTO;
 import cz.muni.fi.pa165.vozovna.enums.DriveStateEnum;
-import java.security.Principal;
-
-
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-
 import cz.muni.fi.pa165.vozovna.service.DriveService;
 import cz.muni.fi.pa165.vozovna.service.UserService;
 import cz.muni.fi.pa165.vozovna.validators.DriveFinishedValidator;
+import java.security.Principal;
 import java.util.LinkedList;
 import java.util.List;
 import javax.servlet.http.HttpSession;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.hibernate.criterion.Criterion;
-import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 import org.joda.time.DateTime;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 public class UserDrivesController {
 
-//    protected final Log logger = LogFactory.getLog(getClass());
-//    
-//    @Autowired
-//    DriveService driveService;
-//
-//    @RequestMapping(value = "/drives", method = RequestMethod.GET)
-//    public String userDrives(HttpServletRequest request, ModelMap model, Principal principal) {
-//        
-//        //model.put("drives", driveService.findByUser(user));
-//        logger.debug("tajcto");
-//
-//        return "drives";
-//    }
     protected final Log logger = LogFactory.getLog(getClass());
     @Autowired
     DriveService driveService;
@@ -63,27 +46,20 @@ public class UserDrivesController {
      * @param model
      * @param principal
      * @return
-     * @throws PageNotFoundException
      */
     @RequestMapping(value = "/drives", method = RequestMethod.GET)
     public String viewVehiclesList(ModelMap model, Principal principal) {
         //get current User
         String principalName = SecurityContextHolder.getContext().getAuthentication().getName();
         if (principalName == null) {
-            //throw new PageNotFoundException("Couldn't get current user's username.");
+            return "redirect:login";
         }
         UserDTO user = userService.getByUsername(principalName);
         if (user == null) {
             //throw new PageNotFoundException("Current user doesn't exist.");
         }
 
-        // find drives
-        List<Criterion> crits = new LinkedList<>();
-        crits.add(Restrictions.eq("user.id", user.getId()));
-        List<Order> orders = new LinkedList<>();
-        orders.add(Order.desc("dateFrom"));
-        List<DriveDTO> drives = driveService.findByCriteria(crits, orders);
-
+        List<DriveDTO> drives = driveService.findByUser(user);
         model.put("drives", drives);
 
         return "/drives/index";
@@ -142,7 +118,7 @@ public class UserDrivesController {
         // check user's permission
         UserDTO currentUser = getCurrentUser();
         if (currentUser == null) {
-            // throw new PageNotFoundException("Current user didn't found.");
+            return "redirect:login";
         }
         if (drive.getUser().getId() != currentUser.getId()) {
             // throw new PageNotFoundException("User can't change state of foreign drive.");
@@ -166,13 +142,10 @@ public class UserDrivesController {
             session.setAttribute("error", "drives.msg.start.tooLate");
             return "redirect:/drives";
         }
-        // is vehicle available
-        List<Criterion> crits = new LinkedList<>();
-        crits.add(Restrictions.eq("vehicle.id", drive.getVehicle().getId()));
-        crits.add(Restrictions.eq("state", DriveStateEnum.ONGOING));
-        List<DriveDTO> unfinishedDrives = driveService.findByCriteria(crits, null);
-        if (unfinishedDrives.size() > 0) {
-            // vehicle is still not returned
+        
+        boolean isVehicleAvailable = driveService.isVehicleFromDriveAvailable(drive);
+        if (!isVehicleAvailable) {
+            // vehicle hasn't been returned yet
             session.setAttribute("error", "drives.msg.start.notReturnedVehicle");
             return "redirect:/drives";
         }
@@ -181,7 +154,6 @@ public class UserDrivesController {
         drive.setState(DriveStateEnum.ONGOING);
         driveService.update(drive);
         session.setAttribute("message", "drives.msg.start.successful");
-
 
         return "redirect:/drives";
     }

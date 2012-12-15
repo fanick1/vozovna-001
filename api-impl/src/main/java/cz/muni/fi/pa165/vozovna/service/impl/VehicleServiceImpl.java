@@ -110,14 +110,14 @@ public class VehicleServiceImpl implements VehicleService {
         return convertListOfVehiclesToListOfVehicleDTOs(vehicles);
     }
 
-    @Override
-    @Transactional(readOnly = true)
-    public List<VehicleDTO> findByCriteria(List<Criterion> criterion, List<Order> orders) {
-
-        List<Vehicle> result = vehicleDAO.findByCriteria(criterion, orders);
-
-        return convertListOfVehiclesToListOfVehicleDTOs(result);
-    }
+//    @Override
+//    @Transactional(readOnly = true)
+//    public List<VehicleDTO> findByCriteria(List<Criterion> criterion, List<Order> orders) {
+//
+//        List<Vehicle> result = vehicleDAO.findByCriteria(criterion, orders);
+//
+//        return convertListOfVehiclesToListOfVehicleDTOs(result);
+//    }
 
     /**
      * Converts list of vehicles to list of vehicle DTOs

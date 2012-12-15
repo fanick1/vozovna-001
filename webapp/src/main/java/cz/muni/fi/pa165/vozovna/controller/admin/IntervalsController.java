@@ -1,13 +1,15 @@
 package cz.muni.fi.pa165.vozovna.controller.admin;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
-
 import cz.muni.fi.pa165.vozovna.dto.ServiceIntervalDTO;
 import cz.muni.fi.pa165.vozovna.dto.VehicleDTO;
 import cz.muni.fi.pa165.vozovna.editors.DateListEditor;
-import cz.muni.fi.pa165.vozovna.enums.UserClassEnum;
+import cz.muni.fi.pa165.vozovna.service.ServiceIntervalService;
 import cz.muni.fi.pa165.vozovna.service.VehicleService;
+import cz.muni.fi.pa165.vozovna.validators.ServiceIntervalValidator;
+import java.util.Date;
+import java.util.List;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,14 +19,6 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
-
-import cz.muni.fi.pa165.vozovna.service.ServiceIntervalService;
-import cz.muni.fi.pa165.vozovna.validators.ServiceIntervalValidator;
-
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
 
 @Controller
 @SessionAttributes("intervalDTO")
@@ -44,46 +38,11 @@ public class IntervalsController {
         binder.registerCustomEditor(List.class, new DateListEditor());
  
     }
-    
-    private void initData() {
-        VehicleDTO vehicle = new VehicleDTO();
-        vehicle.setBrand("dsgds");
-        vehicle.setDistanceCount(23);
-        vehicle.setEngineType("235");
-        vehicle.setType("ewgre");
-        vehicle.setUserClass(UserClassEnum.EMPLOYEE);
-        vehicle.setVin("dfhgfdh");
-        vehicle.setYearMade(2011);
 
-        this.vehicleService.create(vehicle);
-
-        ServiceIntervalDTO interval = new ServiceIntervalDTO();
-        interval.setDescription("hre");
-        interval.setInspectionInterval(4);
-        interval.setVehicle(vehicle);
-
-        try {
-            SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy");
-            List<Date> dates = new ArrayList<>();
-            dates.add(dateFormat.parse("11.3.2012"));
-            dates.add(dateFormat.parse("14.4.2012"));
-            interval.setDated(dates);
-        } catch (Exception ex) {
-            System.out.println("Error while initializing data: " + ex.getMessage());
-        }
-
-        this.serviceIntervalService.create(interval);
-    }
 
     @RequestMapping(value = "/admin/intervals/index", method = RequestMethod.GET)
     public String printWelcome(HttpServletRequest request, ModelMap model) {
-
-        if(this.serviceIntervalService.findAll().size() == 0) {
-            this.initData();
-        }
-
-        model.put("intervals", this.serviceIntervalService.findAll());
-
+        model.put("intervals", serviceIntervalService.findAll());
         return "/admin/intervals/index";
     }
 
@@ -91,9 +50,9 @@ public class IntervalsController {
     @RequestMapping(value = "/admin/intervals/add", method = RequestMethod.GET)
     public String viewEmptyForm(HttpServletRequest request, ModelMap model) {
 
-        System.out.println("In add method");
+        
         String vehicleID = request.getParameter("vehicleId");
-        System.out.println("Vehicle ID: " + vehicleID);
+        logger.info("Vehicle ID: " + vehicleID);
         if(vehicleID == null) {
             this.logger.fatal("Cannot find vehicle");
             return "admin/intervals/index";

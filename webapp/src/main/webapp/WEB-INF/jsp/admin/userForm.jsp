@@ -32,7 +32,7 @@
                     <col style="width: 200px" />
                     <col style="width: 350px" />
                 </colgroup>
-                <c:if test="${user.id != null}">
+                <c:if test="${not empty user.id}">
                     <tr>
                         <td><form:label path="id"><fmt:message key="user.labels.id" />: </form:label></td>
                         <td class="value"><form:hidden path="id" />${user.id}</td>

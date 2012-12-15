@@ -1,16 +1,13 @@
 package cz.muni.fi.pa165.vozovna.ws;
 
+import cz.muni.fi.pa165.vozovna.dto.UserDTO;
+import cz.muni.fi.pa165.vozovna.service.UserService;
 import java.util.List;
-
+import javax.jws.WebMethod;
+import javax.jws.WebService;
 import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.Order;
 import org.springframework.beans.factory.annotation.Autowired;
-
-import cz.muni.fi.pa165.vozovna.dto.UserDTO;
-import cz.muni.fi.pa165.vozovna.service.UserService;
-
-import javax.jws.WebMethod;
-import javax.jws.WebService;
 
 @WebService
 public class UserWebServiceImpl implements UserWebService{
@@ -54,12 +51,6 @@ public class UserWebServiceImpl implements UserWebService{
 		return userServiceDelegate.findByLastName(lastName);
 	}
 
-	@Override
-	@WebMethod
-	public void generateTestDataIfNoneExist() {
-		throw new UnsupportedOperationException();
-		
-	}
 
 	@Override
 	@WebMethod
@@ -67,10 +58,4 @@ public class UserWebServiceImpl implements UserWebService{
 		return userServiceDelegate.getByUsername(username);
 	}
 
-	@Override
-	@WebMethod(exclude=true)
-	public List<UserDTO> findByCriteria(List<Criterion> criterion,
-			List<Order> orders) {
-		throw new UnsupportedOperationException();
-	}
 }

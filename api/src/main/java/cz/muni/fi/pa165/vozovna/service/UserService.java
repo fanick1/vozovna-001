@@ -64,10 +64,6 @@ public interface UserService {
      * @throws DataAccessException          Throws if a data access exception occurred.
      */
     public List<UserDTO> findByLastName(String lastName);
-
-    public void generateTestDataIfNoneExist();
-    
-    public List<UserDTO> findByCriteria(List<Criterion> criterion, List<Order> orders);
     
     public UserDTO getByUsername(String username);
 
