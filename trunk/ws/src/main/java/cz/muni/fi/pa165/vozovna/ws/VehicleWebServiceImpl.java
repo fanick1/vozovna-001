@@ -1,19 +1,14 @@
 package cz.muni.fi.pa165.vozovna.ws;
 
-import java.util.List;
-
-import javax.jws.WebMethod;
-import javax.jws.WebService;
-
-import org.hibernate.criterion.Criterion;
-import org.hibernate.criterion.Order;
-import org.joda.time.DateTime;
-import org.springframework.beans.factory.annotation.Autowired;
-
 import cz.muni.fi.pa165.vozovna.dto.VehicleDTO;
 import cz.muni.fi.pa165.vozovna.entity.User;
 import cz.muni.fi.pa165.vozovna.enums.UserClassEnum;
 import cz.muni.fi.pa165.vozovna.service.VehicleService;
+import java.util.List;
+import javax.jws.WebMethod;
+import javax.jws.WebService;
+import org.joda.time.DateTime;
+import org.springframework.beans.factory.annotation.Autowired;
 
 @WebService
 public class VehicleWebServiceImpl implements VehicleWebService {

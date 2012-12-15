@@ -3,15 +3,12 @@
                                          "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
 
 <hibernate-configuration>
-	<session-factory>
-<!-- 	<session-factory name="HibernateSessionFactory"> -->
+    <session-factory>
 
-		<mapping class="cz.muni.fi.pa165.vozovna.entity.Drive" />
-		<mapping class="cz.muni.fi.pa165.vozovna.entity.User" />
+        <mapping class="cz.muni.fi.pa165.vozovna.entity.Drive" />
+        <mapping class="cz.muni.fi.pa165.vozovna.entity.User" />
         <mapping class="cz.muni.fi.pa165.vozovna.entity.Vehicle" />
         <mapping class="cz.muni.fi.pa165.vozovna.entity.ServiceInterval" />
 
-
-	</session-factory>
+    </session-factory>
 </hibernate-configuration>
-

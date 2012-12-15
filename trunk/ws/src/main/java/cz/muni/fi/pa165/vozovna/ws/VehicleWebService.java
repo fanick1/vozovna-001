@@ -1,15 +1,12 @@
 package cz.muni.fi.pa165.vozovna.ws;
 
-import java.util.List;
-
-import javax.jws.WebMethod;
-import javax.jws.WebService;
-
-import org.joda.time.DateTime;
-
 import cz.muni.fi.pa165.vozovna.dto.VehicleDTO;
 import cz.muni.fi.pa165.vozovna.entity.User;
 import cz.muni.fi.pa165.vozovna.service.VehicleService;
+import java.util.List;
+import javax.jws.WebMethod;
+import javax.jws.WebService;
+import org.joda.time.DateTime;
 
 @WebService
 public interface VehicleWebService extends VehicleService{
