@@ -20,7 +20,7 @@ import org.springframework.transaction.annotation.Transactional;
 /**
  * Generator of developement data. Not to be used in production.
  *
- * @author Eva Neduchalová, uèo 359893
+ * @author Eva Neduchalova, uco 359893
  */
 public class DevelopementDataGeneratorImpl implements DevelopementDataGenerator {
 
