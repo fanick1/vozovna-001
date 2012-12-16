@@ -16,12 +16,13 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.encoding.PasswordEncoder;
 import org.springframework.transaction.annotation.Transactional;
-
+import org.springframework.stereotype.Service;
 /**
  * Generator of developement data. Not to be used in production.
  *
  * @author Eva Neduchalova, uco 359893
  */
+ @Service
 public class DevelopementDataGeneratorImpl implements DevelopementDataGenerator {
 
     @Autowired
@@ -129,7 +130,7 @@ public class DevelopementDataGeneratorImpl implements DevelopementDataGenerator 
             vehicleDAO.create(tatra);
 
             SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy");
-            List<Date> dates = new ArrayList();
+            List<Date> dates = new ArrayList<>();
             try {
                 dates.add(dateFormat.parse("17.5.2012"));
                 dates.add(dateFormat.parse("17.11.2012"));
@@ -144,7 +145,7 @@ public class DevelopementDataGeneratorImpl implements DevelopementDataGenerator 
             interval.setVehicle(fabia);
             serviceIntervalDAO.create(interval);
 
-            dates = new ArrayList();
+            dates = new ArrayList<>();
             try {
                 dates.add(dateFormat.parse("3.1.2012"));
                 dates.add(dateFormat.parse("3.4.2012"));
@@ -160,7 +161,7 @@ public class DevelopementDataGeneratorImpl implements DevelopementDataGenerator 
             interval.setVehicle(octavia);
             serviceIntervalDAO.create(interval);
 
-            dates = new ArrayList();
+            dates = new ArrayList<>();
             try {
                 dates.add(dateFormat.parse("3.1.2012"));
                 dates.add(dateFormat.parse("3.1.2013"));
@@ -175,7 +176,7 @@ public class DevelopementDataGeneratorImpl implements DevelopementDataGenerator 
             interval.setVehicle(tatra);
             serviceIntervalDAO.create(interval);
 
-            dates = new ArrayList();
+            dates = new ArrayList<>();
             try {
                 dates.add(dateFormat.parse("8.4.2012"));
                 dates.add(dateFormat.parse("8.4.2013"));

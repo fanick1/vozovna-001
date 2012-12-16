@@ -12,6 +12,7 @@
 
 	<properties>
 		<org.springframework.version>3.1.2.RELEASE</org.springframework.version>
+		<org.apache.cxf.version>2.7.1</org.apache.cxf.version>
 	</properties>
 	<build>
 		<plugins>
@@ -147,11 +148,11 @@
 			<version>1.2</version>
 		</dependency>
 
-		<!-- Spring Security ZAČ�?TEK -->
+		<!-- Spring Security ZACATEK -->
 		<dependency>
 			<groupId>org.springframework.security</groupId>
 			<artifactId>spring-security-core</artifactId>
-			<version>3.1.0.RELEASE</version>
+			<version>${org.springframework.version}</version>
 		 <type>jar</type>
 		</dependency>
 		<dependency>
@@ -171,8 +172,7 @@
 		</dependency>
 		<!-- Spring Security KONEC -->
 
-		<!-- Spring ZAČ�?TEK -->
-		<!-- TODO protřídit, co opravdu používám -->
+		<!-- Spring ZACATEK -->
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-core</artifactId>
@@ -245,18 +245,7 @@
 		<dependency>
 			<groupId>org.apache.cxf</groupId>
 			<artifactId>cxf-rt-frontend-jaxws</artifactId>
-			<version>2.7.2-SNAPSHOT</version>
+			<version>${org.apache.cxf.version}</version>
 		</dependency>
 	</dependencies>
-				
-<repositories>
-	<repository>
-		<id>apache-snapshots</id>
-		<name>Apache SNAPSHOT Repository</name>
-		<url>http://repository.apache.org/snapshots/</url>
-		<snapshots>
-			<enabled>true</enabled>
-		</snapshots>
-	</repository>
-</repositories>
 </project>
