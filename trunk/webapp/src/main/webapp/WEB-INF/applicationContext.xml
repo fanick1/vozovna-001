@@ -3,6 +3,7 @@
        xmlns:mvc="http://www.springframework.org/schema/mvc"
        xmlns:context="http://www.springframework.org/schema/context"
        xmlns:p="http://www.springframework.org/schema/p" xmlns:util="http://www.springframework.org/schema/util"
+       xmlns:jaxws="http://cxf.apache.org/jaxws"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
             http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
             http://www.springframework.org/schema/mvc
@@ -10,9 +11,10 @@
             http://www.springframework.org/schema/context 
             http://www.springframework.org/schema/context/spring-context-3.0.xsd
             http://www.springframework.org/schema/util
-			http://www.springframework.org/schema/util/spring-util-3.0.xsd"
+            http://www.springframework.org/schema/util/spring-util-3.0.xsd
+            http://cxf.apache.org/jaxws 
+            http://cxf.apache.org/schemas/jaxws.xsd"
        default-autowire="byName">
-
 
     <util:properties id="globalProperties" location="classpath:config.properties" />
     <context:property-placeholder properties-ref="globalProperties" />
@@ -24,6 +26,16 @@
     <context:component-scan base-package="cz.muni.fi.pa165.vozovna.entity" />
     <context:component-scan base-package="cz.muni.fi.pa165.vozovna.controller" />
 	<context:component-scan base-package="cz.muni.fi.pa165.vozovna.ws" />
+
+	<import resource="classpath:META-INF/cxf/cxf.xml" />
+	<import resource="classpath:META-INF/cxf/cxf-servlet.xml" />
+	
+	<bean id="userWS" class="cz.muni.fi.pa165.vozovna.ws.UserWebServiceImpl" autowire-candidate="false"/>
+	<bean id="vehicleWS" class="cz.muni.fi.pa165.vozovna.ws.VehicleWebServiceImpl" autowire-candidate="false"/>
+	
+	<jaxws:endpoint id="userWebService" implementor="#userWS" address="/UserWebService" />
+
+	<jaxws:endpoint id="vehicleWebService" implementor="#vehicleWS" address="/VehicleWebService" />
 
     <mvc:annotation-driven />
 

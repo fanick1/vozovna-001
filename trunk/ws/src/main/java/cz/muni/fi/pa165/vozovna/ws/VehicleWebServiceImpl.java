@@ -1,12 +1,12 @@
 package cz.muni.fi.pa165.vozovna.ws;
 
+import java.util.List;
+import javax.jws.WebMethod;
+import javax.jws.WebService;
 import cz.muni.fi.pa165.vozovna.dto.VehicleDTO;
 import cz.muni.fi.pa165.vozovna.entity.User;
 import cz.muni.fi.pa165.vozovna.enums.UserClassEnum;
 import cz.muni.fi.pa165.vozovna.service.VehicleService;
-import java.util.List;
-import javax.jws.WebMethod;
-import javax.jws.WebService;
 import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -14,7 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 public class VehicleWebServiceImpl implements VehicleWebService {
 
 	@Autowired
-	VehicleService vehicleServiceDelegate;
+	private	VehicleService vehicleServiceDelegate;
 	
 	@Override
 	@WebMethod
@@ -46,10 +46,9 @@ public class VehicleWebServiceImpl implements VehicleWebService {
 	public List<VehicleDTO> findAll() {
 		return vehicleServiceDelegate.findAll();
 	}
-
 	
 	@Override
-	@WebMethod(operationName="getAvailableVehiclesForUser",action="EFGH")
+	@WebMethod(operationName="getAvailableVehiclesForUser")
 	public List<VehicleDTO> getAvailableVehicles(User user, DateTime startDate,
 			DateTime endDate) {
 		
@@ -57,10 +56,14 @@ public class VehicleWebServiceImpl implements VehicleWebService {
 	}
 
 	@Override
-	@WebMethod(operationName="getAvailableVehiclesForUserClass",action="ABCD")
+	@WebMethod(operationName="getAvailableVehiclesForUserClass")
 	public List<VehicleDTO> getAvailableVehicles(UserClassEnum userClass,
 			DateTime startDate, DateTime endDate) {
 		return vehicleServiceDelegate.getAvailableVehicles(userClass, startDate, endDate);
+	}
+
+	public void setVehicleServiceDelegate(VehicleService vehicleServiceDelegate) {
+		this.vehicleServiceDelegate = vehicleServiceDelegate;
 	}
 
 }
