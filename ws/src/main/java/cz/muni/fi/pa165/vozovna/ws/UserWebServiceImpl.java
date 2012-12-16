@@ -49,4 +49,8 @@ public class UserWebServiceImpl implements UserWebService{
 		return userServiceDelegate.getByUsername(username);
 	}
 
+	public void setUserServiceDelegate(UserService userServiceDelegate) {
+		this.userServiceDelegate = userServiceDelegate;
+	}
+
 }
