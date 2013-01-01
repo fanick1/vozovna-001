@@ -5,20 +5,61 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <title><fmt:message key="vehicles.title" /></title>
     
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
-    <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.9.2/jquery-ui.min.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.9.2/jquery-ui.min.js"></script>
     <link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css" rel="stylesheet" type="text/css" />
     
     <script type="text/javascript">
-        //if (datefield.type!="date"){ //if browser doesn't support input type="date", initialize date picker widget:
-        $(function() {
-            $('input[type=text]').datepicker({
-            // specify the same format as the spec
-            dateFormat: 'yy-mm-dd'
+       $(function() {
+            // DATE FROM
+            // insert alt field
+            $('<input type="text" id="dateFrom">').insertBefore("#from");
+            // get date
+            var from = $('#from').val();
+            // convert to localized date format
+            var dateFrom = $.datepicker.parseDate('yy-mm-dd', from);
+            // put localized date to alt field
+            $('#dateFrom').val($.datepicker.formatDate('<fmt:message key="date.pattern.jquery.ui.datepicker"/>', dateFrom));
+            // hide original field
+            $("#from").hide();
+            // set datepicker
+            $('#dateFrom').datepicker({
+                dateFormat: '<fmt:message key="date.pattern.jquery.ui.datepicker"/>',
+                altFormat: 'yy-mm-dd',
+                altField: '#from'
             });
+            
+            // DATE TO
+            // insert alt field
+            $('<input type="text" id="dateTo">').insertBefore("#to");
+            // get date
+            var to = $('#to').val();
+            // convert to localized date format
+            var dateTo = $.datepicker.parseDate('yy-mm-dd', to);
+            // put localized date to alt field
+            $('#dateTo').val($.datepicker.formatDate('<fmt:message key="date.pattern.jquery.ui.datepicker"/>', dateTo));
+            // hide original field
+            $("#to").hide();
+            // set datepicker
+            $('#dateTo').datepicker({
+                dateFormat: '<fmt:message key="date.pattern.jquery.ui.datepicker"/>',
+                altFormat: 'yy-mm-dd',
+                altField: '#to'
+            });
+            
+       
         });
-        //}
+        
     </script>
+    <c:choose >
+        <c:when test="${pageContext.response.locale == 'cs'}">
+            <script type="text/javascript" src="<c:url value="/resources/js/jquery.ui.datepicker-cs.min.js" />"></script>
+        </c:when>
+        <c:when test="${pageContext.response.locale == 'sk'}">
+            <script type="text/javascript" src="<c:url value="/resources/js/jquery.ui.datepicker-sk.min.js" />"></script>
+        </c:when>    
+    </c:choose>
+   
     <style type="text/css">
         #choose-dates  {
             border:  0px none;

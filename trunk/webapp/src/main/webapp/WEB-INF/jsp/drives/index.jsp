@@ -24,6 +24,7 @@
     </script>
 </head>
 <body>
+    <fmt:message var="datePattern" key="date.pattern.joda" /> 
     <div>
         <a href="<c:url value="/vehicles" />"><fmt:message key="drives.reserveVehicle" /></a>
          | 
@@ -58,8 +59,8 @@
             <tr>
                 <td class="number">${item.id}</td>
                 <!-- < fmt : formatDate value="" / > --->
-                <td><joda:format pattern="d.M.yyyy" value="${item.dateFrom}"/></td>
-                <td><joda:format pattern="d.M.yyyy" value="${item.dateTo}"/></td>
+                <td><joda:format pattern="${datePattern}" value="${item.dateFrom}"/></td>
+                <td><joda:format pattern="${datePattern}" value="${item.dateTo}"/></td>
                 <td><fmt:message key="${item.state.code}" /></td>
                 <td class="number"><c:out value="${item.vehicle.id}"/></td>
                 <td><c:out value="${item.vehicle.brand}"/></td>

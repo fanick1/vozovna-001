@@ -27,6 +27,7 @@
     </script>
 </head>
 <body>  
+    <fmt:message var="datePattern" key="date.pattern.joda" /> 
     <div class="form">
 
         <form:form commandName="drive" method="post" id="drive-finish">
@@ -65,8 +66,8 @@
             </tr>
             <tr>
                 <td>${drive.id}</td>
-                <td><joda:format pattern="d.M.yyyy" value="${drive.dateFrom}"/></td>
-                <td><joda:format pattern="d.M.yyyy" value="${drive.dateTo}"/></td>
+                <td><joda:format pattern="${datePattern}" value="${drive.dateFrom}"/></td>
+                <td><joda:format pattern="${datePattern}" value="${drive.dateTo}"/></td>
             </tr>
         </table>
     </div>
