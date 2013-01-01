@@ -21,7 +21,7 @@
         <a href="<c:url value="/admin/drives/new/" />"><fmt:message key="drives.add" /></a>
     </div>
 
-
+    <fmt:message var="datePattern" key="date.pattern.joda" />
     <table class="grid">
     <colgroup>
             <col style="width: 40px;"/>
@@ -46,8 +46,8 @@
         <c:forEach items="${drives}" var="drive">
             <tr>
                 <td><c:out value="${drive.id}"/></td>
-                <td><joda:format pattern="d.M.yyyy" value="${drive.dateFrom}" /></td>
-                <td><joda:format pattern="d.M.yyyy" value="${drive.dateTo}" /></td>
+                <td><joda:format pattern="${datePattern}" value="${drive.dateFrom}" /></td>
+                <td><joda:format pattern="${datePattern}" value="${drive.dateTo}" /></td>
                 <td><fmt:message key="${drive.state.code}" /></td>
                 <td><c:out value="${drive.distance}"/></td>
                 <td><c:if test="${not empty drive.user != null}">

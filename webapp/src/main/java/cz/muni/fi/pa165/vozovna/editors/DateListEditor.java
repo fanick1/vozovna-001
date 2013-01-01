@@ -12,13 +12,43 @@ import java.util.List;
  */
 public class DateListEditor extends PropertyEditorSupport {
 
+    private String dateFormat;
+
+    public static final String DEFAULT_DATE_PATERN = "yyyy-MM-dd";
+    
+    public DateListEditor(String dateFormat) {
+        super();
+        setDateFormat(dateFormat);
+    }
+
+    public DateListEditor() {
+        super();
+        setDateFormat(null);
+    }
+
+    /**
+     * Sets date pattern
+     * 
+     * @param dateFormat Date pattern
+     * @see java.util.Date
+     */
+    public final void setDateFormat(String dateFormat) {
+        if (dateFormat == null) {
+            this.dateFormat = DEFAULT_DATE_PATERN;
+        } else {
+            this.dateFormat = dateFormat;
+        }
+    }
+    
+    
+    
     @Override
     public void setAsText(String text) throws IllegalArgumentException {
         if (text == null || text.isEmpty()) {
             setValue(null);
         } else {
             String[] lines = text.split("\n");
-            SimpleDateFormat sdf = new java.text.SimpleDateFormat("yyyy-MM-dd");
+            SimpleDateFormat sdf = new java.text.SimpleDateFormat(dateFormat);
             List<Date> dates = new LinkedList<>();
             for (String line : lines) {
                 if (line.equals("")) {
@@ -43,7 +73,7 @@ public class DateListEditor extends PropertyEditorSupport {
         } else {
             StringBuilder asText = new StringBuilder();
 
-            SimpleDateFormat sdf = new java.text.SimpleDateFormat("YYYY-MM-dd");
+            SimpleDateFormat sdf = new java.text.SimpleDateFormat(dateFormat);
             for (Date date : dates) {
                 asText.append(sdf.format(date)).append("\n");
             }

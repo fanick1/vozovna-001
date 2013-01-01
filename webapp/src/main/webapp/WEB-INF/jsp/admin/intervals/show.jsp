@@ -48,8 +48,9 @@
     <tr>
         <th><fmt:message key="interval.dated" />:</th>
         <td>
+           <fmt:message var="datePattern" key="date.pattern.date" /> 
             <c:forEach var="item" items="${interval.dated}">
-                ${item}<br>
+                <fmt:formatDate pattern="${datePattern}" value="${item}"/><br>
             </c:forEach>
             <a href="<c:url value="/admin/intervals/inspect?id=${interval.id}" />" class="inspect"><fmt:message key="admin.intervals.inspect" /></a>
         </td>
