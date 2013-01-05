@@ -1,8 +1,30 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <div style="text-align: right;">
     <fmt:message key="header.language" />
-    <a href="?language=en"><fmt:message key="header.language.english" /></a>
+  
+    <c:url value=""  var="pageUrl">
+        <c:forEach items="${param}" var="currentParam">
+            <c:if test="${currentParam.key != 'language'}">
+                <c:param name="${currentParam.key}" value="${currentParam.value}" />
+            </c:if>
+        </c:forEach>
+    </c:url>
+    <c:url value="${pageUrl}" var="pageUrlEn">
+        <c:param name="language" value="en" />
+    </c:url>
+    <c:url value="${pageUrl}" var="pageUrlCs">
+        <c:param name="language" value="cs" />
+    </c:url>
+    <c:url value="${pageUrl}" var="pageUrlSk">
+        <c:param name="language" value="sk" />
+    </c:url>
+    
+    <a href="${pageUrlEn}"><fmt:message key="header.language.english" /></a>
         | 
-        <a href="?language=cs"><fmt:message key="header.language.czech" /></a>
+        <a href="${pageUrlCs}"><fmt:message key="header.language.czech" /></a>
         | 
-        <a href="?language=sk"><fmt:message key="header.language.slovak" /></a>
+        <a href="${pageUrlSk}"><fmt:message key="header.language.slovak" /></a>
+
+            
+         
 </div>
