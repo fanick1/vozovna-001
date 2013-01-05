@@ -54,10 +54,10 @@
         
     </script>
     <c:choose >
-        <c:when test="${pageContext.response.locale == 'cs'}">
+        <c:when test="${pageContext.response.locale.language == 'cs'}">
             <script type="text/javascript" src="<c:url value="/resources/js/jquery.ui.datepicker-cs.min.js" />"></script>
         </c:when>
-        <c:when test="${pageContext.response.locale == 'sk'}">
+        <c:when test="${pageContext.response.locale.language == 'sk'}">
             <script type="text/javascript" src="<c:url value="/resources/js/jquery.ui.datepicker-sk.min.js" />"></script>
         </c:when>    
     </c:choose>
