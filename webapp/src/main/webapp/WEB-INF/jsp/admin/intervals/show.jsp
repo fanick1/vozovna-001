@@ -8,7 +8,12 @@
 
     <script type="text/javascript" src="http://code.jquery.com/jquery-latest.js"></script>
     <script type="text/javascript">
-
+        $("a.remove").live("click",function(event){
+            event.stopPropagation();
+            if(!confirm("<fmt:message key="admin.intervals.confirmDelete" />")) {
+                event.preventDefault();
+            }
+        });
         $("a.inspect").live("click",function(event){
             event.stopPropagation();
             if(!confirm("<fmt:message key="admin.intervals.confirmInspection" />")) {
@@ -63,6 +68,12 @@
 </table>
 
 <br/>
-<a href="<c:url value="/admin/intervals/index" />"><fmt:message key="intervals.list" /></a>
+<div class="inpage-nav">
+    <a href="<c:url value="/admin/intervals/index" />"><fmt:message key="intervals.list" /></a> |
+    <a href="<c:url value="/admin/intervals/inspect?id=${interval.id}" />" class="inspect"><fmt:message key="admin.intervals.inspect" /></a> | 
+    <a href="<c:url value="/admin/intervals/edit?id=${interval.id}" />"><fmt:message key="actions.edit" /></a> |
+    <a href="<c:url value="/admin/intervals/delete?id=${interval.id}" />" class="remove"><fmt:message key="actions.delete" /></a>
+</div>
+
 </body>
 </html>

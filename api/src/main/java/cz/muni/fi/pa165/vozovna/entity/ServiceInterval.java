@@ -11,6 +11,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Parameter;
 
@@ -41,11 +43,10 @@ public class ServiceInterval implements Serializable {
     /**
      * The dates when vehicle was inspected.
      */
-    @ElementCollection(fetch = FetchType.EAGER)
-    //@CollectionTable(name="SERVICEINTERVAL_DATED",joinColumns={@JoinColumn(name="SERVICEINTERVAL_ID")})
-    //@OrderBy("DATED DESC")
+    
+    @ElementCollection(targetClass=java.util.Date.class)
+    @Fetch(FetchMode.JOIN)
     @Temporal(javax.persistence.TemporalType.DATE)
-    // @Type(type = "org.jadira.usertype.dateandtime.joda.PersistentDateTime")
     private List<Date> dated;
     /**
      * The related vehicle
@@ -152,15 +153,16 @@ public class ServiceInterval implements Serializable {
 
     @Override
     public boolean equals(Object obj) {
-        if (this == obj) {
-            return true;
-        }
-        if (getId() == null) {
+        if (obj == null) {
             return false;
         }
-        if (obj instanceof ServiceInterval) {
-            return getId().equals(((ServiceInterval) obj).getId());
+        if (!(obj instanceof ServiceInterval)) {
+            return false;
         }
-        return false;
+        final ServiceInterval other = (ServiceInterval) obj;
+        if (this.id != other.id && (this.id == null || !this.id.equals(other.id))) {
+            return false;
+        }
+        return true;
     }
 }

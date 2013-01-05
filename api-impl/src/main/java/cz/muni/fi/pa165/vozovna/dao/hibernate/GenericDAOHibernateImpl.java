@@ -59,6 +59,7 @@ public abstract class GenericDAOHibernateImpl<T, PK extends Serializable> implem
     public List<T> findAll() {
         final Session session = sessionFactory.getCurrentSession();
         final Criteria crit = session.createCriteria(entityClass);
+        crit.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
         return crit.list();
     }
 

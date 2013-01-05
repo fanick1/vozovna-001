@@ -13,6 +13,16 @@
                 margin: 0 auto;
             }
         </style>
+        
+        <script type="text/javascript" src="http://code.jquery.com/jquery-latest.js"></script>
+        <script type="text/javascript">
+            $("a.remove").live("click",function(event){
+                event.stopPropagation();
+                if(!confirm("<fmt:message key="admin.vehicles.confirmDelete" />")) {
+                    event.preventDefault();
+                }       
+             });
+        </script>
     </head>
     <body>
         
@@ -55,7 +65,11 @@
                 <td><fmt:message key="${vehicle.userClass.code}" /></td>
             </tr>
         </table>
-            <br>
-            <a href="<c:url value="/admin/vehicles" />"><fmt:message key="vehicles.list" /></a>
+        <br>
+        <div class="inpage-nav">
+            <a href="<c:url value="/admin/vehicles" />"><fmt:message key="vehicles.list" /></a> |
+            <a href="<c:url value="/admin/vehicles/edit?id=${vehicle.id}" />"><fmt:message key="actions.edit" /></a> | 
+            <a href="<c:url value="/admin/vehicles/delete?id=${vehicle.id}" />" class="remove"><fmt:message key="actions.delete" /></a>
+        </div>            
     </body>
 </html>

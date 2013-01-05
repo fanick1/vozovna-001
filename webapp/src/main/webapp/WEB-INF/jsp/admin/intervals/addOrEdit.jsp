@@ -20,7 +20,7 @@
     <script type="text/javascript" src="http://ajax.microsoft.com/ajax/jquery.validate/1.7/jquery.validate.js"></script> 
     <script type="text/javascript"> 
         $(document).ready(function() { 
-            $("#vehicle-edit-form").validate({ 
+            $("#interval-edit-form").validate({ 
                 rules: { 
                     description:        {required:true},
                     inspectionInterval: {required:true, 
@@ -35,7 +35,9 @@
                                      }
                 } 
               }); 
-            }); 
+              
+              
+        }); 
             
         $("#interval-edit-form-cancel").live("click",function(event){
             
@@ -44,6 +46,47 @@
             }
         });
     </script>
+            
+    <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.9.2/jquery-ui.min.js"></script>
+
+    <script type="text/javascript">
+       // Localize field #dated
+       $(function() {
+            // Create alt localized field
+            // insert alt field
+            $('<textarea type="text" id="datedLocalized" rows="6"></textarea>').insertBefore("#dated");
+            // get date
+            var lines = $('#dated').val().split("\n");
+            var new_lines = [];
+            $.each(lines, function(index, value){
+                var date = $.datepicker.parseDate('yy-mm-dd', value);
+
+                new_lines.push($.datepicker.formatDate('<fmt:message key="date.pattern.jquery.ui.datepicker"/>', date));
+
+            });
+            $('#datedLocalized').val(new_lines.join("\n"));
+            // hide original field
+            $("#dated").hide();
+                   
+            
+        });
+        $(function() {
+            // Transform date from alt localized field into original
+            $("#interval-edit-form").submit(function(){ 
+                var lines = $('#datedLocalized').val().split("\n");
+                var new_lines = [];
+                $.each(lines, function(index, value){
+                    try {
+                        var date = $.datepicker.parseDate('<fmt:message key="date.pattern.jquery.ui.datepicker"/>', value);
+                        new_lines.push($.datepicker.formatDate('yy-mm-dd', date));
+                    }catch (error) {
+                        
+                    }
+              });
+              $('#dated').val(new_lines.join("\n"));
+            });
+       });
+    </script>        
     <style type="text/css" media="all">
         .detail {
             width: 600px;

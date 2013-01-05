@@ -135,16 +135,18 @@ public class ServiceIntervalDTO implements java.io.Serializable {
 
     @Override
     public boolean equals(Object obj) {
-        if (this == obj) {
-            return true;
-        }
-        if (getId() == null) {
+        if (obj == null) {
             return false;
         }
-        if (obj instanceof ServiceIntervalDTO) {
-            return getId().equals(((ServiceIntervalDTO) obj).getId());
+        if (!(obj instanceof ServiceIntervalDTO)) {
+            return false;
         }
-        return false;
+        final ServiceIntervalDTO other = (ServiceIntervalDTO) obj;
+        if (this.id != other.id && (this.id == null || !this.id.equals(other.id))) {
+            return false;
+        }
+        return true;
+      
     }
     
 }

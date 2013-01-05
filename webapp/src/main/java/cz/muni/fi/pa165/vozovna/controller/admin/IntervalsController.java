@@ -161,6 +161,6 @@ public class IntervalsController {
         dates.add(new Date());
         serviceIntervalService.update(interval);
         session.setAttribute("message", "admin.intervals.inspect.msg.successful");
-        return "redirect:/admin/intervals/index";
+        return "redirect:/admin/intervals/show?id=" + id;
     }
 }
