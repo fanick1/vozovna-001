@@ -25,9 +25,10 @@
 
 </head>
 <body onload='document.f.j_username.focus();'>
+    <%@ include file="/WEB-INF/jspf/header.jspf"%>
+    
     <div id="layout-body">
-        <%@ include file="/WEB-INF/jspf/header.jspf"%>
-
+        
         <h1>
             <fmt:message key="header.title" />
         </h1>
