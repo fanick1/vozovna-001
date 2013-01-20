@@ -1,0 +1,141 @@
+body {
+    font-size: small;
+    font-family: Tahoma, "Helvetica Neue", Helvetica, Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #e2f2fa;
+}
+
+
+h1,h2,h3 {
+
+    color: #3DA29B;
+}
+
+h1 {
+    color: #1f7b9a;
+}
+
+a {
+    text-decoration: none;
+    /*color: #5E5E5E;*/
+    color: #000000;
+    text-decoration: underline;
+}
+
+a:hover {
+    color: #A33030;
+}
+
+#wrapper {
+    padding-top: 50px;
+}
+
+.container {
+    width: 1000px;
+    margin: 0px auto;
+}
+
+#layout-body {
+    width: 750px;
+    margin: 0 auto;
+    text-align: left;
+    
+    
+}
+/* Header */
+#layout-header-wrapper {
+    margin: 0 auto;
+    width: 100%;
+    margin-bottom: 0px;
+    clear: left;
+    float: none;
+    overflow: visible;
+    /*background: #C5DA99 url("../img/img01.jpg") repeat;*/
+    /*height: 140px;*/
+}
+#layout-header-wrapper.user {
+    background: #ACD264;
+    background-color: #9ad8ed;
+}
+#layout-header {
+    width: 750px;
+    margin: 0 auto;
+    padding: 10px 50px;  
+    
+}
+#layout-header-lang-bar-wrapper {
+    background: url("../img/img02.jpg") repeat;
+    text-align: center;
+    color: #e3ecd0;
+}
+#layout-header-lang-bar {
+    width: 750px;
+    margin: 0 auto;
+    text-align: right;
+    padding: 10px 0px;
+}
+#layout-header-lang-bar a {
+    color: #FFFFFF;
+
+}
+#layout-header-lang-bar a:hover {
+    color: #D6E2F0;
+    text-decoration: none;
+}
+
+/* Menu */
+
+
+#menu ul {
+    
+}
+#menu li {
+}
+#menu a {
+    color: #FFFFFF;
+}
+
+
+
+
+
+
+table.grid tr {
+    border-bottom: 1px solid #1f7b9a;
+}
+table.grid th, table.grid td {
+    border: 1px solid #1f7b9a;
+    font-size: 14px;
+    cursor: default;
+}
+table.grid th {
+    color: #1f7b9a;
+    background-color: #9ad8ed;
+}
+table.grid td {
+    background-color: #edf8fb;
+}
+
+table.grid tr:nth-child(2n) td {
+    background-color: #f2fafc;
+}
+table.grid tr:hover td {
+    background-color: #cce4eb;   
+}
+.detail  {
+    background-color: #edf8fb;
+}
+
+.inpage-nav{
+    text-align: center;
+}
+.inpage-nav a {
+    padding: 5px;
+    display: inline-block;
+    
+}
+.inpage-nav a:hover {
+    background-color: #F2F7EA;
+    
+}
