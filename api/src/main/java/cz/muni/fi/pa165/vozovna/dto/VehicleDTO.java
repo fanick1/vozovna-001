@@ -31,6 +31,11 @@ public class VehicleDTO implements java.io.Serializable {
     private String engineType;
     
     /**
+     * If true, vehicle can be removed, because has not active rides.
+     */
+    private boolean canRemove;
+    
+    /**
      * Vehicle type
      */
     private String type;
@@ -104,6 +109,14 @@ public class VehicleDTO implements java.io.Serializable {
 
     public void setVin(String vin) {
         this.vin = vin;
+    }
+    
+    public boolean getCanRemove() {
+        return this.canRemove;
+    }
+    
+    public void setCanRemove(boolean canRemove) {
+        this.canRemove = canRemove;
     }
 
     public Integer getYearMade() {

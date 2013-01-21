@@ -2,6 +2,7 @@ package cz.muni.fi.pa165.vozovna.dao;
 
 import cz.muni.fi.pa165.vozovna.entity.Drive;
 import cz.muni.fi.pa165.vozovna.entity.User;
+import cz.muni.fi.pa165.vozovna.entity.Vehicle;
 import java.util.List;
 
 /**
@@ -78,5 +79,21 @@ public interface DriveDAO extends GenericDAO<Drive, Long> {
      */
     public boolean isVehicleFromDriveAvailable(Drive drive);
 
-
+    /**
+     * Returns future registered drives for vehicle.
+     * 
+     * @param vehicle
+     * @return Registered drives for vehicle.
+     * @throws IllegalArgumentException Throws of given vehicle is null or has set id but it does not exists.
+     */
+    public boolean hasVehicleDrives(Vehicle vehicle);
+    
+    /**
+     * Returns future registered drives for user.
+     * 
+     * @param user user, for which check drives in future
+     * @return Registered drives for user.
+     * @throws IllegalArgumentException Throws of given user is null or has set id but it does not exists.
+     */
+    boolean hasUserDrives(User user);
 }

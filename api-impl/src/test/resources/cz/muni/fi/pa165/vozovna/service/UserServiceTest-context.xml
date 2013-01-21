@@ -12,7 +12,12 @@
     <context:annotation-config />
 
 	 <bean id="userDao" class="org.mockito.Mockito" factory-method="mock"> 
-	 <constructor-arg value="cz.muni.fi.pa165.vozovna.dao.UserDAO"/> </bean>
+            <constructor-arg value="cz.muni.fi.pa165.vozovna.dao.UserDAO"/>
+         </bean>
+         
+         <bean id="driveDao" class="org.mockito.Mockito" factory-method="mock"> 
+            <constructor-arg value="cz.muni.fi.pa165.vozovna.dao.DriveDAO"/>
+         </bean>
 
     <!-- tested class -->
     <bean id="userService" class="cz.muni.fi.pa165.vozovna.service.impl.UserServiceImpl"/>
