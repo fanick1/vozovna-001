@@ -6,13 +6,15 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title><fmt:message key="admin.vehicles.title" /></title>
 
-        <script type="text/javascript" src="http://code.jquery.com/jquery-latest.js"></script>
+        <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
         <script type="text/javascript">
-            $("a.remove").live("click",function(event){
-                event.stopPropagation();
-                if(!confirm("<fmt:message key="admin.vehicles.confirmDelete" />")) {
-                    event.preventDefault();
-                }       
+            $(document).ready(function() { 
+                $("a.remove").on("click",function(){
+                    event.stopPropagation();
+                    if(!confirm("<fmt:message key="admin.vehicles.confirmDelete" />")) {
+                        event.preventDefault();
+                    }       
+                 });
              });
         </script>
     </head>
@@ -24,6 +26,7 @@
         <table class="grid">
             <colgroup>
                 <col style="width: 50px;" />
+                <col style="width: 130px;" />
                 <col />
                 <col />
                 <col />
@@ -31,6 +34,7 @@
             </colgroup>
             <tr>
                 <th><fmt:message key="vehicle.id" /></th>
+                <th><fmt:message key="vehicle.registrationPlate" /></th>
                 <th><fmt:message key="vehicle.brand" /></th>
                 <th><fmt:message key="vehicle.type" /></th>
                 <th><fmt:message key="vehicle.engineType" /></th>
@@ -39,6 +43,7 @@
             <c:forEach  items="${vehicles}" var="vehicle">
                 <tr>
                     <td class="number">${vehicle.id}</td>
+                    <td>${vehicle.registrationPlate}</td>
                     <td><c:out value="${vehicle.brand}"/></td>
                     <td><c:out value="${vehicle.type}"/></td>
                     <td><c:out value="${vehicle.engineType}"/></td>

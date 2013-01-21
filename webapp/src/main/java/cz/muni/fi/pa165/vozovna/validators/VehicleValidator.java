@@ -26,6 +26,7 @@ public class VehicleValidator implements Validator {
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "vin", "error.vehicle.vin");
         ValidationUtils.rejectIfEmpty(errors, "yearMade", "error.vehicle.yearMade");
         ValidationUtils.rejectIfEmpty(errors, "userClass", "error.vehicle.userClass");
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "registrationPlate", "error.vehicle.registrationPlate");
 
         VehicleDTO vehicle = (VehicleDTO) obj;
 
@@ -54,11 +55,13 @@ public class VehicleValidator implements Validator {
         if (vehicle.getEngineType().length() > 20) {
             errors.rejectValue("engineType", "error.vehicle.engineType.maxLength");
         }
-
         // vin
         if (vehicle.getVin().length() > 17) {
             errors.rejectValue("vin", "error.vehicle.vin.maxLength");
         }
-
+        // registration plate
+        if (vehicle.getRegistrationPlate().length() > 8) {
+            errors.rejectValue("registrationPlate", "error.vehicle.registrationPlate.maxLength");
+        }
     }
 }

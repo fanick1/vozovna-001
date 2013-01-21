@@ -82,6 +82,7 @@ public class VehicleServiceImpl implements VehicleService {
         entity.setVin(vehicle.getVin());
         entity.setYearMade(vehicle.getYearMade());
         entity.setUserClass(vehicle.getUserClass());
+        entity.setRegistrationPlate(vehicle.getRegistrationPlate());
 
         vehicleDAO.update(entity);
         vehicle.fromVehicle(entity);

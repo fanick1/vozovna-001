@@ -578,6 +578,7 @@ table.grid th, table.grid td {
     text-align: left;
     font-size: 14px;
     cursor: default;
+    line-height: 130%;
 }
 table.grid th {
     font-weight: 600;
@@ -661,4 +662,8 @@ table.grid tr:hover td {
 .inpage-nav a:hover {
     background-color: #F2F7EA;
     
+}
+.registrationPlate {
+    
+    color: #979797;
 }

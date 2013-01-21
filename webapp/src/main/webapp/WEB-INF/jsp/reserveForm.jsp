@@ -6,13 +6,15 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <title><fmt:message key="vehicles.title" /></title>
 
-    <script type="text/javascript" src="http://code.jquery.com/jquery-latest.js"></script>
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
     <script type="text/javascript" src="http://ajax.microsoft.com/ajax/jquery.validate/1.7/jquery.validate.js"></script>
     <script type="text/javascript">
-        $("#drive-create-cancel").live("click",function(event){
-            if(confirm("<fmt:message key="user.drive.confirmLeave" />")) {
-                window.location = "<c:url value="/vehicles" />";
-            }
+        $(function() {
+            $("#drive-create-cancel").on("click",function(){
+                if(confirm("<fmt:message key="user.drive.confirmLeave" />")) {
+                    window.location = "<c:url value="/vehicles" />";
+                }
+            });
         });
     </script>
     <style type="text/css" media="all">

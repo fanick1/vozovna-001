@@ -5,21 +5,20 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <title>
-        <!--<fmt:message key="admin.vehicles.title" /> : -->
         <c:choose>
-            <c:when test="${model.vehicle.id == null}">
-                <fmt:message key="admin.vehicles.add.title" />
+            <c:when test="${model.intervalDTO.id == null}">
+                <fmt:message key="admin.intervals.add.title" />
             </c:when>
             <c:otherwise>
-                <fmt:message key="admin.vehicles.edit.title" />
+                <fmt:message key="admin.intervals.edit.title" />
             </c:otherwise>
         </c:choose>
     </title>
 
-     <script type="text/javascript" src="http://code.jquery.com/jquery-latest.js"></script> 
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script> 
     <script type="text/javascript" src="http://ajax.microsoft.com/ajax/jquery.validate/1.7/jquery.validate.js"></script> 
     <script type="text/javascript"> 
-        $(document).ready(function() { 
+       $(function() {
             $("#interval-edit-form").validate({ 
                 rules: { 
                     description:        {required:true},
@@ -36,15 +35,14 @@
                 } 
               }); 
               
-              
+            $("#interval-edit-form-cancel").on("click",function(){
+                if(confirm("<fmt:message key="admin.vehicles.confirmLeave" />")) {
+                    window.location = "<c:url value="/admin/intervals/index" />";
+                }
+            });  
         }); 
             
-        $("#interval-edit-form-cancel").live("click",function(event){
-            
-            if(confirm("<fmt:message key="admin.vehicles.confirmLeave" />")) {
-                window.location = "<c:url value="/admin/intervals/index" />";
-            }
-        });
+        
     </script>
             
     <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.9.2/jquery-ui.min.js"></script>

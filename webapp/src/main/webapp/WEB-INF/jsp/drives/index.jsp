@@ -6,21 +6,22 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <title><fmt:message key="drives.title" /></title>
     
-    <script type="text/javascript" src="http://code.jquery.com/jquery-latest.js"></script>
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
     <script type="text/javascript">
-        $("a.link-drive-cancel").live("click",function(event){
-            event.stopPropagation();
-            if(!confirm("<fmt:message key="drives.confirm.cancel" />")) {
-                event.preventDefault();
-            }       
+        $(function() {
+            $("a.link-drive-cancel").on("click",function(){
+                event.stopPropagation();
+                if(!confirm("<fmt:message key="drives.confirm.cancel" />")) {
+                    event.preventDefault();
+                }       
+             });
+             $("a.link-drive-start").on("click",function(){
+                event.stopPropagation();
+                if(!confirm("<fmt:message key="drives.confirm.start" />")) {
+                    event.preventDefault();
+                }       
+             });
          });
-         $("a.link-drive-start").live("click",function(event){
-            event.stopPropagation();
-            if(!confirm("<fmt:message key="drives.confirm.start" />")) {
-                event.preventDefault();
-            }       
-         });
-         
     </script>
 </head>
 <body>
@@ -37,11 +38,11 @@
     </div>
     <table class="grid">
         <colgroup>
-            <col style="width: 90px;" />
+            <col style="width: 60px;" />
             <col style="width: 100px;" />
             <col style="width: 100px;" />
             <col style="width: 100px;" />
-            <col style="width: 80px;" />
+            <col style="width: 250px;" />
             <col style="min-width: 100px;" />
         </colgroup>
         <tr>
@@ -50,8 +51,7 @@
             <th><fmt:message key="drive.dateTo" /></th>
             <th><fmt:message key="drive.state" /></th>
             <th><fmt:message key="drive.vehicle" /></th>
-            <th><fmt:message key="vehicle.brand" /></th>
-            <th><fmt:message key="vehicle.type" /></th>
+            
             <th><fmt:message key="drive.actions" /></th>
         </tr>
         
@@ -62,9 +62,7 @@
                 <td><joda:format pattern="${datePattern}" value="${item.dateFrom}"/></td>
                 <td><joda:format pattern="${datePattern}" value="${item.dateTo}"/></td>
                 <td><fmt:message key="${item.state.code}" /></td>
-                <td class="number"><c:out value="${item.vehicle.id}"/></td>
-                <td><c:out value="${item.vehicle.brand}"/></td>
-                <td><c:out value="${item.vehicle.type}"/></td>
+                <td> #<c:out value="${item.vehicle.id}"/>: <span class="registrationPlate">[<c:out value="${item.vehicle.registrationPlate}"/>]</span> <c:out value="${item.vehicle.brand}"/> <c:out value="${item.vehicle.type}"/></td>
                 <c:choose>
                     <c:when test="${item.state.name == 'reserved'}">
                         <td>

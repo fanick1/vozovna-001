@@ -23,7 +23,7 @@ public abstract class VehicleDAOTest extends AbstractGenericApiTest{
     }
     
     private static Vehicle createTestVehicle(String brand, int distanceCount, String engineType,
-            String type, UserClassEnum userClass, String vin, int year) {
+            String type, UserClassEnum userClass, String vin, int year, String registrationPlate) {
         Vehicle vehicle = new Vehicle();
         vehicle.setBrand(brand);
         vehicle.setDistanceCount(distanceCount);
@@ -32,6 +32,8 @@ public abstract class VehicleDAOTest extends AbstractGenericApiTest{
         vehicle.setUserClass(userClass);
         vehicle.setVin(vin);
         vehicle.setYearMade(year);
+        vehicle.setRegistrationPlate(registrationPlate);
+        
         return vehicle;
     }
 
@@ -40,7 +42,7 @@ public abstract class VehicleDAOTest extends AbstractGenericApiTest{
      */
     @Test
     public void testCreateAndGetById() {
-            Vehicle mercedes = VehicleDAOTest.createTestVehicle("Mercedes", 20000, "R4 Diesel", "E", UserClassEnum.PRESIDENT, "2a-447i-882a45", 2009);
+            Vehicle mercedes = VehicleDAOTest.createTestVehicle("Mercedes", 20000, "R4 Diesel", "E", UserClassEnum.PRESIDENT, "2a-447i-882a45", 2009, "1A3 1111");
             this.vehicleDao.create(mercedes);
             Vehicle loaded = this.vehicleDao.getById(mercedes.getId());
             Assert.assertEquals("Inserted and loaded vehicles should be same.", mercedes, loaded);
@@ -51,7 +53,7 @@ public abstract class VehicleDAOTest extends AbstractGenericApiTest{
      */
     @Test
     public void testRemove() {
-            Vehicle mercedes = VehicleDAOTest.createTestVehicle("Mercedes", 20000, "R4 Diesel", "E", UserClassEnum.PRESIDENT, "2a-447i-882a45", 2009);
+            Vehicle mercedes = VehicleDAOTest.createTestVehicle("Mercedes", 20000, "R4 Diesel", "E", UserClassEnum.PRESIDENT, "2a-447i-882a45", 2009, "2B5 2013");
             this.vehicleDao.create(mercedes);
             Long id = mercedes.getId();
             System.out.println("Log: vehicle [" + id + "] created!");
@@ -70,7 +72,7 @@ public abstract class VehicleDAOTest extends AbstractGenericApiTest{
      */
     @Test
     public void testUpdate() {
-            Vehicle mercedes = VehicleDAOTest.createTestVehicle("Mercedes", 20000, "R4 Diesel", "E", UserClassEnum.PRESIDENT, "2a-447i-882a45", 2009);
+            Vehicle mercedes = VehicleDAOTest.createTestVehicle("Mercedes", 20000, "R4 Diesel", "E", UserClassEnum.PRESIDENT, "2a-447i-882a45", 2009, "2B5 2013");
             this.vehicleDao.create(mercedes);
             Long id = mercedes.getId();
 
@@ -86,8 +88,8 @@ public abstract class VehicleDAOTest extends AbstractGenericApiTest{
      */
     @Test
     public void testFindAll() {
-            Vehicle mercedes1 = VehicleDAOTest.createTestVehicle("Mercedes", 20000, "R4 Diesel", "E", UserClassEnum.PRESIDENT, "2a-447i-882a45", 2009);
-            Vehicle mercedes2 = VehicleDAOTest.createTestVehicle("Mercedes", 20000, "R4 Diesel", "C", UserClassEnum.PRESIDENT, "98-447i-883345", 2009);
+            Vehicle mercedes1 = VehicleDAOTest.createTestVehicle("Mercedes", 20000, "R4 Diesel", "E", UserClassEnum.PRESIDENT, "2a-447i-882a45", 2009, "2B5 2013");
+            Vehicle mercedes2 = VehicleDAOTest.createTestVehicle("Mercedes", 20000, "R4 Diesel", "C", UserClassEnum.PRESIDENT, "98-447i-883345", 2009, "1A1 1111");
             this.vehicleDao.create(mercedes1);
             this.vehicleDao.create(mercedes2);
 

@@ -5,13 +5,15 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <title><fmt:message key="admin.users.title" /></title>
-    <script type="text/javascript" src="http://code.jquery.com/jquery-latest.js"></script>
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
     <script type="text/javascript">
-        $("a.remove").live("click",function(event){
-            event.stopPropagation();
-            if(!confirm("<fmt:message key="admin.users.confirm.delete" />")) {
-                event.preventDefault();
-            }       
+        $(document).ready(function() { 
+            $("a.remove").on("click", function(){
+                event.stopPropagation();
+                if(!confirm("<fmt:message key="admin.users.confirm.delete" />")) {
+                    event.preventDefault();
+                }       
+             });
          });
     </script>
 </head>

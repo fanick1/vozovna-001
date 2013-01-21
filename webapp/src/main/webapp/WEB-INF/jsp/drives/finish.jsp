@@ -6,22 +6,22 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <title><fmt:message key="drives.finish.title" /></title>
 
-    <script type="text/javascript" src="http://code.jquery.com/jquery-latest.js"></script> 
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script> 
           <script type="text/javascript" src="http://ajax.microsoft.com/ajax/jquery.validate/1.7/jquery.validate.js"></script> 
           <script type="text/javascript"> 
-            $(document).ready(function() { 
-            $("#drive-finish").validate({ 
-                rules: { 
-                    distance: { required:   true, 
-                                number:     true,
-                                min:        0}
-                    }, 
-                messages: { 
-                    distance: 	{required:  " <fmt:message key="error.drive.distance" />", 
-                                 number:    " <fmt:message key="error.drive.distance.number" />",
-                                 min:       " <fmt:message key="error.drive.distance.gtZero" />"}
-                    } 
-              }); 
+            $(function() {
+                $("#drive-finish").validate({ 
+                    rules: { 
+                        distance: { required:   true, 
+                                    number:     true,
+                                    min:        0}
+                        }, 
+                    messages: { 
+                        distance: 	{required:  " <fmt:message key="error.drive.distance" />", 
+                                     number:    " <fmt:message key="error.drive.distance.number" />",
+                                     min:       " <fmt:message key="error.drive.distance.gtZero" />"}
+                        } 
+                  }); 
             }); 
 
     </script>
@@ -80,17 +80,16 @@
             </colgroup>
             <tr>
                 <th><fmt:message key="vehicle" /></th>
+                <th><fmt:message key="vehicle.registrationPlate" /></th>
                 <th><fmt:message key="vehicle.brand" /></th>
                 <th><fmt:message key="vehicle.type" /></th>
-                <th><fmt:message key="vehicle.vin" /></th>
-
             </tr>
             <tr>
                 <td><c:out value="${drive.vehicle.id}"/></td>
+                <td><c:out value="${drive.vehicle.registrationPlate}"/></td>                
                 <td><c:out value="${drive.vehicle.brand}"/></td>
                 <td><c:out value="${drive.vehicle.type}"/></td>
-                <td><c:out value="${drive.vehicle.vin}"/></td>
-            </tr>
+           </tr>
         </table>
     </div>
     <br/>
