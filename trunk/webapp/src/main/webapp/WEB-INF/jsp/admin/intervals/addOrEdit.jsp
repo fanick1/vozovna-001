@@ -6,7 +6,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <title>
         <c:choose>
-            <c:when test="${model.intervalDTO.id == null}">
+            <c:when test="${intervalDTO.id == null}">
                 <fmt:message key="admin.intervals.add.title" />
             </c:when>
             <c:otherwise>
@@ -132,10 +132,14 @@
             <tr>
                 <td><form:label path="vehicle"><fmt:message key="interval.vehicle" />:</form:label></td>
                 <td>
-                    <form:input readonly="true" path="vehicle.fullName" maxlength="40" />
+                    <form:input readonly="true" path="vehicle.fullName" maxlength="80" />
                     <form:errors path="vehicle" cssClass="error" />
                 </td>
-                <td><a href="<c:url value="/admin/intervals/vehicleSelect2?intervalId=${intervalDTO.id}" />"><fmt:message key="admin.intervals.vehicleSelect" /></a></td>
+                <td>
+                    <c:if test="${intervalDTO.id != null}">
+                        <a href="<c:url value="/admin/intervals/vehicleSelect2?intervalId=${intervalDTO.id}" />"><fmt:message key="admin.intervals.vehicleSelect" /></a>
+                    </c:if>
+                </td>
             </tr>
             <tr>
                 <td><form:label path="inspectionInterval"><fmt:message key="interval.inspectionInterval" />:</form:label></td>

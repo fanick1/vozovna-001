@@ -5,9 +5,8 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <title>
-        <!--<fmt:message key="admin.vehicles.title" /> : -->
         <c:choose>
-            <c:when test="${model.vehicle.id == null}">
+            <c:when test="${vehicleDTO.id == null}">
 				<fmt:message key="admin.vehicles.add.title" />		
             </c:when>                  
             <c:otherwise>
