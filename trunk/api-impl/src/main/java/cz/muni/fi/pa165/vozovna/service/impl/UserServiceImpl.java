@@ -1,5 +1,6 @@
 package cz.muni.fi.pa165.vozovna.service.impl;
 
+import cz.muni.fi.pa165.vozovna.dao.DriveDAO;
 import cz.muni.fi.pa165.vozovna.dao.UserDAO;
 import cz.muni.fi.pa165.vozovna.dto.UserDTO;
 import cz.muni.fi.pa165.vozovna.entity.User;
@@ -23,6 +24,10 @@ import org.springframework.transaction.annotation.Transactional;
 @Service("userService")
 public class UserServiceImpl implements UserService, UserDetailsService {
 
+    
+    @Autowired
+    private DriveDAO driveDAO;
+    
     private UserDAO userDAO;
 
     @Autowired
@@ -115,9 +120,25 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         // transform results
         List<UserDTO> result = new ArrayList<>();
         for (User user : users) {
-            result.add(new UserDTO(user));
+            UserDTO userDTO = new UserDTO(user);
+            userDTO.setCanRemove(this.canRemoveUser(user));
+            result.add(userDTO);
         }
         return result;
+    }
+    
+    /**
+     * Checks, if there exists future drives with given user and if no, return true.
+     * 
+     * @param user user, for which check drives
+     * @return If true, user don't have drives, so can be deleted.
+     */
+    private boolean canRemoveUser(User user) {
+        if(user == null) {
+            throw new IllegalArgumentException("user is null");
+        }
+        
+        return !this.driveDAO.hasUserDrives(user);
     }
 
     @Override

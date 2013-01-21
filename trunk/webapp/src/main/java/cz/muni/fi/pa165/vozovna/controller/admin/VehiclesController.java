@@ -33,7 +33,7 @@ public class VehiclesController {
 
     protected final Log logger = LogFactory.getLog(getClass());
     @Autowired
-    VehicleService vehicleService;
+    private VehicleService vehicleService;
 
     @InitBinder
     protected void initBinder(WebDataBinder binder) {

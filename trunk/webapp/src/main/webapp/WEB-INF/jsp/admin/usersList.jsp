@@ -62,7 +62,9 @@
                 
                 <td><fmt:message key="${user.userClass.code}" /></td>
                 <td><a href="<c:url value="/admin/users/edit/${user.id}" />"><fmt:message key="actions.edit" /></a>
-                    | <a href="<c:url value="/admin/users/delete/${user.id}" />" class="remove"><fmt:message key="actions.delete" /></a>
+                    <c:if test="${user.canRemove}">
+                        | <a href="<c:url value="/admin/users/delete/${user.id}" />" class="remove"><fmt:message key="actions.delete" /></a>
+                    </c:if>
                 </td>
             </tr>
         </c:forEach>

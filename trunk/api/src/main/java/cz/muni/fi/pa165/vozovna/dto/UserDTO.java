@@ -34,6 +34,11 @@ public class UserDTO implements java.io.Serializable {
      * True if this user is administrator
      */
     private Boolean isAdmin;
+    
+    /**
+     * If true, user can be removed from system, because has not drives in future.
+     */
+    private boolean canRemove;
 
     private String username;
 
@@ -47,6 +52,14 @@ public class UserDTO implements java.io.Serializable {
 
     public void setId(Long id) {
         this.id = id;
+    }
+    
+    public void setCanRemove(boolean canRemove) {
+        this.canRemove = canRemove;
+    }
+    
+    public boolean getCanRemove() {
+        return this.canRemove;
     }
 
     public String getFirstName() {

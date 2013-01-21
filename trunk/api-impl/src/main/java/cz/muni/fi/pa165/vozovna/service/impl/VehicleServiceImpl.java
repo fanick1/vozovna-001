@@ -1,5 +1,6 @@
 package cz.muni.fi.pa165.vozovna.service.impl;
 
+import cz.muni.fi.pa165.vozovna.dao.DriveDAO;
 import cz.muni.fi.pa165.vozovna.dao.VehicleDAO;
 import cz.muni.fi.pa165.vozovna.dto.VehicleDTO;
 import cz.muni.fi.pa165.vozovna.entity.User;
@@ -24,9 +25,9 @@ public class VehicleServiceImpl implements VehicleService {
     @Autowired
     private VehicleDAO vehicleDAO;
 
-//    public void setUserDAO(VehicleDAO vehicleDAO) {
-//        this.vehicleDAO = vehicleDAO;
-//    }
+    @Autowired
+    private DriveDAO driveDAO;
+
     @Override
     @Transactional(readOnly = true)
     public VehicleDTO getById(Long id) {
@@ -34,7 +35,8 @@ public class VehicleServiceImpl implements VehicleService {
             return null;
         }
         Vehicle vehicle = vehicleDAO.getById(id);
-        return new VehicleDTO(vehicle);
+        VehicleDTO vehicleDTO = new VehicleDTO(vehicle);
+        return vehicleDTO;
     }
 
     @Override
@@ -104,14 +106,30 @@ public class VehicleServiceImpl implements VehicleService {
      * @param list List of vehicles
      * @return List of Vehicle Data Transform Objects
      */
-    private static List<VehicleDTO> convertListOfVehiclesToListOfVehicleDTOs(List<Vehicle> intervals) {
+    private List<VehicleDTO> convertListOfVehiclesToListOfVehicleDTOs(List<Vehicle> intervals) {
         List<VehicleDTO> result = new ArrayList<>();
 
         for (Vehicle item : intervals) {
-            result.add(new VehicleDTO(item));
+            VehicleDTO vehicleDTO = new VehicleDTO(item);
+            vehicleDTO.setCanRemove(this.canRemoveVehicle(item));
+            result.add(vehicleDTO);
         }
 
         return result;
+    }
+    
+    /**
+     * Checks, if there exists future drives with given vehicle and if no, return true.
+     * 
+     * @param vehicle vehicle, for which check drives
+     * @return If true, vehicle don't have drives, so can be deleted.
+     */
+    private boolean canRemoveVehicle(Vehicle vehicle) {
+        if(vehicle == null) {
+            throw new IllegalArgumentException("vehicle is null");
+        }
+        
+        return !this.driveDAO.hasVehicleDrives(vehicle);
     }
 
     /**

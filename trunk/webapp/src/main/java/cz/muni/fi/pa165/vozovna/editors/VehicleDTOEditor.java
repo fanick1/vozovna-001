@@ -1,9 +1,8 @@
 package cz.muni.fi.pa165.vozovna.editors;
 
-import java.beans.PropertyEditorSupport;
-
 import cz.muni.fi.pa165.vozovna.dto.VehicleDTO;
 import cz.muni.fi.pa165.vozovna.service.VehicleService;
+import java.beans.PropertyEditorSupport;
 
 /**
  * @author Eva Neduchalová, 359893
