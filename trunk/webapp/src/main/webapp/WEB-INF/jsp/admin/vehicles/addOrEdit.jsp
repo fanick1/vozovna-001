@@ -16,7 +16,7 @@
         </c:choose> 
     </title>
     
-    <script type="text/javascript" src="http://code.jquery.com/jquery-latest.js"></script> 
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script> 
     <script type="text/javascript" src="http://ajax.microsoft.com/ajax/jquery.validate/1.7/jquery.validate.js"></script> 
     <script type="text/javascript"> 
         $(document).ready(function() { 
@@ -36,7 +36,9 @@
                     yearMade:       {required:true, 
                                      number:true,
                                      min: 1900,
-                                     max: 2100}
+                                     max: 2100},
+                    registrationPlate: {required: true,
+                                     maxlength: 8}
                     }, 
                 messages: { 
                     brand: 			{required:  " <fmt:message key="error.vehicle.brand" />",
@@ -53,16 +55,21 @@
                     yearMade:       {required:  " <fmt:message key="error.vehicle.yearMade" />", 
                                      number:    " <fmt:message key="error.vehicle.yearMade.number" />",
                                      min:       " <fmt:message key="error.vehicle.yearMade.min" />",
-                                     max:       " <fmt:message key="error.vehicle.yearMade.max" />"}
+                                     max:       " <fmt:message key="error.vehicle.yearMade.max" />"},
+                    registrationPlate: {required:  " <fmt:message key="error.vehicle.registrationPlate" />",
+                                     maxlength: " <fmt:message key="error.vehicle.registrationPlate.maxLength" />"}
+
                 } 
               }); 
-            }); 
+              
+            $("#vehicle-edit-form-cancel").on("click",function(){
+                if(confirm("<fmt:message key="admin.vehicles.confirmLeave" />")) {
+                   window.location = "<c:url value="/admin/vehicles" />";
+                }       
+            });  
+        }); 
 
-        $("#vehicle-edit-form-cancel").live("click",function(event){
-            if(confirm("<fmt:message key="admin.vehicles.confirmLeave" />")) {
-               window.location = "<c:url value="/admin/vehicles" />";
-            }       
-         });
+       
     </script>
     <style type="text/css" media="all">
         .detail {
@@ -97,6 +104,13 @@
 
                             <td class="value"><form:hidden path="id" />${vehicleDTO.id}</td>
                         </c:if>
+                    </tr>
+                    <tr>
+                        <td><form:label path="registrationPlate"><fmt:message key="vehicle.registrationPlate" />:</form:label></td>
+                        <td>
+                            <form:input path="registrationPlate" maxlength="17" />
+                            <form:errors path="registrationPlate" cssClass="error" />
+                        </td>
                     </tr>
                     <tr>
                         <td>
@@ -159,6 +173,7 @@
                             <form:errors path="userClass" cssClass="error" />
                         </td>
                     </tr>
+                    
                     
                     
 					<tr>

@@ -5,14 +5,16 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <title><fmt:message key="admin.drives.title" /></title>
-    <script type="text/javascript" src="http://code.jquery.com/jquery-latest.js"></script> 
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script> 
     <script type="text/javascript">
-        $("a.remove").live("click",function(event){
-            event.stopPropagation();
-            if(!confirm("<fmt:message key="admin.drives.confirm.delete" />")) {
-                event.preventDefault();
-            }       
-         });
+        $(function() {
+            $("a.remove").on("click",function(){
+                event.stopPropagation();
+                if(!confirm("<fmt:message key="admin.drives.confirm.delete" />")) {
+                    event.preventDefault();
+                }       
+             });
+        });
     </script>
 </head>
 <body>
@@ -31,7 +33,7 @@
             <col style="width: 60px;"/>
             <col style="width: 60px;"/>
             <col />
-            <col style="width: 120px;"/>
+            <col style="width: 90px;"/>
         </colgroup>
         <tr>
             <th><fmt:message key="drive.id" /></th>
@@ -50,10 +52,15 @@
                 <td><joda:format pattern="${datePattern}" value="${drive.dateTo}" /></td>
                 <td><fmt:message key="${drive.state.code}" /></td>
                 <td><c:out value="${drive.distance}"/></td>
-                <td><c:if test="${not empty drive.user != null}">
-                [<c:out value="${drive.user.id}"/>] <c:out value="${drive.user.firstName}"/> <c:out value="${drive.user.lastName}"/> </c:if></td>
-                <td><c:if test="${not empty drive.vehicle}">
-                [<c:out value="${drive.vehicle.id}"/>] <c:out value="${drive.vehicle.brand}"/> <c:out value="${drive.vehicle.type}"/> <c:out value="${drive.vehicle.vin}"/> </c:if></td>
+                <td>
+                    <c:if test="${not empty drive.user != null}">
+                    #<c:out value="${drive.user.id}"/>: <c:out value="${drive.user.firstName}"/> <c:out value="${drive.user.lastName}"/> </c:if>
+                </td>
+                <td>
+                    <c:if test="${not empty drive.vehicle}">
+                        #<a href="<c:url value="/admin/vehicles/show/${drive.id}" />"><c:out value="${drive.vehicle.id}"/></a>: <span class="registrationPlate">[<c:out value="${drive.vehicle.registrationPlate}"/>]</span> <br /><c:out value="${drive.vehicle.brand}"/> <c:out value="${drive.vehicle.type}"/>
+                    </c:if>
+                </td>
                 <td><a href="<c:url value="/admin/drives/edit/${drive.id}" />"><fmt:message key="actions.edit" /></a>
                     | <a href="<c:url value="/admin/drives/delete/${drive.id}" />" class="remove"><fmt:message key="actions.delete" /></a>
                 </td>

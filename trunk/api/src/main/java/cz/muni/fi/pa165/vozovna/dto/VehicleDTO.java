@@ -5,6 +5,7 @@ import cz.muni.fi.pa165.vozovna.enums.UserClassEnum;
 
 /**
  * Data Transfer Object for  Vehicle
+ * 
  * @author Lukas Hajek <359617@mail.muni.cz>
  */
 public class VehicleDTO implements java.io.Serializable {
@@ -49,6 +50,13 @@ public class VehicleDTO implements java.io.Serializable {
      */
     private UserClassEnum userClass;
 
+    /**
+     * Registration plate (licence plate / number plate / tag)
+     */
+    private String registrationPlate;
+    
+    
+    // SETTER & GETTER METHODS:
     
     public Long getId() {
         return id;
@@ -113,14 +121,31 @@ public class VehicleDTO implements java.io.Serializable {
     public void setUserClass(UserClassEnum userClass) {
         this.userClass = userClass;
     }
+
+    public String getRegistrationPlate() {
+        return registrationPlate;
+    }
+
+    public void setRegistrationPlate(String registrationPlate) {
+        this.registrationPlate = registrationPlate;
+    }
+    
+    
+    // CONSTRUCTORS:
     
     public VehicleDTO() {
 
     }
     
+    /**
+     * Creates VehicleDTO from Vehicle entity
+     * @param vehicle   Original vehicle
+     */
     public VehicleDTO(Vehicle vehicle) {
         fromVehicle(vehicle);
     }
+    
+    // CONVERTORS FROM AND TO ENTITY:
     
     /**
      * Fills properties from vehicle
@@ -134,7 +159,8 @@ public class VehicleDTO implements java.io.Serializable {
         type = vehicle.getType();
         vin = vehicle.getVin();
         yearMade = vehicle.getYearMade();
-        userClass = vehicle.getUserClass();  
+        userClass = vehicle.getUserClass(); 
+        registrationPlate = vehicle.getRegistrationPlate();
     }
     
     /**
@@ -151,13 +177,27 @@ public class VehicleDTO implements java.io.Serializable {
         vehicle.setVin(vin);
         vehicle.setYearMade(yearMade);
         vehicle.setUserClass(userClass);
-
+        vehicle.setRegistrationPlate(registrationPlate);
+        
         return vehicle;
     }
     
+    
+    // OTHER METHODS:
+    
     @Override
     public String toString() {
-        return "VehicleDTO{" + "id=" + id + ", brand=" + brand + ", maxDistance=" + maxDistance + ", engineType=" + engineType + ", type=" + type + ", vin=" + vin + ", yearMade=" + yearMade + ", userClass=" + userClass + '}';
+        return "VehicleDTO{" 
+            + "id=" + id 
+            + ", brand=" + brand 
+            + ", maxDistance=" + maxDistance 
+            + ", engineType=" + engineType 
+            + ", type=" + type 
+            + ", vin=" + vin 
+            + ", yearMade=" + yearMade 
+            + ", userClass=" + userClass 
+            + ", registrationPlate=" + registrationPlate 
+            + '}';
     }
     
     @Override

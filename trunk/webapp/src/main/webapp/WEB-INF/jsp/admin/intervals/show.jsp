@@ -6,19 +6,21 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <title><fmt:message key="admin.intervals.show.title" /></title>
 
-    <script type="text/javascript" src="http://code.jquery.com/jquery-latest.js"></script>
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
     <script type="text/javascript">
-        $("a.remove").live("click",function(event){
-            event.stopPropagation();
-            if(!confirm("<fmt:message key="admin.intervals.confirmDelete" />")) {
-                event.preventDefault();
-            }
-        });
-        $("a.inspect").live("click",function(event){
-            event.stopPropagation();
-            if(!confirm("<fmt:message key="admin.intervals.confirmInspection" />")) {
-                event.preventDefault();
-            }
+        $(function() {
+            $("a.remove").on("click", function(){
+                event.stopPropagation();
+                if(!confirm("<fmt:message key="admin.intervals.confirmDelete" />")) {
+                    event.preventDefault();
+                }
+            });
+            $("a.inspect").on("click", function(){
+                event.stopPropagation();
+                if(!confirm("<fmt:message key="admin.intervals.confirmInspection" />")) {
+                    event.preventDefault();
+                }
+            });
         });
     </script>
     
@@ -27,6 +29,10 @@
             width: 500px;
             text-align: center;
             margin: 0 auto;
+        }
+        .detail td, .detail th {
+            padding-top: 5px;
+            padding-bottom: 5px;
         }
     </style>
 </head>
@@ -43,7 +49,7 @@
     </tr>
     <tr>
         <th><fmt:message key="interval.description" />:</th>
-        <td><c:out value="${interval.description}"/></td>
+        <td><b><c:out value="${interval.description}"/></b></td>
     </tr>
     <tr>
         <th><fmt:message key="interval.inspectionInterval" />:</th>
@@ -63,7 +69,12 @@
     </tr>
     <tr>
         <th><fmt:message key="interval.vehicle" />:</th>
-        <td>[ID: <a href="<c:url value="/admin/vehicles/show?id=${interval.vehicle.id}" />"><c:out value="${interval.vehicle.id}"/></a>] <br/> <c:out value="${interval.vehicle.brand}"/> <br/> <c:out value="${interval.vehicle.type}"/> <br/>(<c:out value="${interval.vehicle.yearMade}"/>)</td>
+        <td>
+            ID: <a href="<c:url value="/admin/vehicles/show?id=${interval.vehicle.id}" />"><c:out value="${interval.vehicle.id}"/></a> <br/>
+            <c:out value="${interval.vehicle.brand}"/> <c:out value="${interval.vehicle.type}"/> <br />
+            <span class="registrationPlate">[<c:out value="${interval.vehicle.registrationPlate}"/>]</span>  <br/>
+            (<c:out value="${interval.vehicle.yearMade}"/>)
+        </td>
     </tr>
 </table>
 

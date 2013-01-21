@@ -6,19 +6,21 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <title><fmt:message key="admin.serviceIntervals.title" /></title>
 
-    <script type="text/javascript" src="http://code.jquery.com/jquery-latest.js"></script>
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
     <script type="text/javascript">
-        $("a.remove").live("click",function(event){
-            event.stopPropagation();
-            if(!confirm("<fmt:message key="admin.intervals.confirmDelete" />")) {
-                event.preventDefault();
-            }
-        });
-        $("a.inspect").live("click",function(event){
-            event.stopPropagation();
-            if(!confirm("<fmt:message key="admin.intervals.confirmInspection" />")) {
-                event.preventDefault();
-            }
+        $(document).ready(function() { 
+            $("a.remove").on("click",function(){
+                event.stopPropagation();
+                if(!confirm("<fmt:message key="admin.intervals.confirmDelete" />")) {
+                    event.preventDefault();
+                }
+            });
+            $("a.inspect").on("click",function(){
+                event.stopPropagation();
+                if(!confirm("<fmt:message key="admin.intervals.confirmInspection" />")) {
+                    event.preventDefault();
+                }
+            });
         });
     </script>
 
@@ -32,24 +34,24 @@
     <table class="grid">
         <colgroup>
             <col style="width: 50px;" />
-            <col style="width: 80px;" />
             <col />
+            <col style="width: 80px;" />
             <col />
             <col style="width: 200px;"/>
         </colgroup>
         <tr>
             <th><fmt:message key="interval.id" /></th>
+            <th><fmt:message key="interval.description" /></th>
             <th><fmt:message key="interval.inspectionInterval" /></th>
             <th><fmt:message key="interval.vehicle" /></th>
-            <th><fmt:message key="interval.description" /></th>
             <th></th>
         </tr>
         <c:forEach  items="${intervals}" var="interval">
             <tr>
                 <td class="number"><a href="<c:url value="/admin/intervals/show?id=${interval.id}" />">${interval.id}</a></td>
+                <td><a href="<c:url value="/admin/intervals/show?id=${interval.id}" />"><c:out value="${interval.description}" /></a></td>
                 <td class="number"><c:out value="${interval.inspectionInterval}"/></td>
-                <td><a href="<c:url value="/admin/vehicles/show?id=${interval.vehicle.id}" />"><c:out value="${interval.vehicle.fullName}"/></a></td>
-                <td><c:out value="${interval.description}" /></td>
+                <td><a href="<c:url value="/admin/vehicles/show?id=${interval.vehicle.id}" />"> <span class="registrationPlate">[<c:out value="${interval.vehicle.registrationPlate}"/>]</span> <c:out value="${interval.vehicle.fullName}"/></a></td>
                 <td>
                     <a href="<c:url value="/admin/intervals/show?id=${interval.id}" />"><fmt:message key="actions.show" /></a> |
                     <a href="<c:url value="/admin/intervals/inspect?id=${interval.id}" />" class="inspect"><fmt:message key="admin.intervals.inspect" /></a> | 

@@ -151,7 +151,7 @@
                         <form:select path="userId">
                             <c:forEach var="item" items="${users}">
                                 <form:option value="${item.id}">
-                                    [${item.id}] ${item.firstName} ${item.lastName} 
+                                    #<c:out value="${item.id}" />: <c:out value="${item.firstName}" /> <c:out value="${item.lastName}" /> 
                                 </form:option>
                             </c:forEach>
                         </form:select>
@@ -169,7 +169,7 @@
                         <form:select path="vehicleId">
                             <c:forEach var="item" items="${vehicles}">
                                 <form:option value="${item.id}">
-                                    [${item.id}] ${item.brand} ${item.type} ${item.vin} 
+                                    #<c:out value="${item.id}"/>: [<c:out value="${item.registrationPlate}"/>] <c:out value="${item.brand}"/> <c:out value="${item.type}"/>  
                                 </form:option>
                             </c:forEach>
                         </form:select>
@@ -180,6 +180,7 @@
                 <tr>
                     <td>&nbsp;</td>
                     <td><input type="submit" value="<fmt:message key="actions.save" />" /></td>
+                    
                 </tr>
             </table>
         </form:form>

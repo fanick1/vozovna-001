@@ -48,6 +48,7 @@ create table Vehicle (
     userClass integer,
     vin varchar(255),
     yearMade integer not null,
+    registrationPlate varchar(8),
     primary key (id)
 );
 

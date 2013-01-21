@@ -11,6 +11,7 @@
 <table class="grid">
     <colgroup>
         <col style="width: 50px;" />
+        <col style="width: 110px;" />
         <col />
         <col />
         <col />
@@ -18,6 +19,7 @@
     </colgroup>
     <tr>
         <th><fmt:message key="vehicle.id" /></th>
+        <th><fmt:message key="vehicle.registrationPlate" /></th>
         <th><fmt:message key="vehicle.brand" /></th>
         <th><fmt:message key="vehicle.type" /></th>
         <th><fmt:message key="vehicle.engineType" /></th>
@@ -26,6 +28,7 @@
     <c:forEach  items="${vehicles}" var="vehicle">
         <tr>
             <td class="number">${vehicle.id}</td>
+            <td><c:out value="${vehicle.registrationPlate}"/></td>
             <td><c:out value="${vehicle.brand}"/></td>
             <td><c:out value="${vehicle.type}"/></td>
             <td><c:out value="${vehicle.engineType}"/></td>

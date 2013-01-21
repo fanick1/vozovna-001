@@ -12,16 +12,22 @@
                 text-align: center;
                 margin: 0 auto;
             }
+            .detail td, .detail th {
+                padding-top: 4px;
+                padding-bottom: 4px;
+            }
         </style>
         
-        <script type="text/javascript" src="http://code.jquery.com/jquery-latest.js"></script>
+        <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
         <script type="text/javascript">
-            $("a.remove").live("click",function(event){
-                event.stopPropagation();
-                if(!confirm("<fmt:message key="admin.vehicles.confirmDelete" />")) {
-                    event.preventDefault();
-                }       
-             });
+            $(function() {
+                $("a.remove").on("click", function(){
+                    event.stopPropagation();
+                    if(!confirm("<fmt:message key="admin.vehicles.confirmDelete" />")) {
+                        event.preventDefault();
+                    }       
+                 });
+            });
         </script>
     </head>
     <body>
@@ -36,6 +42,10 @@
                 <td><c:out value="${vehicle.id}"/></td>
             </tr>
             <tr>
+                <th><fmt:message key="vehicle.registrationPlate" />:</th>
+                <td><c:out value="${vehicle.registrationPlate}" /></td>
+            </tr>
+           <tr>
                 <th><fmt:message key="vehicle.brand" />:</th>
                 <td><c:out value="${vehicle.brand}"/></td>
             </tr>
@@ -64,6 +74,7 @@
                 <th><fmt:message key="vehicle.userClass" />:</th>
                 <td><fmt:message key="${vehicle.userClass.code}" /></td>
             </tr>
+            
         </table>
         <br>
         <div class="inpage-nav">

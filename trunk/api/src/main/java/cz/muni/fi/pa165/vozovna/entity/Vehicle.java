@@ -45,6 +45,9 @@ public class Vehicle implements Serializable {
 
     @Column(nullable = false)
     private UserClassEnum userClass;
+    
+    @Column(length=8)
+    private String registrationPlate;
 
     /**
      * Returns id of vehicle.
@@ -85,9 +88,22 @@ public class Vehicle implements Serializable {
 
     @Override
     public String toString() {
-        return "cz.muni.fi.pa165.vozovna.entities.Vehicle[ id=" + id + " ]";
+        return 
+            "Vehicle{" 
+            + "id=" + id 
+            + ", brand=" + brand 
+            + ", maxDistance=" + maxDistance 
+            + ", engineType=" + engineType 
+            + ", type=" + type 
+            + ", vin=" + vin 
+            + ", yearMade=" + yearMade 
+            + ", userClass=" + userClass 
+            + ", registrationPlate=" + registrationPlate + '}';
     }
 
+    
+
+    
     /**
      * Returns brand of vehicle.
      * 
@@ -237,4 +253,24 @@ public class Vehicle implements Serializable {
     public void setUserClass(UserClassEnum userClass) {
         this.userClass = userClass;
     }
+
+    /**
+     * Returns registration plate
+     * 
+     * @return Registration plate
+     */
+    public String getRegistrationPlate() {
+        return registrationPlate;
+    }
+
+    /**
+     * Sets registration plate of vehicle
+     * 
+     * @param registrationPlate  Registration plate
+     */
+    public void setRegistrationPlate(String registrationPlate) {
+        this.registrationPlate = registrationPlate;
+    }
+    
+    
 }

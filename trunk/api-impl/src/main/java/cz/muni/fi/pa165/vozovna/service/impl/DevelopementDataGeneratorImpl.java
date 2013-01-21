@@ -15,8 +15,8 @@ import java.util.Date;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.encoding.PasswordEncoder;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 /**
  * Generator of developement data. Not to be used in production.
  *
@@ -47,7 +47,7 @@ public class DevelopementDataGeneratorImpl implements DevelopementDataGenerator 
             newAdmin.setUsername("admin");
             newAdmin.setPassword(passwordEncoder.encodePassword("admin", null));
             newAdmin.setFirstName("Helmut");
-            newAdmin.setLastName("InstalatÃ©r");
+            newAdmin.setLastName("Instalatér");
             newAdmin.setIsAdmin(Boolean.TRUE);
             newAdmin.setUserClass(UserClassEnum.PRESIDENT);
             userDAO.create(newAdmin);
@@ -89,24 +89,26 @@ public class DevelopementDataGeneratorImpl implements DevelopementDataGenerator 
             userDAO.create(employee);
 
             Vehicle fabia = new Vehicle();
-            fabia.setBrand("Å koda");
+            fabia.setBrand("Škoda");
             fabia.setDistanceCount(30000);
             fabia.setEngineType("1.4 TDi");
             fabia.setType("Fabia");
             fabia.setUserClass(UserClassEnum.MANAGER);
             fabia.setVin("147ef-5482c-664de");
             fabia.setYearMade(2001);
+            fabia.setRegistrationPlate("1A2 1225");
             vehicleDAO.create(fabia);
 
 
             Vehicle octavia = new Vehicle();
-            octavia.setBrand("Å koda");
+            octavia.setBrand("Škoda");
             octavia.setDistanceCount(50000);
             octavia.setEngineType("1.9 TDi 96 kW");
             octavia.setType("Octavia");
             octavia.setUserClass(UserClassEnum.PRESIDENT);
             octavia.setVin("1xxef-12D3c-AA4de");
             octavia.setYearMade(2010);
+            octavia.setRegistrationPlate("1B1 1111");
             vehicleDAO.create(octavia);
 
             Vehicle peugeot = new Vehicle();
@@ -117,6 +119,7 @@ public class DevelopementDataGeneratorImpl implements DevelopementDataGenerator 
             peugeot.setUserClass(UserClassEnum.EMPLOYEE);
             peugeot.setVin("154ef-4788c-613de");
             peugeot.setYearMade(2003);
+            peugeot.setRegistrationPlate("2M3 2121");
             vehicleDAO.create(peugeot);
 
             Vehicle tatra = new Vehicle();
@@ -127,6 +130,7 @@ public class DevelopementDataGeneratorImpl implements DevelopementDataGenerator 
             tatra.setUserClass(UserClassEnum.EMPLOYEE);
             tatra.setVin("1afef-ds82c-6134e");
             tatra.setYearMade(1983);
+            tatra.setRegistrationPlate("1B2 3456");
             vehicleDAO.create(tatra);
 
             SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy");
@@ -140,7 +144,7 @@ public class DevelopementDataGeneratorImpl implements DevelopementDataGenerator 
 
             ServiceInterval interval = new ServiceInterval();
             interval.setDated(dates);
-            interval.setDescription("Vymena koles");
+            interval.setDescription("Výmìna kol");
             interval.setInspectionInterval(183);
             interval.setVehicle(fabia);
             serviceIntervalDAO.create(interval);
