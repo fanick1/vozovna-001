@@ -34,7 +34,6 @@
     </div>
     <table class="grid">
         <colgroup>
-            <col style="width: 50px;" />
             <col />
             <col style="width: 80px;" />
             <col />

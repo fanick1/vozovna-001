@@ -26,7 +26,6 @@
     <fmt:message var="datePattern" key="date.pattern.joda" />
     <table class="grid">
     <colgroup>
-            <col style="width: 40px;"/>
             <col />
             <col />
             <col />
