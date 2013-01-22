@@ -26,7 +26,6 @@
 
     <table class="grid">
         <colgroup>
-            <col style="width: 40px;"/>
             <col />
             <col />
             <col />
