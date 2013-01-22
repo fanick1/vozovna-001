@@ -4,6 +4,7 @@ import cz.muni.fi.pa165.vozovna.dao.DriveDAO;
 import cz.muni.fi.pa165.vozovna.dao.ServiceIntervalDAO;
 import cz.muni.fi.pa165.vozovna.dao.VehicleDAO;
 import cz.muni.fi.pa165.vozovna.dto.ServiceIntervalDTO;
+import cz.muni.fi.pa165.vozovna.dto.UserDTO;
 import cz.muni.fi.pa165.vozovna.dto.VehicleDTO;
 import cz.muni.fi.pa165.vozovna.entity.ServiceInterval;
 import cz.muni.fi.pa165.vozovna.entity.User;
@@ -42,12 +43,12 @@ public class VehicleServiceImpl implements VehicleService {
             return null;
         }
         Vehicle vehicle = vehicleDAO.getById(id);
-        VehicleDTO vehicleDTO = new VehicleDTO(vehicle);
+        VehicleDTO vehicleDTO = vehicle.toVehicleDTO();
         
         List<ServiceIntervalDTO> intervals = new ArrayList<>();
         
         for(ServiceInterval interval: this.serviceIntervalDAO.findAllByVehicle(vehicle)) {
-            ServiceIntervalDTO dto = new ServiceIntervalDTO(interval);
+            ServiceIntervalDTO dto = interval.toServiceIntervalDTO();
             
             // check, if inspection is required
             Date lastDate = dto.getDated().get(dto.getDated().size() - 1);
@@ -71,9 +72,9 @@ public class VehicleServiceImpl implements VehicleService {
         if (vehicle == null) {
             throw new IllegalArgumentException("null vehicle");
         }
-        Vehicle entity = vehicle.toVehicle();
+        Vehicle entity = new Vehicle(vehicle);
         vehicleDAO.create(entity);
-        vehicle.fromVehicle(entity);
+        vehicle = entity.applyToVehicleDTO(vehicle);
         return entity.getId();
     }
 
@@ -113,7 +114,7 @@ public class VehicleServiceImpl implements VehicleService {
         entity.setRegistrationPlate(vehicle.getRegistrationPlate());
 
         vehicleDAO.update(entity);
-        vehicle.fromVehicle(entity);
+        vehicle = entity.applyToVehicleDTO(vehicle);
         return vehicle;
     }
 
@@ -136,7 +137,7 @@ public class VehicleServiceImpl implements VehicleService {
         List<VehicleDTO> result = new ArrayList<>();
 
         for (Vehicle item : intervals) {
-            VehicleDTO vehicleDTO = new VehicleDTO(item);
+            VehicleDTO vehicleDTO = item.toVehicleDTO();
             
             vehicleDTO.setCanRemove(this.canRemoveVehicle(item));
             vehicleDTO.setMileage(this.vehicleDAO.getMileageOfVehicle(item));
@@ -171,8 +172,8 @@ public class VehicleServiceImpl implements VehicleService {
      * @throws IllegalArgumentException If any of argument is null.
      */
     @Override
-    public List<VehicleDTO> getAvailableVehicles(User user, DateTime startDate, DateTime endDate) {
-        return convertListOfVehiclesToListOfVehicleDTOs(this.vehicleDAO.getAvailableVehicles(user, startDate, endDate));
+    public List<VehicleDTO> getAvailableVehicles(UserDTO user, DateTime startDate, DateTime endDate) {
+        return convertListOfVehiclesToListOfVehicleDTOs(this.vehicleDAO.getAvailableVehicles(new User(user), startDate, endDate));
 
 
     }

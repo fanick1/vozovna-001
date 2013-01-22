@@ -1,6 +1,5 @@
 package cz.muni.fi.pa165.vozovna.dto;
 
-import cz.muni.fi.pa165.vozovna.entity.User;
 import cz.muni.fi.pa165.vozovna.enums.UserClassEnum;
 
 /**
@@ -122,46 +121,46 @@ public class UserDTO implements java.io.Serializable {
 
     }
 
-    public UserDTO(User user) {
-        fromUser(user);
-    }
+//    public UserDTO(User user) {
+//        fromUser(user);
+//    }
 
     /**
      * Fills properties from user
      * 
      * @param user Original user
      */
-    public final void fromUser(User user) {
-        if (user == null) {
-            return;
-        }
-        id = user.getId();
-        firstName = user.getFirstName();
-        lastName = user.getLastName();
-        isAdmin = user.getIsAdmin();
-        userClass = user.getUserClass();
-        username = user.getUsername();
-        password = user.getPassword();
-        enabled = user.isEnabled();
-    }
+//    public final void fromUser(User user) {
+//        if (user == null) {
+//            return;
+//        }
+//        id = user.getId();
+//        firstName = user.getFirstName();
+//        lastName = user.getLastName();
+//        isAdmin = user.getIsAdmin();
+//        userClass = user.getUserClass();
+//        username = user.getUsername();
+//        password = user.getPassword();
+//        enabled = user.isEnabled();
+//    }
 
     /**
      * Returns user with same properties
      * 
      * @return User
      */
-    public User toNewUser() {
-        User user = new User();
-        user.setId(id);
-        user.setFirstName(firstName);
-        user.setLastName(lastName);
-        user.setUserClass(userClass);
-        user.setIsAdmin(isAdmin);
-        user.setUsername(username);
-        user.setPassword(password);
-        user.setEnabled(enabled);
-        return user;
-    }
+//    public User toNewUser() {
+//        User user = new User();
+//        user.setId(id);
+//        user.setFirstName(firstName);
+//        user.setLastName(lastName);
+//        user.setUserClass(userClass);
+//        user.setIsAdmin(isAdmin);
+//        user.setUsername(username);
+//        user.setPassword(password);
+//        user.setEnabled(enabled);
+//        return user;
+//    }
 
     public String getFullName() {
         return this.firstName + " " + this.lastName + " (" + this.username + ")";

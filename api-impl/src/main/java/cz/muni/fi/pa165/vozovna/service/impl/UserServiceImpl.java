@@ -47,7 +47,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         if (user == null) {
             return null;
         }
-        return new UserDTO(user);
+        return user.toUserDTO();
     }
 
     @Override
@@ -59,10 +59,10 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         if (user.getId() != null) {
             throw new IllegalArgumentException("user has set id");
         }
-        User entity = user.toNewUser();
+        User entity = new User(user);
         entity.setPassword(passwordEncoder.encodePassword(user.getPassword(), ""));
         userDAO.create(entity);
-        user.fromUser(entity);
+        user = entity.applyToUserDTO(user);
         return entity.getId();
     }
 
@@ -107,7 +107,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         entity.setEnabled(user.getEnabled());
 
         userDAO.update(entity);
-        user.fromUser(entity);
+        user = entity.applyToUserDTO(user);
         return user;
     }
 
@@ -120,7 +120,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         // transform results
         List<UserDTO> result = new ArrayList<>();
         for (User user : users) {
-            UserDTO userDTO = new UserDTO(user);
+            UserDTO userDTO = user.toUserDTO();
             userDTO.setCanRemove(this.canRemoveUser(user));
             result.add(userDTO);
         }
@@ -169,6 +169,6 @@ public class UserServiceImpl implements UserService, UserDetailsService {
             return null;
         }
 
-        return new UserDTO(user);
+        return user.toUserDTO();
     }
 }
