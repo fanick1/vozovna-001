@@ -103,7 +103,6 @@
                 <col style="width: 230px;"/>
             </colgroup>
             <tr>
-                <th><fmt:message key="vehicle.id" /></th>
                 <th><fmt:message key="vehicle.registrationPlate" /></th>
                 <th><fmt:message key="vehicle.brand" /></th>
                 <th><fmt:message key="vehicle.type" /></th>
@@ -111,7 +110,6 @@
             </tr>
             <c:forEach  items="${vehicles}" var="vehicle">
                 <tr>
-                    <td class="number"><c:out value="${vehicle.id}"/></td>
                     <td><c:out value="${vehicle.registrationPlate}"/></td>
                     <td><c:out value="${vehicle.brand}"/></td>
                     <td><c:out value="${vehicle.type}"/></td>

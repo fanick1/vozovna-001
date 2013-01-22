@@ -1,7 +1,9 @@
 package cz.muni.fi.pa165.vozovna.dto;
 
+import cz.muni.fi.pa165.vozovna.entity.ServiceInterval;
 import cz.muni.fi.pa165.vozovna.entity.Vehicle;
 import cz.muni.fi.pa165.vozovna.enums.UserClassEnum;
+import java.util.List;
 
 /**
  * Data Transfer Object for  Vehicle
@@ -60,6 +62,15 @@ public class VehicleDTO implements java.io.Serializable {
      */
     private String registrationPlate;
     
+    /**
+     * Sum of all km went by vehicle.
+     */
+    private int mileage;
+    
+    /**
+     * Service intervals of vehicle
+     */
+    private List<ServiceIntervalDTO> serviceIntervals;
     
     // SETTER & GETTER METHODS:
     
@@ -234,6 +245,34 @@ public class VehicleDTO implements java.io.Serializable {
             return false;
         }
         return true;
+    }
+
+    /**
+     * @return the mileage
+     */
+    public int getMileage() {
+        return mileage;
+    }
+
+    /**
+     * @param mileage the mileage to set
+     */
+    public void setMileage(int mileage) {
+        this.mileage = mileage;
+    }
+
+    /**
+     * @return the serviceIntervals
+     */
+    public List<ServiceIntervalDTO> getServiceIntervals() {
+        return serviceIntervals;
+    }
+
+    /**
+     * @param serviceIntervals the serviceIntervals to set
+     */
+    public void setServiceIntervals(List<ServiceIntervalDTO> serviceIntervals) {
+        this.serviceIntervals = serviceIntervals;
     }
 
 

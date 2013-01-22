@@ -36,7 +36,6 @@
             <col style="width: 120px;"/>
         </colgroup>
         <tr>
-            <th><fmt:message key="user.labels.id" /></th>
             <th><fmt:message key="user.labels.username" /></th>
             <th><fmt:message key="user.labels.firstName" /></th>
             <th><fmt:message key="user.labels.lastName" /></th>
@@ -50,7 +49,6 @@
         </tr>
         <c:forEach items="${users}" var="user">
             <tr>
-                <td class="number"><c:out value="${user.id}"/></td>
                 <td><c:out value="${user.username}"/></td>
                 <td><c:out value="${user.firstName}"/></td>
                 <td><c:out value="${user.lastName}"/></td>

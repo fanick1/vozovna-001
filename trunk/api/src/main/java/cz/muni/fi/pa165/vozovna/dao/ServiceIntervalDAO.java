@@ -70,4 +70,5 @@ public interface ServiceIntervalDAO extends GenericDAO<ServiceInterval, Long> {
      * @throws IllegalArgumentException Throws if given vehicle is null;
      */
     public List<ServiceInterval> findAllByVehicle(Vehicle vehicle);
+    
 }

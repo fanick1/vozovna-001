@@ -46,7 +46,6 @@
             <col style="min-width: 100px;" />
         </colgroup>
         <tr>
-            <th><fmt:message key="drive.id" /></th>
             <th><fmt:message key="drive.dateFrom" /></th>
             <th><fmt:message key="drive.dateTo" /></th>
             <th><fmt:message key="drive.state" /></th>
@@ -57,7 +56,6 @@
         
         <c:forEach var="item" items="${drives}">
             <tr>
-                <td class="number">${item.id}</td>
                 <!-- < fmt : formatDate value="" / > --->
                 <td><joda:format pattern="${datePattern}" value="${item.dateFrom}"/></td>
                 <td><joda:format pattern="${datePattern}" value="${item.dateTo}"/></td>

@@ -36,7 +36,6 @@
             <col style="width: 90px;"/>
         </colgroup>
         <tr>
-            <th><fmt:message key="drive.id" /></th>
             <th><fmt:message key="drive.dateFrom" /></th>
             <th><fmt:message key="drive.dateTo" /></th>
             <th><fmt:message key="drive.state" /></th>
@@ -47,7 +46,6 @@
         </tr>
         <c:forEach items="${drives}" var="drive">
             <tr>
-                <td><c:out value="${drive.id}"/></td>
                 <td><joda:format pattern="${datePattern}" value="${drive.dateFrom}" /></td>
                 <td><joda:format pattern="${datePattern}" value="${drive.dateTo}" /></td>
                 <td><fmt:message key="${drive.state.code}" /></td>

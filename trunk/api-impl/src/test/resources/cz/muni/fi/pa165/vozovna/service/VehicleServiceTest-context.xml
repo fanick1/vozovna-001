@@ -17,6 +17,9 @@
          <bean id="driveDao" class="org.mockito.Mockito" factory-method="mock"> 
             <constructor-arg value="cz.muni.fi.pa165.vozovna.dao.DriveDAO"/>
          </bean>
+         <bean id="serviceIntervalDAO" class="org.mockito.Mockito" factory-method="mock"> 
+            <constructor-arg value="cz.muni.fi.pa165.vozovna.dao.ServiceIntervalDAO"/>
+         </bean>
 
     <!-- tested class -->
     <bean id="vehicleService" class="cz.muni.fi.pa165.vozovna.service.impl.VehicleServiceImpl"/>

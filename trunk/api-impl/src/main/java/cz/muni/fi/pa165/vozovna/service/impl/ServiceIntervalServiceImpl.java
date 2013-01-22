@@ -8,7 +8,9 @@ import cz.muni.fi.pa165.vozovna.entity.ServiceInterval;
 import cz.muni.fi.pa165.vozovna.entity.Vehicle;
 import cz.muni.fi.pa165.vozovna.service.ServiceIntervalService;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import org.joda.time.Days;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -131,7 +133,17 @@ public class ServiceIntervalServiceImpl implements ServiceIntervalService {
         List<ServiceIntervalDTO> result = new ArrayList<>();
 
         for (ServiceInterval item : intervals) {
-            result.add(new ServiceIntervalDTO(item));
+            
+            // check, if inspection is required
+            Date lastDate = item.getDated().get(item.getDated().size() - 1);
+            Date currentDate = new Date();
+            
+            int range = (int)( (currentDate.getTime() - lastDate.getTime()) / (1000 * 60 * 60 * 24));
+            
+            ServiceIntervalDTO dto = new ServiceIntervalDTO(item);
+            dto.setHasRequiredInspection(range > item.getInspectionInterval());
+            
+            result.add(dto);
         }
 
         return result;

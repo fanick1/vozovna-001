@@ -573,6 +573,9 @@ table.grid {
 table.grid tr {
     border-bottom: 1px solid #DBDBDB;
 }
+table.grid tr.error {
+    border-bottom: 1px solid #DBDBDB;
+}
 table.grid th, table.grid td {
     border: 1px solid #627B2D;
     text-align: left;
@@ -595,9 +598,17 @@ table.grid td {
 table.grid tr:nth-child(2n) td {
     background-color: #EAF2DB;
 }
+table.grid tr.error:nth-child(2n) td {
+    background-color: #EAF2DB;
+}
+
 table.grid tr:hover td {
     background-color: #EAFFFF;   
 }
+table.grid tr.error:hover td {
+    background-color: #EAFFFF;   
+}
+
 .detail  {
     padding: 10px;
     background-color: #F2F7EA;
