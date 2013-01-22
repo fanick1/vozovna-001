@@ -1,5 +1,6 @@
 package cz.muni.fi.pa165.vozovna.entity;
 
+import cz.muni.fi.pa165.vozovna.dto.UserDTO;
 import cz.muni.fi.pa165.vozovna.enums.UserClassEnum;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -251,4 +252,39 @@ public class User implements org.springframework.security.core.userdetails.UserD
         }
         return enabled;
     }
+
+    public User(UserDTO user){
+    	if(user == null){
+    		throw new IllegalArgumentException("User can't be null.");
+    	}
+    	id = user.getId();
+    	firstName = user.getFirstName();
+    	lastName = user.getLastName();
+    	userClass = user.getUserClass();
+    	isAdmin = user.getIsAdmin();
+    	username = user.getUsername();
+    	password = user.getPassword();
+    	enabled = user.getEnabled();    	
+    }
+    
+	public UserDTO toUserDTO() {
+		UserDTO user = new UserDTO();
+		return applyToUserDTO(user);
+	}
+
+	public UserDTO applyToUserDTO(UserDTO user) {
+		if(user == null){
+			throw new IllegalArgumentException("User can't be null.");
+		}
+		user.setId(id);
+		user.setFirstName(firstName);
+		user.setLastName(lastName);
+		user.setIsAdmin(isAdmin);
+		user.setUserClass(userClass);
+		user.setUsername(username);
+		user.setPassword(password);
+		user.setEnabled(enabled);
+		
+		return user;
+	}
 }

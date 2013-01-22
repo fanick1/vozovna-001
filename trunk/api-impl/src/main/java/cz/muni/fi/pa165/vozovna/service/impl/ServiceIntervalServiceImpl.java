@@ -45,7 +45,7 @@ public class ServiceIntervalServiceImpl implements ServiceIntervalService {
 
         ServiceInterval interval = serviceIntervalDAO.getById(id);
 
-        return new ServiceIntervalDTO(interval);
+        return interval.toServiceIntervalDTO();
     }
 
     @Override
@@ -55,11 +55,11 @@ public class ServiceIntervalServiceImpl implements ServiceIntervalService {
             throw new IllegalArgumentException("null serviceInterval");
         }
 
-        ServiceInterval entity = serviceInterval.toServiceInterval();
+        ServiceInterval entity = new ServiceInterval(serviceInterval);
         // save
         serviceIntervalDAO.create(entity);
 
-        serviceInterval.fromServiceInterval(entity);
+        serviceInterval = entity.applyToServiceIntervalDTO(serviceInterval);
 
         return entity.getId();
     }
@@ -111,7 +111,7 @@ public class ServiceIntervalServiceImpl implements ServiceIntervalService {
         serviceIntervalDAO.update(entity);
 
         // propagate changes
-        serviceInterval.fromServiceInterval(entity);
+        serviceInterval = entity.applyToServiceIntervalDTO(serviceInterval);
 
         return serviceInterval;
     }
@@ -140,7 +140,7 @@ public class ServiceIntervalServiceImpl implements ServiceIntervalService {
             
             int range = (int)( (currentDate.getTime() - lastDate.getTime()) / (1000 * 60 * 60 * 24));
             
-            ServiceIntervalDTO dto = new ServiceIntervalDTO(item);
+            ServiceIntervalDTO dto = item.toServiceIntervalDTO();
             dto.setHasRequiredInspection(range > item.getInspectionInterval());
             
             result.add(dto);

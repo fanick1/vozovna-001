@@ -51,7 +51,7 @@ public class DriveServiceImpl implements DriveService {
 
         Drive drive = driveDAO.getById(id);
 
-        return new DriveDTO(drive);
+        return drive.toDriveDTO();
     }
 
     @Override
@@ -60,7 +60,7 @@ public class DriveServiceImpl implements DriveService {
         if (drive == null) {
             throw new IllegalArgumentException("null drive");
         }
-        Drive entity = drive.toNewDrive();
+        Drive entity = new Drive(drive);
 
         if (drive.getUserId() != null) {
             entity.setUser(userDAO.getById(drive.getUserId()));
@@ -70,7 +70,7 @@ public class DriveServiceImpl implements DriveService {
         }
 
         driveDAO.create(entity);
-        drive.fromDrive(entity);
+        drive = entity.applyToDriveDTO(drive);
         return entity.getId();
     }
 
@@ -116,7 +116,7 @@ public class DriveServiceImpl implements DriveService {
 
         driveDAO.update(entity);
 
-        drive.fromDrive(entity);
+        drive = entity.applyToDriveDTO(drive);
 
         return drive;
     }
@@ -157,7 +157,7 @@ public class DriveServiceImpl implements DriveService {
         
         Drive entity;
         if (drive.getId() == null) {
-            entity = drive.toNewDrive();
+            entity = new Drive(drive);
         } else {
             entity = driveDAO.getById(drive.getId());
             if (entity == null) {
@@ -178,7 +178,7 @@ public class DriveServiceImpl implements DriveService {
         List<DriveDTO> result = new ArrayList<>();
 
         for (Drive drive : drives) {
-            result.add(new DriveDTO(drive));
+            result.add(drive.toDriveDTO());
         }
 
         return result;

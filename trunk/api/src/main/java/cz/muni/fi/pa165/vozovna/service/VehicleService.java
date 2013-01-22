@@ -1,7 +1,7 @@
 package cz.muni.fi.pa165.vozovna.service;
 
+import cz.muni.fi.pa165.vozovna.dto.UserDTO;
 import cz.muni.fi.pa165.vozovna.dto.VehicleDTO;
-import cz.muni.fi.pa165.vozovna.entity.User;
 import cz.muni.fi.pa165.vozovna.enums.UserClassEnum;
 import java.util.List;
 import org.joda.time.DateTime;
@@ -66,7 +66,7 @@ public interface VehicleService {
      *
      * @throws IllegalArgumentException If any of argument is null.
      */
-    public List<VehicleDTO> getAvailableVehicles(User user, DateTime startDate, DateTime endDate);
+    public List<VehicleDTO> getAvailableVehicles(UserDTO user, DateTime startDate, DateTime endDate);
     
     public List<VehicleDTO> getAvailableVehicles(UserClassEnum userClass, DateTime startDate, DateTime endDate);
 }

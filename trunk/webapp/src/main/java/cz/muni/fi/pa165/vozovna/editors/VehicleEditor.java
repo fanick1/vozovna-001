@@ -21,7 +21,7 @@ public class VehicleEditor extends PropertyEditorSupport {
     @Override
     public void setAsText(String text) throws IllegalArgumentException {
         VehicleDTO vehicleDTO = vehicleService.getById((long) Integer.parseInt(text));
-        setValue(vehicleDTO.toVehicle());
+        setValue(new Vehicle(vehicleDTO));
     }
 
     @Override

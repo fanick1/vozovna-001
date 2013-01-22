@@ -1,7 +1,7 @@
 package cz.muni.fi.pa165.vozovna.dto;
 
-import cz.muni.fi.pa165.vozovna.entity.ServiceInterval;
-import cz.muni.fi.pa165.vozovna.entity.Vehicle;
+//import cz.muni.fi.pa165.vozovna.entity.ServiceInterval;
+//import cz.muni.fi.pa165.vozovna.entity.Vehicle;
 import cz.muni.fi.pa165.vozovna.enums.UserClassEnum;
 import java.util.List;
 
@@ -165,9 +165,9 @@ public class VehicleDTO implements java.io.Serializable {
      * Creates VehicleDTO from Vehicle entity
      * @param vehicle   Original vehicle
      */
-    public VehicleDTO(Vehicle vehicle) {
-        fromVehicle(vehicle);
-    }
+//    public VehicleDTO(Vehicle vehicle) {
+//        fromVehicle(vehicle);
+//    }
     
     // CONVERTORS FROM AND TO ENTITY:
     
@@ -175,36 +175,36 @@ public class VehicleDTO implements java.io.Serializable {
      * Fills properties from vehicle
      * @param vehicle   Original vehicle
      */
-    public final void fromVehicle(Vehicle vehicle) {
-        id = vehicle.getId();
-        brand = vehicle.getBrand();
-        maxDistance = vehicle.getDistanceCount();
-        engineType = vehicle.getEngineType();
-        type = vehicle.getType();
-        vin = vehicle.getVin();
-        yearMade = vehicle.getYearMade();
-        userClass = vehicle.getUserClass(); 
-        registrationPlate = vehicle.getRegistrationPlate();
-    }
+//    public final void fromVehicle(Vehicle vehicle) {
+//        id = vehicle.getId();
+//        brand = vehicle.getBrand();
+//        maxDistance = vehicle.getDistanceCount();
+//        engineType = vehicle.getEngineType();
+//        type = vehicle.getType();
+//        vin = vehicle.getVin();
+//        yearMade = vehicle.getYearMade();
+//        userClass = vehicle.getUserClass(); 
+//        registrationPlate = vehicle.getRegistrationPlate();
+//    }
     
     /**
      * Returns vehicle with same properties
      * @return  Instance of vehicle
      */
-    public Vehicle toVehicle() {
-        Vehicle vehicle = new Vehicle();
-        vehicle.setId(id);
-        vehicle.setBrand(brand);
-        vehicle.setDistanceCount(maxDistance);
-        vehicle.setEngineType(engineType);
-        vehicle.setType(type);
-        vehicle.setVin(vin);
-        vehicle.setYearMade(yearMade);
-        vehicle.setUserClass(userClass);
-        vehicle.setRegistrationPlate(registrationPlate);
-        
-        return vehicle;
-    }
+//    public Vehicle toVehicle() {
+//        Vehicle vehicle = new Vehicle();
+//        vehicle.setId(id);
+//        vehicle.setBrand(brand);
+//        vehicle.setDistanceCount(maxDistance);
+//        vehicle.setEngineType(engineType);
+//        vehicle.setType(type);
+//        vehicle.setVin(vin);
+//        vehicle.setYearMade(yearMade);
+//        vehicle.setUserClass(userClass);
+//        vehicle.setRegistrationPlate(registrationPlate);
+//        
+//        return vehicle;
+//    }
     
     
     // OTHER METHODS:
