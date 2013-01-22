@@ -26,6 +26,7 @@ public class ServiceIntervalDAOImpl extends GenericDAOHibernateImpl<ServiceInter
             // for new vehicle we don't need to query database
             return new ArrayList<ServiceInterval>();
         }
+        
         final Session session = sessionFactory.getCurrentSession();
         Query query = session.createQuery("FROM " + ServiceInterval.class.getName()
                 + " interval WHERE interval.vehicle = :vehicle");

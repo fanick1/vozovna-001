@@ -6,6 +6,7 @@ import cz.muni.fi.pa165.vozovna.entity.User;
 import cz.muni.fi.pa165.vozovna.entity.Vehicle;
 import cz.muni.fi.pa165.vozovna.enums.DriveStateEnum;
 import cz.muni.fi.pa165.vozovna.enums.UserClassEnum;
+import java.util.Iterator;
 import java.util.List;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -54,5 +55,21 @@ public class VehicleDAOHibernateImpl extends GenericDAOHibernateImpl<Vehicle, Lo
         query.setParameter("stateReserved", DriveStateEnum.RESERVED);
         query.setParameter("stateOngoing", DriveStateEnum.ONGOING);
         return (List<Vehicle>) query.list();
+    }
+
+    @Override
+    public int getMileageOfVehicle(Vehicle vehicle) {
+        if (vehicle == null) {
+            throw new IllegalArgumentException("Given vehicle is null");
+        }
+
+        final Session session = sessionFactory.getCurrentSession();
+        Query query = session.createQuery(
+                "SELECT SUM(d.distance) FROM " + Drive.class.getName() + " d WHERE d.vehicle=:vehicle");
+        query.setParameter("vehicle", vehicle);
+        
+        Long sum = (Long) query.uniqueResult();
+        
+        return sum == null ? 0 : sum.intValue();
     }
 }

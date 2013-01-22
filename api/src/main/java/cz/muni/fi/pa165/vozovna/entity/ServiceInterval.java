@@ -9,6 +9,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.OrderBy;
 import javax.persistence.Temporal;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
@@ -46,6 +47,7 @@ public class ServiceInterval implements Serializable {
     @ElementCollection(targetClass=java.util.Date.class)
     @Fetch(FetchMode.JOIN)
     @Temporal(javax.persistence.TemporalType.DATE)
+    @OrderBy()
     private List<Date> dated;
     /**
      * The related vehicle

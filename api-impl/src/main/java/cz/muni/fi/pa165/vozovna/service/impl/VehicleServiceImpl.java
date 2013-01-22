@@ -1,13 +1,17 @@
 package cz.muni.fi.pa165.vozovna.service.impl;
 
 import cz.muni.fi.pa165.vozovna.dao.DriveDAO;
+import cz.muni.fi.pa165.vozovna.dao.ServiceIntervalDAO;
 import cz.muni.fi.pa165.vozovna.dao.VehicleDAO;
+import cz.muni.fi.pa165.vozovna.dto.ServiceIntervalDTO;
 import cz.muni.fi.pa165.vozovna.dto.VehicleDTO;
+import cz.muni.fi.pa165.vozovna.entity.ServiceInterval;
 import cz.muni.fi.pa165.vozovna.entity.User;
 import cz.muni.fi.pa165.vozovna.entity.Vehicle;
 import cz.muni.fi.pa165.vozovna.enums.UserClassEnum;
 import cz.muni.fi.pa165.vozovna.service.VehicleService;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +31,9 @@ public class VehicleServiceImpl implements VehicleService {
 
     @Autowired
     private DriveDAO driveDAO;
+    
+    @Autowired
+    private ServiceIntervalDAO serviceIntervalDAO;
 
     @Override
     @Transactional(readOnly = true)
@@ -36,6 +43,25 @@ public class VehicleServiceImpl implements VehicleService {
         }
         Vehicle vehicle = vehicleDAO.getById(id);
         VehicleDTO vehicleDTO = new VehicleDTO(vehicle);
+        
+        List<ServiceIntervalDTO> intervals = new ArrayList<>();
+        
+        for(ServiceInterval interval: this.serviceIntervalDAO.findAllByVehicle(vehicle)) {
+            ServiceIntervalDTO dto = new ServiceIntervalDTO(interval);
+            
+            // check, if inspection is required
+            Date lastDate = dto.getDated().get(dto.getDated().size() - 1);
+            Date currentDate = new Date();
+            
+            int range = (int)( (currentDate.getTime() - lastDate.getTime()) / (1000 * 60 * 60 * 24));
+            
+            dto.setHasRequiredInspection(range > dto.getInspectionInterval());
+            
+            intervals.add(dto);
+        }
+        
+        vehicleDTO.setServiceIntervals(intervals);
+        
         return vehicleDTO;
     }
 
@@ -111,7 +137,10 @@ public class VehicleServiceImpl implements VehicleService {
 
         for (Vehicle item : intervals) {
             VehicleDTO vehicleDTO = new VehicleDTO(item);
+            
             vehicleDTO.setCanRemove(this.canRemoveVehicle(item));
+            vehicleDTO.setMileage(this.vehicleDAO.getMileageOfVehicle(item));
+            
             result.add(vehicleDTO);
         }
 

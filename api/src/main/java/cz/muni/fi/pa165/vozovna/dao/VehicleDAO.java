@@ -75,4 +75,13 @@ public interface VehicleDAO extends GenericDAO<Vehicle, Long> {
     public List<Vehicle> getAvailableVehicles(User user, DateTime startDate, DateTime endDate);
 
     public List<Vehicle> getAvailableVehicles(UserClassEnum userClass, DateTime startDate, DateTime endDate);
+    
+    /**
+     * Returns total km went by vehicle until now.
+     * 
+     * @param vehicle Vehicle, for which compute mileage.
+     * @return Mileage of vehicle
+     * @throws IllegalArgumentException Throws if given vehicle is null.
+     */
+    public int getMileageOfVehicle(Vehicle vehicle);
 }

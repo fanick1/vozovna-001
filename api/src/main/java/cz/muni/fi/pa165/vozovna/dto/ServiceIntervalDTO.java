@@ -36,7 +36,10 @@ public class ServiceIntervalDTO implements java.io.Serializable {
      */
     private String description;
 
-    
+    /**
+     * If true, inspection id required for this service interval.
+     */
+    private boolean hasRequiredInspection;
     
     public Long getId() {
         return id;
@@ -147,6 +150,20 @@ public class ServiceIntervalDTO implements java.io.Serializable {
         }
         return true;
       
+    }
+
+    /**
+     * @return the hasRequiredInspection
+     */
+    public boolean isHasRequiredInspection() {
+        return hasRequiredInspection;
+    }
+
+    /**
+     * @param hasRequiredInspection the hasRequiredInspection to set
+     */
+    public void setHasRequiredInspection(boolean hasRequiredInspection) {
+        this.hasRequiredInspection = hasRequiredInspection;
     }
     
 }

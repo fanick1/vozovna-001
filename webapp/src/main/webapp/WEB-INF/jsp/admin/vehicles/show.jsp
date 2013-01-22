@@ -75,6 +75,35 @@
                 <td><fmt:message key="${vehicle.userClass.code}" /></td>
             </tr>
             
+            <tr>
+                <table class="grid">
+                    <colgroup>
+                        <col style="width: 50px;" />
+                        <col />
+                        <col style="width: 20px;" />
+                        <col />
+                        <col style="width: 200px;"/>
+                    </colgroup>
+                    <tr>
+                        <th><fmt:message key="interval.description" /></th>
+                        <th><fmt:message key="interval.inspectionInterval" /></th>
+                        <th></th>
+                    </tr>
+                    <c:forEach  items="${vehicle.serviceIntervals}" var="interval">
+                        <tr >       
+                                <td><a href="<c:url value="/admin/intervals/show?id=${interval.id}" />"><c:out value="${interval.description}" /></a></td>
+                                <td class="number"><c:out value="${interval.inspectionInterval}"/></td>
+                                <td>
+                                    <a href="<c:url value="/admin/intervals/show?id=${interval.id}" />"><fmt:message key="actions.show" /></a>
+                                    <c:if test="${interval.hasRequiredInspection}" >
+                                        <img width="15" height="15" title="<fmt:message key="admin.intervals.requiredInspection"/>" src="<spring:url value="/resources/img/error.png"/>" />
+                                    </c:if>
+                                </td>
+                            </tr>
+                    </c:forEach>
+                </table>
+            </tr>
+            
         </table>
         <br>
         <div class="inpage-nav">

@@ -33,19 +33,19 @@
                 <col style="width: 200px;"/>
             </colgroup>
             <tr>
-                <th><fmt:message key="vehicle.id" /></th>
                 <th><fmt:message key="vehicle.registrationPlate" /></th>
                 <th><fmt:message key="vehicle.brand" /></th>
                 <th><fmt:message key="vehicle.type" /></th>
+                <th><fmt:message key="vehicle.mileage" /></th>
                 <th><fmt:message key="vehicle.engineType" /></th>
                 <th></th>
             </tr>
             <c:forEach  items="${vehicles}" var="vehicle">
                 <tr>
-                    <td class="number">${vehicle.id}</td>
                     <td>${vehicle.registrationPlate}</td>
                     <td><c:out value="${vehicle.brand}"/></td>
                     <td><c:out value="${vehicle.type}"/></td>
+                    <td><c:out value="${vehicle.mileage}"/></td>
                     <td><c:out value="${vehicle.engineType}"/></td>
                     <td>
                         <a href="<c:url value="/admin/vehicles/show?id=${vehicle.id}" />"><fmt:message key="actions.show" /></a> |
