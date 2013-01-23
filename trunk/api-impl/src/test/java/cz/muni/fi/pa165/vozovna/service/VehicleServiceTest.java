@@ -156,7 +156,9 @@ public abstract class VehicleServiceTest {
         } catch (IllegalArgumentException e) {
             //OK
         }
-        VehicleDTO vehicleDto = new VehicleDTO(existingVehicle);
+        //FIXME
+        //VehicleDTO vehicleDto = new VehicleDTO(existingVehicle);
+        VehicleDTO vehicleDto = new VehicleDTO();
         vehicleDto.setId(15l);
         Long id = vehicleService.create(vehicleDto);
         assertNotNull(id);

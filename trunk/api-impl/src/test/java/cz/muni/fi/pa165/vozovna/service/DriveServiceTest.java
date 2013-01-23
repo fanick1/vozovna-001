@@ -101,7 +101,9 @@ public abstract class DriveServiceTest {
 		existingUser.setId(1l);
 		existingUser.setUserClass(UserClassEnum.EMPLOYEE);
 		
-		existingUserDTO = new UserDTO(existingUser);
+		//FIXME
+		//existingUserDTO = new UserDTO(existingUser);
+		existingUserDTO = new UserDTO();
 		
 		existingDrive = new Drive();
 		existingDrive.setDateFrom(new DateTime());

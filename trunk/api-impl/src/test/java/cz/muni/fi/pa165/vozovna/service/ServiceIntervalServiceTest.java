@@ -209,7 +209,9 @@ public abstract class ServiceIntervalServiceTest {
         serviceIntervalDto.setId(15l);
         serviceIntervalDto.setInspectionInterval(213);
         serviceIntervalDto.setDescription("x");
-        serviceIntervalDto.setVehicle(new VehicleDTO(existingVehicle));
+        //FIXME
+        //serviceIntervalDto.setVehicle(new VehicleDTO(existingVehicle));
+        
         Long id = serviceIntervalService.create(serviceIntervalDto);
         assertNotNull(id);
         assertEquals("IDs should be equal.", id, serviceIntervalDto.getId());
