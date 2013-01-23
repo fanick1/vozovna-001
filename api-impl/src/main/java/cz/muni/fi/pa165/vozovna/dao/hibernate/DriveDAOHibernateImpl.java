@@ -65,11 +65,8 @@ public class DriveDAOHibernateImpl extends GenericDAOHibernateImpl<Drive, Long> 
         final Session session = sessionFactory.getCurrentSession();
         
         Query query = session.createQuery("FROM " + Drive.class.getName()
-                + " d WHERE d.vehicle = :vehicle AND d.dateFrom > :dateFrom AND (d.state = :state1 OR d.state = :state2)");
+                + " d WHERE d.vehicle = :vehicle ");
         query.setParameter("vehicle", vehicle);
-        query.setParameter("dateFrom", DateTime.now());
-        query.setParameter("state1", DriveStateEnum.RESERVED);
-        query.setParameter("state2", DriveStateEnum.ONGOING);
         
         List<Drive> drivesOfVehicle = (List<Drive>) query.list();
         return !drivesOfVehicle.isEmpty();
@@ -84,11 +81,8 @@ public class DriveDAOHibernateImpl extends GenericDAOHibernateImpl<Drive, Long> 
         final Session session = sessionFactory.getCurrentSession();
         
         Query query = session.createQuery("FROM " + Drive.class.getName()
-                + " d WHERE d.user = :user AND d.dateFrom > :dateFrom AND (d.state = :state1 OR d.state = :state2)");
+                + " d WHERE d.user = :user");
         query.setParameter("user", user);
-        query.setParameter("dateFrom", DateTime.now());
-        query.setParameter("state1", DriveStateEnum.RESERVED);
-        query.setParameter("state2", DriveStateEnum.ONGOING);
         
         List<Drive> drivesOfUser = (List<Drive>) query.list();
         return !drivesOfUser.isEmpty();

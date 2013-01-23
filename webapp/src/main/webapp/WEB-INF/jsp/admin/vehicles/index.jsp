@@ -25,12 +25,12 @@
         </div>
         <table class="grid">
             <colgroup>
-                <col style="width: 50px;" />
+                <col style="width:  60px;" />
                 <col style="width: 130px;" />
-                <col />
-                <col style="width: 50px;" />
-                <col />
-                <col style="width: 200px;"/>
+                <col style="width: 120px;" />
+                <col style="width:  80px;" />
+                <col style="width: 120px;" />
+                <col style="width: 200px;" />
             </colgroup>
             <tr>
                 <th><fmt:message key="vehicle.registrationPlate" /></th>
@@ -45,7 +45,12 @@
                     <td><a href="<c:url value="/admin/vehicles/show?id=${vehicle.id}" />"><c:out value="${vehicle.registrationPlate}"/></a></td>
                     <td><c:out value="${vehicle.brand}"/></td>
                     <td><c:out value="${vehicle.type}"/></td>
-                    <td><c:out value="${vehicle.mileage}"/></td>
+                    <td class="number">
+                        <c:if test="${vehicle.mileage > vehicle.distanceCount}" >    
+                           <img width="20" height="20" align="left" title="<fmt:message key="admin.vehicle.reachedMaxMileage"/>" src="<spring:url value="/resources/img/stop.png"/>" />
+                       </c:if>
+                        <c:out value="${vehicle.mileage}"/>
+                    </td>
                     <td><c:out value="${vehicle.engineType}"/></td>
                     <td>
                         <a href="<c:url value="/admin/vehicles/show?id=${vehicle.id}" />"><fmt:message key="actions.show" /></a> |
