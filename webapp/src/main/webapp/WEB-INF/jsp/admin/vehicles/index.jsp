@@ -42,7 +42,7 @@
             </tr>
             <c:forEach  items="${vehicles}" var="vehicle">
                 <tr>
-                    <td>${vehicle.registrationPlate}</td>
+                    <td><a href="<c:url value="/admin/vehicles/show?id=${vehicle.id}" />"><c:out value="${vehicle.registrationPlate}"/></a></td>
                     <td><c:out value="${vehicle.brand}"/></td>
                     <td><c:out value="${vehicle.type}"/></td>
                     <td><c:out value="${vehicle.mileage}"/></td>

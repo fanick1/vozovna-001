@@ -65,8 +65,9 @@ public class VehicleDAOHibernateImpl extends GenericDAOHibernateImpl<Vehicle, Lo
 
         final Session session = sessionFactory.getCurrentSession();
         Query query = session.createQuery(
-                "SELECT SUM(d.distance) FROM " + Drive.class.getName() + " d WHERE d.vehicle=:vehicle");
+                "SELECT SUM(d.distance) FROM " + Drive.class.getName() + " d WHERE d.vehicle=:vehicle AND d.state = :state");
         query.setParameter("vehicle", vehicle);
+        query.setParameter("state", DriveStateEnum.FINISHED);
         
         Long sum = (Long) query.uniqueResult();
         
