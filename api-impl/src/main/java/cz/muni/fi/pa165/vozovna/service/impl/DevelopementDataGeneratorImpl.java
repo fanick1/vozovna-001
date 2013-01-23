@@ -47,7 +47,7 @@ public class DevelopementDataGeneratorImpl implements DevelopementDataGenerator 
             newAdmin.setUsername("admin");
             newAdmin.setPassword(passwordEncoder.encodePassword("admin", null));
             newAdmin.setFirstName("Helmut");
-            newAdmin.setLastName("Instalatér");
+            newAdmin.setLastName("InstalatÃ©r");
             newAdmin.setIsAdmin(Boolean.TRUE);
             newAdmin.setUserClass(UserClassEnum.PRESIDENT);
             userDAO.create(newAdmin);
@@ -89,7 +89,7 @@ public class DevelopementDataGeneratorImpl implements DevelopementDataGenerator 
             userDAO.create(employee);
 
             Vehicle fabia = new Vehicle();
-            fabia.setBrand("Škoda");
+            fabia.setBrand("Å koda");
             fabia.setDistanceCount(30000);
             fabia.setEngineType("1.4 TDi");
             fabia.setType("Fabia");
@@ -101,7 +101,7 @@ public class DevelopementDataGeneratorImpl implements DevelopementDataGenerator 
 
 
             Vehicle octavia = new Vehicle();
-            octavia.setBrand("Škoda");
+            octavia.setBrand("Å koda");
             octavia.setDistanceCount(50000);
             octavia.setEngineType("1.9 TDi 96 kW");
             octavia.setType("Octavia");
@@ -144,7 +144,7 @@ public class DevelopementDataGeneratorImpl implements DevelopementDataGenerator 
 
             ServiceInterval interval = new ServiceInterval();
             interval.setDated(dates);
-            interval.setDescription("Výmìna kol");
+            interval.setDescription("VÃ½mÄ›na kol");
             interval.setInspectionInterval(183);
             interval.setVehicle(fabia);
             serviceIntervalDAO.create(interval);
