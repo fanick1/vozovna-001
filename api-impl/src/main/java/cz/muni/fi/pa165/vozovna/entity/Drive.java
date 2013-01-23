@@ -70,6 +70,10 @@ public class Drive {
     // TODO nastavit mapovani do DB na string
     private DriveStateEnum state;
 
+    public Drive() {
+        super();
+    }
+
     public DateTime getDateFrom() {
         return dateFrom;
     }
