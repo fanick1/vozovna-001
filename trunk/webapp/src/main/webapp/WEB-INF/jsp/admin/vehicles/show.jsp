@@ -67,6 +67,10 @@
                 <td><c:out value="${vehicle.distanceCount}"/></td>
             </tr>
             <tr>
+                <th><fmt:message key="vehicle.mileage" />:</th>
+                <td><c:out value="${vehicle.mileage}"/></td>
+            </tr>
+            <tr>
                 <th><fmt:message key="vehicle.vin" />:</th>
                 <td><c:out value="${vehicle.vin}"/></td>
             </tr>
@@ -74,42 +78,44 @@
                 <th><fmt:message key="vehicle.userClass" />:</th>
                 <td><fmt:message key="${vehicle.userClass.code}" /></td>
             </tr>
-            
-            <tr>
-                <table class="grid">
-                    <colgroup>
-                        <col style="width: 50px;" />
-                        <col />
-                        <col style="width: 20px;" />
-                        <col />
-                        <col style="width: 200px;"/>
-                    </colgroup>
-                    <tr>
-                        <th><fmt:message key="interval.description" /></th>
-                        <th><fmt:message key="interval.inspectionInterval" /></th>
-                        <th></th>
-                    </tr>
-                    <c:forEach  items="${vehicle.serviceIntervals}" var="interval">
-                        <tr >       
-                                <td><a href="<c:url value="/admin/intervals/show?id=${interval.id}" />"><c:out value="${interval.description}" /></a></td>
-                                <td class="number"><c:out value="${interval.inspectionInterval}"/></td>
-                                <td>
-                                    <a href="<c:url value="/admin/intervals/show?id=${interval.id}" />"><fmt:message key="actions.show" /></a>
-                                    <c:if test="${interval.hasRequiredInspection}" >
-                                        <img width="15" height="15" title="<fmt:message key="admin.intervals.requiredInspection"/>" src="<spring:url value="/resources/img/error.png"/>" />
-                                    </c:if>
-                                </td>
-                            </tr>
-                    </c:forEach>
-                </table>
-            </tr>
-            
         </table>
+            <br />
+        <div style="text-align: center;">
+            <table class="grid" style="width: 500px; margin: 0 auto;">
+                <colgroup>
+                    <col style="width: 300px;">
+                    <col style="width: 100px;">
+                    <col style="width: 100px;">
+                </colgroup>
+                <tr>
+                    <th><fmt:message key="interval" /></th>
+                    <th><fmt:message key="interval.inspectionInterval" /></th>
+                    <th></th>
+                </tr>
+                <c:forEach  items="${vehicle.serviceIntervals}" var="interval">
+                    <tr>       
+                        <td><a href="<c:url value="/admin/intervals/show?id=${interval.id}" />"><c:out value="${interval.description}" /></a></td>
+                        <td class="number">
+                            <c:if test="${interval.hasRequiredInspection}" >
+                                <img width="20" height="20" align="left" title="<fmt:message key="admin.intervals.requiredInspection"/>" src="<spring:url value="/resources/img/wrench.png"/>" />
+                            </c:if>
+                            <c:out value="${interval.inspectionInterval}"/>
+                        </td>
+                        <td>
+                            <a href="<c:url value="/admin/intervals/show?id=${interval.id}" />"><fmt:message key="actions.show" /></a>
+
+                        </td>
+                    </tr>
+                </c:forEach>
+            </table>
+        </div> 
         <br>
         <div class="inpage-nav">
-            <a href="<c:url value="/admin/vehicles" />"><fmt:message key="vehicles.list" /></a> |
-            <a href="<c:url value="/admin/vehicles/edit?id=${vehicle.id}" />"><fmt:message key="actions.edit" /></a> | 
-            <a href="<c:url value="/admin/vehicles/delete?id=${vehicle.id}" />" class="remove"><fmt:message key="actions.delete" /></a>
+            <a href="<c:url value="/admin/vehicles" />"><fmt:message key="vehicles.list" /></a>
+            | <a href="<c:url value="/admin/vehicles/edit?id=${vehicle.id}" />"><fmt:message key="actions.edit" /></a> 
+            <c:if test="${vehicle.canRemove}">
+                | <a href="<c:url value="/admin/vehicles/delete?id=${vehicle.id}" />" class="remove"><fmt:message key="actions.delete" /></a>
+            </c:if>
         </div>            
     </body>
 </html>

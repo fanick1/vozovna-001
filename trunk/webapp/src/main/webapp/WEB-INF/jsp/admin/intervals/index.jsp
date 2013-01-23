@@ -51,16 +51,18 @@
             </c:if>
             <tr class="${trCssClass}">       
                     <td><a href="<c:url value="/admin/intervals/show?id=${interval.id}" />"><c:out value="${interval.description}" /></a></td>
-                    <td class="number"><c:out value="${interval.inspectionInterval}"/></td>
+                    <td class="number">
+                        <c:if test="${interval.hasRequiredInspection}" >
+                            <img width="20" height="20" align="left" title="<fmt:message key="admin.intervals.requiredInspection"/>" src="<spring:url value="/resources/img/wrench.png"/>" />
+                        </c:if>
+                        <c:out value="${interval.inspectionInterval}"/>
+                    </td>
                     <td><a href="<c:url value="/admin/vehicles/show?id=${interval.vehicle.id}" />"> <span class="registrationPlate">[<c:out value="${interval.vehicle.registrationPlate}"/>]</span> <c:out value="${interval.vehicle.fullName}"/></a></td>
                     <td>
                         <a href="<c:url value="/admin/intervals/show?id=${interval.id}" />"><fmt:message key="actions.show" /></a> |
                         <a href="<c:url value="/admin/intervals/inspect?id=${interval.id}" />" class="inspect"><fmt:message key="admin.intervals.inspect" /></a> | 
                         <a href="<c:url value="/admin/intervals/edit?id=${interval.id}" />"><fmt:message key="actions.edit" /></a> |
                         <a href="<c:url value="/admin/intervals/delete?id=${interval.id}" />" class="remove"><fmt:message key="actions.delete" /></a>
-                        <c:if test="${interval.hasRequiredInspection}" >
-                            <img width="15" height="15" title="<fmt:message key="admin.intervals.requiredInspection"/>" src="<spring:url value="/resources/img/error.png"/>" />
-                        </c:if>
                     </td>
                 </tr>
         </c:forEach>

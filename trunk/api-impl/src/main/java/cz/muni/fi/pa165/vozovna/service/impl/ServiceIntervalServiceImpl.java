@@ -45,7 +45,18 @@ public class ServiceIntervalServiceImpl implements ServiceIntervalService {
 
         ServiceInterval interval = serviceIntervalDAO.getById(id);
 
-        return interval.toServiceIntervalDTO();
+        
+        // check, if inspection is required
+        Date lastDate = interval.getDated().get(interval.getDated().size() - 1);
+        Date currentDate = new Date();
+
+        int range = (int)( (currentDate.getTime() - lastDate.getTime()) / (1000 * 60 * 60 * 24));
+
+        ServiceIntervalDTO dto = interval.toServiceIntervalDTO();
+        dto.setHasRequiredInspection(range > interval.getInspectionInterval());
+            
+        return dto;
+
     }
 
     @Override

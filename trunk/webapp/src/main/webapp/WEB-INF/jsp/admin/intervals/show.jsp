@@ -34,10 +34,27 @@
             padding-top: 5px;
             padding-bottom: 5px;
         }
+        .info {
+            text-align: left;
+            padding: 10px 0px;
+            font-weight: bold;
+            line-height: 20px;
+        }
+        .info img {
+            margin-left: 10px;
+            margin-right: 10px;
+        }
     </style>
 </head>
 <body>
 
+<c:if test="${interval.hasRequiredInspection}" >    
+    <div class="detail info">
+        <img width="20" height="20" align="left" title="<fmt:message key="admin.intervals.requiredInspection"/>" src="<spring:url value="/resources/img/wrench.png"/>" />
+        <fmt:message key="admin.intervals.requiredInspection"/>
+        
+    </div><br>
+ </c:if>
 <table class="detail">
     <colgroup>
         <col style="width: 200px" />

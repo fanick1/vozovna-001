@@ -43,6 +43,7 @@ public class VehicleServiceImpl implements VehicleService {
             return null;
         }
         Vehicle vehicle = vehicleDAO.getById(id);
+        
         VehicleDTO vehicleDTO = vehicle.toVehicleDTO();
         
         List<ServiceIntervalDTO> intervals = new ArrayList<>();
@@ -60,8 +61,11 @@ public class VehicleServiceImpl implements VehicleService {
             
             intervals.add(dto);
         }
-        
+       
         vehicleDTO.setServiceIntervals(intervals);
+        
+        vehicleDTO.setCanRemove(this.canRemoveVehicle(vehicle));
+        vehicleDTO.setMileage(this.vehicleDAO.getMileageOfVehicle(vehicle));
         
         return vehicleDTO;
     }
@@ -133,10 +137,10 @@ public class VehicleServiceImpl implements VehicleService {
      * @param list List of vehicles
      * @return List of Vehicle Data Transform Objects
      */
-    private List<VehicleDTO> convertListOfVehiclesToListOfVehicleDTOs(List<Vehicle> intervals) {
+    private List<VehicleDTO> convertListOfVehiclesToListOfVehicleDTOs(List<Vehicle> vehicles) {
         List<VehicleDTO> result = new ArrayList<>();
 
-        for (Vehicle item : intervals) {
+        for (Vehicle item : vehicles) {
             VehicleDTO vehicleDTO = item.toVehicleDTO();
             
             vehicleDTO.setCanRemove(this.canRemoveVehicle(item));

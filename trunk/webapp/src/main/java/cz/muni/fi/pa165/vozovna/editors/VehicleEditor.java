@@ -26,7 +26,7 @@ public class VehicleEditor extends PropertyEditorSupport {
 
     @Override
     public String getAsText() {
-        Vehicle vehicle = (Vehicle) getValue();
+        VehicleDTO vehicle = (VehicleDTO) getValue();
         if (vehicle == null) {
             return null;
         } else {
