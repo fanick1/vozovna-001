@@ -1,7 +1,7 @@
 package cz.muni.fi.pa165.vozovna.ws;
 
+import cz.muni.fi.pa165.vozovna.dto.UserDTO;
 import cz.muni.fi.pa165.vozovna.dto.VehicleDTO;
-import cz.muni.fi.pa165.vozovna.entity.User;
 import cz.muni.fi.pa165.vozovna.enums.UserClassEnum;
 import cz.muni.fi.pa165.vozovna.service.VehicleService;
 import java.util.List;
@@ -33,7 +33,7 @@ public interface VehicleWebService extends VehicleService{
 	
 	@Override
 	@WebMethod(operationName="getAvailableVehiclesForUser")
-	public List<VehicleDTO> getAvailableVehicles(User user, DateTime startDate,
+	public List<VehicleDTO> getAvailableVehicles(UserDTO user, DateTime startDate,
 			DateTime endDate);
 
 	@Override
