@@ -16,6 +16,16 @@
                 padding-top: 4px;
                 padding-bottom: 4px;
             }
+            .info {
+                text-align: left;
+                padding: 10px 0px;
+                font-weight: bold;
+                line-height: 20px;
+            }
+            .info img {
+                margin-left: 10px;
+                margin-right: 10px;
+            }
         </style>
         
         <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
@@ -31,7 +41,25 @@
         </script>
     </head>
     <body>
-        
+        <c:if test="${vehicle.mileage > vehicle.distanceCount}" >    
+            <div class="detail info">
+                <img width="20" height="20" align="left" title="<fmt:message key="admin.vehicle.reachedMaxMileage"/>" src="<spring:url value="/resources/img/stop.png"/>" />
+                <fmt:message key="admin.vehicle.reachedMaxMileage"/>
+            </div>
+            <br>
+        </c:if>
+        <c:forEach  items="${vehicle.serviceIntervals}" var="interval">
+            <c:if test="${interval.hasRequiredInspection}" >
+                <c:set var="hasRequiredInspection" value="true"/>
+            </c:if>
+        </c:forEach>
+        <c:if test="${hasRequiredInspection}" >    
+            <div class="detail info">
+                <img width="20" height="20" align="left" title="<fmt:message key="admin.vehicle.inspectionInterval"/>" src="<spring:url value="/resources/img/wrench.png"/>" />
+                <fmt:message key="admin.vehicle.inspectionInterval"/>
+            </div>
+            <br>
+        </c:if>        
         <table class="detail">
             <colgroup>
                 <col style="width: 200px" />
