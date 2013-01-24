@@ -48,12 +48,16 @@ public class VehicleDAOHibernateImpl extends GenericDAOHibernateImpl<Vehicle, Lo
                 + "SELECT d.vehicle FROM " + Drive.class.getName() + " d WHERE "
                 + "(d.state = :stateReserved OR d.state = :stateOngoing) "
                 + "AND ( (:dateFrom > d.dateFrom AND :dateFrom < d.dateTo) OR (:dateTo > d.dateFrom AND :dateTo < d.dateTo) ) "
-                + ")");
+                + ")"
+                + " AND v.maxDistance > (SELECT SUM(d.distance) FROM " + Drive.class.getName() + " d WHERE d.vehicle = v AND d.state = :state)"
+                );
         query.setParameter("userClass", userClass);
         query.setParameter("dateFrom", startDate);
         query.setParameter("dateTo", endDate);
         query.setParameter("stateReserved", DriveStateEnum.RESERVED);
         query.setParameter("stateOngoing", DriveStateEnum.ONGOING);
+        query.setParameter("state", DriveStateEnum.FINISHED);
+        
         return (List<Vehicle>) query.list();
     }
 

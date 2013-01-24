@@ -92,6 +92,13 @@ public class VehicleServiceImpl implements VehicleService {
             throw new IllegalArgumentException("vehicle unexists");
         }
         Vehicle v = vehicleDAO.getById(vehicle.getId());
+        
+        // get and remove dependent service intervals
+        List<ServiceInterval> intervals = serviceIntervalDAO.findAllByVehicle(v);
+        for (ServiceInterval interval : intervals) {
+            serviceIntervalDAO.remove(interval);
+        }
+        // remove vehicle
         vehicleDAO.remove(v);
         vehicle.setId(null);
     }
