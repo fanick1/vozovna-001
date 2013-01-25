@@ -1,13 +1,11 @@
 package cz.muni.fi.pa165.vozovna.editors;
 
 import cz.muni.fi.pa165.vozovna.dto.VehicleDTO;
-import cz.muni.fi.pa165.vozovna.entity.Vehicle;
 import cz.muni.fi.pa165.vozovna.service.VehicleService;
 import java.beans.PropertyEditorSupport;
 
 /**
- *
- * @author Lukas Hajek <359617@mail.muni.cz>
+ * @author Eva Neduchalová, 359893
  */
 public class VehicleEditor extends PropertyEditorSupport {
 
@@ -21,7 +19,7 @@ public class VehicleEditor extends PropertyEditorSupport {
     @Override
     public void setAsText(String text) throws IllegalArgumentException {
         VehicleDTO vehicleDTO = vehicleService.getById((long) Integer.parseInt(text));
-        setValue(new Vehicle(vehicleDTO));
+        setValue(vehicleDTO);
     }
 
     @Override

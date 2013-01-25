@@ -23,7 +23,7 @@ import cz.muni.fi.pa165.vozovna.dto.UserDTO;
 import cz.muni.fi.pa165.vozovna.dto.VehicleDTO;
 import cz.muni.fi.pa165.vozovna.editors.DateTimeEditor;
 import cz.muni.fi.pa165.vozovna.editors.UserEditor;
-import cz.muni.fi.pa165.vozovna.editors.VehicleDTOEditor;
+import cz.muni.fi.pa165.vozovna.editors.VehicleEditor;
 import cz.muni.fi.pa165.vozovna.enums.DriveStateEnum;
 import cz.muni.fi.pa165.vozovna.service.DriveService;
 import cz.muni.fi.pa165.vozovna.service.UserService;
@@ -49,7 +49,7 @@ public class DrivesController {
         binder.setValidator(new DriveFormValidator());
         binder.registerCustomEditor(String.class, new StringTrimmerEditor(true));
         binder.registerCustomEditor(UserDTO.class, new UserEditor(userService));
-        binder.registerCustomEditor(VehicleDTO.class, new VehicleDTOEditor(vehicleService));
+        binder.registerCustomEditor(VehicleDTO.class, new VehicleEditor(vehicleService));
         binder.registerCustomEditor(DateTime.class, new DateTimeEditor());
     }
 
