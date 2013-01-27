@@ -6,11 +6,12 @@ import cz.muni.fi.pa165.vozovna.dto.DriveDTO;
 import cz.muni.fi.pa165.vozovna.dto.UserDTO;
 import cz.muni.fi.pa165.vozovna.dto.VehicleDTO;
 import cz.muni.fi.pa165.vozovna.entity.Drive;
-import cz.muni.fi.pa165.vozovna.entity.EntityToDTOConvertor;
 import cz.muni.fi.pa165.vozovna.entity.User;
 import cz.muni.fi.pa165.vozovna.entity.Vehicle;
 import cz.muni.fi.pa165.vozovna.enums.DriveStateEnum;
 import cz.muni.fi.pa165.vozovna.enums.UserClassEnum;
+import cz.muni.fi.pa165.vozovna.utils.EntityToDTOConvertor;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;

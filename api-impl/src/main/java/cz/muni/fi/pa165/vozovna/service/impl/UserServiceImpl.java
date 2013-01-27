@@ -15,9 +15,10 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import static cz.muni.fi.pa165.vozovna.entity.EntityToDTOConvertor.toDTO;
-import static cz.muni.fi.pa165.vozovna.entity.EntityToDTOConvertor.applyToDTO;
-import static cz.muni.fi.pa165.vozovna.entity.EntityToDTOConvertor.toEntity;
+
+import static cz.muni.fi.pa165.vozovna.utils.EntityToDTOConvertor.applyToDTO;
+import static cz.muni.fi.pa165.vozovna.utils.EntityToDTOConvertor.toDTO;
+import static cz.muni.fi.pa165.vozovna.utils.EntityToDTOConvertor.toEntity;
 
 /**
  * Implementation User's Service Layer
