@@ -4,8 +4,9 @@ import cz.muni.fi.pa165.vozovna.service.DevelopementDataGenerator;
 import cz.muni.fi.pa165.vozovna.service.UserService;
 import java.security.Principal;
 import javax.servlet.http.HttpServletRequest;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -15,13 +16,18 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @Controller
 public class LoginController {
 
+	private static final Logger LGR = LoggerFactory.getLogger(LoginController.class);
+	
     @Autowired
     UserService userService;
     
     @Autowired
     DevelopementDataGenerator DevelopementDataGenerator;
-    
-    protected final Log logger = LogFactory.getLog(getClass());
+
+    @RequestMapping(value = "/", method = RequestMethod.GET)
+    public String index(ModelMap model) {
+        return "login";
+    }
 
     @RequestMapping(value = "/welcome", method = RequestMethod.GET)
     public String redirectToWelcomePage(HttpServletRequest request, ModelMap model, Principal principal) {
@@ -40,9 +46,20 @@ public class LoginController {
         return "login";
     }
 
+    @RequestMapping(value = "/defaultError", method = RequestMethod.GET)
+    public String defaultError(ModelMap model) {
+        return "defaultError";
+    }
+
+    @RequestMapping(value = "/error", method = RequestMethod.GET)
+    public String error(ModelMap model) {
+    	return "redirect:/defaultError";
+    }
+
     @RequestMapping(value = "/login/generate", method = RequestMethod.GET)
     public String generateLogins(ModelMap model) {
-        DevelopementDataGenerator.generateTestDataIfNoneExist();
+    	LGR.info("Generating data");
+    	DevelopementDataGenerator.generateTestDataIfNoneExist();
         return "redirect:/login";
     }
 
@@ -57,3 +74,4 @@ public class LoginController {
         return "login";
     }
 }
+	

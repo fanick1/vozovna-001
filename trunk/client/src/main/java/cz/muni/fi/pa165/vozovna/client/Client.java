@@ -2,7 +2,9 @@ package cz.muni.fi.pa165.vozovna.client;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.CommandLineParser;
@@ -19,6 +21,8 @@ import org.apache.cxf.frontend.ClientProxy;
 import org.apache.cxf.jaxws.JaxWsProxyFactoryBean;
 import org.apache.cxf.transport.http.HTTPConduit;
 import org.apache.cxf.transports.http.configuration.HTTPClientPolicy;
+import org.apache.cxf.ws.security.wss4j.WSS4JOutInterceptor;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -87,6 +91,7 @@ public class Client {
 
 		timeout = config.getLong(WS_TIMEOUT, 20000);
 		System.out.println("Connection/data timeout: " + timeout + "ms");
+		System.out.println("Using username 'rest', password 'rest'");
 		System.out.println("");
 		init();
 	}
@@ -95,6 +100,18 @@ public class Client {
 		JaxWsProxyFactoryBean factory = new JaxWsProxyFactoryBean();
 		factory.setServiceClass(UserWebService.class);
 		factory.setAddress(serverPath + "/" + userServicePath);
+		
+		ClientPasswordCallback callback = new ClientPasswordCallback();
+			Map<String, Object> args = new HashMap<>();
+		args.put("action", "UsernameToken");
+		args.put("user", "rest");
+		args.put("passwordType", "PasswordText");
+		args.put("passwordCallbackRef", callback);
+		
+		  WSS4JOutInterceptor wss4jOut = new WSS4JOutInterceptor(args);
+	    factory.getOutInterceptors().add(wss4jOut);
+	    factory.setProperties(new HashMap<String, Object>());
+		
 		userWebService = (UserWebService) factory.create();
 
 		factory.setServiceClass(VehicleWebService.class);
@@ -592,6 +609,5 @@ public class Client {
 			System.out.println("Some unexpected problems occured while processing your request." + t.getMessage());
 			System.exit(4);
 		}
-	}
-
+	}	
 }

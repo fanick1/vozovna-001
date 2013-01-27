@@ -65,10 +65,13 @@
     <filter>
         <filter-name>springSecurityFilterChain</filter-name>
         <filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
+<!--         <init-param><param-name>targetBeanName</param-name><param-value>authenticationManager</param-value></init-param> -->
     </filter>
     <filter-mapping>
         <filter-name>springSecurityFilterChain</filter-name>
         <url-pattern>/*</url-pattern>
+	    <dispatcher>REQUEST</dispatcher>
+	    <dispatcher>FORWARD</dispatcher>
     </filter-mapping>
     <!-- Spring Security KONEC -->
 

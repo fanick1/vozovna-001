@@ -32,15 +32,28 @@
 
     <!-- Automatically receives AuthenticationEvent messages -->
     <bean id="loggerListener" class="org.springframework.security.authentication.event.LoggerListener" />
-
-    <security:http auto-config='true' access-denied-page="/exceptions/forbidden">
-        <security:intercept-url pattern="/admin/" access="ROLE_ADMIN" requires-channel="https" />
-        <security:intercept-url pattern="/" access="ROLE_USER" />
+ 
+    <security:http pattern="/loginfailed/**" security="none"/>
+    <security:http pattern="/resources/**" security="none"/>
+    <security:http pattern="/error/**" security="none"/>
+    <security:http pattern="/defaultError/**" security="none"/>
+ 
+    <security:http auto-config='true'>
+        <security:intercept-url pattern="/j_spring_security_check" access="IS_AUTHENTICATED_ANONYMOUSLY" />
+        <security:intercept-url pattern="/login/**" access="IS_AUTHENTICATED_ANONYMOUSLY" />
+        <security:intercept-url pattern="/services/**" access="IS_AUTHENTICATED_ANONYMOUSLY" />
+        <security:intercept-url pattern="/logout/**" access="IS_AUTHENTICATED_ANONYMOUSLY" />
+        <security:intercept-url pattern="/admin/**" access="ROLE_ADMIN" />
+        <security:intercept-url pattern="/loginfailed" access="IS_AUTHENTICATED_ANONYMOUSLY" />
+        <security:intercept-url pattern="/**"  access="ROLE_USER,ROLE_ADMIN" />
         <security:form-login login-page="/login" default-target-url="/welcome.htm"
             authentication-failure-url="/loginfailed" />
         <security:logout logout-success-url="/logout" />
         <security:session-management invalid-session-url="/login" />
+        <security:access-denied-handler error-page="/error"/>
     </security:http>
+	
+    
 
     <security:authentication-manager>
         <security:authentication-provider user-service-ref="userService">

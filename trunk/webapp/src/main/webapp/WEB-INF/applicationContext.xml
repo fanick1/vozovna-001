@@ -14,8 +14,9 @@
             http://www.springframework.org/schema/util/spring-util-3.0.xsd
             http://cxf.apache.org/jaxws 
             http://cxf.apache.org/schemas/jaxws.xsd"
+            
        default-autowire="byName">
-
+    
     <util:properties id="globalProperties" location="classpath:config.properties" />
     <context:property-placeholder properties-ref="globalProperties" />
 
@@ -27,16 +28,43 @@
     <context:component-scan base-package="cz.muni.fi.pa165.vozovna.controller" />
 	<context:component-scan base-package="cz.muni.fi.pa165.vozovna.ws" />
 
+	<!-- Web services -->
 	<import resource="classpath:META-INF/cxf/cxf.xml" />
 	<import resource="classpath:META-INF/cxf/cxf-servlet.xml" />
 	
 	<bean id="userWS" class="cz.muni.fi.pa165.vozovna.ws.UserWebServiceImpl" autowire-candidate="false"/>
 	<bean id="vehicleWS" class="cz.muni.fi.pa165.vozovna.ws.VehicleWebServiceImpl" autowire-candidate="false"/>
 	
-	<jaxws:endpoint id="userWebService" implementor="#userWS" address="/UserWebService" />
+	<bean id="passwordCallback" class="cz.muni.fi.pa165.vozovna.ws.PasswordCallback"/>
 
-	<jaxws:endpoint id="vehicleWebService" implementor="#vehicleWS" address="/VehicleWebService" />
+	<bean id="logInBound" class="org.apache.cxf.interceptor.LoggingInInterceptor" />
+	
+	<bean id="inInterceptor" class="org.apache.cxf.ws.security.wss4j.WSS4JInInterceptor">
+		<constructor-arg>
+			<map>
+				<entry key="action" value="UsernameToken"/>
+				<entry key="passwordType" value="PasswordText"/>	
+				<entry key="passwordCallbackRef" > <ref bean="passwordCallback"/> </entry>	
+			</map>
+		</constructor-arg>
+	</bean>
+	
+	<jaxws:endpoint id="userWebService" implementor="#userWS" address="/UserWebService" >
+		<jaxws:inInterceptors>
+			<ref bean="logInBound" />
+			<ref bean="inInterceptor" />
+		</jaxws:inInterceptors>
+	</jaxws:endpoint>
 
+	<jaxws:endpoint id="vehicleWebService" implementor="#vehicleWS" address="/VehicleWebService">
+		<jaxws:inInterceptors>
+			<ref bean="logInBound" />
+			<ref bean="inInterceptor" />
+		</jaxws:inInterceptors>
+	</jaxws:endpoint>
+	
+	<!-- Web services end -->
+	  
     <mvc:annotation-driven />
 
     <!-- static resources mapping (images, css) -->
