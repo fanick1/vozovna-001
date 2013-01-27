@@ -143,11 +143,11 @@
 		</dependency>
         
         <!-- pokud by tuhle dependency evča omylem commitnula, tak zase smazat! -->
-        <dependency>
-            <groupId>postgresql</groupId>
-            <artifactId>postgresql</artifactId>
-            <version>9.1-901.jdbc3</version>
-        </dependency>
+<!--         <dependency> -->
+<!--             <groupId>postgresql</groupId> -->
+<!--             <artifactId>postgresql</artifactId> -->
+<!--             <version>9.1-901.jdbc3</version> -->
+<!--         </dependency> -->
 
 		<dependency>
 			<groupId>jstl</groupId>
