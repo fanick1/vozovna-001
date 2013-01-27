@@ -37,7 +37,7 @@
             <fmt:message key="login.request" />
         </h3>
 
-        <a href="<c:url value='login/generate' />">Vygenerovat testovaci loginy admin-admin a user-user</a>
+        <a href="<c:url value='login/generate' />">Vygenerovat testovaci loginy admin-admin, rest-rest a user-user</a>
 
 
         <c:if test="${not empty error}">

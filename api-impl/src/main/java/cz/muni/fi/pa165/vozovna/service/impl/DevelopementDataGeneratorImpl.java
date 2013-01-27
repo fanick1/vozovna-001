@@ -52,6 +52,16 @@ public class DevelopementDataGeneratorImpl implements DevelopementDataGenerator 
             newAdmin.setUserClass(UserClassEnum.PRESIDENT);
             userDAO.create(newAdmin);
 
+            User webServicesUser = new User(); 
+            webServicesUser.setUsername("rest");
+            webServicesUser.setPassword(passwordEncoder.encodePassword("rest", null));
+            webServicesUser.setFirstName("Web services default user");
+            webServicesUser.setLastName("-");
+            webServicesUser.setIsAdmin(Boolean.TRUE);
+            webServicesUser.setUserClass(UserClassEnum.MANAGER);
+            userDAO.create(webServicesUser);
+            
+            
             User newUser = new User();
             newUser.setUsername("user");
             newUser.setPassword(passwordEncoder.encodePassword("user", null));
