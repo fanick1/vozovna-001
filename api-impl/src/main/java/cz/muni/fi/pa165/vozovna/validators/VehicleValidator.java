@@ -37,7 +37,7 @@ public class VehicleValidator implements Validator {
         if(vehicle.getYearMade() > 2100) {
             errors.rejectValue("yearMade", "error.vehicle.yearMade.max");
         }
-        // validate yearMade
+        // validate distance count
         if(vehicle.getDistanceCount() < 0) {
             errors.rejectValue("distanceCount", "error.vehicle.distanceCount.lsThanZero");
         }

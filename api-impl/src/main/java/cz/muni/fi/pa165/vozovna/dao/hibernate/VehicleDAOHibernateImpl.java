@@ -1,21 +1,24 @@
 package cz.muni.fi.pa165.vozovna.dao.hibernate;
 
+import java.util.List;
+
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.hibernate.Query;
+import org.hibernate.Session;
+import org.joda.time.DateTime;
+import org.springframework.stereotype.Repository;
+
 import cz.muni.fi.pa165.vozovna.dao.VehicleDAO;
 import cz.muni.fi.pa165.vozovna.entity.Drive;
 import cz.muni.fi.pa165.vozovna.entity.User;
 import cz.muni.fi.pa165.vozovna.entity.Vehicle;
 import cz.muni.fi.pa165.vozovna.enums.DriveStateEnum;
 import cz.muni.fi.pa165.vozovna.enums.UserClassEnum;
-import java.util.List;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-import org.hibernate.*;
-import org.joda.time.DateTime;
-import org.springframework.stereotype.Repository;
 
 /**
  * Vehicle DAO using Hibernate
- *
+ * 
  * @author Frantisek Veverka, 207422@mail.muni.cz
  */
 @Repository("vehicleDao")
@@ -67,13 +70,13 @@ public class VehicleDAOHibernateImpl extends GenericDAOHibernateImpl<Vehicle, Lo
         }
 
         final Session session = sessionFactory.getCurrentSession();
-        Query query = session.createQuery(
-                "SELECT SUM(d.distance) FROM " + Drive.class.getName() + " d WHERE d.vehicle=:vehicle AND d.state = :state");
+        Query query = session.createQuery("SELECT SUM(d.distance) FROM " + Drive.class.getName()
+                + " d WHERE d.vehicle=:vehicle AND d.state = :state");
         query.setParameter("vehicle", vehicle);
         query.setParameter("state", DriveStateEnum.FINISHED);
-        
+
         Long sum = (Long) query.uniqueResult();
-        
+
         return sum == null ? 0 : sum.intValue();
     }
 }

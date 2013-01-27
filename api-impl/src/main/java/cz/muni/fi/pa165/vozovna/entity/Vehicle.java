@@ -1,13 +1,16 @@
 package cz.muni.fi.pa165.vozovna.entity;
 
-import cz.muni.fi.pa165.vozovna.enums.UserClassEnum;
 import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Parameter;
+
+import cz.muni.fi.pa165.vozovna.enums.UserClassEnum;
 
 /**
  * 
@@ -45,11 +48,11 @@ public class Vehicle implements Serializable {
 
     @Column(nullable = false)
     private UserClassEnum userClass;
-    
-    @Column(length=8)
+
+    @Column(length = 8)
     private String registrationPlate;
 
-	/**
+    /**
      * Returns id of vehicle.
      * 
      * @return Id of vehicle.
@@ -88,22 +91,11 @@ public class Vehicle implements Serializable {
 
     @Override
     public String toString() {
-        return 
-            "Vehicle{" 
-            + "id=" + id 
-            + ", brand=" + brand 
-            + ", maxDistance=" + maxDistance 
-            + ", engineType=" + engineType 
-            + ", type=" + type 
-            + ", vin=" + vin 
-            + ", yearMade=" + yearMade 
-            + ", userClass=" + userClass 
-            + ", registrationPlate=" + registrationPlate + '}';
+        return "Vehicle{" + "id=" + id + ", brand=" + brand + ", maxDistance=" + maxDistance + ", engineType=" + engineType + ", type="
+                + type + ", vin=" + vin + ", yearMade=" + yearMade + ", userClass=" + userClass + ", registrationPlate="
+                + registrationPlate + '}';
     }
 
-    
-
-    
     /**
      * Returns brand of vehicle.
      * 
@@ -266,7 +258,7 @@ public class Vehicle implements Serializable {
     /**
      * Sets registration plate of vehicle
      * 
-     * @param registrationPlate  Registration plate
+     * @param registrationPlate Registration plate
      */
     public void setRegistrationPlate(String registrationPlate) {
         this.registrationPlate = registrationPlate;

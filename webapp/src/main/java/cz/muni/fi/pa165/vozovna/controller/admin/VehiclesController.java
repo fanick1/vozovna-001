@@ -24,9 +24,9 @@ import cz.muni.fi.pa165.vozovna.service.VehicleService;
 import cz.muni.fi.pa165.vozovna.validators.VehicleValidator;
 
 /**
- *
+ * 
  * @author Lukáš Hájek
- *
+ * 
  */
 @Controller
 public class VehiclesController {
@@ -81,7 +81,7 @@ public class VehiclesController {
     }
 
     // Submited add/edit form
-    @RequestMapping(value = {"/admin/vehicles/add", "/admin/vehicles/edit"}, method = RequestMethod.POST)
+    @RequestMapping(value = { "/admin/vehicles/add", "/admin/vehicles/edit" }, method = RequestMethod.POST)
     public String submitEditForm(@Validated @ModelAttribute("vehicle") VehicleDTO vehicle, BindingResult result, ModelMap model,
             HttpSession session) {
 
@@ -90,7 +90,6 @@ public class VehiclesController {
             return "/admin/vehicles/addOrEdit";
         }
 
-        // VehicleDTO vehicleDTO = new VehicleDTO(vehicle);
         if (vehicle.getId() == null) {
             vehicleService.create(vehicle);
             session.setAttribute("message", "admin.vehicles.create.msg.successful");
