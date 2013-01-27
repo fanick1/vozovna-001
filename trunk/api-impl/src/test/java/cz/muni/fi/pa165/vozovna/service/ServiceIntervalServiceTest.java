@@ -3,10 +3,11 @@ package cz.muni.fi.pa165.vozovna.service;
 import cz.muni.fi.pa165.vozovna.dao.ServiceIntervalDAO;
 import cz.muni.fi.pa165.vozovna.dao.VehicleDAO;
 import cz.muni.fi.pa165.vozovna.dto.ServiceIntervalDTO;
-import cz.muni.fi.pa165.vozovna.entity.EntityToDTOConvertor;
 import cz.muni.fi.pa165.vozovna.entity.ServiceInterval;
 import cz.muni.fi.pa165.vozovna.entity.Vehicle;
 import cz.muni.fi.pa165.vozovna.enums.UserClassEnum;
+import cz.muni.fi.pa165.vozovna.utils.EntityToDTOConvertor;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;

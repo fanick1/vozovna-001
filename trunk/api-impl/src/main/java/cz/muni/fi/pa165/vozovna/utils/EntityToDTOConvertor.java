@@ -1,9 +1,13 @@
-package cz.muni.fi.pa165.vozovna.entity;
+package cz.muni.fi.pa165.vozovna.utils;
 
 import cz.muni.fi.pa165.vozovna.dto.DriveDTO;
 import cz.muni.fi.pa165.vozovna.dto.ServiceIntervalDTO;
 import cz.muni.fi.pa165.vozovna.dto.UserDTO;
 import cz.muni.fi.pa165.vozovna.dto.VehicleDTO;
+import cz.muni.fi.pa165.vozovna.entity.Drive;
+import cz.muni.fi.pa165.vozovna.entity.ServiceInterval;
+import cz.muni.fi.pa165.vozovna.entity.User;
+import cz.muni.fi.pa165.vozovna.entity.Vehicle;
 
 /**
  * Utility class for morphing entities into DTOs
@@ -31,7 +35,7 @@ public class EntityToDTOConvertor {
 	 */
 	public static Drive toEntity(DriveDTO dto){
 		if(dto == null){
-			throw new IllegalArgumentException("Dto can't be null.");
+			throw new IllegalArgumentException("dto can't be null.");
 		}
 		Drive drive = new Drive();
 		
@@ -102,7 +106,7 @@ public class EntityToDTOConvertor {
 	 */
 	public static ServiceInterval toEntity(ServiceIntervalDTO dto){    	
 		if(dto == null){
-    		throw new IllegalArgumentException("Dto can't be null.");
+    		throw new IllegalArgumentException("dto can't be null.");
     	}
 		ServiceInterval entity = new ServiceInterval();
 		entity.setId(dto.getId());
@@ -122,7 +126,7 @@ public class EntityToDTOConvertor {
 		}
 
 		if(dto == null){
-    		throw new IllegalArgumentException("Dto can't be null.");
+    		throw new IllegalArgumentException("dto can't be null.");
     	}
     	dto.setId(entity.getId());
     	dto.setInspectionInterval(entity.getInspectionInterval());
@@ -153,7 +157,7 @@ public class EntityToDTOConvertor {
 	 */
 	public static User toEntity(UserDTO dto){
     	if(dto == null){
-    		throw new IllegalArgumentException("Dto can't be null.");
+    		throw new IllegalArgumentException("dto can't be null.");
     	}
     	User entity = new User();
     	entity.setId(dto.getId());
@@ -177,7 +181,7 @@ public class EntityToDTOConvertor {
 		}
 
 		if(dto == null){
-			throw new IllegalArgumentException("Dto can't be null.");
+			throw new IllegalArgumentException("dto can't be null.");
 		}
 		
 		dto.setId(entity.getId());
@@ -211,7 +215,7 @@ public class EntityToDTOConvertor {
 	public static Vehicle toEntity(VehicleDTO dto){
 		Vehicle entity = new Vehicle();
     	if(dto == null){
-    		throw new IllegalArgumentException("Dto can't be null.");
+    		throw new IllegalArgumentException("dto can't be null.");
     	}
     	entity.setId(dto.getId());
     	entity.setBrand(dto.getBrand());
@@ -234,7 +238,7 @@ public class EntityToDTOConvertor {
 			throw new IllegalArgumentException("Entity can't be null.");
 		}
 		if(dto == null){
-			throw new IllegalArgumentException("Dto can't be null.");
+			throw new IllegalArgumentException("dto can't be null.");
 		}
 
 		dto.setId(entity.getId());
