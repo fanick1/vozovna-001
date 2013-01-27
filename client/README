@@ -1,8 +1,7 @@
 
 Zalozeni uzivatele do systemu:	
 
-mvn exec:java -Dexec.mainClass=cz.muni.fi.pa165.vozovna.client.Client \
-	-Dexec.args="-createUser -firstName Jack -lastName Black -password black -username blackjack -userClass 2"
+mvn exec:java -Dexec.mainClass=cz.muni.fi.pa165.vozovna.client.Client -Dexec.args="-createUser -firstName Jack -lastName Black -password black -username blackjack -userClass 2"
 
 	
 Seznam vsech uzivatelu:
@@ -13,6 +12,6 @@ Zalozeni vozidla s udaji, ktere obsahuji mezeru
 
 mvn exec:java -Dexec.mainClass=cz.muni.fi.pa165.vozovna.client.Client -Dexec.args="-createVehicle -brand \"Alfa Romeo\" -distance 20000 -engine \"1.8 TDI\" -type Alfa1 -vin 3BF112323 -userClass 1 -year 2001"
 
-Vypis informaci o automobilu s ID == 1:
+Vypis informaci o automobilu s ID == 3:
 
-mvn exec:java -Dexec.mainClass=cz.muni.fi.pa165.vozovna.client.Client -Dexec.args="-findVehicleById -id 1"
+mvn exec:java -Dexec.mainClass=cz.muni.fi.pa165.vozovna.client.Client -Dexec.args="-findVehicleById -id 3"

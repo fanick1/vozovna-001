@@ -10,10 +10,12 @@ import cz.muni.fi.pa165.vozovna.service.ServiceIntervalService;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import org.joda.time.Days;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import static cz.muni.fi.pa165.vozovna.entity.EntityToDTOConvertor.toDTO;
+import static cz.muni.fi.pa165.vozovna.entity.EntityToDTOConvertor.applyToDTO;
+import static cz.muni.fi.pa165.vozovna.entity.EntityToDTOConvertor.toEntity;
 
 /**
  * Implementation of ServiceInterval's service
@@ -52,7 +54,7 @@ public class ServiceIntervalServiceImpl implements ServiceIntervalService {
 
         int range = (int)( (currentDate.getTime() - lastDate.getTime()) / (1000 * 60 * 60 * 24));
 
-        ServiceIntervalDTO dto = interval.toServiceIntervalDTO();
+        ServiceIntervalDTO dto = toDTO(interval);
         dto.setHasRequiredInspection(range > interval.getInspectionInterval());
             
         return dto;
@@ -66,11 +68,11 @@ public class ServiceIntervalServiceImpl implements ServiceIntervalService {
             throw new IllegalArgumentException("null serviceInterval");
         }
 
-        ServiceInterval entity = new ServiceInterval(serviceInterval);
+        ServiceInterval entity = toEntity(serviceInterval);
         // save
         serviceIntervalDAO.create(entity);
 
-        serviceInterval = entity.applyToServiceIntervalDTO(serviceInterval);
+        serviceInterval = applyToDTO(serviceInterval, entity);
 
         return entity.getId();
     }
@@ -122,7 +124,7 @@ public class ServiceIntervalServiceImpl implements ServiceIntervalService {
         serviceIntervalDAO.update(entity);
 
         // propagate changes
-        serviceInterval = entity.applyToServiceIntervalDTO(serviceInterval);
+        serviceInterval =  applyToDTO(serviceInterval, entity);
 
         return serviceInterval;
     }
@@ -151,7 +153,7 @@ public class ServiceIntervalServiceImpl implements ServiceIntervalService {
             
             int range = (int)( (currentDate.getTime() - lastDate.getTime()) / (1000 * 60 * 60 * 24));
             
-            ServiceIntervalDTO dto = item.toServiceIntervalDTO();
+            ServiceIntervalDTO dto = toDTO(item);
             dto.setHasRequiredInspection(range > item.getInspectionInterval());
             
             result.add(dto);

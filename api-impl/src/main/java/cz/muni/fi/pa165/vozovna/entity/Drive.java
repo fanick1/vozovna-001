@@ -1,6 +1,5 @@
 package cz.muni.fi.pa165.vozovna.entity;
 
-import cz.muni.fi.pa165.vozovna.dto.DriveDTO;
 import cz.muni.fi.pa165.vozovna.enums.DriveStateEnum;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -156,60 +155,6 @@ public class Drive {
         int hash = 5;
         hash = 47 * hash + (this.id != null ? this.id.hashCode() : 0);
         return hash;
-    }
-
-    public Drive(DriveDTO drive){
-
-    	if(drive == null){
-    		throw new IllegalArgumentException("Drive can't be null.");
-    	}
-    	
-    	id = drive.getId();
-    	distance = drive.getDistance();
-    	if(drive.getUser() != null){
-    		user = new User(drive.getUser()); 
-    	}
-    	if(drive.getVehicle() != null){
-    		vehicle = new Vehicle(drive.getVehicle());
-    	}
-    	dateFrom = drive.getDateFrom();
-    	dateTo = drive.getDateTo();
-    	state = drive.getState();
-     }
-    /**
-     * Creates new DriveDTO with properties from this drive
-     */
-    public DriveDTO toDriveDTO(){
-    	DriveDTO drive = new DriveDTO();
-    	return applyToDriveDTO(drive);
-    }
-    
-    /**
-     * Fills properties from drive
-     * @param drive Original drive
-     */
-    public DriveDTO applyToDriveDTO(DriveDTO drive){
-    	if(drive == null){
-    		throw new IllegalArgumentException("Drive can't be null.");
-    	}
-    	
-    	drive.setId(this.id);
-    	drive.setDistance(this.distance);
-    	    	
-    	if(this.user != null){    		
-    		drive.setUser(this.user.toUserDTO());
-    	}
-    	
-    	if(this.vehicle != null){
-    		drive.setVehicle(this.vehicle.toVehicleDTO());
-    		drive.setVehicleId(this.vehicle.getId());
-    	}
-    	
-    	drive.setDateFrom(this.dateFrom);
-    	drive.setDateTo(this.dateTo);
-    	drive.setState(this.state);
-
-    	return drive;
     }
 }
 

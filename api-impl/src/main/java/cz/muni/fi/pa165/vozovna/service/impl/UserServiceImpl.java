@@ -15,6 +15,9 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import static cz.muni.fi.pa165.vozovna.entity.EntityToDTOConvertor.toDTO;
+import static cz.muni.fi.pa165.vozovna.entity.EntityToDTOConvertor.applyToDTO;
+import static cz.muni.fi.pa165.vozovna.entity.EntityToDTOConvertor.toEntity;
 
 /**
  * Implementation User's Service Layer
@@ -47,7 +50,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         if (user == null) {
             return null;
         }
-        return user.toUserDTO();
+        return toDTO(user);
     }
 
     @Override
@@ -59,10 +62,10 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         if (user.getId() != null) {
             throw new IllegalArgumentException("user has set id");
         }
-        User entity = new User(user);
+        User entity = toEntity(user);
         entity.setPassword(passwordEncoder.encodePassword(user.getPassword(), ""));
         userDAO.create(entity);
-        user = entity.applyToUserDTO(user);
+        user = applyToDTO(user,entity);
         return entity.getId();
     }
 
@@ -107,7 +110,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         entity.setEnabled(user.getEnabled());
 
         userDAO.update(entity);
-        user = entity.applyToUserDTO(user);
+        user = applyToDTO(user, entity);
         return user;
     }
 
@@ -120,7 +123,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         // transform results
         List<UserDTO> result = new ArrayList<>();
         for (User user : users) {
-            UserDTO userDTO = user.toUserDTO();
+            UserDTO userDTO = toDTO(user);
             userDTO.setCanRemove(this.canRemoveUser(user));
             result.add(userDTO);
         }
@@ -169,6 +172,6 @@ public class UserServiceImpl implements UserService, UserDetailsService {
             return null;
         }
 
-        return user.toUserDTO();
+        return toDTO(user);
     }
 }

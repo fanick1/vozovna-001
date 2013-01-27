@@ -6,6 +6,7 @@ import cz.muni.fi.pa165.vozovna.dto.DriveDTO;
 import cz.muni.fi.pa165.vozovna.dto.UserDTO;
 import cz.muni.fi.pa165.vozovna.dto.VehicleDTO;
 import cz.muni.fi.pa165.vozovna.entity.Drive;
+import cz.muni.fi.pa165.vozovna.entity.EntityToDTOConvertor;
 import cz.muni.fi.pa165.vozovna.entity.User;
 import cz.muni.fi.pa165.vozovna.entity.Vehicle;
 import cz.muni.fi.pa165.vozovna.enums.DriveStateEnum;
@@ -101,9 +102,7 @@ public abstract class DriveServiceTest {
 		existingUser.setId(1l);
 		existingUser.setUserClass(UserClassEnum.EMPLOYEE);
 		
-		//FIXME
-		//existingUserDTO = new UserDTO(existingUser);
-		existingUserDTO = new UserDTO();
+		existingUserDTO = EntityToDTOConvertor.toDTO(existingUser);
 		
 		existingDrive = new Drive();
 		existingDrive.setDateFrom(new DateTime());

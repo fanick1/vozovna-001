@@ -1,7 +1,6 @@
 package cz.muni.fi.pa165.vozovna.dao;
 
 import cz.muni.fi.pa165.vozovna.entity.User;
-import cz.muni.fi.pa165.vozovna.entity.Vehicle;
 import java.util.List;
 
 /**

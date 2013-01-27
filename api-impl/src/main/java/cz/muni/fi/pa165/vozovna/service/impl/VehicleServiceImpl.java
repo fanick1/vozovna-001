@@ -7,7 +7,6 @@ import cz.muni.fi.pa165.vozovna.dto.ServiceIntervalDTO;
 import cz.muni.fi.pa165.vozovna.dto.UserDTO;
 import cz.muni.fi.pa165.vozovna.dto.VehicleDTO;
 import cz.muni.fi.pa165.vozovna.entity.ServiceInterval;
-import cz.muni.fi.pa165.vozovna.entity.User;
 import cz.muni.fi.pa165.vozovna.entity.Vehicle;
 import cz.muni.fi.pa165.vozovna.enums.UserClassEnum;
 import cz.muni.fi.pa165.vozovna.service.VehicleService;
@@ -18,6 +17,9 @@ import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import static cz.muni.fi.pa165.vozovna.entity.EntityToDTOConvertor.toDTO;
+import static cz.muni.fi.pa165.vozovna.entity.EntityToDTOConvertor.applyToDTO;
+import static cz.muni.fi.pa165.vozovna.entity.EntityToDTOConvertor.toEntity;
 
 /**
  * Implementation of Vehicle Service
@@ -44,12 +46,12 @@ public class VehicleServiceImpl implements VehicleService {
         }
         Vehicle vehicle = vehicleDAO.getById(id);
         
-        VehicleDTO vehicleDTO = vehicle.toVehicleDTO();
+        VehicleDTO vehicleDTO = toDTO(vehicle);
         
         List<ServiceIntervalDTO> intervals = new ArrayList<>();
         
         for(ServiceInterval interval: this.serviceIntervalDAO.findAllByVehicle(vehicle)) {
-            ServiceIntervalDTO dto = interval.toServiceIntervalDTO();
+            ServiceIntervalDTO dto = toDTO(interval);
             
             // check, if inspection is required
             Date lastDate = dto.getDated().get(dto.getDated().size() - 1);
@@ -76,9 +78,9 @@ public class VehicleServiceImpl implements VehicleService {
         if (vehicle == null) {
             throw new IllegalArgumentException("null vehicle");
         }
-        Vehicle entity = new Vehicle(vehicle);
+        Vehicle entity = toEntity(vehicle);
         vehicleDAO.create(entity);
-        vehicle = entity.applyToVehicleDTO(vehicle);
+        vehicle = applyToDTO(vehicle, entity);
         return entity.getId();
     }
 
@@ -125,7 +127,7 @@ public class VehicleServiceImpl implements VehicleService {
         entity.setRegistrationPlate(vehicle.getRegistrationPlate());
 
         vehicleDAO.update(entity);
-        vehicle = entity.applyToVehicleDTO(vehicle);
+        vehicle = applyToDTO(vehicle, entity);
         return vehicle;
     }
 
@@ -148,7 +150,7 @@ public class VehicleServiceImpl implements VehicleService {
         List<VehicleDTO> result = new ArrayList<>();
 
         for (Vehicle item : vehicles) {
-            VehicleDTO vehicleDTO = item.toVehicleDTO();
+            VehicleDTO vehicleDTO = toDTO(item);
             
             vehicleDTO.setCanRemove(this.canRemoveVehicle(item));
             vehicleDTO.setMileage(this.vehicleDAO.getMileageOfVehicle(item));
@@ -184,7 +186,7 @@ public class VehicleServiceImpl implements VehicleService {
      */
     @Override
     public List<VehicleDTO> getAvailableVehicles(UserDTO user, DateTime startDate, DateTime endDate) {
-        return convertListOfVehiclesToListOfVehicleDTOs(this.vehicleDAO.getAvailableVehicles(new User(user), startDate, endDate));
+        return convertListOfVehiclesToListOfVehicleDTOs(this.vehicleDAO.getAvailableVehicles(toEntity(user), startDate, endDate));
 
 
     }
