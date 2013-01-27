@@ -4,27 +4,15 @@ import java.util.Arrays;
 import java.util.List;
 
 /**
- * Enum pro aktuální stav jízdy.
+ * Enum for current drive state
  *
  * @author eva.neduchalova
  */
 public enum DriveStateEnum {
 
-    /**
-     * Vozidlo je rezervováno pro jízdu.
-     */
     RESERVED("reserved", "drive.state.reserved"),
-    /**
-     * Jízda právě probíhá (vozidlo je půjčeno).
-     */
     ONGOING("ongoing", "drive.state.ongoing"),
-    /**
-     * Již proběhlá jízda.
-     */
     FINISHED("finished", "drive.state.finished"),
-    /**
-     * Zrušená jízda.
-     */
     CANCELLED("cancelled", "drive.state.cancelled");
     
     private String name;
