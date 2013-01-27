@@ -5,40 +5,41 @@ import java.util.List;
 
 /**
  * Data Transfer Object for Service Interval
+ * 
  * @author Lukas Hajek <359617@mail.muni.cz>
  */
 public class ServiceIntervalDTO implements java.io.Serializable {
-    
+
     /**
      * Identification key
      */
     private Long id;
-    
+
     /**
      * The required time interval between two service inspections (in days).
      */
     private int inspectionInterval;
-    
+
     /**
      * The dates when vehicle was inspected.
      */
     private List<Date> dated;
-    
+
     /**
      * The related vehicle
      */
     private VehicleDTO vehicle;
-    
+
     /**
      * Description of service interval. E.g: wheel exchange
      */
     private String description;
 
     /**
-     * If true, inspection id required for this service interval.
+     * If true, inspection is required for this service interval.
      */
     private boolean hasRequiredInspection;
-    
+
     public Long getId() {
         return id;
     }
@@ -68,7 +69,7 @@ public class ServiceIntervalDTO implements java.io.Serializable {
     }
 
     public void setVehicle(VehicleDTO vehicle) {
-         this.vehicle = vehicle;
+        this.vehicle = vehicle;
     }
 
     public String getDescription() {
@@ -79,54 +80,20 @@ public class ServiceIntervalDTO implements java.io.Serializable {
         this.description = description;
     }
 
-    public ServiceIntervalDTO() {
-
-    }
-    
-//    public ServiceIntervalDTO(ServiceInterval serviceInterval) {
-//        fromServiceInterval(serviceInterval);
-//    }
-    
     /**
-     * Fills properties from serviceInterval
-     * @param serviceInterval Original Service Interval
+     * @return the hasRequiredInspection
      */
-//    public final void fromServiceInterval(ServiceInterval serviceInterval) {
-//        id = serviceInterval.getId();
-//        inspectionInterval = serviceInterval.getInspectionInterval();
-//        dated = serviceInterval.getDated();
-//        description = serviceInterval.getDescription();
-//        
-//        // vehicle
-//        VehicleDTO vehicleDTO = new VehicleDTO();
-//        Vehicle v = serviceInterval.getVehicle();
-//        if (v != null) {
-//            vehicleDTO.fromVehicle(serviceInterval.getVehicle());
-//            vehicle = vehicleDTO;
-//        }
-//    }
-    
-    /**
-     * Returns service interval with same properties
-     * @return Instance of Service Interval
-     */
-//    public ServiceInterval toServiceInterval() {
-//        ServiceInterval serviceInterval = new ServiceInterval();
-//        serviceInterval.setId(id);
-//        serviceInterval.setInspectionInterval(inspectionInterval);
-//        serviceInterval.setDated(dated);
-//        serviceInterval.setVehicle(vehicle.toVehicle());
-//        serviceInterval.setDescription(description);
-//        
-//        return serviceInterval;
-//    }
-
-    
-    @Override
-    public String toString() {
-        return "ServiceIntervalDTO{" + "id=" + id + ", inspectionInterval=" + inspectionInterval + ", dated=" + dated + ", vehicle=" + vehicle + ", description=" + description + '}';
+    public boolean isHasRequiredInspection() {
+        return hasRequiredInspection;
     }
-       
+
+    /**
+     * @param hasRequiredInspection the hasRequiredInspection to set
+     */
+    public void setHasRequiredInspection(boolean hasRequiredInspection) {
+        this.hasRequiredInspection = hasRequiredInspection;
+    }
+
     @Override
     public int hashCode() {
         int hash = 3;
@@ -147,21 +114,12 @@ public class ServiceIntervalDTO implements java.io.Serializable {
             return false;
         }
         return true;
-      
     }
 
-    /**
-     * @return the hasRequiredInspection
-     */
-    public boolean isHasRequiredInspection() {
-        return hasRequiredInspection;
+    @Override
+    public String toString() {
+        return "ServiceIntervalDTO [\nid=" + id + "\ninspectionInterval=" + inspectionInterval + "\ndated=" + dated + "\nvehicle="
+                + vehicle + "\ndescription=" + description + "\nhasRequiredInspection=" + hasRequiredInspection + "\n]";
     }
 
-    /**
-     * @param hasRequiredInspection the hasRequiredInspection to set
-     */
-    public void setHasRequiredInspection(boolean hasRequiredInspection) {
-        this.hasRequiredInspection = hasRequiredInspection;
-    }
-    
 }
