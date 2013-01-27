@@ -26,14 +26,14 @@
 
 
     <!-- Zpracovani vyjimek -->
-    <!-- <bean id="exceptionResolver" class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver"> -->
-    <!-- <property name="exceptionMappings"> -->
-    <!-- <props> -->
-    <!-- <prop key="java.lang.NullPointerException">exception/404</prop> -->
-    <!-- </props> -->
-    <!-- </property> -->
-    <!-- <property name="defaultErrorView" value="exception/anotherError" /> -->
-    <!-- </bean> -->
+    <bean id="exceptionResolver" class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">
+        <property name="exceptionMappings">
+            <props>
+                <prop key="java.lang.NullPointerException">exception/404</prop>
+            </props>
+        </property>
+        <property name="defaultErrorView" value="exception/anotherError" />
+    </bean>
     <!-- Zpracovani vyjimek - konec -->
 
 
