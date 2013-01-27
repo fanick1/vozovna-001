@@ -1,6 +1,6 @@
 = Diagram užití =
 
-[http://vozovna-001.googlecode.com/files/vozovna - Use Case Model.png]
+[http://vozovna-001.googlecode.com/files/usecase_final.png]
 
 = Diagram tříd =
 
