@@ -33,9 +33,9 @@ public class UserDTO implements java.io.Serializable {
      * True if this user is administrator
      */
     private Boolean isAdmin;
-    
+
     /**
-     * If true, user can be removed from system, because has not drives in future.
+     * If true, user can be removed from system as he has got no assigned drives
      */
     private boolean canRemove;
 
@@ -52,11 +52,11 @@ public class UserDTO implements java.io.Serializable {
     public void setId(Long id) {
         this.id = id;
     }
-    
+
     public void setCanRemove(boolean canRemove) {
         this.canRemove = canRemove;
     }
-    
+
     public boolean getCanRemove() {
         return this.canRemove;
     }
@@ -117,59 +117,8 @@ public class UserDTO implements java.io.Serializable {
         this.enabled = enabled;
     }
 
-    public UserDTO() {
-
-    }
-
-//    public UserDTO(User user) {
-//        fromUser(user);
-//    }
-
-    /**
-     * Fills properties from user
-     * 
-     * @param user Original user
-     */
-//    public final void fromUser(User user) {
-//        if (user == null) {
-//            return;
-//        }
-//        id = user.getId();
-//        firstName = user.getFirstName();
-//        lastName = user.getLastName();
-//        isAdmin = user.getIsAdmin();
-//        userClass = user.getUserClass();
-//        username = user.getUsername();
-//        password = user.getPassword();
-//        enabled = user.isEnabled();
-//    }
-
-    /**
-     * Returns user with same properties
-     * 
-     * @return User
-     */
-//    public User toNewUser() {
-//        User user = new User();
-//        user.setId(id);
-//        user.setFirstName(firstName);
-//        user.setLastName(lastName);
-//        user.setUserClass(userClass);
-//        user.setIsAdmin(isAdmin);
-//        user.setUsername(username);
-//        user.setPassword(password);
-//        user.setEnabled(enabled);
-//        return user;
-//    }
-
     public String getFullName() {
         return this.firstName + " " + this.lastName + " (" + this.username + ")";
-    }
-
-    @Override
-    public String toString() {
-        return "UserDTO [\nid=" + id + "\nfirstName=" + firstName + "\nlastName=" + lastName + "\nuserClass=" + userClass + "\nisAdmin="
-                + isAdmin + "\nusername=" + username + "\nenabled=" + enabled + "\n]";
     }
 
     @Override
@@ -192,12 +141,18 @@ public class UserDTO implements java.io.Serializable {
             return false;
         }
         UserDTO other = (UserDTO) obj;
-        if (id == null || other.id == null) { // can't compare null ids
+        if (id == null || other.id == null) {
             return false;
         } else if (!id.equals(other.id)) {
             return false;
         }
         return true;
+    }
+
+    @Override
+    public String toString() {
+        return "UserDTO [\nid=" + id + "\nfirstName=" + firstName + "\nlastName=" + lastName + "\nuserClass=" + userClass + "\nisAdmin="
+                + isAdmin + "\ncanRemove=" + canRemove + "\nusername=" + username + "\nenabled=" + enabled + "\n]";
     }
 
 }
