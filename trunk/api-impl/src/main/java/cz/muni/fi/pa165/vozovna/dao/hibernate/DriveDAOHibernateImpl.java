@@ -8,7 +8,6 @@ import cz.muni.fi.pa165.vozovna.enums.DriveStateEnum;
 import java.util.List;
 import org.hibernate.Query;
 import org.hibernate.Session;
-import org.joda.time.DateTime;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 

@@ -16,8 +16,6 @@ import org.hibernate.annotations.FetchMode;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Parameter;
 
-import cz.muni.fi.pa165.vozovna.dto.ServiceIntervalDTO;
-
 /**
  * The Entity represents service interval.
  *
@@ -168,40 +166,4 @@ public class ServiceInterval implements Serializable {
         }
         return true;
     }
-    public ServiceInterval(ServiceIntervalDTO serviceInterval){
-    	if(serviceInterval == null){
-    		throw new IllegalArgumentException("ServiceInterval can't be null.");
-    	}
-    	id = serviceInterval.getId();
-    	inspectionInterval = serviceInterval.getInspectionInterval();
-    	dated = serviceInterval.getDated();
-    	vehicle = new Vehicle(serviceInterval.getVehicle());
-    	description = serviceInterval.getDescription();
-    	
-    }
-    
-    public ServiceInterval() {
-	}
-
-	public ServiceIntervalDTO toServiceIntervalDTO(){
-    	ServiceIntervalDTO serviceInterval = new ServiceIntervalDTO();
-    	return applyToServiceIntervalDTO(serviceInterval);
-    }
-    
-    public ServiceIntervalDTO applyToServiceIntervalDTO(ServiceIntervalDTO serviceInterval){
-    	if(serviceInterval == null){
-    		throw new IllegalArgumentException("ServiceInterval can't be null.");
-    	}
-    	serviceInterval.setId(id);
-    	serviceInterval.setInspectionInterval(inspectionInterval);
-    	serviceInterval.setDated(dated);
-    	serviceInterval.setDescription(description);
-    	
-    	if(vehicle != null){
-    		serviceInterval.setVehicle(vehicle.toVehicleDTO());
-    	}
-    	
-    	return serviceInterval;
-    }
-
 }

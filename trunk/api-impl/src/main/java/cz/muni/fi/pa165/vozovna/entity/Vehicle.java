@@ -1,6 +1,5 @@
 package cz.muni.fi.pa165.vozovna.entity;
 
-import cz.muni.fi.pa165.vozovna.dto.VehicleDTO;
 import cz.muni.fi.pa165.vozovna.enums.UserClassEnum;
 import java.io.Serializable;
 import javax.persistence.Column;
@@ -49,24 +48,6 @@ public class Vehicle implements Serializable {
     
     @Column(length=8)
     private String registrationPlate;
-
-    public Vehicle(VehicleDTO vehicle) {
-    	if(vehicle == null){
-    		throw new IllegalArgumentException("Vehicle can't be null.");
-    	}
-    	id = vehicle.getId();
-    	brand = vehicle.getBrand();
-    	maxDistance = vehicle.getDistanceCount();
-    	engineType = vehicle.getEngineType();
-    	type = vehicle.getType();
-    	vin = vehicle.getVin();
-    	yearMade = vehicle.getYearMade();
-    	userClass = vehicle.getUserClass();
-    	registrationPlate = vehicle.getRegistrationPlate();
-	}
-
-	public Vehicle() {
-	}
 
 	/**
      * Returns id of vehicle.
@@ -290,23 +271,4 @@ public class Vehicle implements Serializable {
     public void setRegistrationPlate(String registrationPlate) {
         this.registrationPlate = registrationPlate;
     }
-
-	public VehicleDTO toVehicleDTO() {
-		VehicleDTO vehicle = new VehicleDTO();
-		return applyToVehicleDTO(vehicle);
-	}
-
-	public VehicleDTO applyToVehicleDTO(VehicleDTO vehicle){
-		vehicle.setId(id);
-		vehicle.setBrand(brand);
-		vehicle.setDistanceCount(maxDistance);
-		vehicle.setEngineType(engineType);
-		vehicle.setType(type);
-		vehicle.setVin(vin);
-		vehicle.setYearMade(yearMade);
-		vehicle.setUserClass(userClass);
-		vehicle.setRegistrationPlate(registrationPlate);
-		
-		return vehicle;
-	}        
 }

@@ -14,7 +14,9 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
+import static cz.muni.fi.pa165.vozovna.entity.EntityToDTOConvertor.toDTO;
+import static cz.muni.fi.pa165.vozovna.entity.EntityToDTOConvertor.applyToDTO;
+import static cz.muni.fi.pa165.vozovna.entity.EntityToDTOConvertor.toEntity;
 /**
  * Implementation of Drive service.
  *
@@ -51,7 +53,7 @@ public class DriveServiceImpl implements DriveService {
 
         Drive drive = driveDAO.getById(id);
 
-        return drive.toDriveDTO();
+        return  toDTO(drive);
     }
 
     @Override
@@ -60,7 +62,7 @@ public class DriveServiceImpl implements DriveService {
         if (drive == null) {
             throw new IllegalArgumentException("null drive");
         }
-        Drive entity = new Drive(drive);
+        Drive entity = toEntity(drive);
 
         if (drive.getUserId() != null) {
             entity.setUser(userDAO.getById(drive.getUserId()));
@@ -70,7 +72,7 @@ public class DriveServiceImpl implements DriveService {
         }
 
         driveDAO.create(entity);
-        drive = entity.applyToDriveDTO(drive);
+        drive = applyToDTO(drive, entity);
         return entity.getId();
     }
 
@@ -116,7 +118,7 @@ public class DriveServiceImpl implements DriveService {
 
         driveDAO.update(entity);
 
-        drive = entity.applyToDriveDTO(drive);
+        drive = applyToDTO(drive,entity);
 
         return drive;
     }
@@ -157,7 +159,7 @@ public class DriveServiceImpl implements DriveService {
         
         Drive entity;
         if (drive.getId() == null) {
-            entity = new Drive(drive);
+            entity = toEntity(drive);
         } else {
             entity = driveDAO.getById(drive.getId());
             if (entity == null) {
@@ -178,7 +180,7 @@ public class DriveServiceImpl implements DriveService {
         List<DriveDTO> result = new ArrayList<>();
 
         for (Drive drive : drives) {
-            result.add(drive.toDriveDTO());
+            result.add(toDTO(drive));
         }
 
         return result;

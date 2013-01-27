@@ -1,15 +1,12 @@
 package cz.muni.fi.pa165.vozovna.dao.hibernate;
 
 import cz.muni.fi.pa165.vozovna.dao.UserDAO;
-import cz.muni.fi.pa165.vozovna.entity.Drive;
 import cz.muni.fi.pa165.vozovna.entity.User;
-import cz.muni.fi.pa165.vozovna.enums.DriveStateEnum;
 import java.util.List;
 import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.criterion.Restrictions;
-import org.joda.time.DateTime;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 

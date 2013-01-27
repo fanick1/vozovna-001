@@ -2,6 +2,7 @@ package cz.muni.fi.pa165.vozovna.service;
 
 import cz.muni.fi.pa165.vozovna.dao.VehicleDAO;
 import cz.muni.fi.pa165.vozovna.dto.VehicleDTO;
+import cz.muni.fi.pa165.vozovna.entity.EntityToDTOConvertor;
 import cz.muni.fi.pa165.vozovna.entity.Vehicle;
 import cz.muni.fi.pa165.vozovna.enums.UserClassEnum;
 import java.util.Arrays;
@@ -156,9 +157,8 @@ public abstract class VehicleServiceTest {
         } catch (IllegalArgumentException e) {
             //OK
         }
-        //FIXME
-        //VehicleDTO vehicleDto = new VehicleDTO(existingVehicle);
-        VehicleDTO vehicleDto = new VehicleDTO();
+
+        VehicleDTO vehicleDto = EntityToDTOConvertor.toDTO(existingVehicle);
         vehicleDto.setId(15l);
         Long id = vehicleService.create(vehicleDto);
         assertNotNull(id);
