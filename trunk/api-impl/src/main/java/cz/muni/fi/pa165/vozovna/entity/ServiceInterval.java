@@ -18,7 +18,7 @@ import org.hibernate.annotations.Parameter;
 
 /**
  * The Entity represents service interval.
- *
+ * 
  * @author Lukas Hajek, 359617@mail.muni.cz
  */
 @Entity
@@ -31,9 +31,8 @@ public class ServiceInterval implements Serializable {
     @Id
     @GeneratedValue(generator = "service_interval_id_sequence")
     @GenericGenerator(name = "service_interval_id_sequence", strategy = "org.hibernate.id.enhanced.SequenceStyleGenerator", parameters = {
-        @Parameter(name = "sequence_name", value = "service_interval_id_sequence"),
-        @Parameter(name = "initial_value", value = "1"),
-        @Parameter(name = "increment_size", value = "1")})
+            @Parameter(name = "sequence_name", value = "service_interval_id_sequence"), @Parameter(name = "initial_value", value = "1"),
+            @Parameter(name = "increment_size", value = "1") })
     private Long id;
     /**
      * The required time interval between two service inspections (in days).
@@ -43,8 +42,8 @@ public class ServiceInterval implements Serializable {
     /**
      * The dates when vehicle was inspected.
      */
-    
-    @ElementCollection(targetClass=java.util.Date.class)
+
+    @ElementCollection(targetClass = java.util.Date.class)
     @Fetch(FetchMode.JOIN)
     @Temporal(javax.persistence.TemporalType.DATE)
     @OrderBy()
@@ -52,7 +51,6 @@ public class ServiceInterval implements Serializable {
     /**
      * The related vehicle
      */
-    // @Column(nullable = false)
     @ManyToOne()
     private Vehicle vehicle;
     /**
@@ -81,7 +79,7 @@ public class ServiceInterval implements Serializable {
 
     /**
      * Sets time interval between two service inspections
-     *
+     * 
      * @param inspectionInterval Interval between two service inspections (in days)
      * @throws IllegalArgumentException If inspectionInterval is less or equals to 0
      */

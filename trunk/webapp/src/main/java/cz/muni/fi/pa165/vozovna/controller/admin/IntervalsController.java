@@ -32,13 +32,12 @@ public class IntervalsController {
     @Autowired
     private VehicleService vehicleService;
 
-     @InitBinder
+    @InitBinder
     protected void initBinder(WebDataBinder binder) {
         binder.setValidator(new ServiceIntervalValidator());
         binder.registerCustomEditor(List.class, new DateListEditor());
- 
-    }
 
+    }
 
     @RequestMapping(value = "/admin/intervals/index", method = RequestMethod.GET)
     public String printWelcome(HttpServletRequest request, ModelMap model) {
@@ -46,14 +45,13 @@ public class IntervalsController {
         return "/admin/intervals/index";
     }
 
-    //Add
+    // Add
     @RequestMapping(value = "/admin/intervals/add", method = RequestMethod.GET)
     public String viewEmptyForm(HttpServletRequest request, ModelMap model) {
 
-        
         String vehicleID = request.getParameter("vehicleId");
         logger.info("Vehicle ID: " + vehicleID);
-        if(vehicleID == null) {
+        if (vehicleID == null) {
             this.logger.fatal("Cannot find vehicle");
             return "admin/intervals/index";
         }
@@ -66,13 +64,13 @@ public class IntervalsController {
         return "admin/intervals/addOrEdit";
     }
 
-
     // Edit
     @RequestMapping(value = "/admin/intervals/edit", params = "id", method = RequestMethod.GET)
-    public String viewFilledForm(@RequestParam("id") Long id, @RequestParam(value = "vehicleId", required = false) Long vehicleID, HttpServletRequest request,  ModelMap model, HttpSession session) throws Exception {
+    public String viewFilledForm(@RequestParam("id") Long id, @RequestParam(value = "vehicleId", required = false) Long vehicleID,
+            HttpServletRequest request, ModelMap model, HttpSession session) throws Exception {
 
         ServiceIntervalDTO interval = this.serviceIntervalService.getById(id);
-        if(vehicleID != null) {
+        if (vehicleID != null) {
             VehicleDTO vehicleDTO = this.vehicleService.getById(vehicleID);
             interval.setVehicle(vehicleDTO);
         }
@@ -86,14 +84,14 @@ public class IntervalsController {
     }
 
     @RequestMapping(value = { "/admin/intervals/add", "/admin/intervals/edit" }, method = RequestMethod.POST)
-    public String submitEditForm(@Validated @ModelAttribute("intervalDTO") ServiceIntervalDTO interval,  BindingResult result,
+    public String submitEditForm(@Validated @ModelAttribute("intervalDTO") ServiceIntervalDTO interval, BindingResult result,
             ModelMap model, HttpSession session) {
-        
+
         if (result.hasErrors()) {
             model.put("intervalDTO", interval);
             return "admin/intervals/addOrEdit";
         }
-        
+
         if (interval.getId() == null) {
             this.serviceIntervalService.create(interval);
             session.setAttribute("message", "admin.intervals.create.msg.successful");
@@ -106,7 +104,7 @@ public class IntervalsController {
     }
 
     // Vehicle select
-    @RequestMapping(value = "/admin/intervals/vehicleSelect",method = RequestMethod.GET)
+    @RequestMapping(value = "/admin/intervals/vehicleSelect", method = RequestMethod.GET)
     public String showVehicles(ModelMap model) throws Exception {
 
         model.put("vehicles", this.vehicleService.findAll());
@@ -114,7 +112,7 @@ public class IntervalsController {
     }
 
     // Vehicle select
-    @RequestMapping(value = "/admin/intervals/vehicleSelect2",method = RequestMethod.GET)
+    @RequestMapping(value = "/admin/intervals/vehicleSelect2", method = RequestMethod.GET)
     public String showVehiclesForEdit(HttpServletRequest request, ModelMap model) throws Exception {
 
         model.put("vehicles", this.vehicleService.findAll());
@@ -148,7 +146,7 @@ public class IntervalsController {
         session.setAttribute("message", "admin.intervals.delete.msg.successful");
         return "redirect:/admin/intervals/index";
     }
-    
+
     // Inspect vehicle
     @RequestMapping(value = "/admin/intervals/inspect", params = "id")
     public String actionInspectInterval(@RequestParam("id") Long id, ModelMap model, HttpSession session) throws Exception {

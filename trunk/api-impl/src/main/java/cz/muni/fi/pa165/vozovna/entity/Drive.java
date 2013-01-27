@@ -15,7 +15,7 @@ import org.joda.time.DateTime;
 
 /**
  * Drive. Used both for vehicle reservation and drive reports.
- *
+ * 
  * @author eva.neduchalova
  */
 @Entity
@@ -26,9 +26,8 @@ public class Drive {
     @Column(name = "id")
     @GeneratedValue(generator = "drive_id_sequence")
     @GenericGenerator(name = "drive_id_sequence", strategy = "org.hibernate.id.enhanced.SequenceStyleGenerator", parameters = {
-        @Parameter(name = "sequence_name", value = "drive_id_sequence"),
-        @Parameter(name = "initial_value", value = "1"),
-        @Parameter(name = "increment_size", value = "1")})
+            @Parameter(name = "sequence_name", value = "drive_id_sequence"), @Parameter(name = "initial_value", value = "1"),
+            @Parameter(name = "increment_size", value = "1") })
     /**
      * Unique id
      */
@@ -157,16 +156,3 @@ public class Drive {
         return hash;
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-

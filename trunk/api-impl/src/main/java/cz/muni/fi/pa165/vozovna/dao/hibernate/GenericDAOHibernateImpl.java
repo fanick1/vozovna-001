@@ -1,19 +1,22 @@
 package cz.muni.fi.pa165.vozovna.dao.hibernate;
 
-import cz.muni.fi.pa165.vozovna.dao.GenericDAO;
 import java.io.Serializable;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.util.List;
+
 import javax.annotation.Resource;
+
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.transaction.annotation.Transactional;
 
+import cz.muni.fi.pa165.vozovna.dao.GenericDAO;
+
 /**
  * Hibernate implementation of base DAO with CRUD operations and findAll() method
- *
+ * 
  * @author eva.neduchalova
  */
 public abstract class GenericDAOHibernateImpl<T, PK extends Serializable> implements GenericDAO<T, PK> {
