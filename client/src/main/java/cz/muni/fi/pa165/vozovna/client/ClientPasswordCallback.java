@@ -9,6 +9,11 @@ import javax.security.auth.callback.UnsupportedCallbackException;
 import org.apache.ws.security.WSPasswordCallback;
 import org.springframework.security.authentication.encoding.PasswordEncoder;
 
+
+/**
+ * Callback for setting the password for web-service clients
+ * @author Frantisek Veverka, 207422@mail.muni.cz
+ */
 public class ClientPasswordCallback implements CallbackHandler{
 	
 	private PasswordEncoder passwordEncoder = new org.springframework.security.authentication.encoding.ShaPasswordEncoder(256);
