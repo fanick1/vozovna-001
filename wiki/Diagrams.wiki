@@ -4,4 +4,4 @@
 
 = Diagram tříd =
 
-[http://vozovna-001.googlecode.com/files/class_model_final.jpg]
+[http://vozovna-001.googlecode.com/files/class_model_final.png]
